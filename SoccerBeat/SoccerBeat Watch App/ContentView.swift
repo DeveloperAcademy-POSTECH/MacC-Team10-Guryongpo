@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  SoccerBeat
+//  SoccerBeat Watch App
 //
 //  Created by daaan on 10/21/23.
 //

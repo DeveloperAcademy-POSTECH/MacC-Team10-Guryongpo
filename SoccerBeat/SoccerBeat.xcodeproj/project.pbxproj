@@ -7,28 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D35DF7752AE367BE00C11735 /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35DF7742AE367BE00C11735 /* SoccerBeatApp.swift */; };
-		D35DF7772AE367BE00C11735 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35DF7762AE367BE00C11735 /* ContentView.swift */; };
-		D35DF7792AE367BF00C11735 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D35DF7782AE367BF00C11735 /* Assets.xcassets */; };
-		D35DF77C2AE367BF00C11735 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D35DF77B2AE367BF00C11735 /* Preview Assets.xcassets */; };
-		D35DF77E2AE367BF00C11735 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35DF77D2AE367BF00C11735 /* Persistence.swift */; };
-		D35DF7812AE367BF00C11735 /* SoccerBeat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D35DF77F2AE367BF00C11735 /* SoccerBeat.xcdatamodeld */; };
+		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
+		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
+		D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
+		D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500192AE36F3F00EFAEFF /* Preview Assets.xcassets */; };
+		D3C500202AE36F3F00EFAEFF /* SoccerBeat Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D3C5001F2AE36F3F00EFAEFF /* SoccerBeat Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
+		D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500262AE36F3F00EFAEFF /* ContentView.swift */; };
+		D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500282AE36F4000EFAEFF /* Assets.xcassets */; };
+		D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D3C500212AE36F3F00EFAEFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3C500072AE36F3E00EFAEFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D3C5001E2AE36F3F00EFAEFF;
+			remoteInfo = "SoccerBeat Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D3C500322AE36F4000EFAEFF /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				D3C500202AE36F3F00EFAEFF /* SoccerBeat Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		D35DF7712AE367BE00C11735 /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D35DF7742AE367BE00C11735 /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
-		D35DF7762AE367BE00C11735 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		D35DF7782AE367BF00C11735 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D35DF77B2AE367BF00C11735 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D35DF77D2AE367BF00C11735 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		D35DF7802AE367BF00C11735 /* SoccerBeat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SoccerBeat.xcdatamodel; sourceTree = "<group>"; };
-		D35DF7822AE367BF00C11735 /* SoccerBeat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoccerBeat.entitlements; sourceTree = "<group>"; };
-		D35DF7832AE367BF00C11735 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
+		D3C500142AE36F3F00EFAEFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D3C500162AE36F3F00EFAEFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D3C500192AE36F3F00EFAEFF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D3C5001F2AE36F3F00EFAEFF /* SoccerBeat Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SoccerBeat Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
+		D3C500262AE36F3F00EFAEFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D3C500282AE36F4000EFAEFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D35DF76E2AE367BE00C11735 /* Frameworks */ = {
+		D3C5000C2AE36F3F00EFAEFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3C5001C2AE36F3F00EFAEFF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -38,41 +73,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D35DF7682AE367BE00C11735 = {
+		D3C500062AE36F3E00EFAEFF = {
 			isa = PBXGroup;
 			children = (
-				D35DF7732AE367BE00C11735 /* SoccerBeat */,
-				D35DF7722AE367BE00C11735 /* Products */,
+				D3C500112AE36F3F00EFAEFF /* SoccerBeat */,
+				D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */,
+				D3C500102AE36F3F00EFAEFF /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D35DF7722AE367BE00C11735 /* Products */ = {
+		D3C500102AE36F3F00EFAEFF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D35DF7712AE367BE00C11735 /* SoccerBeat.app */,
+				D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */,
+				D3C5001F2AE36F3F00EFAEFF /* SoccerBeat Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D35DF7732AE367BE00C11735 /* SoccerBeat */ = {
+		D3C500112AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXGroup;
 			children = (
-				D35DF7742AE367BE00C11735 /* SoccerBeatApp.swift */,
-				D35DF7762AE367BE00C11735 /* ContentView.swift */,
-				D35DF7782AE367BF00C11735 /* Assets.xcassets */,
-				D35DF77D2AE367BF00C11735 /* Persistence.swift */,
-				D35DF7822AE367BF00C11735 /* SoccerBeat.entitlements */,
-				D35DF7832AE367BF00C11735 /* Info.plist */,
-				D35DF77F2AE367BF00C11735 /* SoccerBeat.xcdatamodeld */,
-				D35DF77A2AE367BF00C11735 /* Preview Content */,
+				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
+				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
+				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
+				D3C500182AE36F3F00EFAEFF /* Preview Content */,
 			);
 			path = SoccerBeat;
 			sourceTree = "<group>";
 		};
-		D35DF77A2AE367BF00C11735 /* Preview Content */ = {
+		D3C500182AE36F3F00EFAEFF /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				D35DF77B2AE367BF00C11735 /* Preview Assets.xcassets */,
+				D3C500192AE36F3F00EFAEFF /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
+				D3C500262AE36F3F00EFAEFF /* ContentView.swift */,
+				D3C500282AE36F4000EFAEFF /* Assets.xcassets */,
+				D3C5002A2AE36F4000EFAEFF /* Preview Content */,
+			);
+			path = "SoccerBeat Watch App";
+			sourceTree = "<group>";
+		};
+		D3C5002A2AE36F4000EFAEFF /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -80,39 +132,61 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D35DF7702AE367BE00C11735 /* SoccerBeat */ = {
+		D3C5000E2AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D35DF7862AE367BF00C11735 /* Build configuration list for PBXNativeTarget "SoccerBeat" */;
+			buildConfigurationList = D3C500332AE36F4000EFAEFF /* Build configuration list for PBXNativeTarget "SoccerBeat" */;
 			buildPhases = (
-				D35DF76D2AE367BE00C11735 /* Sources */,
-				D35DF76E2AE367BE00C11735 /* Frameworks */,
-				D35DF76F2AE367BE00C11735 /* Resources */,
+				D3C5000B2AE36F3F00EFAEFF /* Sources */,
+				D3C5000C2AE36F3F00EFAEFF /* Frameworks */,
+				D3C5000D2AE36F3F00EFAEFF /* Resources */,
+				D3C500322AE36F4000EFAEFF /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D3C500222AE36F3F00EFAEFF /* PBXTargetDependency */,
+			);
+			name = SoccerBeat;
+			productName = SoccerBeat;
+			productReference = D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D3C5001E2AE36F3F00EFAEFF /* SoccerBeat Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D3C5002F2AE36F4000EFAEFF /* Build configuration list for PBXNativeTarget "SoccerBeat Watch App" */;
+			buildPhases = (
+				D3C5001B2AE36F3F00EFAEFF /* Sources */,
+				D3C5001C2AE36F3F00EFAEFF /* Frameworks */,
+				D3C5001D2AE36F3F00EFAEFF /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SoccerBeat;
-			productName = SoccerBeat;
-			productReference = D35DF7712AE367BE00C11735 /* SoccerBeat.app */;
+			name = "SoccerBeat Watch App";
+			productName = "SoccerBeat Watch App";
+			productReference = D3C5001F2AE36F3F00EFAEFF /* SoccerBeat Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D35DF7692AE367BE00C11735 /* Project object */ = {
+		D3C500072AE36F3E00EFAEFF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
-					D35DF7702AE367BE00C11735 = {
+					D3C5000E2AE36F3F00EFAEFF = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					D3C5001E2AE36F3F00EFAEFF = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
-			buildConfigurationList = D35DF76C2AE367BE00C11735 /* Build configuration list for PBXProject "SoccerBeat" */;
+			buildConfigurationList = D3C5000A2AE36F3E00EFAEFF /* Build configuration list for PBXProject "SoccerBeat" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -120,44 +194,69 @@
 				en,
 				Base,
 			);
-			mainGroup = D35DF7682AE367BE00C11735;
-			productRefGroup = D35DF7722AE367BE00C11735 /* Products */;
+			mainGroup = D3C500062AE36F3E00EFAEFF;
+			productRefGroup = D3C500102AE36F3F00EFAEFF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D35DF7702AE367BE00C11735 /* SoccerBeat */,
+				D3C5000E2AE36F3F00EFAEFF /* SoccerBeat */,
+				D3C5001E2AE36F3F00EFAEFF /* SoccerBeat Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D35DF76F2AE367BE00C11735 /* Resources */ = {
+		D3C5000D2AE36F3F00EFAEFF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D35DF77C2AE367BF00C11735 /* Preview Assets.xcassets in Resources */,
-				D35DF7792AE367BF00C11735 /* Assets.xcassets in Resources */,
+				D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */,
+				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3C5001D2AE36F3F00EFAEFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */,
+				D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D35DF76D2AE367BE00C11735 /* Sources */ = {
+		D3C5000B2AE36F3F00EFAEFF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D35DF77E2AE367BF00C11735 /* Persistence.swift in Sources */,
-				D35DF7772AE367BE00C11735 /* ContentView.swift in Sources */,
-				D35DF7812AE367BF00C11735 /* SoccerBeat.xcdatamodeld in Sources */,
-				D35DF7752AE367BE00C11735 /* SoccerBeatApp.swift in Sources */,
+				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
+				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3C5001B2AE36F3F00EFAEFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */,
+				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D3C500222AE36F3F00EFAEFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D3C5001E2AE36F3F00EFAEFF /* SoccerBeat Watch App */;
+			targetProxy = D3C500212AE36F3F00EFAEFF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		D35DF7842AE367BF00C11735 /* Debug */ = {
+		D3C5002D2AE36F4000EFAEFF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -209,18 +308,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		D35DF7852AE367BF00C11735 /* Release */ = {
+		D3C5002E2AE36F4000EFAEFF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -266,33 +363,90 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		D35DF7872AE367BF00C11735 /* Debug */ = {
+		D3C500302AE36F4000EFAEFF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SoccerBeat/SoccerBeat.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Guryongpo.com.SoccerBeat;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Guryongpo.com.SoccerBeat.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		D3C500312AE36F4000EFAEFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Guryongpo.com.SoccerBeat;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Guryongpo.com.SoccerBeat.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		D3C500342AE36F4000EFAEFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SoccerBeat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,29 +454,31 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Guryongpo.com.SoccerBeat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		D35DF7882AE367BF00C11735 /* Release */ = {
+		D3C500352AE36F4000EFAEFF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SoccerBeat/SoccerBeat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SoccerBeat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,47 +486,45 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Guryongpo.com.SoccerBeat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D35DF76C2AE367BE00C11735 /* Build configuration list for PBXProject "SoccerBeat" */ = {
+		D3C5000A2AE36F3E00EFAEFF /* Build configuration list for PBXProject "SoccerBeat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D35DF7842AE367BF00C11735 /* Debug */,
-				D35DF7852AE367BF00C11735 /* Release */,
+				D3C5002D2AE36F4000EFAEFF /* Debug */,
+				D3C5002E2AE36F4000EFAEFF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D35DF7862AE367BF00C11735 /* Build configuration list for PBXNativeTarget "SoccerBeat" */ = {
+		D3C5002F2AE36F4000EFAEFF /* Build configuration list for PBXNativeTarget "SoccerBeat Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D35DF7872AE367BF00C11735 /* Debug */,
-				D35DF7882AE367BF00C11735 /* Release */,
+				D3C500302AE36F4000EFAEFF /* Debug */,
+				D3C500312AE36F4000EFAEFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D3C500332AE36F4000EFAEFF /* Build configuration list for PBXNativeTarget "SoccerBeat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3C500342AE36F4000EFAEFF /* Debug */,
+				D3C500352AE36F4000EFAEFF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		D35DF77F2AE367BF00C11735 /* SoccerBeat.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				D35DF7802AE367BF00C11735 /* SoccerBeat.xcdatamodel */,
-			);
-			currentVersion = D35DF7802AE367BF00C11735 /* SoccerBeat.xcdatamodel */;
-			path = SoccerBeat.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
-	rootObject = D35DF7692AE367BE00C11735 /* Project object */;
+	rootObject = D3C500072AE36F3E00EFAEFF /* Project object */;
 }
