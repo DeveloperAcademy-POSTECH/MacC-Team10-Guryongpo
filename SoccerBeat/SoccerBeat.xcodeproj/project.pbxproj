@@ -19,6 +19,10 @@
 		D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500262AE36F3F00EFAEFF /* ContentView.swift */; };
 		D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500282AE36F4000EFAEFF /* Assets.xcassets */; };
 		D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */; };
+		FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */; };
+		FBCED9232AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */; };
+		FBCED9242AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */; };
+		FBCED9272AE3E5EF00C57BF9 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +63,10 @@
 		D3C500262AE36F3F00EFAEFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D3C500282AE36F4000EFAEFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardView.swift; sourceTree = "<group>"; };
+		FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
+		FBCED9252AE3DF5900C57BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +101,7 @@
 				685D7B582AE38D1A00783433 /* .swiftlint.yml */,
 				D3C500112AE36F3F00EFAEFF /* SoccerBeat */,
 				D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */,
+				FBCED9212AE3DAC700C57BF9 /* Fonts */,
 				D3C500102AE36F3F00EFAEFF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,8 +118,11 @@
 		D3C500112AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXGroup;
 			children = (
+				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
+				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
+				FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */,
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 				D3C500182AE36F3F00EFAEFF /* Preview Content */,
 			);
@@ -144,6 +156,14 @@
 				D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FBCED9212AE3DAC700C57BF9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +252,7 @@
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */,
 				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
+				FBCED9232AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +263,7 @@
 				685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */,
 				D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */,
+				FBCED9242AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,8 +313,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
+				FBCED9272AE3E5EF00C57BF9 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +527,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SoccerBeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -535,6 +560,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SoccerBeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
