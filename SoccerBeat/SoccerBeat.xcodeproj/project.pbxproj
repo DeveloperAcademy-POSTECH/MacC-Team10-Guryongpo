@@ -22,6 +22,8 @@
 		FBCED9232AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */; };
 		FBCED9242AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */; };
 		FBCED9272AE3E5EF00C57BF9 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
+		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
+		FBCED9332AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,7 @@
 		FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
 		FBCED9252AE3DF5900C57BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRecapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +114,7 @@
 				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
+				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
 				FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */,
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 				D3C500182AE36F3F00EFAEFF /* Preview Content */,
@@ -303,6 +307,7 @@
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
+				FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
 				FBCED9272AE3E5EF00C57BF9 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCED9332AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
 				D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 			);
