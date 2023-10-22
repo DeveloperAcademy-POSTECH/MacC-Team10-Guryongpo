@@ -14,6 +14,61 @@ struct ProgressView: View {
         var text: String {
             return "zone".uppercased() + "\(self.rawValue)"
         }
+        
+        private var tintColor: Color {
+            var tintHexacode: UInt = 0xFFFFFF
+            switch self {
+            case .one:
+                tintHexacode = 0xFFE603
+            case .two:
+                tintHexacode = 0x03B3FF
+            case .three:
+                tintHexacode = 0x03FFC3
+            case .four:
+                tintHexacode = 0xFF00B8
+            case .five:
+                tintHexacode = 0xFF4003
+            }
+            return .init(hex: tintHexacode)
+        }
+        
+        var zoneGradient: LinearGradient {
+            var start: Color = .black
+            
+            switch self {
+            case .one:
+                start = .init(hex: 0xFFE603, alpha: 0.35)
+            case .two:
+                start = .init(hex: 0x03B3FF, alpha: 0.35)
+            case .three:
+                start = .init(hex: 0x03B3FF, alpha: 0.35)
+            case .four:
+                start = .init(hex: 0xFF00B8, alpha: 0.35)
+            case .five:
+                start = .init(hex: 0xFF4003, alpha: 0.35)
+            }
+            
+            var gradient = LinearGradient(stops: [
+                .init(color: start, location: 0.2),
+                .init(color: tintColor, location: 0.9)
+            ], startPoint: .leading, endPoint: .trailing)
+            if self == .three {
+                start = Color(hex: 0x03B3FF, alpha: 0.35)
+                let middle = Color(hex: 0x03BBF9, alpha: 0.4109)
+                let end = tintColor
+                gradient = LinearGradient(stops: [
+                    .init(color: start, location: 0.2),
+                    .init(color: middle, location: 0.25),
+                    .init(color: end, location: 0.95)
+                ], startPoint: .leading, endPoint: .trailing)
+            }
+            return gradient
+        }
+        
+        var heartRateGradient: LinearGradient {
+            return .linearGradient(colors: [tintColor, .white],
+                                   startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
     }
     // MARK: - Data
     let heartRate: Int
@@ -46,8 +101,7 @@ struct ProgressView: View {
                 + Text(" bpm")
                     .font(.system(size: 28).bold().italic())
             }
-            .foregroundStyle(.linearGradient(colors: [Color.init(hex: 0x03B3FF), .white],
-                                             startPoint: .topLeading, endPoint: .bottomTrailing))
+            .foregroundStyle(zone.heartRateGradient)
             
             HStack(spacing: 30) {
                 VStack {
@@ -80,6 +134,7 @@ extension ProgressView {
     private var zoneBar: some View {
         let circleHeight = CGFloat(16.0)
         let currentZoneWidth = CGFloat(51.0)
+        let circleColor = Color(hex: 0x757575)
         
         HStack {
             ForEach(1...5, id: \.self) { index in
@@ -89,40 +144,37 @@ extension ProgressView {
                 } else {
                     Circle()
                         .frame(width: circleHeight, height: circleHeight)
+                        .foregroundStyle(circleColor)
                 }
             }
-            .foregroundStyle(Color(hex: 0x757575))
         }
     }
     
     @ViewBuilder
     private var currentZone: some View {
         let circleHeight = CGFloat(16.0)
-        let start = Color(hex: 0x03B3FF, alpha: 0.35)
-        let end = Color(hex: 0xFF00B8)
-        let gradient = LinearGradient(stops: [
-            .init(color: start, location: 0.2), .init(color: end, location: 0.9)
-        ],
-                                      startPoint: .leading, endPoint: .trailing)
+        let numberTextColor = Color(hex: 0xCACACA)
+        let strokeColor = Color(hex: 0xB1B1B1)
+        let strokeWidth = CGFloat(0.6)
         let roundedRectangle = RoundedRectangle(cornerRadius: circleHeight / 2)
         
         if #available(watchOS 10.0, *) {
             roundedRectangle
-                .stroke(Color.init(hex: 0xB1B1B1), lineWidth: 0.6)
-                .fill(gradient)
+                .stroke(strokeColor, lineWidth: strokeWidth)
+                .fill(zone.zoneGradient)
                 .overlay {
                     Text(zone.text)
                         .font(.footnote)
-                        .foregroundStyle(Color.init(hex: 0xCACACA))
+                        .foregroundStyle(numberTextColor)
                 }
         } else { // current watch version(9.0)
             roundedRectangle
-                .strokeBorder(Color.init(hex: 0xB1B1B1), lineWidth: 0.6)
-                .background(roundedRectangle.foregroundStyle(gradient))
+                .strokeBorder(strokeColor, lineWidth: strokeWidth)
+                .background(roundedRectangle.foregroundStyle(zone.zoneGradient))
                 .overlay {
                     Text(zone.text)
                         .font(.footnote)
-                        .foregroundStyle(Color.init(hex: 0xCACACA))
+                        .foregroundStyle(numberTextColor)
                 }
         }
     }
