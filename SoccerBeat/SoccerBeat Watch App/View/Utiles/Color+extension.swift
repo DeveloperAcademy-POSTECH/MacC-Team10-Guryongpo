@@ -45,6 +45,12 @@ extension ShapeStyle where Self == Color {
     static var inactiveZone: Self { .init(hex: 0x757575)}
     static var currentZoneStroke: Self { .init(hex: 0xB1B1B1) }
     static var currentZoneText: Self { .init(hex: 0xCACACA) }
+    
+    // MARK: - Henry's Color Assets
+    
+    static var darkblue: Self { .init(hex: 0x002737) }
+    static var skyblue: Self { .init(hex: 0x03B3FF) }
+    static var hotpink: Self { .init(hex: 0xFF00B8) }
 }
 
 extension ShapeStyle where Self == LinearGradient {

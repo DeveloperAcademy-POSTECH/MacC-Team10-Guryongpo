@@ -63,13 +63,7 @@ struct GameProgressView: View {
             zoneBar
             
             // Heart Rate
-            Group {
-                Text(heartRate, format: .number)
-                    .font(.system(size: 56).bold().italic())
-                + Text(" bpm")
-                    .font(.system(size: 28).bold().italic())
-            }
-            .foregroundStyle(zoneBPMGradient)
+            BPMTextView(textGradient: zoneBPMGradient, bpm: heartRate)
             
             // Game Ongoing Information
             HStack(spacing: 30) {
@@ -129,24 +123,23 @@ extension GameProgressView {
         let circleHeight = CGFloat(16.0)
         let strokeWidth = CGFloat(0.6)
         let roundedRectangle = RoundedRectangle(cornerRadius: circleHeight / 2)
+        let text = Text(zone.text)
+            .font(.system(size: 12))
+            .foregroundStyle(.currentZoneText)
         
         if #available(watchOS 10.0, *) {
             roundedRectangle
                 .stroke(.currentZoneStroke, lineWidth: strokeWidth)
                 .fill(currentZoneBarGradient)
                 .overlay {
-                    Text(zone.text)
-                        .font(.footnote)
-                        .foregroundStyle(.currentZoneText)
+                    text
                 }
         } else { // current watch version(9.0)
             roundedRectangle
                 .strokeBorder(.currentZoneStroke, lineWidth: strokeWidth)
                 .background(roundedRectangle.foregroundStyle(currentZoneBarGradient))
                 .overlay {
-                    Text(zone.text)
-                        .font(.footnote)
-                        .foregroundStyle(.currentZoneText)
+                    text
                 }
         }
     }

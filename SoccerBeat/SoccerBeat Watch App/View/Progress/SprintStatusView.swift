@@ -27,8 +27,8 @@ struct SprintStatusView: View {
 
 #Preview {
     SprintStatusView(accentGradient: .zone1Bpm,
-                            sprintableCount: 5,
-                            restSprint: 3)
+                     sprintableCount: 5,
+                     restSprint: 3)
 }
 
 // MARK: - 커스텀 프로그레스 뷰 설정을 위한 코드
