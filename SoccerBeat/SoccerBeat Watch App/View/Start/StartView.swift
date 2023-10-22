@@ -17,7 +17,6 @@ struct StartView: View {
                     .resizable()
                     .scaledToFill()
             }
-            // TODO: - adjusting Frame size
             .buttonStyle(.plain)
             .clipShape(Circle())
         }
