@@ -7,15 +7,87 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+enum TabbedItems: Int, CaseIterable {
+    case statistic = 0
+    case mycard
+    case matchrecap
+    
+    var title: String {
+        switch self {
+        case .statistic:
+            return "Archive"
+        case .mycard:
+            return "My"
+        case .matchrecap:
+            return "Archive"
         }
-        .padding()
+    }
+    
+    var iconName: String {
+        switch self {
+        case .statistic:
+            return "doc.text"
+        case .mycard:
+            return "person.text.rectangle"
+        case .matchrecap:
+            return "figure.run"
+        }
+    }
+}
+
+struct ContentView: View {
+    
+    @State var selectedTab = 1
+    
+    var body: some View {
+        
+        ZStack(alignment: .bottom) {
+            TabView(selection: $selectedTab) {
+                Text("StatisticsView")
+                    .tag(0)
+                
+                Text("MyCardView")
+                    .tag(1)
+                
+                Text("MatchRecapView")
+                    .tag(2)
+            }
+        }
+        
+        ZStack {
+            HStack {
+                ForEach((TabbedItems.allCases), id: \.self) { item in
+                    Button (action: {
+                        selectedTab = item.rawValue
+                    }, label: {
+                        CustomTabItem(imageName: item.iconName, title: item.title, isActive: (selectedTab == item.rawValue))
+                    })
+                }
+            }
+        }
+        .frame(width: 260, height: 54)
+        .background(.black.opacity(0.2))
+        .cornerRadius(25)
+    }
+}
+
+extension ContentView {
+    func CustomTabItem(imageName: String, title: String, isActive: Bool) -> some View {
+        VStack {
+            Spacer()
+            Image(systemName: imageName)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(isActive ? .black : .gray)
+                .frame(width: 28, height: 28)
+            Spacer()
+                .frame(height: 1)
+            Text(title)
+                .font(.system(size: 10))
+                .foregroundColor(isActive ? .black : .gray)
+            Spacer()
+        }
+        .frame(width: 72)
     }
 }
 
