@@ -26,8 +26,7 @@ struct SprintStatusView: View {
 }
 
 #Preview {
-    let zone = HeartRateZone.three
-    return SprintStatusView(accentGradient: zone.heartRateGradient,
+    SprintStatusView(accentGradient: .zone1Bpm,
                             sprintableCount: 5,
                             restSprint: 3)
 }
@@ -39,9 +38,7 @@ struct BarProgressStyle: ProgressViewStyle {
     let accentGradient: LinearGradient
     let maxAvailable: Int
     let restSprint: Int
-    
     private let height: Double = 20.0
-    private let gaugeBackgroundColor = Color(hex: 0xD9D9D9, alpha: 0.6)
     private var isFull: Bool { maxAvailable == restSprint }
     
     func makeBody(configuration: Configuration) -> some View {
@@ -50,13 +47,13 @@ struct BarProgressStyle: ProgressViewStyle {
         
         GeometryReader { geometry in
             RoundedRectangle(cornerRadius: 10.0)
-                .fill(gaugeBackgroundColor)
+                .fill(.gaugeBackground)
                 .frame(height: height)
                 .overlay(alignment: .leading) {
                     if isFull {
                         RoundedRectangle(cornerRadius: 7.0)
-                        .fill(accentGradient)
-                        .padding(2)
+                            .fill(accentGradient)
+                            .padding(2)
                     } else {
                         UnevenRoundedRectangle(cornerRadii: .init(topLeading: 7.0,
                                                                   bottomLeading: 7.0,
@@ -71,7 +68,7 @@ struct BarProgressStyle: ProgressViewStyle {
                     HStack {
                         ForEach(0..<maxAvailable, id: \.self) { index in
                             Rectangle()
-                                .fill(gaugeBackgroundColor)
+                                .fill(.gaugeBackground)
                                 .frame(width: 3)
                                 .opacity(index == 0 ? 0.0 : 1.0)
                             Spacer()

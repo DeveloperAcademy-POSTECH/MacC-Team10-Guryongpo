@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct GameProgressView: View {
+    
     // MARK: - Data
+    
     let heartRate: Int
     private let runningDistance = "2.1KM"
     private let elapsedTime = "45 : 23"
-    
-    private var accentColor: Color {
-        Color.blue
-    }
     
     private var zone: HeartRateZone {
         switch heartRate {
@@ -26,7 +24,39 @@ struct GameProgressView: View {
         default: return .five
         }
     }
+    
+    private var zoneBPMGradient: LinearGradient {
+        switch zone {
+        case .one:
+            return .zone1Bpm
+        case .two:
+            return .zone2Bpm
+        case .three:
+            return .zone3Bpm
+        case .four:
+            return .zone4Bpm
+        case .five:
+            return .zone5Bpm
+        }
+    }
+    
+    private var currentZoneBarGradient: LinearGradient {
+        switch zone {
+        case .one:
+            return .zone1CurrentZoneBar
+        case .two:
+            return .zone2CurrentZoneBar
+        case .three:
+            return .zone3CurrentZoneBar
+        case .four:
+            return .zone4CurrentZoneBar
+        case .five:
+            return .zone5CurrentZoneBar
+        }
+    }
+    
     // MARK: - Body
+    
     var body: some View {
         VStack {
             // Zone Bar
@@ -39,26 +69,28 @@ struct GameProgressView: View {
                 + Text(" bpm")
                     .font(.system(size: 28).bold().italic())
             }
-            .foregroundStyle(zone.heartRateGradient)
+            .foregroundStyle(zoneBPMGradient)
             
             // Game Ongoing Information
             HStack(spacing: 30) {
                 VStack {
                     Text(runningDistance)
                         .font(.caption.bold().italic())
+                        .foregroundStyle(.ongoingNumber)
                     Text("뛴 거리")
-                        .foregroundStyle(Color(hex: 0xDFDFDF))
+                        .foregroundStyle(.ongoingText)
                 }
                 VStack {
                     Text(elapsedTime)
                         .font(.caption.bold().italic())
+                        .foregroundStyle(.ongoingNumber)
                     Text("경기 시간")
-                        .foregroundStyle(Color(hex: 0xDFDFDF))
+                        .foregroundStyle(.ongoingText)
                 }
             }
             
             // Sprint Count Gague
-            SprintStatusView(accentGradient: zone.heartRateGradient,
+            SprintStatusView(accentGradient: zoneBPMGradient,
                              sprintableCount: 5,
                              restSprint: 4)
         }
@@ -77,7 +109,6 @@ extension GameProgressView {
     private var zoneBar: some View {
         let circleHeight = CGFloat(16.0)
         let currentZoneWidth = CGFloat(51.0)
-        let circleColor = Color(hex: 0x757575)
         
         HStack {
             ForEach(1...5, id: \.self) { index in
@@ -87,7 +118,7 @@ extension GameProgressView {
                 } else {
                     Circle()
                         .frame(width: circleHeight, height: circleHeight)
-                        .foregroundStyle(circleColor)
+                        .foregroundStyle(.inactiveZone)
                 }
             }
         }
@@ -96,28 +127,26 @@ extension GameProgressView {
     @ViewBuilder
     private var currentZone: some View {
         let circleHeight = CGFloat(16.0)
-        let numberTextColor = Color(hex: 0xCACACA)
-        let strokeColor = Color(hex: 0xB1B1B1)
         let strokeWidth = CGFloat(0.6)
         let roundedRectangle = RoundedRectangle(cornerRadius: circleHeight / 2)
         
         if #available(watchOS 10.0, *) {
             roundedRectangle
-                .stroke(strokeColor, lineWidth: strokeWidth)
-                .fill(zone.zoneGradient)
+                .stroke(.currentZoneStroke, lineWidth: strokeWidth)
+                .fill(currentZoneBarGradient)
                 .overlay {
                     Text(zone.text)
                         .font(.footnote)
-                        .foregroundStyle(numberTextColor)
+                        .foregroundStyle(.currentZoneText)
                 }
         } else { // current watch version(9.0)
             roundedRectangle
-                .strokeBorder(strokeColor, lineWidth: strokeWidth)
-                .background(roundedRectangle.foregroundStyle(zone.zoneGradient))
+                .strokeBorder(.currentZoneStroke, lineWidth: strokeWidth)
+                .background(roundedRectangle.foregroundStyle(currentZoneBarGradient))
                 .overlay {
                     Text(zone.text)
                         .font(.footnote)
-                        .foregroundStyle(numberTextColor)
+                        .foregroundStyle(.currentZoneText)
                 }
         }
     }
