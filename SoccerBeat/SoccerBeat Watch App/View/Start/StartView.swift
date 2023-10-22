@@ -9,7 +9,18 @@ import SwiftUI
 
 struct StartView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Button {
+                print("Button Tapped")
+            } label: {
+                Image(.startButton)
+                    .resizable()
+                    .scaledToFill()
+            }
+            // TODO: - adjusting Frame size
+            .buttonStyle(.plain)
+            .clipShape(Circle())
+        }
     }
 }
 

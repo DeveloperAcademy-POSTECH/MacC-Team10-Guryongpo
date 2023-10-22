@@ -10,6 +10,7 @@
 		685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */; };
+		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
 		D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		685D7B582AE38D1A00783433 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SoccerBeat Watch App.entitlements"; sourceTree = "<group>"; };
+		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
 		D3C500142AE36F3F00EFAEFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,22 @@
 				685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */,
 			);
 			path = WorkoutManager;
+			sourceTree = "<group>";
+		};
+		BEB666BE2AE4E13E0090195A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BEB666BF2AE4E14B0090195A /* Start */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BEB666BF2AE4E14B0090195A /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				BEB666C12AE4E16D0090195A /* StartView.swift */,
+			);
+			path = Start;
 			sourceTree = "<group>";
 		};
 		D3C500062AE36F3E00EFAEFF = {
@@ -141,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */,
+				BEB666BE2AE4E13E0090195A /* View */,
 				685D7B5D2AE3F3BD00783433 /* WorkoutManager */,
 				D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
 				D3C500262AE36F3F00EFAEFF /* ContentView.swift */,
@@ -327,6 +346,7 @@
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
+				BEB666C22AE4E16D0090195A /* StartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
