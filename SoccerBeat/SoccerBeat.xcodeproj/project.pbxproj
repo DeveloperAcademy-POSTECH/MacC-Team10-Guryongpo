@@ -22,6 +22,7 @@
 		BE22D6142AE4F885009035C9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6132AE4F885009035C9 /* Color+extension.swift */; };
 		BE22D6182AE51461009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6172AE51461009035C9 /* SprintStatusView.swift */; };
 		BE22D61A2AE519C8009035C9 /* HeartRateZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6192AE519C8009035C9 /* HeartRateZone.swift */; };
+		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
 		D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
@@ -81,6 +82,7 @@
 		BE22D6132AE4F885009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		BE22D6172AE51461009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
 		BE22D6192AE519C8009035C9 /* HeartRateZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateZone.swift; sourceTree = "<group>"; };
+		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
 		D3C500142AE36F3F00EFAEFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -171,7 +173,9 @@
 		BEB666BE2AE4E13E0090195A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BE22D61D2AE5447B009035C9 /* Utiles */,
 				BEB666BF2AE4E14B0090195A /* Start */,
+				BE22D61B2AE54429009035C9 /* Progress */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -237,12 +241,9 @@
 			children = (
 				685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */,
 				BEB666BE2AE4E13E0090195A /* View */,
+				BE22D61C2AE54465009035C9 /* Model */,
 				685D7B5D2AE3F3BD00783433 /* WorkoutManager */,
 				D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
-				BE22D6112AE4F85F009035C9 /* GameProgressView.swift */,
-				BE22D6192AE519C8009035C9 /* HeartRateZone.swift */,
-				BE22D6172AE51461009035C9 /* SprintStatusView.swift */,
-				BE22D6132AE4F885009035C9 /* Color+extension.swift */,
 				D3C500262AE36F3F00EFAEFF /* ContentView.swift */,
 				D3C500282AE36F4000EFAEFF /* Assets.xcassets */,
 				D3C5002A2AE36F4000EFAEFF /* Preview Content */,
