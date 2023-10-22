@@ -41,7 +41,7 @@ struct GameProgressView: View {
             }
             .foregroundStyle(zone.heartRateGradient)
             
-            // Game Progress Information
+            // Game Ongoing Information
             HStack(spacing: 30) {
                 VStack {
                     Text(runningDistance)
