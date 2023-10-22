@@ -10,6 +10,7 @@ import SwiftUI
 extension Color {
     static let darkblue = Color(hex: "002737")
     static let skyblue = Color(hex: "03B3FF")
+    static let hotpink = Color(hex: "FF00B8")
 }
 
 extension Color {
