@@ -24,6 +24,8 @@
 		FBCED9272AE3E5EF00C57BF9 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9332AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
+		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
+		FBCED9362AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,7 @@
 		FBCED9252AE3DF5900C57BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRecapView.swift; sourceTree = "<group>"; };
+		FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,7 @@
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
 				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
+				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
 				FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */,
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 				D3C500182AE36F3F00EFAEFF /* Preview Content */,
@@ -305,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
+				FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
@@ -319,6 +324,7 @@
 				FBCED9332AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
 				D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
+				FBCED9362AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
