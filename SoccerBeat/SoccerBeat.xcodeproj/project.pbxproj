@@ -10,6 +10,13 @@
 		685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */; };
+		685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B642AE529E800783433 /* AnalyticsView.swift */; };
+		685D7B682AE52A2900783433 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B672AE52A2900783433 /* Data.swift */; };
+		685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B6D2AE5396200783433 /* LightRectangleView.swift */; };
+		685D7B732AE53DA000783433 /* BarGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B722AE53DA000783433 /* BarGraphView.swift */; };
+		685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B742AE53DC400783433 /* LineGraphView.swift */; };
+		685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */; };
+		685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
@@ -54,6 +61,13 @@
 		685D7B582AE38D1A00783433 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SoccerBeat Watch App.entitlements"; sourceTree = "<group>"; };
+		685D7B642AE529E800783433 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
+		685D7B672AE52A2900783433 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		685D7B6D2AE5396200783433 /* LightRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightRectangleView.swift; sourceTree = "<group>"; };
+		685D7B722AE53DA000783433 /* BarGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarGraphView.swift; sourceTree = "<group>"; };
+		685D7B742AE53DC400783433 /* LineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraphView.swift; sourceTree = "<group>"; };
+		685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarMinMaxGraphView.swift; sourceTree = "<group>"; };
+		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
@@ -97,6 +111,49 @@
 			path = WorkoutManager;
 			sourceTree = "<group>";
 		};
+		685D7B662AE52A2100783433 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				685D7B672AE52A2900783433 /* Data.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		685D7B6C2AE5394E00783433 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				685D7B6D2AE5396200783433 /* LightRectangleView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		685D7B702AE53D7E00783433 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				685D7B642AE529E800783433 /* AnalyticsView.swift */,
+				685D7B712AE53D8400783433 /* Graph */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		685D7B712AE53D8400783433 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				685D7B722AE53DA000783433 /* BarGraphView.swift */,
+				685D7B742AE53DC400783433 /* LineGraphView.swift */,
+				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		685D7B7A2AE554DD00783433 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		BEB666BE2AE4E13E0090195A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +193,10 @@
 		D3C500112AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXGroup;
 			children = (
+				685D7B7A2AE554DD00783433 /* Extension */,
+				685D7B702AE53D7E00783433 /* View */,
+				685D7B6C2AE5394E00783433 /* Component */,
+				685D7B662AE52A2100783433 /* Data */,
 				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
@@ -333,9 +394,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
+				685D7B682AE52A2900783433 /* Data.swift in Sources */,
+				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
+				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
+				685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */,
+				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				FBCED9272AE3E5EF00C57BF9 /* ColorExtension.swift in Sources */,
+				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
+				685D7B732AE53DA000783433 /* BarGraphView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +622,8 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -587,7 +656,8 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
