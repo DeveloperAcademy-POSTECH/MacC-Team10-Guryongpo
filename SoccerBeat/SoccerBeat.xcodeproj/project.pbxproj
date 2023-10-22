@@ -18,6 +18,8 @@
 		685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */; };
 		685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
+		BE22D6122AE4F85F009035C9 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6112AE4F85F009035C9 /* ProgressView.swift */; };
+		BE22D6142AE4F885009035C9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6132AE4F885009035C9 /* Color+extension.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
 		D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
@@ -73,6 +75,8 @@
 		685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarMinMaxGraphView.swift; sourceTree = "<group>"; };
 		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		BE22D6112AE4F85F009035C9 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		BE22D6132AE4F885009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
 		D3C500142AE36F3F00EFAEFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -231,6 +235,8 @@
 				BEB666BE2AE4E13E0090195A /* View */,
 				685D7B5D2AE3F3BD00783433 /* WorkoutManager */,
 				D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
+				BE22D6112AE4F85F009035C9 /* ProgressView.swift */,
+				BE22D6132AE4F885009035C9 /* Color+extension.swift */,
 				D3C500262AE36F3F00EFAEFF /* ContentView.swift */,
 				D3C500282AE36F4000EFAEFF /* Assets.xcassets */,
 				D3C5002A2AE36F4000EFAEFF /* Preview Content */,
@@ -422,6 +428,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCED9332AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
+				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
+				BE22D6122AE4F85F009035C9 /* ProgressView.swift in Sources */,
+				BE22D6142AE4F885009035C9 /* Color+extension.swift in Sources */,
 				D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				FBCED9362AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
@@ -564,6 +573,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = D7F6ZDDCV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
@@ -594,6 +604,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = D7F6ZDDCV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
@@ -625,6 +636,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
+				DEVELOPMENT_TEAM = D7F6ZDDCV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
@@ -659,6 +671,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
+				DEVELOPMENT_TEAM = D7F6ZDDCV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
