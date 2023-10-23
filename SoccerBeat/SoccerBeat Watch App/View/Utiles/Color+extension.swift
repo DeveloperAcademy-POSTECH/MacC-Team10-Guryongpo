@@ -20,7 +20,7 @@ extension ShapeStyle where Self == Color {
     
     // MARK: - Sprint Progress
     
-    static var gaugeBackground: Self { Self(hex: 0xD9D9D9, alpha: 0.6) }
+    static var gaugeBackground: Self { Self(hex: 0xD9D9D9, alpha: 0.3) }
     
     // MARK: - HeartRate Tint
     
@@ -69,23 +69,23 @@ extension ShapeStyle where Self == LinearGradient {
     // MARK: - HeartRate BPM
     
     static var zone1Bpm: Self {
-        return .linearGradient(colors: [.zone1Tint, .white],
+        .linearGradient(colors: [.zone1Tint, .white],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     static var zone2Bpm: Self {
-        return .linearGradient(colors: [.zone2Tint, .white],
+        .linearGradient(colors: [.zone2Tint, .white],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     static var zone3Bpm: Self {
-        return .linearGradient(colors: [.zone3Tint, .white],
+        .linearGradient(colors: [.zone3Tint, .white],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     static var zone4Bpm: Self {
-        return .linearGradient(colors: [.zone4Tint, .white],
+        .linearGradient(colors: [.zone4Tint, .white],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     static var zone5Bpm: Self {
-        return .linearGradient(colors: [.zone5Tint, .white],
+        .linearGradient(colors: [.zone5Tint, .white],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     
@@ -125,5 +125,21 @@ extension ShapeStyle where Self == LinearGradient {
             .init(color: .zone5StartTint, location: 0.2),
             .init(color: .zone5Tint, location: 0.9)
         ], startPoint: .leading, endPoint: .trailing)
+    }
+    
+    // MARK: - Stop State
+    static var stopCurrentZoneBar: Self {
+        let start = Color(hex: 0x000000, alpha: 0.35)
+        let end = Color(hex: 0x838383)
+        return LinearGradient(stops: [
+            .init(color: start, location: 0.2),
+            .init(color: end, location: 0.9)
+        ], startPoint: .leading, endPoint: .trailing)
+    }
+    
+    static var stopBpm: Self {
+        let start = Color(hex: 0x333333)
+        return .linearGradient(colors: [start, .white],
+                               startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }

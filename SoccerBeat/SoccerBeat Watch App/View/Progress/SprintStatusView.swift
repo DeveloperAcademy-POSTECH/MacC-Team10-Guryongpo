@@ -38,43 +38,44 @@ struct BarProgressStyle: ProgressViewStyle {
     let accentGradient: LinearGradient
     let maxAvailable: Int
     let restSprint: Int
-    private let height: Double = 20.0
+    private let cornerRadius = CGFloat(7.0)
+    private let height: Double = 15.0
     private var isFull: Bool { maxAvailable == restSprint }
     
     func makeBody(configuration: Configuration) -> some View {
         
-        let progress = configuration.fractionCompleted ?? 0.0
+        let progress = configuration.fractionCompleted ?? .zero
         
         GeometryReader { geometry in
             RoundedRectangle(cornerRadius: 10.0)
                 .fill(.gaugeBackground)
-                .frame(height: height)
                 .overlay(alignment: .leading) {
                     if isFull {
-                        RoundedRectangle(cornerRadius: 7.0)
+                        RoundedRectangle(cornerRadius: cornerRadius)
                             .fill(accentGradient)
                             .padding(2)
                     } else {
-                        UnevenRoundedRectangle(cornerRadii: .init(topLeading: 7.0,
-                                                                  bottomLeading: 7.0,
-                                                                  bottomTrailing: isFull ? 7.0 : 0.0,
-                                                                  topTrailing: isFull ? 7.0 : 0.0))
+                        let cornerRaddi =  RectangleCornerRadii(topLeading: cornerRadius,
+                                                                bottomLeading: cornerRadius,
+                                                                bottomTrailing: isFull ? cornerRadius : .zero,
+                                                                topTrailing: isFull ? cornerRadius : .zero)
+                        UnevenRoundedRectangle(cornerRadii: cornerRaddi)
                         .fill(accentGradient)
-                        .frame(width: geometry.size.width * progress, height: height-5)
-                        .padding(2)
+                        .frame(width: geometry.size.width * progress)
                     }
                 }
                 .overlay {
                     HStack {
                         ForEach(0..<maxAvailable, id: \.self) { index in
                             Rectangle()
-                                .fill(.white)
-                                .frame(width: 1)
-                                .opacity(index == 0 ? 0.0 : 1.0)
+                                .fill(.black)
+                                .frame(width: 3)
+                                .opacity(index == 0 ? .zero : .infinity)
                             Spacer()
                         }
                     }
                 }
+                .frame(height: height)
         }
     }
 }
