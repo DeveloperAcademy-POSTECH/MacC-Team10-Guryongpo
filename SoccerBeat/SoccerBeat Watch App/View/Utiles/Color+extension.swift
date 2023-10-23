@@ -46,9 +46,15 @@ extension ShapeStyle where Self == Color {
     static var currentZoneStroke: Self { .init(hex: 0xB1B1B1) }
     static var currentZoneText: Self { .init(hex: 0xCACACA) }
     
+<<<<<<< HEAD
     // MARK: - SummaryView
     static var columnTitle: Self { .init(hex: 0x474747) }
     static var columnContent: Self { .init(hex: 0x242424) }
+=======
+    // MARK: - SplitControlsView
+    
+    static var circleBackground: Self { .init(hex: 0xD9D9D9, alpha: 0.2) }
+>>>>>>> 8b8397e (feat: [#22] 버튼이 둘로 나뉘는 SplitControlsView 생성)
 }
 
 extension ShapeStyle where Self == LinearGradient {

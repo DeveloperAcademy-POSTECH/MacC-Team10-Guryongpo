@@ -21,6 +21,7 @@
 		68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
 		68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */; };
 		BE0639D62AE5FFE5008D1D4E /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D52AE5FFE5008D1D4E /* PauseView.swift */; };
+		BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */; };
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
 		BE22D6362AE586AA009035C9 /* BPMTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6312AE586AA009035C9 /* BPMTextView.swift */; };
 		BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6322AE586AA009035C9 /* SprintStatusView.swift */; };
@@ -82,6 +83,7 @@
 		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		BE0639D52AE5FFE5008D1D4E /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
+		BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitControlsView.swift; sourceTree = "<group>"; };
 		BE22D6112AE4F85F009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
 		BE22D6132AE4F885009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		BE22D6172AE51461009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
@@ -227,17 +229,18 @@
 				681297382AE64432000CC957 /* PhraseView.swift */,
 				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
 				BEB666BF2AE4E14B0090195A /* StartPause */,
+				BEB666BF2AE4E14B0090195A /* StartPauseControll */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		BEB666BF2AE4E14B0090195A /* StartPause */ = {
+		BEB666BF2AE4E14B0090195A /* StartPauseControll */ = {
 			isa = PBXGroup;
 			children = (
 				BEB666C12AE4E16D0090195A /* StartView.swift */,
-				BE0639D52AE5FFE5008D1D4E /* PauseView.swift */,
+				BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */,
 			);
-			path = StartPause;
+			path = StartPauseControll;
 			sourceTree = "<group>";
 		};
 		D3C500062AE36F3E00EFAEFF = {
@@ -490,7 +493,7 @@
 				BE22D63B2AE586CA009035C9 /* HeartRateZone.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */,
-				BE0639D62AE5FFE5008D1D4E /* PauseView.swift in Sources */,
+				BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */,
 				BE22D6362AE586AA009035C9 /* BPMTextView.swift in Sources */,
 				BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */,
 				681297392AE64432000CC957 /* PhraseView.swift in Sources */,
