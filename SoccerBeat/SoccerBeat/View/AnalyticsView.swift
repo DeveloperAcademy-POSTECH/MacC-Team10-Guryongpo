@@ -33,6 +33,7 @@ struct AnalyticsView: View {
                         .linearGradient(colors: [.skyblue, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
                     .font(.custom("SFProText-HeavyItalic", size: 36))
                     .kerning(-1.5)
+                    .padding(.horizontal)
                     .padding(.leading, 10.0)
                     Spacer()
                 }

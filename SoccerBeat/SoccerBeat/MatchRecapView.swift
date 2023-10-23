@@ -58,7 +58,7 @@ struct MatchRecapView: View {
             }
         }.sheet(isPresented: $showingMatchDetail, content: {
             MatchDetailView()
-                .presentationDetents([.height(630), .large])
+                .presentationDetents([.height(630)])
         })
     }
 }
