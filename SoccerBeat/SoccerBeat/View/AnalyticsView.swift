@@ -80,17 +80,17 @@ struct AnalyticsView: View {
                     ZStack {
                         LightRectangleView()
                         if isShowingSprint {
-                            BarGraphView()
+                            BarMinMaxGraphView(color: Gradient(colors: [Color(hex:  "0EB7FF"), .white]), data: SprintDatalast30Days)
                                 .padding()
                         }
                         
                         if isShowingDistance {
-                            LineGraphView(data: DistanceDummyData)
+                            LineGraphView(color: Color(hex: "FF007A"), data: DistanceDummyData)
                                 .padding()
                         }
                         
                         if isShowingHeartRate {
-                            BarMinMaxGraphView()
+                            BarMinMaxGraphView(color: Gradient(colors:[Color(hex: "FF007A")]), data: HeartBeatlast12Months)
                                 .padding()
                         }
                         
