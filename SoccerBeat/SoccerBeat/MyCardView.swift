@@ -43,43 +43,41 @@ struct MyCardView: View {
             VStack {
                 Image("HeartBeatSign")
                     .resizable()
-                    .frame(width: 400, height: 229)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 229)
                     .blur(radius: 5)
                     .opacity(0.2)
-                
                 Spacer()
-                    .frame(height: 200)
+                    .frame(height: 230)
             }
             
-            VStack {
-                Spacer()
-                    .frame(height: 100)
-                
+            VStack {                
                 HStack {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0.0) {
                         Text("Hello, Son")
-                        Text("How you like")
-                        Text("that?")
+                        Text("Are you")
+                        Text("World class?")
                     }
                     .foregroundStyle(!isFlipped ?
                         .linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing) : .linearGradient(colors: [.titlegray, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
                     .font(.custom("SFProText-HeavyItalic", size: 36))
-                    
+                    .kerning(-1.5)
+                    .padding(.leading, 10.0)
                     Spacer()
-                        .frame(width: 50)
                 }
+                .padding(.top, 30)
+                .padding(.horizontal)
                 
                 Spacer()
                 
-                ZStack {
-                    CardFront(width: width, height: height, degree: $frontDegree)
-                    CardBack(width: width, height: height, degree: $backDegree)
-                }.onTapGesture {
-                    flipCard()
-                }
-                
+                    ZStack {
+                        CardFront(width: width, height: height, degree: $frontDegree)
+                        CardBack(width: width, height: height, degree: $backDegree)
+                    }.onTapGesture {
+                        flipCard()
+                    }
                 Spacer()
-            }.padding(.horizontal)
+            }
             
         }
     }
