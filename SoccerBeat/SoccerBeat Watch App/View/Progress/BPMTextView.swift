@@ -10,6 +10,7 @@ import SwiftUI
 struct BPMTextView: View {
     @State private var firstCircle = 1.0
     @State private var secondCircle = 1.0
+    @Binding var isRunning: Bool
     let textGradient: LinearGradient
     let bpm: Int
     
@@ -24,15 +25,20 @@ struct BPMTextView: View {
             }
             
             // 첫 파문
-            Group {
-                Text(bpm, format: .number)
-                    .font(.system(size: 56).bold().italic())
-                + Text(" bpm")
+
+            HStack {
+                Group {
+                    Text(bpm, format: .number)
+                        .font(.system(size: 56).bold().italic())
+                }
+                .scaleEffect(firstCircle)
+                .opacity(isRunning ? 2 - firstCircle : 0)
+                
+                Text(" bpm")
                     .font(.system(size: 28).bold().italic())
+                    .foregroundStyle(.clear)
             }
             .foregroundStyle(.white)
-            .scaleEffect(firstCircle)
-            .opacity(2 - firstCircle)
             .onAppear {
                 withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: false)) {
                     firstCircle = 3
@@ -40,25 +46,28 @@ struct BPMTextView: View {
             }
             
             // 두번째 파문
-            Group {
-                Text(bpm, format: .number)
-                    .font(.system(size: 56).bold().italic())
-                    
-                + Text(" bpm")
+            HStack {
+                Group {
+                    Text(bpm, format: .number)
+                        .font(.system(size: 56).bold().italic())
+                }
+                .scaleEffect(secondCircle)
+                .opacity(isRunning ? 2 - secondCircle : 0)
+                
+                Text(" bpm")
                     .font(.system(size: 28).bold().italic())
+                    .foregroundStyle(.clear)
             }
-            .scaleEffect(secondCircle)
-            .opacity(2 - secondCircle)
             .onAppear {
                 withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: false)) {
                     secondCircle = 2
                 }
             }
         }
-        .foregroundStyle(textGradient)
+        .foregroundStyle(isRunning ? textGradient : LinearGradient.stopBpm)
     }
 }
 
 #Preview {
-    BPMTextView(textGradient: .zone3Bpm, bpm: 120)
+    BPMTextView(isRunning: .constant(true), textGradient: .zone3Bpm, bpm: 120)
 }

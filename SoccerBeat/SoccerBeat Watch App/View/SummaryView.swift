@@ -38,8 +38,10 @@ struct SummaryView: View {
                         .foregroundStyle(.zone2Bpm)
                 }
             }
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
+            .scrollIndicators(.hidden)
         }
-        
     }
 }
 

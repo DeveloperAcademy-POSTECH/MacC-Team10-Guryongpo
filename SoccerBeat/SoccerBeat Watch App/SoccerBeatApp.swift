@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct SoccerBeat_Watch_AppApp: App {
     @StateObject private var workoutManager = WorkoutManager()
+
     var body: some Scene {
         WindowGroup {
             NavigationView {

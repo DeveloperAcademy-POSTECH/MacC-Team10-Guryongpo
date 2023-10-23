@@ -10,13 +10,12 @@ import SwiftUI
 struct GameProgressView: View {
     
     // MARK: - Data
-    
-    let heartRate: Int
+    @EnvironmentObject var workoutManager: WorkoutManager
+
     private let runningDistance = "2.1KM"
     private let elapsedTime = "45 : 23"
-    
     private var zone: HeartRateZone {
-        switch heartRate {
+        switch workoutManager.heartRate {
         case ...80: return .one
         case ...100: return .two
         case ...120: return .three
@@ -24,6 +23,7 @@ struct GameProgressView: View {
         default: return .five
         }
     }
+    @State private var isRunning = false
     
     private var zoneBPMGradient: LinearGradient {
         switch zone {
@@ -63,7 +63,7 @@ struct GameProgressView: View {
             zoneBar
             
             // Heart Rate
-            BPMTextView(textGradient: zoneBPMGradient, bpm: heartRate)
+            BPMTextView(isRunning: $isRunning, textGradient: zoneBPMGradient, bpm: workoutManager.heartRate)
             
             // Game Ongoing Information
             HStack(spacing: 30) {
@@ -84,7 +84,7 @@ struct GameProgressView: View {
             }
             
             // Sprint Count Gague
-            SprintStatusView(accentGradient: zoneBPMGradient,
+            SprintStatusView(accentGradient: isRunning ? zoneBPMGradient : LinearGradient.stopBpm,
                              sprintableCount: 5,
                              restSprint: 4)
         }
@@ -93,7 +93,7 @@ struct GameProgressView: View {
 }
 
 #Preview {
-    GameProgressView(heartRate: 160)
+    GameProgressView()
 }
 
 // MARK: - Zone Bar
@@ -130,14 +130,16 @@ extension GameProgressView {
         if #available(watchOS 10.0, *) {
             roundedRectangle
                 .stroke(.currentZoneStroke, lineWidth: strokeWidth)
-                .fill(currentZoneBarGradient)
+                .fill(isRunning ? currentZoneBarGradient : LinearGradient.stopCurrentZoneBar)
                 .overlay {
                     text
                 }
         } else { // current watch version(9.0)
             roundedRectangle
                 .strokeBorder(.currentZoneStroke, lineWidth: strokeWidth)
-                .background(roundedRectangle.foregroundStyle(currentZoneBarGradient))
+                .background(
+                    roundedRectangle.foregroundStyle(isRunning ? currentZoneBarGradient : .stopCurrentZoneBar)
+                )
                 .overlay {
                     text
                 }
