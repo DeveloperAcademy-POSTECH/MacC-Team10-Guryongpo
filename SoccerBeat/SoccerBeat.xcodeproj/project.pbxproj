@@ -24,7 +24,6 @@
 		BE22D63B2AE586CA009035C9 /* HeartRateZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
-		BECAE5C02AE58A700002EA31 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
 		D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
@@ -38,7 +37,6 @@
 		FBCED9232AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */; };
 		FBCED9242AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
-		FBCED9332AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
 		FBCED9362AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
 /* End PBXBuildFile section */
@@ -468,7 +466,6 @@
 				685D7B682AE52A2900783433 /* Data.swift in Sources */,
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
-				BECAE5C02AE58A700002EA31 /* Color+extension.swift in Sources */,
 				685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */,
 				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
@@ -481,7 +478,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE22D63B2AE586CA009035C9 /* HeartRateZone.swift in Sources */,
-				FBCED9332AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */,
 				BE22D6362AE586AA009035C9 /* BPMTextView.swift in Sources */,
