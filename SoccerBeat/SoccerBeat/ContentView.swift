@@ -15,7 +15,7 @@ enum TabbedItems: Int, CaseIterable {
     var title: String {
         switch self {
         case .statistic:
-            return "Archive"
+            return "Analysis"
         case .mycard:
             return "My"
         case .matchrecap:
@@ -26,18 +26,18 @@ enum TabbedItems: Int, CaseIterable {
     var iconName: String {
         switch self {
         case .statistic:
-            return "doc.text"
+            return "AnalysisTabIcon"
         case .mycard:
-            return "person.text.rectangle"
+            return "MyTabIcon"
         case .matchrecap:
-            return "figure.run"
+            return "ArchiveTabIcon"
         }
     }
 }
 
 struct ContentView: View {
     
-    @State var selectedTab = 1
+    @State var selectedTab = 0
     
     var body: some View {
         
@@ -55,6 +55,15 @@ struct ContentView: View {
         }
         
         ZStack {
+            RoundedRectangle(cornerRadius: 35)
+                .shadow(color: .white, radius: 8)
+            RoundedRectangle(cornerRadius: 35)
+                .blendMode(.destinationOut)
+            RoundedRectangle(cornerRadius: 35)
+                .strokeBorder(.white)
+            RoundedRectangle(cornerRadius: 35)
+                .fill(.white.opacity(0.6))
+            
             HStack {
                 ForEach((TabbedItems.allCases), id: \.self) { item in
                     Button (action: {
@@ -64,10 +73,11 @@ struct ContentView: View {
                     })
                 }
             }
+            
+            
         }
-        .frame(width: 260, height: 54)
-        .background(.ultraThinMaterial)
-        .cornerRadius(25)
+        .frame(width: 280, height: 60)
+        .compositingGroup()
     }
 }
 
@@ -75,22 +85,23 @@ extension ContentView {
     func CustomTabItem(imageName: String, title: String, isActive: Bool) -> some View {
         VStack {
             Spacer()
-            Image(systemName: imageName)
+            Image(isActive ? imageName + "Selected" : imageName + "NotSelected")
                 .resizable()
                 .scaledToFit()
-                .foregroundColor(isActive ? .blue : .secondary)
+                .foregroundColor(.white)
                 .frame(width: 28, height: 28)
             Spacer()
-                .frame(height: 1)
+                .frame(height: 4)
             Text(title)
                 .font(.system(size: 10))
-                .foregroundColor(isActive ? .blue : .secondary)
+                .foregroundColor(.primary)
             Spacer()
         }
-        .frame(width: 72)
+        .frame(width: 75)
     }
 }
 
 #Preview {
     ContentView()
+        .preferredColorScheme(.dark)
 }

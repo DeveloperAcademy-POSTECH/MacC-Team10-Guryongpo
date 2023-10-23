@@ -27,7 +27,6 @@ struct BPMTextView: View {
             Group {
                 Text(bpm, format: .number)
                     .font(.system(size: 56).bold().italic())
-                    .fontWeight(.ultraLight)
                 + Text(" bpm")
                     .font(.system(size: 28).bold().italic())
             }
@@ -44,12 +43,9 @@ struct BPMTextView: View {
             Group {
                 Text(bpm, format: .number)
                     .font(.system(size: 56).bold().italic())
-                    .fontWeight(.ultraLight)
                     
                 + Text(" bpm")
                     .font(.system(size: 28).bold().italic())
-                    
-                    
             }
             .scaleEffect(secondCircle)
             .opacity(2 - secondCircle)

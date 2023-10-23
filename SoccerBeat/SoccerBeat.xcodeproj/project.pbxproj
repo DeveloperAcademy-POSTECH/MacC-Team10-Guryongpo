@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		681297392AE64432000CC957 /* PhraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681297382AE64432000CC957 /* PhraseView.swift */; };
+		6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812973A2AE648E0000CC957 /* SummaryComponent.swift */; };
 		685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */; };
@@ -16,6 +18,8 @@
 		685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B742AE53DC400783433 /* LineGraphView.swift */; };
 		685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */; };
 		685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */; };
+		68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
+		68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */; };
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
 		BE22D6362AE586AA009035C9 /* BPMTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6312AE586AA009035C9 /* BPMTextView.swift */; };
 		BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6322AE586AA009035C9 /* SprintStatusView.swift */; };
@@ -64,6 +68,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		681297382AE64432000CC957 /* PhraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseView.swift; sourceTree = "<group>"; };
+		6812973A2AE648E0000CC957 /* SummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryComponent.swift; sourceTree = "<group>"; };
 		685D7B582AE38D1A00783433 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SoccerBeat Watch App.entitlements"; sourceTree = "<group>"; };
@@ -73,6 +79,7 @@
 		685D7B742AE53DC400783433 /* LineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraphView.swift; sourceTree = "<group>"; };
 		685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarMinMaxGraphView.swift; sourceTree = "<group>"; };
 		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
+		68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		BE22D6112AE4F85F009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
 		BE22D6132AE4F885009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		BE22D6172AE51461009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
@@ -214,6 +221,9 @@
 				BE22D62F2AE586AA009035C9 /* Progress */,
 				BE22D6332AE586AA009035C9 /* Utiles */,
 				BEB666BF2AE4E14B0090195A /* Start */,
+				68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */,
+				681297382AE64432000CC957 /* PhraseView.swift */,
+				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -454,6 +464,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */,
+				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
 				FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
@@ -477,11 +488,14 @@
 				BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */,
 				BE22D6362AE586AA009035C9 /* BPMTextView.swift in Sources */,
 				BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */,
+				681297392AE64432000CC957 /* PhraseView.swift in Sources */,
 				D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */,
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BEB666C22AE4E16D0090195A /* StartView.swift in Sources */,
+				68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */,
+				6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +637,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Guryongpo.com.SoccerBeat;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -654,6 +671,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Guryongpo.com.SoccerBeat;
 				LD_RUNPATH_SEARCH_PATHS = (

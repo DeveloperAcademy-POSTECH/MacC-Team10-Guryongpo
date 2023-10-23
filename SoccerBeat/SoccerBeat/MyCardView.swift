@@ -12,9 +12,9 @@ struct MyCardView: View {
     @State var frontDegree = -90.0
     @State var isFlipped = false
     
-    let width : CGFloat = 242
-    let height : CGFloat = 396
-    let durationAndDelay : CGFloat = 0.15
+    let width : CGFloat = 321
+    let height : CGFloat = 445
+    let durationAndDelay : CGFloat = 0.25
     
     func flipCard () {
         isFlipped = !isFlipped
@@ -40,22 +40,34 @@ struct MyCardView: View {
             LinearGradient(colors: [.darkblue, .black], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea(.all)
             
-            Image("HeartBeatSign")
+            VStack {
+                Image("HeartBeatSign")
+                    .resizable()
+                    .frame(width: 400, height: 229)
+                    .blur(radius: 5)
+                    .opacity(0.2)
+                
+                Spacer()
+                    .frame(height: 200)
+            }
             
             VStack {
+                Spacer()
+                    .frame(height: 100)
+                
                 HStack {
-                    VStack(alignment: .leading, spacing: 0.0) {
+                    VStack(alignment: .leading) {
                         Text("Hello, Son")
-                        Text("why always me?")
+                        Text("How you like")
+                        Text("that?")
                     }
-                    .foregroundStyle(
-                        .linearGradient(colors: [.skyblue, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .foregroundStyle(!isFlipped ?
+                        .linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing) : .linearGradient(colors: [.titlegray, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
                     .font(.custom("SFProText-HeavyItalic", size: 36))
-                    .kerning(-1.5)
-                    .padding(.leading, 10.0)
+                    
                     Spacer()
+                        .frame(width: 50)
                 }
-                .padding(.top, 30)
                 
                 Spacer()
                 
@@ -80,7 +92,7 @@ struct CardFront : View {
     
     var body: some View {
         ZStack {
-            Image("CardFront")
+            Image("MyCardFront")
                 .resizable()
                 .frame(width: width, height: height)
         }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
@@ -94,15 +106,9 @@ struct CardBack : View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .strokeBorder(Color.white, lineWidth: 1)
+            Image("MyCardBack")
+                .resizable()
                 .frame(width: width, height: height)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.white)
-                        .opacity(0.5)
-                )
-            Image("HeartShape")
         }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
     }
 }

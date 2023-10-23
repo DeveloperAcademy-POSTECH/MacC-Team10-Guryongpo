@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StartView: View {
+    @EnvironmentObject var workoutManager: WorkoutManager
     var body: some View {
         VStack {
             Button {
@@ -19,6 +20,9 @@ struct StartView: View {
             }
             .buttonStyle(.plain)
             .clipShape(Circle())
+        }
+        .onAppear {
+            workoutManager.requestAuthorization()
         }
     }
 }
