@@ -43,13 +43,13 @@ struct ContentView: View {
         
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                Text("StatisticsView")
+                AnalyticsView()
                     .tag(0)
                 
-                Text("MyCardView")
+                MyCardView()
                     .tag(1)
                 
-                Text("MatchRecapView")
+                MatchRecapView()
                     .tag(2)
             }
         }
@@ -66,7 +66,7 @@ struct ContentView: View {
             }
         }
         .frame(width: 260, height: 54)
-        .background(.black.opacity(0.2))
+        .background(.ultraThinMaterial)
         .cornerRadius(25)
     }
 }
@@ -78,13 +78,13 @@ extension ContentView {
             Image(systemName: imageName)
                 .resizable()
                 .scaledToFit()
-                .foregroundColor(isActive ? .black : .gray)
+                .foregroundColor(isActive ? .blue : .secondary)
                 .frame(width: 28, height: 28)
             Spacer()
                 .frame(height: 1)
             Text(title)
                 .font(.system(size: 10))
-                .foregroundColor(isActive ? .black : .gray)
+                .foregroundColor(isActive ? .blue : .secondary)
             Spacer()
         }
         .frame(width: 72)
