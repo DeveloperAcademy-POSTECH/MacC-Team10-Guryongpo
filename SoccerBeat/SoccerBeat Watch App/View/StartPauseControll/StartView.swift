@@ -15,7 +15,6 @@ struct StartView: View {
             // to Session Page
             SessionPagingView()
                 .navigationBarBackButtonHidden()
-                .environmentObject(workoutManager)
         } label: {
             Image(.startButton)
         }

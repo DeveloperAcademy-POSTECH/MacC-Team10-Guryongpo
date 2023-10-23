@@ -29,7 +29,6 @@ struct SummaryComponent: View {
                     .fill(Color.columnTitle)
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 26, alignment: .top)
                 HStack {
-//                    Image(systemName: "heart")
                     Image("BlueHeart")
                         .resizable()
                         .scaledToFit()
@@ -40,11 +39,7 @@ struct SummaryComponent: View {
                         .foregroundStyle(.white)
                         .padding(.horizontal)
                 }
-            }
-            
-            
-                
-                
+            }     
         }
         .clipShape(RoundedRectangle(cornerRadius: 7.2))
     }
