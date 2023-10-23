@@ -37,7 +37,7 @@ enum TabbedItems: Int, CaseIterable {
 
 struct ContentView: View {
     
-    @State var selectedTab = 0
+    @State var selectedTab = 1
     
     var body: some View {
         
