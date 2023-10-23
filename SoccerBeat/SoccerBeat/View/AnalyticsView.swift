@@ -10,11 +10,12 @@ import Charts
 
 struct AnalyticsView: View {
     
+    var isBool = false
     @State var isShowingDistance: Bool = false
-    @State var isShowingSprint: Bool = false
+    @State var isShowingSprint: Bool = true
     @State var isShowingHeartRate: Bool = false
     @State var isShowingSpeed: Bool = false
-    @State var isOverGraphs: Bool = false
+    @State var showingText: String = "스프린트 (FW)"
     
     var body: some View {
         ZStack {
@@ -42,39 +43,13 @@ struct AnalyticsView: View {
                 
                 HStack {
                     VStack(alignment: .leading) {
-                        Toggle(isOn: $isShowingSprint, label: {
-                            Text("스프린트 (FW)")
-                                .foregroundStyle(isOverGraphs ? .gray : .white)
-                                .opacity(0.8)
-                        })
-                        .toggleStyle(CheckboxToggleStyle())
-                        .disabled(isShowingSprint ? false : isOverGraphs)
-                        
-                        Toggle(isOn: $isShowingHeartRate, label: {
-                            Text("심박수 (DF)")
-                                .foregroundStyle(isOverGraphs ? .gray : .white)
-                                .opacity(0.8)
-                        })
-                        .toggleStyle(CheckboxToggleStyle())
-                        .disabled(isShowingHeartRate ? false : isOverGraphs)
+                        CheckboxToggleStyle(isOn: $isShowingSprint, showingText: $showingText, text: "스프린트 (FW)")
+                        CheckboxToggleStyle(isOn: $isShowingHeartRate, showingText: $showingText, text: "심박수 (DF)")
                     }
                     
                     VStack(alignment: .leading) {
-                        Toggle(isOn: $isShowingDistance, label: {
-                            Text("활동량 (MF)")
-                                .foregroundStyle(isOverGraphs ? .gray : .white)
-                                .opacity(0.8)
-                        })
-                        .toggleStyle(CheckboxToggleStyle())
-                        .disabled(isShowingDistance ? false : isOverGraphs)
-                        
-                        Toggle(isOn: $isShowingSpeed, label: {
-                            Text("최대 속도 (DF)")
-                                .foregroundStyle(isOverGraphs ? .gray : .white)
-                                .opacity(0.8)
-                        })
-                        .toggleStyle(CheckboxToggleStyle())
-                        .disabled(isShowingSpeed ? false : isOverGraphs)
+                        CheckboxToggleStyle(isOn: $isShowingDistance, showingText: $showingText, text: "활동량 (MF)")
+                        CheckboxToggleStyle(isOn: $isShowingSpeed, showingText: $showingText, text: "최대 속도 (DF)")
                     }
                 }
                 
@@ -101,7 +76,7 @@ struct AnalyticsView: View {
                                 .padding()
                         }
                     }
-            
+                    
                     HStack {
                         FormattedRecord(recordType: "최고 기록")
                             .frame(maxWidth: .infinity)
@@ -118,36 +93,40 @@ struct AnalyticsView: View {
                             }
                         
                     }
-                }
-            }.padding(.horizontal)
-        }
-        .onChange(of: [isShowingDistance, isShowingSprint, isShowingHeartRate, isShowingSpeed]) { newValue in
-            if newValue.filter({ $0 == true }).count < 2 {
-                isOverGraphs = false
-            } else {
-                isOverGraphs = true
+                }.padding(.horizontal)
+                    .onChange(of: [isShowingDistance, isShowingSpeed, isShowingSprint, isShowingHeartRate] ) { newValue in
+                        disableAll()
+                        // activate only one selection
+                    }
             }
         }
     }
-}
-
-#Preview {
-    AnalyticsView()
-}
-
-struct FormattedRecord: View {
-    var recordType: String
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(recordType)
-                .font(.system(size: 10))
-            Text("2023.10.12")
-                .font(.system(size: 10))
-            Text("1.5km")
-                .font(.system(size: 14))
-                .italic()
-                .bold()
-                .padding(.top)
-        }
+    
+    func disableAll() {
+        self.isShowingSpeed = false
+        self.isShowingSprint = false
+        self.isShowingHeartRate = false
+        self.isShowingDistance = false
     }
 }
+
+    #Preview {
+        AnalyticsView()
+    }
+    
+    struct FormattedRecord: View {
+        var recordType: String
+        var body: some View {
+            VStack(alignment: .leading) {
+                Text(recordType)
+                    .font(.system(size: 10))
+                Text("2023.10.12")
+                    .font(.system(size: 10))
+                Text("1.5km")
+                    .font(.system(size: 14))
+                    .italic()
+                    .bold()
+                    .padding(.top)
+            }
+        }
+    }
