@@ -45,9 +45,21 @@ extension ShapeStyle where Self == Color {
     static var inactiveZone: Self { .init(hex: 0x757575)}
     static var currentZoneStroke: Self { .init(hex: 0xB1B1B1) }
     static var currentZoneText: Self { .init(hex: 0xCACACA) }
+    
+    // MARK: - SummaryView
+    static var phraseBasis: Self { .init(hex: 0x1CBBFF) }
+    static var columnTitle: Self { .init(hex: 0x474747) }
+    static var columnContent: Self { .init(hex: 0x242424) }
 }
 
 extension ShapeStyle where Self == LinearGradient {
+    
+    // MARK: - SummaryView
+    
+    static var phraseGradient: Self {
+        return .linearGradient(colors: [.phraseBasis, .white],
+                               startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
     
     // MARK: - HeartRate BPM
     

@@ -68,8 +68,8 @@ struct BarProgressStyle: ProgressViewStyle {
                     HStack {
                         ForEach(0..<maxAvailable, id: \.self) { index in
                             Rectangle()
-                                .fill(.gaugeBackground)
-                                .frame(width: 3)
+                                .fill(.white)
+                                .frame(width: 1)
                                 .opacity(index == 0 ? 0.0 : 1.0)
                             Spacer()
                         }

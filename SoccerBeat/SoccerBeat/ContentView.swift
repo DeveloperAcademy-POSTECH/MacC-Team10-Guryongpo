@@ -26,7 +26,7 @@ enum TabbedItems: Int, CaseIterable {
     var iconName: String {
         switch self {
         case .statistic:
-            return "doc.text"
+            return "doc.text.fill"
         case .mycard:
             return "person.text.rectangle"
         case .matchrecap:
@@ -37,7 +37,7 @@ enum TabbedItems: Int, CaseIterable {
 
 struct ContentView: View {
     
-    @State var selectedTab = 1
+    @State var selectedTab = 0
     
     var body: some View {
         
@@ -93,4 +93,5 @@ extension ContentView {
 
 #Preview {
     ContentView()
+        .preferredColorScheme(.dark)
 }

@@ -93,7 +93,7 @@ struct GameProgressView: View {
 }
 
 #Preview {
-    GameProgressView(heartRate: 120)
+    GameProgressView(heartRate: 160)
 }
 
 // MARK: - Zone Bar
