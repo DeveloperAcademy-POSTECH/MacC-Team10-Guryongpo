@@ -11,7 +11,6 @@ struct BPMTextView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var firstCircle = 1.0
     @State private var secondCircle = 1.0
-    @Binding var isRunning: Bool
     let textGradient: LinearGradient
     private var bpm: Int {
         Int(workoutManager.heartRate)
@@ -35,7 +34,7 @@ struct BPMTextView: View {
                         .font(.system(size: 56).bold().italic())
                 }
                 .scaleEffect(firstCircle)
-                .opacity(isRunning ? 2 - firstCircle : 0)
+                .opacity(workoutManager.running ? 2 - firstCircle : 0)
                 
                 Text(" bpm")
                     .font(.system(size: 28).bold().italic())
@@ -55,7 +54,7 @@ struct BPMTextView: View {
                         .font(.system(size: 56).bold().italic())
                 }
                 .scaleEffect(secondCircle)
-                .opacity(isRunning ? 2 - secondCircle : 0)
+                .opacity(workoutManager.running ? 2 - secondCircle : 0)
                 
                 Text(" bpm")
                     .font(.system(size: 28).bold().italic())
@@ -67,10 +66,10 @@ struct BPMTextView: View {
                 }
             }
         }
-        .foregroundStyle(isRunning ? textGradient : LinearGradient.stopBpm)
+        .foregroundStyle(workoutManager.running ? textGradient : LinearGradient.stopBpm)
     }
 }
 
 #Preview {
-    BPMTextView(isRunning: .constant(true), textGradient: .zone3Bpm)
+    BPMTextView(textGradient: .zone3Bpm)
 }

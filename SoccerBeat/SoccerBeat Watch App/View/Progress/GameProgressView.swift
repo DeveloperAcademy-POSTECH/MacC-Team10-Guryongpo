@@ -21,7 +21,6 @@ struct GameProgressView: View {
         default: return .five
         }
     }
-    @State private var isRunning = false
     
     private var zoneBPMGradient: LinearGradient {
         switch zone {
@@ -64,8 +63,7 @@ struct GameProgressView: View {
                 
                 // Heart Rate
 //                Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))) + " bpm")
-                BPMTextView(isRunning: $isRunning,
-                            textGradient: zoneBPMGradient)
+                BPMTextView(textGradient: zoneBPMGradient)
                 
                 // Game Ongoing Information
                 HStack(spacing: 30) {
@@ -86,7 +84,7 @@ struct GameProgressView: View {
                 }
                 
                 // Sprint Count Gague
-                SprintStatusView(accentGradient: isRunning ? zoneBPMGradient : LinearGradient.stopBpm,
+                SprintStatusView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm,
                                  sprintableCount: 5,
                                  restSprint: 4)
             }
@@ -133,7 +131,7 @@ extension GameProgressView {
         if #available(watchOS 10.0, *) {
             roundedRectangle
                 .stroke(.currentZoneStroke, lineWidth: strokeWidth)
-                .fill(isRunning ? currentZoneBarGradient : LinearGradient.stopCurrentZoneBar)
+                .fill(workoutManager.running ? currentZoneBarGradient : LinearGradient.stopCurrentZoneBar)
                 .overlay {
                     text
                 }
@@ -141,7 +139,7 @@ extension GameProgressView {
             roundedRectangle
                 .strokeBorder(.currentZoneStroke, lineWidth: strokeWidth)
                 .background(
-                    roundedRectangle.foregroundStyle(isRunning ? currentZoneBarGradient : .stopCurrentZoneBar)
+                    roundedRectangle.foregroundStyle(workoutManager.running ? currentZoneBarGradient : .stopCurrentZoneBar)
                 )
                 .overlay {
                     text
