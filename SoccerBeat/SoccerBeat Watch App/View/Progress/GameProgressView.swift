@@ -53,7 +53,7 @@ struct GameProgressView: View {
     }
     
     // MARK: - Body
-    
+        
     var body: some View {
         TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
                                               isPaused: workoutManager.session?.state == .paused)) { context in
@@ -64,7 +64,7 @@ struct GameProgressView: View {
                 // Heart Rate
 //                Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))) + " bpm")
                 BPMTextView(textGradient: zoneBPMGradient)
-                
+                    
                 // Game Ongoing Information
                 HStack(spacing: 30) {
                     VStack {

@@ -11,59 +11,27 @@ struct BPMTextView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var firstCircle = 1.0
     @State private var secondCircle = 1.0
+    @State private var beatAnimation = false
     let textGradient: LinearGradient
-    private var bpm: Int {
-        Int(workoutManager.heartRate)
-    }
     
     var body: some View {
-        ZStack {
+        var text = Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))))
+        return ZStack {
             // 기본 텍스트
-            Group {
-                Text(bpm, format: .number)
-                    .font(.system(size: 56).bold().italic())
-                + Text(" bpm")
-                    .font(.system(size: 28).bold().italic())
-            }
-            
-            // 첫 파문
-
-            HStack {
+            HStack(alignment: .lastTextBaseline, spacing: 8) {
                 Group {
-                    Text(bpm, format: .number)
+                    text
                         .font(.system(size: 56).bold().italic())
                 }
-                .scaleEffect(firstCircle)
-                .opacity(workoutManager.running ? 2 - firstCircle : 0)
-                
+                .scaleEffect(beatAnimation ? 1.1 : 1)
+                .animation(.spring.repeatForever(autoreverses: true).speed(2), value: beatAnimation)
+                .onAppear {
+                    withAnimation {
+                        beatAnimation.toggle()
+                    }
+                }
                 Text(" bpm")
-                    .font(.system(size: 28).bold().italic())
-                    .foregroundStyle(.clear)
-            }
-            .foregroundStyle(.white)
-            .onAppear {
-                withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: false)) {
-                    firstCircle = 3
-                }
-            }
-            
-            // 두번째 파문
-            HStack {
-                Group {
-                    Text(bpm, format: .number)
-                        .font(.system(size: 56).bold().italic())
-                }
-                .scaleEffect(secondCircle)
-                .opacity(workoutManager.running ? 2 - secondCircle : 0)
-                
-                Text(" bpm")
-                    .font(.system(size: 28).bold().italic())
-                    .foregroundStyle(.clear)
-            }
-            .onAppear {
-                withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: false)) {
-                    secondCircle = 2
-                }
+                    .font(.system(size: 18).bold().italic())
             }
         }
         .foregroundStyle(workoutManager.running ? textGradient : LinearGradient.stopBpm)
