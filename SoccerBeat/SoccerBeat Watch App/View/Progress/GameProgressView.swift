@@ -10,12 +10,12 @@ import SwiftUI
 struct GameProgressView: View {
     
     // MARK: - Data
-    
-    let heartRate: Int
+    @EnvironmentObject var workoutManager: WorkoutManager
+
     private let runningDistance = "2.1KM"
     private let elapsedTime = "45 : 23"
     private var zone: HeartRateZone {
-        switch heartRate {
+        switch workoutManager.heartRate {
         case ...80: return .one
         case ...100: return .two
         case ...120: return .three
@@ -63,7 +63,7 @@ struct GameProgressView: View {
             zoneBar
             
             // Heart Rate
-            BPMTextView(isRunning: $isRunning, textGradient: zoneBPMGradient, bpm: heartRate)
+            BPMTextView(isRunning: $isRunning, textGradient: zoneBPMGradient, bpm: workoutManager.heartRate)
             
             // Game Ongoing Information
             HStack(spacing: 30) {
@@ -93,7 +93,7 @@ struct GameProgressView: View {
 }
 
 #Preview {
-    GameProgressView(heartRate: 160)
+    GameProgressView()
 }
 
 // MARK: - Zone Bar

@@ -9,24 +9,27 @@ import SwiftUI
 
 struct StartView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
+
     var body: some View {
-        VStack {
-            Button {
-                print("Button Tapped")
-            } label: {
-                Image(.startButton)
-                    .resizable()
-                    .scaledToFill()
-            }
-            .buttonStyle(.plain)
-            .clipShape(Circle())
+        NavigationLink {
+            // to Session Page
+            SessionPagingView()
+                .navigationBarBackButtonHidden()
+                .environmentObject(workoutManager)
+        } label: {
+            Image(.startButton)
         }
         .onAppear {
             workoutManager.requestAuthorization()
         }
+        .buttonStyle(.borderless)
+        .clipShape(Circle())
     }
 }
 
 #Preview {
-    StartView()
+    @StateObject var workoutManager = WorkoutManager()
+
+    return StartView()
+        .environmentObject(workoutManager)
 }

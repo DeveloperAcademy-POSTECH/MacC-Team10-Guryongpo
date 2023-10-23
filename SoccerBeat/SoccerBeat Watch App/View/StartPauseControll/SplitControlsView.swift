@@ -9,10 +9,10 @@ import SwiftUI
 
 // TODO:  - 쪼개지기 전에 투명도 줬다가 쪼개지면서 애니메이션 주면서 불투명도 1
 struct SplitControlsView: View {
+    @EnvironmentObject var workoutManager: WorkoutManager
     @State var isClicked: Bool = false
     @State var isMoving: Bool = false
     @State var offset: CGFloat = 15
-    @State private var isRunning = false
     @State private var textYOffset = -40.0
     
     var body: some View {
@@ -21,15 +21,14 @@ struct SplitControlsView: View {
                 // MARK: - 나눠진 후 왼쪽, pause & resume
                 VStack {
                     Button {
-                        // pause & resume
-                        isRunning.toggle()
+                        workoutManager.togglePause()
                     } label: {
                         ZStack {
                             Circle()
                                 .strokeBorder(.white, lineWidth: 1)
                                 .background( Circle().foregroundColor(.circleBackground))
                             
-                            Image(systemName: isRunning ? "pause" : "play.fill")
+                            Image(systemName: workoutManager.running ? "pause" : "play.fill")
                                 .resizable()
                                 .frame(width:16, height: 16)
                                 .foregroundStyle(.white)
@@ -38,7 +37,7 @@ struct SplitControlsView: View {
                     .padding(16)
                     .buttonStyle(.plain)
 
-                    Text(isRunning ? "일시 정지" : "재개")
+                    Text(workoutManager.running ? "일시 정지" : "재개")
                         .offset(x: 0, y: textYOffset)
                 }
                 .offset(x: isMoving ? -offset: offset)
@@ -47,6 +46,7 @@ struct SplitControlsView: View {
                 VStack {
                     Button {
                         // End Workout
+                        workoutManager.endWorkout()
                     } label: {
                         ZStack {
                             Circle()
@@ -71,15 +71,16 @@ struct SplitControlsView: View {
             
             // MARK: - 시작시 timeout 버튼 화면
             if !isClicked {
-                Image(.timeOutButton)
-                    .resizable()
-                    .scaledToFill()
-                    .opacity(isClicked ? 0 : 1)
-                    .onTapGesture {
-                        withAnimation {
-                            isClicked.toggle()
-                        }
+                Button {
+                    withAnimation {
+                        isClicked.toggle()
                     }
+                } label: {
+                    Image(.timeOutButton)
+                }
+                .opacity(isClicked ? 0 : 1)
+                .buttonStyle(.borderless)
+                .clipShape(Circle())
             }
         }.onChange(of: isClicked) { _ in
             // 클릭되면 버튼 쪼개지는 애니메이션 수행

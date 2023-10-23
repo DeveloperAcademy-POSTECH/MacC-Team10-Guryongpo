@@ -10,12 +10,6 @@ import HealthKit
 
 
 class WorkoutManager: NSObject, ObservableObject {
-    var selectedWorkout: HKWorkoutActivityType? {
-        didSet {
-            startWorkout()
-        }
-    }
-    
     @Published var showingSummaryView: Bool = false {
         didSet {
             if showingSummaryView == false {
@@ -28,13 +22,13 @@ class WorkoutManager: NSObject, ObservableObject {
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
     
-    
     var maxHeartRate: Double?
+    
     func computeMaxHeartRate() {
         do {
             let birthYear = try healthStore.dateOfBirthComponents().year
             let year = Calendar.current.component(.year, from: Date())
-            maxHeartRate = Double (220 - ( year - birthYear!))
+            maxHeartRate = Double(220 - ( year - birthYear!))
         } catch {
             maxHeartRate = 190
         }
@@ -95,17 +89,17 @@ class WorkoutManager: NSObject, ObservableObject {
 
     func togglePause() {
         if running == true {
-            self.pause()
+            pause()
         } else {
             resume()
         }
     }
 
-    func pause() {
+    private func pause() {
         session?.pause()
     }
 
-    func resume() {
+    private func resume() {
         session?.resume()
     }
 
@@ -115,9 +109,9 @@ class WorkoutManager: NSObject, ObservableObject {
     }
 
     // MARK: - Workout Metrics
-    @Published var heartRate: Double = 0 {
+    @Published var heartRate: Int = 0 {
         didSet {
-            self.heartZone = computeHeartZone(heartRate: heartRate)
+            self.heartZone = computeHeartZone(heartRate)
         }
     }
     @Published var heartZone: Int = 1
@@ -147,7 +141,8 @@ class WorkoutManager: NSObject, ObservableObject {
             switch statistics.quantityType {
             case HKQuantityType.quantityType(forIdentifier: .heartRate):
                 let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
-                self.heartRate = statistics.mostRecentQuantity()?.doubleValue(for: heartRateUnit) ?? 0
+                let heartRateDouble = statistics.mostRecentQuantity()?.doubleValue(for: heartRateUnit) ?? 0.0
+                self.heartRate = Int(heartRateDouble)
             case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
                 let meterUnit = HKUnit.meter()
                 self.distance = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
@@ -160,7 +155,6 @@ class WorkoutManager: NSObject, ObservableObject {
     }
 
     func resetWorkout() {
-        selectedWorkout = nil
         builder = nil
         workout = nil
         session = nil
@@ -169,14 +163,15 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     
     // MARK: - Heart Rate Setup
-    func computeHeartZone(heartRate: Double) -> Int {
-        if heartRate < Double(maxHeartRate!) * 0.6 {
+    func computeHeartZone(_ heartRate: Int) -> Int {
+        let heartDouble = Double(heartRate)
+        if heartDouble < Double(maxHeartRate!) * 0.6 {
             return 1
-        } else if heartRate < Double(maxHeartRate!) * 0.7 {
+        } else if heartDouble < Double(maxHeartRate!) * 0.7 {
             return 2
-        } else if heartRate < Double(maxHeartRate!) * 0.8 {
+        } else if heartDouble < Double(maxHeartRate!) * 0.8 {
             return 3
-        } else if heartRate < Double(maxHeartRate!) * 0.9 {
+        } else if heartDouble < Double(maxHeartRate!) * 0.9 {
             return 4
         } else {
             return 5
