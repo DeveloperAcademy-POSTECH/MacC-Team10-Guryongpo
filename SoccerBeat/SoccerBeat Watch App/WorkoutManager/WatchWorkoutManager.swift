@@ -8,6 +8,7 @@
 import Foundation
 import HealthKit
 
+
 class WorkoutManager: NSObject, ObservableObject {
     var selectedWorkout: HKWorkoutActivityType? {
         didSet {
