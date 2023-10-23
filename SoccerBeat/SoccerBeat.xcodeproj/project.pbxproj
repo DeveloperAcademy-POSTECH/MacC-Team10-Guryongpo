@@ -13,7 +13,6 @@
 		685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B642AE529E800783433 /* AnalyticsView.swift */; };
 		685D7B682AE52A2900783433 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B672AE52A2900783433 /* Data.swift */; };
 		685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B6D2AE5396200783433 /* LightRectangleView.swift */; };
-		685D7B732AE53DA000783433 /* BarGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B722AE53DA000783433 /* BarGraphView.swift */; };
 		685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B742AE53DC400783433 /* LineGraphView.swift */; };
 		685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */; };
 		685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */; };
@@ -74,7 +73,6 @@
 		685D7B642AE529E800783433 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		685D7B672AE52A2900783433 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		685D7B6D2AE5396200783433 /* LightRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightRectangleView.swift; sourceTree = "<group>"; };
-		685D7B722AE53DA000783433 /* BarGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarGraphView.swift; sourceTree = "<group>"; };
 		685D7B742AE53DC400783433 /* LineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraphView.swift; sourceTree = "<group>"; };
 		685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarMinMaxGraphView.swift; sourceTree = "<group>"; };
 		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 		685D7B712AE53D8400783433 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
-				685D7B722AE53DA000783433 /* BarGraphView.swift */,
 				685D7B742AE53DC400783433 /* LineGraphView.swift */,
 				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
 			);
@@ -472,7 +469,6 @@
 				685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */,
 				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
-				685D7B732AE53DA000783433 /* BarGraphView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

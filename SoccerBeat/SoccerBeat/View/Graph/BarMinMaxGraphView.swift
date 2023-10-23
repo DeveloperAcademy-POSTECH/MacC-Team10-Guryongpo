@@ -9,9 +9,11 @@ import SwiftUI
 import Charts
 
 struct BarMinMaxGraphView: View {
+    var color: Gradient = Gradient(colors: [Color.pink])
+    var data = HeartBeatlast12Months
     var body: some View {
             Chart {
-                ForEach(HeartBeatlast12Months, id: \.month) {
+                ForEach(data, id: \.month) {
                     BarMark(
                         x: .value("Month", $0.month, unit: .month),
                         yStart: .value("Min Sales", $0.dailyMin),
@@ -19,15 +21,14 @@ struct BarMinMaxGraphView: View {
                         width: .ratio(0.6)
                     ).cornerRadius(16.5)
                         .opacity(0.6)
-                    RectangleMark(
-                        x: .value("Month", $0.month, unit: .month),
-                        y: .value("Values", $0.dailyAverage),
-                        width: .ratio(0.6),
-                        height: .fixed(2)
-                    )
+//                    RectangleMark(
+//                        x: .value("Month", $0.month, unit: .month),
+//                        y: .value("Values", $0.dailyAverage),
+//                        width: .ratio(0.6),
+//                        height: .fixed(2)
+//                    )
                 }
-                .foregroundStyle(.pink)
-                
+                .foregroundStyle(color)
             }
             .chartXAxis(.hidden)
         }
