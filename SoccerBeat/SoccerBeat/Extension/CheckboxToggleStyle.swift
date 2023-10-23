@@ -17,7 +17,6 @@ struct CheckboxToggleStyle: View {
             if isOn {
                 showingText = text
             }
-            print(text)
         }, label: {
             HStack {
                 ZStack {

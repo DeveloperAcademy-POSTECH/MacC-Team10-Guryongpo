@@ -95,38 +95,48 @@ struct AnalyticsView: View {
                     }
                 }.padding(.horizontal)
                     .onChange(of: [isShowingDistance, isShowingSpeed, isShowingSprint, isShowingHeartRate] ) { newValue in
-                        disableAll()
+                        disableAll(text: showingText)
                         // activate only one selection
                     }
             }
         }
     }
     
-    func disableAll() {
+    func disableAll(text: String) {
+        
         self.isShowingSpeed = false
         self.isShowingSprint = false
         self.isShowingHeartRate = false
         self.isShowingDistance = false
+        if text == "활동량 (MF)" {
+            isShowingDistance = true
+        } else if text == "최대 속도 (DF)" {
+            isShowingSpeed = true
+        } else if text == "심박수 (DF)" {
+            isShowingHeartRate = true
+        } else {
+            isShowingSprint = true
+        }
     }
 }
 
-    #Preview {
-        AnalyticsView()
-    }
-    
-    struct FormattedRecord: View {
-        var recordType: String
-        var body: some View {
-            VStack(alignment: .leading) {
-                Text(recordType)
-                    .font(.system(size: 10))
-                Text("2023.10.12")
-                    .font(.system(size: 10))
-                Text("1.5km")
-                    .font(.system(size: 14))
-                    .italic()
-                    .bold()
-                    .padding(.top)
-            }
+#Preview {
+    AnalyticsView()
+}
+
+struct FormattedRecord: View {
+    var recordType: String
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(recordType)
+                .font(.system(size: 10))
+            Text("2023.10.12")
+                .font(.system(size: 10))
+            Text("1.5km")
+                .font(.system(size: 14))
+                .italic()
+                .bold()
+                .padding(.top)
         }
     }
+}
