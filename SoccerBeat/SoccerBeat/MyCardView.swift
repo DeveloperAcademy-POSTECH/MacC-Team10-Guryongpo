@@ -43,19 +43,21 @@ struct MyCardView: View {
             Image("HeartBeatSign")
             
             VStack {
-                Spacer()
-                    .frame(height: 100)
-                
-                VStack(alignment: .leading) {
-                    Text("Hello, Son")
-                    Text("why always me?")
+                HStack {
+                    VStack(alignment: .leading, spacing: 0.0) {
+                        Text("Hello, Son")
+                        Text("why always me?")
+                    }
+                    .foregroundStyle(
+                        .linearGradient(colors: [.skyblue, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .font(.custom("SFProText-HeavyItalic", size: 36))
+                    .kerning(-1.5)
+                    .padding(.leading, 10.0)
+                    Spacer()
                 }
-                .foregroundStyle(
-                    .linearGradient(colors: [.skyblue, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
-                .font(.custom("SFProText-HeavyItalic", size: 36))
+                .padding(.top, 30)
                 
                 Spacer()
-                    .frame(height: 35)
                 
                 ZStack {
                     CardFront(width: width, height: height, degree: $frontDegree)
@@ -65,7 +67,7 @@ struct MyCardView: View {
                 }
                 
                 Spacer()
-            }
+            }.padding(.horizontal)
             
         }
     }

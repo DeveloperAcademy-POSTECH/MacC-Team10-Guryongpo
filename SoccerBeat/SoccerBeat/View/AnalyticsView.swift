@@ -22,19 +22,21 @@ struct AnalyticsView: View {
                 .ignoresSafeArea(.all)
             
             VStack {
-                Spacer()
                 HStack {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0.0) {
                         Text("Hello, Son")
                         Text("How you like")
                         Text("that?")
                     }
+                    .foregroundStyle(
+                        .linearGradient(colors: [.skyblue, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .font(.custom("SFProText-HeavyItalic", size: 36))
+                    .kerning(-1.5)
+                    .padding(.leading, 10.0)
                     Spacer()
                 }
-                .foregroundStyle(
-                    .linearGradient(colors: [.skyblue, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
-                .font(.custom("SFProText-HeavyItalic", size: 36))
-                .padding()
+                .padding(.top, 30)
+                .padding(.bottom)
                 
                 Spacer()
                 
@@ -74,7 +76,7 @@ struct AnalyticsView: View {
                         .toggleStyle(CheckboxToggleStyle())
                         .disabled(isShowingSpeed ? false : isOverGraphs)
                     }
-                }.padding(.horizontal)
+                }
                 
                 VStack(alignment: .leading) {
                     ZStack {
@@ -116,8 +118,8 @@ struct AnalyticsView: View {
                             }
                         
                     }
-                }.padding()
-            }.padding()
+                }
+            }.padding(.horizontal)
         }
         .onChange(of: [isShowingDistance, isShowingSprint, isShowingHeartRate, isShowingSpeed]) { newValue in
             if newValue.filter({ $0 == true }).count < 2 {
