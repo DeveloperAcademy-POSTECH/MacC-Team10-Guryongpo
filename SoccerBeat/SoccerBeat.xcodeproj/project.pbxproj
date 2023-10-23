@@ -37,7 +37,6 @@
 		FBCED9242AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
-		FBCED9362AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -481,7 +480,6 @@
 				D3C500272AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */,
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
-				FBCED9362AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BEB666C22AE4E16D0090195A /* StartView.swift in Sources */,
 			);
