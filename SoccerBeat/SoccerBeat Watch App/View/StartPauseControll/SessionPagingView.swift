@@ -20,23 +20,28 @@ struct SessionPagingView: View {
 
     var body: some View {
         TabView(selection: $selection) {
-            SplitControlsView().tag(TabSort.controls)
-            GameProgressView().tag(TabSort.progress)
+            SplitControlsView()
+                .tag(TabSort.controls)
+            GameProgressView()
+                .tag(TabSort.progress)
         }
         .environmentObject(workoutManager)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(selection == .progress)
-        .onChange(of: workoutManager.running) { isRunning in
-            displayMetricsView()
-        }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: isLuminanceReduced ? .never : .automatic))
         .onChange(of: isLuminanceReduced) { _ in
             displayMetricsView()
+        }
+        .onChange(of: workoutManager.running) { isRunning in
+            // MARK: When session is not started, the view will be automatically switched to Metrics
+            displayMetricsView()
+
         }
         .onAppear {
             // MARK: - Session Start
             workoutManager.startWorkout()
         }
+
     }
 
     private func displayMetricsView() {

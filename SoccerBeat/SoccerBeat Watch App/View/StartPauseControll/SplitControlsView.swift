@@ -13,7 +13,7 @@ struct SplitControlsView: View {
     @Environment(\.dismiss) var dismiss
     @State var isClicked: Bool = false
     @State var isMoving: Bool = false
-    @State var offset: CGFloat = 15
+    @State var offset: CGFloat = 12
     @State private var textYOffset = -40.0
     
     var body: some View {
@@ -41,7 +41,8 @@ struct SplitControlsView: View {
                     Text(workoutManager.running ? "일시 정지" : "재개")
                         .offset(x: 0, y: textYOffset)
                 }
-                .offset(x: isMoving ? -offset: offset * 2)
+                .opacity(isMoving ? 1.0 : 0.0)
+                .offset(x: isMoving ? 0: offset * 2.0)
                 
                 // MARK: - 나눠진 후 오른쪽, End
                 VStack {
@@ -67,29 +68,33 @@ struct SplitControlsView: View {
                     Text("경기 종료")
                         .offset(x: 0, y: textYOffset)
                 }
-                .offset(x: isMoving ? offset : -offset * 2)
+                .opacity(isMoving ? 1.0 : 0.0)
+                .offset(x: isMoving ? 0 : -offset * 2.0)
             }
             .padding(.horizontal)
             
             // MARK: - 시작시 timeout 버튼 화면
-            if !isClicked {
-                
                 Image(.timeOutButton)
-                    .onAppear {
-                        withAnimation {
-                            isClicked.toggle()
-                        }
-                    }
                     .opacity(isClicked ? 0 : 1)
                     .buttonStyle(.borderless)
                     .clipShape(Circle())
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ) {
+                withAnimation {
+                    isClicked = true
+                }
             }
-        }.onChange(of: isClicked) { _ in
-            // 클릭되면 버튼 쪼개지는 애니메이션 수행
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
                 withAnimation {
-                    isMoving.toggle()
+                    isMoving = true
                 }
+            }
+        }
+        .onDisappear {
+            withAnimation {
+                isClicked = false
+                isMoving = false
             }
         }
     }
