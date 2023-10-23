@@ -27,16 +27,21 @@ struct MatchRecapView: View {
             
             VStack {
                 HStack {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0.0) {
                         Text("Hello, Son")
                         Text("Your archive")
                     }
                     .foregroundStyle(
                         .linearGradient(colors: [.hotpink, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
                     .font(.custom("SFProText-HeavyItalic", size: 36))
+                    .kerning(-1.5)
+                    .padding(.leading, 10)
                     Spacer()
                 }
-                .padding()
+                .padding(.top, 30)
+                .padding(.horizontal)
+                
+                Spacer()
                 
                 List {
                     ForEach(matchItemData.matchitems, id: \.self) { matchDetail in
@@ -53,7 +58,7 @@ struct MatchRecapView: View {
             }
         }.sheet(isPresented: $showingMatchDetail, content: {
             MatchDetailView()
-                .presentationDetents([.height(630), .large])
+                .presentationDetents([.height(630)])
         })
     }
 }
@@ -64,6 +69,8 @@ struct MatchListItemView: View {
     var body: some View {
         ZStack {
             HStack {
+                Spacer ()
+                
                 Image("\(matchDetail.heatmap)")
                     .resizable()
                     .frame(width: 80, height: 120)
@@ -102,9 +109,10 @@ struct MatchListItemView: View {
                 }
                 Spacer()
             }
-            .padding(.horizontal)
             .padding(.vertical, 10)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
+            .overlay {
+                LightRectangleView()
+            }
         }.listRowBackground(Color.clear)
     }
 }

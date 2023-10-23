@@ -70,7 +70,6 @@ struct MyCardView: View {
                 }
                 
                 Spacer()
-                    .frame(height: 35)
                 
                 ZStack {
                     CardFront(width: width, height: height, degree: $frontDegree)
@@ -80,7 +79,7 @@ struct MyCardView: View {
                 }
                 
                 Spacer()
-            }
+            }.padding(.horizontal)
             
         }
     }

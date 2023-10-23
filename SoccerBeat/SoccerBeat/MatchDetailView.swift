@@ -67,7 +67,7 @@ struct MatchDetailView02: View {
             
             VStack {
                 HStack {
-                    Text("Information")
+                    Text("Playing Area")
                         .padding()
                     Spacer()
                 }
@@ -95,7 +95,7 @@ struct MatchDetailView03: View {
             
             VStack {
                 HStack {
-                    Text("Information")
+                    Text("Heartbeat")
                         .padding()
                     Spacer()
                 }
@@ -124,7 +124,7 @@ struct MatchDetailView04: View {
             
             VStack {
                 HStack {
-                    Text("Information")
+                    Text("Sprint Time")
                         .padding()
                     Spacer()
                 }

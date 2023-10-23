@@ -7,23 +7,31 @@
 
 import SwiftUI
 
-struct CheckboxToggleStyle: ToggleStyle {
-    func makeBody(configuration: Configuration) -> some View {
+struct CheckboxToggleStyle: View {
+    @Binding var isOn: Bool
+    @Binding var showingText: String
+    var text: String
+    var body: some View {
         Button(action: {
-            configuration.isOn.toggle()
+            isOn.toggle()
+            if isOn {
+                showingText = text
+            }
         }, label: {
             HStack {
                 ZStack {
                     RoundedRectangle(cornerRadius: 4.0)
                         .foregroundStyle(.white)
                         .frame(width: 21, height: 21)
-                    if configuration.isOn {
+                    if isOn {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.cyan)
                             .bold()
                     }
                 }
-                configuration.label
+                Text(text)
+                    .foregroundStyle(.white)
+                    .opacity(0.8)
             }
         })
     }
