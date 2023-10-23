@@ -11,6 +11,7 @@ import WatchKit
 struct SessionPagingView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @Environment(\.isLuminanceReduced) var isLuminanceReduced
+    @Environment(\.dismiss) var dismiss
     @State private var selection: TabSort = .progress
 
     enum TabSort {
@@ -25,7 +26,7 @@ struct SessionPagingView: View {
         .environmentObject(workoutManager)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(selection == .progress)
-        .onChange(of: workoutManager.running) { _ in
+        .onChange(of: workoutManager.running) { isRunning in
             displayMetricsView()
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: isLuminanceReduced ? .never : .automatic))

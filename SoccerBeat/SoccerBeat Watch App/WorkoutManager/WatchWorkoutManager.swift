@@ -8,7 +8,6 @@
 import Foundation
 import HealthKit
 
-
 class WorkoutManager: NSObject, ObservableObject {
     @Published var showingSummaryView: Bool = false {
         didSet {
@@ -223,4 +222,3 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
         }
     }
 }
-
