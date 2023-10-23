@@ -47,7 +47,6 @@ extension ShapeStyle where Self == Color {
     static var currentZoneText: Self { .init(hex: 0xCACACA) }
     
     // MARK: - SummaryView
-    static var phraseBasis: Self { .init(hex: 0x1CBBFF) }
     static var columnTitle: Self { .init(hex: 0x474747) }
     static var columnContent: Self { .init(hex: 0x242424) }
 }
@@ -56,8 +55,8 @@ extension ShapeStyle where Self == LinearGradient {
     
     // MARK: - SummaryView
     
-    static var phraseGradient: Self {
-        return .linearGradient(colors: [.phraseBasis, .white],
+    static var summaryGradient: Self {
+        return .linearGradient(colors: [.white, .zone2Tint],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     

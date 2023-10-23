@@ -17,7 +17,7 @@ struct PhraseView: View {
                 .scaledToFill()
                 .fontWeight(.black)
                 .italic()
-                .foregroundStyle(.phraseGradient)
+                .foregroundStyle(.zone2Bpm)
             Image("BlueHeart")
                 .resizable()
                 .scaledToFit()

@@ -15,7 +15,8 @@ struct SummaryComponent: View {
             ZStack {
                 Rectangle()
                     .foregroundStyle(Color.columnContent)
-                Text("\(content)").foregroundStyle(.phraseGradient)
+                Text("\(content)")
+                    .foregroundStyle(.summaryGradient)
                     .fontWeight(.black)
                     .italic()
                     .font(.title)
