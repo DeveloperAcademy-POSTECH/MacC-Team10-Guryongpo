@@ -30,7 +30,6 @@ struct BarMinMaxGraphView: View {
                 }
                 .foregroundStyle(color)
             }
-            .chartXAxis(.hidden)
         }
 }
 

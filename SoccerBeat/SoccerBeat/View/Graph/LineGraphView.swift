@@ -30,7 +30,6 @@ struct LineGraphView: View {
                 .symbolSize(80)
                 .lineStyle(StrokeStyle(lineWidth: 1))
             }
-            .chartXAxis(.hidden)
             .chartLegend(.hidden)
     }
 }
