@@ -25,7 +25,6 @@ struct SessionPagingView: View {
             GameProgressView()
                 .tag(TabSort.progress)
         }
-        .environmentObject(workoutManager)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(selection == .progress)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: isLuminanceReduced ? .never : .automatic))

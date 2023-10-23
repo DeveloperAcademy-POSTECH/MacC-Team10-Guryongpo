@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct BPMTextView: View {
+    @EnvironmentObject var workoutManager: WorkoutManager
     @State private var firstCircle = 1.0
     @State private var secondCircle = 1.0
     @Binding var isRunning: Bool
     let textGradient: LinearGradient
-    let bpm: Int
+    private var bpm: Int {
+        Int(workoutManager.heartRate)
+    }
     
     var body: some View {
         ZStack {
@@ -69,5 +72,5 @@ struct BPMTextView: View {
 }
 
 #Preview {
-    BPMTextView(isRunning: .constant(true), textGradient: .zone3Bpm, bpm: 120)
+    BPMTextView(isRunning: .constant(true), textGradient: .zone3Bpm)
 }

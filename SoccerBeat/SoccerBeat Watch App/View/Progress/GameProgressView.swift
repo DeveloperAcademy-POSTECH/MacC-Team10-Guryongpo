@@ -12,8 +12,6 @@ struct GameProgressView: View {
     // MARK: - Data
     @EnvironmentObject var workoutManager: WorkoutManager
 
-    private let runningDistance = "2.1KM"
-    private let elapsedTime = "45 : 23"
     private var zone: HeartRateZone {
         switch workoutManager.heartRate {
         case ...80: return .one
@@ -58,37 +56,42 @@ struct GameProgressView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack {
-            // Zone Bar
-            zoneBar
-            
-            // Heart Rate
-            BPMTextView(isRunning: $isRunning, textGradient: zoneBPMGradient, bpm: workoutManager.heartRate)
-            
-            // Game Ongoing Information
-            HStack(spacing: 30) {
-                VStack {
-                    Text(runningDistance)
-                        .font(.caption.bold().italic())
-                        .foregroundStyle(.ongoingNumber)
-                    Text("뛴 거리")
-                        .foregroundStyle(.ongoingText)
+        TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
+                                              isPaused: workoutManager.session?.state == .paused)) { context in
+            VStack {
+                // Zone Bar
+                zoneBar
+                
+                // Heart Rate
+//                Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))) + " bpm")
+                BPMTextView(isRunning: $isRunning,
+                            textGradient: zoneBPMGradient)
+                
+                // Game Ongoing Information
+                HStack(spacing: 30) {
+                    VStack {
+                        Text(Measurement(value: workoutManager.distance, unit: UnitLength.meters).formatted(.measurement(width: .abbreviated, usage: .road)))
+                            .font(.caption.bold().italic())
+                            .foregroundStyle(.ongoingNumber)
+                        Text("뛴 거리")
+                            .foregroundStyle(.ongoingText)
+                    }
+                    VStack {
+                        ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0, showSubseconds: context.cadence == .live)
+                            .foregroundStyle(.ongoingNumber)
+                            .font(.caption.bold().italic())
+                        Text("경기 시간")
+                            .foregroundStyle(.ongoingText)
+                    }
                 }
-                VStack {
-                    Text(elapsedTime)
-                        .font(.caption.bold().italic())
-                        .foregroundStyle(.ongoingNumber)
-                    Text("경기 시간")
-                        .foregroundStyle(.ongoingText)
-                }
+                
+                // Sprint Count Gague
+                SprintStatusView(accentGradient: isRunning ? zoneBPMGradient : LinearGradient.stopBpm,
+                                 sprintableCount: 5,
+                                 restSprint: 4)
             }
-            
-            // Sprint Count Gague
-            SprintStatusView(accentGradient: isRunning ? zoneBPMGradient : LinearGradient.stopBpm,
-                             sprintableCount: 5,
-                             restSprint: 4)
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
     }
 }
 
@@ -143,6 +146,27 @@ extension GameProgressView {
                 .overlay {
                     text
                 }
+        }
+    }
+}
+
+private struct ProgressTimelineSchedule: TimelineSchedule {
+    var startDate: Date
+    var isPaused: Bool
+
+    init(from startDate: Date, isPaused: Bool) {
+        self.startDate = startDate
+        self.isPaused = isPaused
+    }
+
+    func entries(from startDate: Date, mode: TimelineScheduleMode) -> AnyIterator<Date> {
+        var baseSchedule = PeriodicTimelineSchedule(from: self.startDate,
+                                                    by: (mode == .lowFrequency ? 1.0 : 1.0 / 30.0))
+            .entries(from: startDate, mode: mode)
+        
+        return AnyIterator<Date> {
+            guard !isPaused else { return nil }
+            return baseSchedule.next()
         }
     }
 }
