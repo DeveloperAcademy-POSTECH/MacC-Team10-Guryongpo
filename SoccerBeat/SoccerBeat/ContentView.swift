@@ -37,7 +37,7 @@ enum TabbedItems: Int, CaseIterable {
 
 struct ContentView: View {
     
-    @State var selectedTab = 1
+    @State var selectedTab = 0
     
     var body: some View {
         
@@ -103,4 +103,5 @@ extension ContentView {
 
 #Preview {
     ContentView()
+        .preferredColorScheme(.dark)
 }
