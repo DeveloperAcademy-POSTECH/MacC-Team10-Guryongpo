@@ -29,7 +29,7 @@ struct BPMTextView: View {
                     .font(.system(size: 18).bold().italic())
             }
         }
-        .foregroundStyle(workoutManager.running ? textGradient : LinearGradient.stopBpm)
+        .foregroundStyle(textGradient)
     }
 }
 
