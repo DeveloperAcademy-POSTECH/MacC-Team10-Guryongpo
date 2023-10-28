@@ -108,7 +108,7 @@
 		D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardView.swift; sourceTree = "<group>"; };
 		FBCED9222AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
-		FBCED9252AE3DF5900C57BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FBCED9252AE3DF5900C57BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRecapView.swift; sourceTree = "<group>"; };
 		FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailView.swift; sourceTree = "<group>"; };
@@ -140,46 +140,39 @@
 			path = WorkoutManager;
 			sourceTree = "<group>";
 		};
-		685D7B662AE52A2100783433 /* Data */ = {
+		685D7B662AE52A2100783433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
+				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 				685D7B672AE52A2900783433 /* Data.swift */,
 			);
-			path = Data;
+			path = Resources;
 			sourceTree = "<group>";
 		};
-		685D7B6C2AE5394E00783433 /* Component */ = {
-			isa = PBXGroup;
-			children = (
-				685D7B6D2AE5396200783433 /* LightRectangleView.swift */,
-			);
-			path = Component;
-			sourceTree = "<group>";
-		};
-		685D7B702AE53D7E00783433 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				685D7B642AE529E800783433 /* AnalyticsView.swift */,
-				685D7B712AE53D8400783433 /* Graph */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		685D7B712AE53D8400783433 /* Graph */ = {
-			isa = PBXGroup;
-			children = (
-				685D7B742AE53DC400783433 /* LineGraphView.swift */,
-				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
-			);
-			path = Graph;
-			sourceTree = "<group>";
-		};
-		685D7B7A2AE554DD00783433 /* Extension */ = {
+		685D7B702AE53D7E00783433 /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */,
+				685D7B6D2AE5396200783433 /* LightRectangleView.swift */,
+				FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */,
+				685D7B712AE53D8400783433 /* Screens */,
 			);
-			path = Extension;
+			path = UI;
+			sourceTree = "<group>";
+		};
+		685D7B712AE53D8400783433 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
+				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
+				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
+				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
+				685D7B642AE529E800783433 /* AnalyticsView.swift */,
+				685D7B742AE53DC400783433 /* LineGraphView.swift */,
+				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		BE22D6262AE58601009035C9 /* Recovered References */ = {
@@ -247,12 +240,12 @@
 		D3C500062AE36F3E00EFAEFF = {
 			isa = PBXGroup;
 			children = (
-				685D7B582AE38D1A00783433 /* .swiftlint.yml */,
 				D3C500112AE36F3F00EFAEFF /* SoccerBeat */,
 				D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */,
 				FBCED9212AE3DAC700C57BF9 /* Fonts */,
-				D3C500102AE36F3F00EFAEFF /* Products */,
 				BE22D6262AE58601009035C9 /* Recovered References */,
+				685D7B582AE38D1A00783433 /* .swiftlint.yml */,
+				D3C500102AE36F3F00EFAEFF /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -268,19 +261,10 @@
 		D3C500112AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXGroup;
 			children = (
-				685D7B7A2AE554DD00783433 /* Extension */,
-				685D7B702AE53D7E00783433 /* View */,
-				685D7B6C2AE5394E00783433 /* Component */,
-				685D7B662AE52A2100783433 /* Data */,
-				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
-				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
-				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
-				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
-				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
-				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
-				FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */,
-				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
+				685D7B702AE53D7E00783433 /* UI */,
+				685D7B662AE52A2100783433 /* Resources */,
 				D3C500182AE36F3F00EFAEFF /* Preview Content */,
+				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
 			);
 			path = SoccerBeat;
 			sourceTree = "<group>";
