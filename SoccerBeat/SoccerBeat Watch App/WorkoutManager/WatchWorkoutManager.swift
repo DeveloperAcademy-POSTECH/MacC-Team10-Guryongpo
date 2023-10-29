@@ -7,8 +7,9 @@
 
 import SwiftUI
 import HealthKit
+import CoreLocation
 
-class WorkoutManager: NSObject, ObservableObject {
+class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var showingSummaryView: Bool = false {
         didSet {
             if showingSummaryView == false {
@@ -18,8 +19,11 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
+    var locationManager = CLLocationManager()
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
+    var routeBuilder: HKWorkoutRouteBuilder?
+    
     
     var maxHeartRate: Double?
     
@@ -38,10 +42,14 @@ class WorkoutManager: NSObject, ObservableObject {
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = .running
         configuration.locationType = .outdoor
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
 
         do {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
+            routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: nil)
             computeMaxHeartRate()
             
         } catch {
@@ -52,6 +60,7 @@ class WorkoutManager: NSObject, ObservableObject {
         // Setup session and builder.
         session?.delegate = self
         builder?.delegate = self
+        locationManager.delegate = self
 
         // Set the workout builder's data source.
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
@@ -63,6 +72,8 @@ class WorkoutManager: NSObject, ObservableObject {
         builder?.beginCollection(withStart: startDate) { (success, error) in
             // The workout has started.
         }
+        
+        
     }
 
     // Request authorization to access HealthKit.
@@ -85,6 +96,8 @@ class WorkoutManager: NSObject, ObservableObject {
         healthStore.requestAuthorization(toShare: typesToShare,
                                          read: typesToRead) { (success, error) in
         }
+        
+        self.locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Session State Control
@@ -156,6 +169,23 @@ class WorkoutManager: NSObject, ObservableObject {
             }
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // Filter the raw data.
+        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
+            location.horizontalAccuracy <= 20.0
+        }
+        
+        guard !filteredLocations.isEmpty else { return }
+        
+        // Add the filtered data to the route.
+        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
+            if !success {
+                // Handle any errors here.
+            }
+        }
+    }
 
     func resetWorkout() {
         builder = nil
@@ -197,6 +227,16 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                         self.workout = workout
                     }
                 }
+
+            }
+            
+            routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
+                
+                guard newRoute != nil else {
+                    // Handle any errors here.
+                    return
+                }
+                // Optional: Do something with the route here.
             }
         }
     }
