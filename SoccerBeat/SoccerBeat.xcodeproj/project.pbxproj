@@ -291,6 +291,7 @@
 				685D7B662AE52A2100783433 /* Resources */,
 				D3C500182AE36F3F00EFAEFF /* Preview Content */,
 				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
+				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 			);
 			path = SoccerBeat;
 			sourceTree = "<group>";
