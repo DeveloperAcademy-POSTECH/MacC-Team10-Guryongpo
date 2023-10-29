@@ -24,9 +24,12 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
     
+    @State var showingAlert: Bool = true
+    
+    var timer: Timer?
+    var runCount = 0
     
     var maxHeartRate: Double?
-    
     func computeMaxHeartRate() {
         do {
             let birthYear = try healthStore.dateOfBirthComponents().year
@@ -35,6 +38,12 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         } catch {
             maxHeartRate = 190
         }
+    }
+    
+    func resetTimer() {
+        timer = nil
+        runCount = 0
+        
     }
 
     func startWorkout() {
@@ -131,7 +140,27 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.heartZone = computeHeartZone(heartRate)
         }
     }
-    @Published var heartZone: Int = 1
+    
+    var isOnTimer = false
+    @Published var heartZone: Int = 1 {
+        didSet {
+            if heartZone == 5 && !isOnTimer {
+                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                    if self.runCount == 120 {
+                        self.showingAlert = true
+                        timer.invalidate()
+                        self.resetTimer()
+                    }
+                }
+                
+                isOnTimer = true
+            } else if heartZone == 5 {
+                
+            } else {
+                timer = nil
+            }
+        }
+    }
     
     let sprintSpeed: Double = 5.5556 // modify it to test code
     var isSprint: Bool = false
