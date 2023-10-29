@@ -89,6 +89,14 @@ struct GameProgressView: View {
                                  restSprint: 4)
             }
             .padding(.horizontal)
+            .fullScreenCover(isPresented: workoutManager.$showingAlert) {
+                    AlertView()
+                    .onAppear() {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            workoutManager.showingAlert = false
+                        }
+                    }
+            }
         }
     }
 }
