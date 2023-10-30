@@ -62,7 +62,6 @@ struct GameProgressView: View {
                 zoneBar
                 
                 // Heart Rate
-//                Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))) + " bpm")
                 BPMTextView(textGradient: zoneBPMGradient)
                     
                 // Game Ongoing Information
