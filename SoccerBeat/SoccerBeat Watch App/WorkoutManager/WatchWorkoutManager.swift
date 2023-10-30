@@ -24,7 +24,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
     
-    @State var showingAlert: Bool = true
+    @State var showingAlert: Bool = false
     
     var timer: Timer?
     var runCount = 0
@@ -43,7 +43,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func resetTimer() {
         timer = nil
         runCount = 0
-        
+        isOnTimer = false
     }
 
     func startWorkout() {
@@ -138,26 +138,30 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         didSet {
             print(heartRate)
             self.heartZone = computeHeartZone(heartRate)
+            print(heartZone)
         }
     }
     
-    var isOnTimer = false
+    @State var isOnTimer = false
     @Published var heartZone: Int = 1 {
         didSet {
             if heartZone == 5 && !isOnTimer {
-                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-                    if self.runCount == 120 {
-                        self.showingAlert = true
-                        timer.invalidate()
-                        self.resetTimer()
-                    }
+                
+                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { timer in
+                    self.runCount += 1
+                    self.isOnTimer = true
                 }
                 
-                isOnTimer = true
             } else if heartZone == 5 {
+                print("isOnTimer should not be false ", isOnTimer)
+
+                if self.runCount >= 4 {
+                    self.showingAlert = true
+                    self.resetTimer()
+                }
                 
             } else {
-                timer = nil
+                self.resetTimer()
             }
         }
     }
