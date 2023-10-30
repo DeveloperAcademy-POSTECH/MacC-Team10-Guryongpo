@@ -68,16 +68,18 @@ struct GameProgressView: View {
                 HStack(spacing: 30) {
                     VStack {
                         Text(Measurement(value: workoutManager.distance, unit: UnitLength.meters).formatted(.measurement(width: .abbreviated, usage: .road)))
-                            .font(.caption.bold().italic())
+                            .font(.distanceTimeNumber)
                             .foregroundStyle(.ongoingNumber)
                         Text("뛴 거리")
+                            .font(.distanceTimeText)
                             .foregroundStyle(.ongoingText)
                     }
                     VStack {
                         ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0, showSubseconds: context.cadence == .live)
                             .foregroundStyle(.ongoingNumber)
-                            .font(.caption.bold().italic())
+                            .font(.distanceTimeNumber)
                         Text("경기 시간")
+                            .font(.distanceTimeText)
                             .foregroundStyle(.ongoingText)
                     }
                 }
@@ -124,7 +126,7 @@ extension GameProgressView {
         let strokeWidth = CGFloat(0.6)
         let roundedRectangle = RoundedRectangle(cornerRadius: circleHeight / 2)
         let text = Text(zone.text)
-            .font(.system(size: 12))
+            .font(.zoneCapsule)
             .foregroundStyle(.currentZoneText)
         
         if #available(watchOS 10.0, *) {

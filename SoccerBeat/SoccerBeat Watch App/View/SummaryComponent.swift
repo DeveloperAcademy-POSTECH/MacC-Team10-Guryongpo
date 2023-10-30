@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct SummaryComponent: View {
-    var title: String = "활동량"
-    var content: String = "Text"
+    let title: String  // "활동량"
+    let content: String  // "Text"
+    let playTime: String  // "전반 25분"
     var body: some View {
         ZStack(alignment: .topLeading) {
             ZStack {
@@ -36,15 +37,25 @@ struct SummaryComponent: View {
                         .padding(.horizontal)
                     Spacer()
                     Text(title)
+                        .font(.summaryTraillingTop)
                         .foregroundStyle(.white)
                         .padding(.horizontal)
                 }
-            }     
+            }
+            
+            VStack(alignment: .leading) {
+                Spacer()
+                Text(playTime)
+                    .font(.summaryLeadingBottom)
+                    .kerning(0.09)
+                    .foregroundStyle(.columnFoot)
+                
+            }
         }
         .clipShape(RoundedRectangle(cornerRadius: 7.2))
     }
 }
 
 #Preview {
-    SummaryComponent()
+    SummaryComponent(title: "활동량", content: "2.1KM", playTime: "전반 25분")
 }

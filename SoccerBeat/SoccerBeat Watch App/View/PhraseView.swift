@@ -14,9 +14,9 @@ struct PhraseView: View {
         VStack {
             Text(text)
                 .font(.title)
-                .scaledToFill()
                 .fontWeight(.black)
                 .italic()
+                .scaledToFill()
                 .foregroundStyle(.zone2Bpm)
             Image("BlueHeart")
                 .resizable()
