@@ -62,9 +62,9 @@ struct GameProgressView: View {
                 zoneBar
                 
                 // Heart Rate
-//                Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))) + " bpm")
+                //                Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))) + " bpm")
                 BPMTextView(textGradient: zoneBPMGradient)
-                    
+                
                 // Game Ongoing Information
                 HStack(spacing: 30) {
                     VStack {
@@ -84,9 +84,12 @@ struct GameProgressView: View {
                 }
                 
                 // Sprint Count Gague
-                SprintStatusView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm,
-                                 sprintableCount: 5,
-                                 restSprint: 4)
+                //                SprintStatusView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm,
+                //                                 sprintableCount: 5,
+                //                                 restSprint: 4)
+                
+                    SprintView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm, progress: workoutManager.speed)
+                
             }
             .padding(.horizontal)
         }
