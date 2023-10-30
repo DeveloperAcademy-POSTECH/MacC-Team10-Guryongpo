@@ -10,6 +10,8 @@ import HealthKit
 import CoreLocation
 
 class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    static let shared: WorkoutManager = WorkoutManager()
+    
     @Published var showingSummaryView: Bool = false {
         didSet {
             if showingSummaryView == false {
@@ -24,11 +26,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
     
-    @State var showingAlert: Bool = false
-    
-    var timer: Timer?
-    var runCount = 0
-    
     var maxHeartRate: Double?
     func computeMaxHeartRate() {
         do {
@@ -40,12 +37,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    func resetTimer() {
-        timer = nil
-        runCount = 0
-        isOnTimer = false
-    }
-
     func startWorkout() {
         
         let configuration = HKWorkoutConfiguration()
@@ -81,8 +72,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         builder?.beginCollection(withStart: startDate) { (success, error) in
             // The workout has started.
         }
-        
-        
     }
 
     // Request authorization to access HealthKit.
@@ -136,36 +125,10 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: - Workout Metrics
     @Published var heartRate: Double = 0 {
         didSet {
-            print(heartRate)
             self.heartZone = computeHeartZone(heartRate)
-            print(heartZone)
         }
     }
-    
-    @State var isOnTimer = false
-    @Published var heartZone: Int = 1 {
-        didSet {
-            if heartZone == 5 && !isOnTimer {
-                
-                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { timer in
-                    self.runCount += 1
-                    self.isOnTimer = true
-                }
-                
-            } else if heartZone == 5 {
-                print("isOnTimer should not be false ", isOnTimer)
 
-                if self.runCount >= 4 {
-                    self.showingAlert = true
-                    self.resetTimer()
-                }
-                
-            } else {
-                self.resetTimer()
-            }
-        }
-    }
-    
     let sprintSpeed: Double = 5.5556 // modify it to test code
     var isSprint: Bool = false
     var speed: Double = 0.0 {
@@ -182,7 +145,35 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var distance: Double = 0
     @Published var sprint: Int = 6 // default setup
     @Published var workout: HKWorkout?
-    @Published var isAlert: Bool = false
+    
+    // MARK: - Detact Zone 5
+    private var timer: Timer?
+    private var zone5Count = 0
+    @Published var isInZone5For2Min = false
+    @Published var heartZone: Int = 1 {
+        didSet {
+            if heartZone == 5 {
+                if timer == .none {
+                    timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                        self.zone5Count += 1
+                    }
+                } else {
+                    if zone5Count >= 120 {
+                        isInZone5For2Min = true
+                        resetZone5Timer()
+                    }
+                }
+            } else {
+                resetZone5Timer()
+            }
+        }
+    }
+    
+    private func resetZone5Timer() {
+        self.timer?.invalidate()
+        self.timer = .none
+        self.zone5Count = 0
+    }
     
     func updateForStatistics(_ statistics: HKStatistics?) {
         guard let statistics = statistics else { return }
