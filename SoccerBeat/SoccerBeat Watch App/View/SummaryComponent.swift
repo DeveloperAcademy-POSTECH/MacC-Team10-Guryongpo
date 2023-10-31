@@ -53,6 +53,7 @@ struct SummaryComponent: View {
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 7.2))
+        .padding()
     }
 }
 

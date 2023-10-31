@@ -11,18 +11,19 @@ struct StartView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
 
     var body: some View {
-        NavigationLink {
-            // to Session Page
-            SessionPagingView()
-                .navigationBarBackButtonHidden()
-        } label: {
-            Image(.startButton)
+        NavigationStack {
+            if !workoutManager.showingPrecount {
+                Button(action: { workoutManager.showingPrecount.toggle()} ) {
+                    Image(.startButton)
+                }
+            } else {
+                PrecountView()
+            }
         }
         .onAppear {
             workoutManager.requestAuthorization()
         }
         .buttonStyle(.borderless)
-        .clipShape(Circle())
     }
 }
 

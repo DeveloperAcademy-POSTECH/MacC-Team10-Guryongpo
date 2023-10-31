@@ -26,10 +26,18 @@ struct SummaryView: View {
                 }
         } else {
             ScrollView {
-                SummaryComponent(title: "활동량", content: "2.1Km", playTime: "전반 25분")
-                SummaryComponent(title: "최고속도", content: "18Km/h", playTime: "전반 25분")
-                SummaryComponent(title: "스프린트 횟수", content: "6 times", playTime: "전반 25분")
-                SummaryComponent(title: "칼로리", content: "200 Kcal", playTime: "전반 25분")
+                SummaryComponent(title: "활동량", content: Measurement(value: workoutManager.workout?.totalDistance?.doubleValue(for: .meter()) ?? 0,
+                        unit: UnitLength.meters)
+                    .formatted(.measurement(width: .abbreviated,
+                                            usage: .road,
+                                            numberFormatStyle: .number.precision(.fractionLength(0)))), playTime: "")
+                SummaryComponent(title: "최고 속도", content: Measurement(value: workoutManager.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)), playTime: "")
+                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted(), playTime: "전반 25분")
+                SummaryComponent(title: "칼로리", content: Measurement(value: workoutManager.workout?.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0,
+                    unit: UnitEnergy.kilocalories)
+                    .formatted(.measurement(width: .abbreviated,
+                                            usage: .workout,
+                                            numberFormatStyle: .number.precision(.fractionLength(0)))), playTime: "")
                 
                 Button(action: { dismiss() }) {
                     Text("완료")  // TODO: Font Design Pattern 추후 추가

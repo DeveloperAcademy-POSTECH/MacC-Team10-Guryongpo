@@ -2,34 +2,39 @@
 //  AlertView.swift
 //  SoccerBeat Watch App
 //
-//  Created by jose Yun on 10/30/23.
+//  Created by jose Yun on 10/31/23.
+
+
 //
 
 import SwiftUI
 
 struct AlertView: View {
     @State private var beatAnimation: Bool = true
+    var text: String = "Zone 5!\nTake a\nBreath"
     @Environment(\.dismiss) var dismiss
     var body: some View {
         ZStack {
             Image("alertButton")
                 .resizable()
                 .scaledToFill()
-            Text("Zone 5!\nTake a\nBreath ")
-                .font(.system(size: 30))
-                .bold()
+                .padding()
+                .scaleEffect(beatAnimation ? 1.1 : 1)
+                .animation(.smooth.repeatForever(autoreverses: true).speed(0.7), value: beatAnimation)
+                .onAppear(perform: {
+                    withAnimation {
+                        beatAnimation.toggle()
+                    }
+                }).padding()
+            
+            Text(text)
+                .font(.system(size: 30, weight: .black))
                 .italic()
+                .kerning(-1)
+                .lineSpacing(-1.0)
                 .multilineTextAlignment(.center)
-                .foregroundStyle(LinearGradient(colors: [.white, .yellow], startPoint: .leading, endPoint: .trailing))
+            .foregroundStyle(LinearGradient(colors: [.white, .yellow], startPoint: .leading, endPoint: .trailing))
         }
-        .scaleEffect(beatAnimation ? 1.1 : 1)
-        .animation(.smooth.repeatForever(autoreverses: true).speed(0.7), value: beatAnimation)
-        .onAppear(perform: {
-            withAnimation {
-                beatAnimation.toggle()
-            }
-        })
-        .padding()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
@@ -42,6 +47,7 @@ struct AlertView: View {
                     
             }
         }
+
     }
 }
 
