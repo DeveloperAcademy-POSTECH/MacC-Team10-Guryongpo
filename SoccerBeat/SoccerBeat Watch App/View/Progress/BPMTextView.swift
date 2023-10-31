@@ -50,6 +50,7 @@ struct LineBPMView: View {
     var body: some View {
         VStack {
                 ZStack {
+                    Color.clear
                     TimelineView(.animation(minimumInterval: 1 - (Double(workoutManager.heartZone)/10), paused: false)) { timeline in
                             Canvas { context, size in
                                 for heart in pulsedHearts {
@@ -89,6 +90,7 @@ struct BasicLineView: View {
     var body: some View {
         let text = Text(workoutManager.heartRate.formatted(.number.precision(.fractionLength(0))))
         return ZStack {
+            Color.clear
             // 기본 텍스트
             HStack(alignment: .lastTextBaseline, spacing: 8) {
                 Group {
