@@ -7,32 +7,6 @@
 
 import SwiftUI
 
-extension Font {
-    
-    // MARK: - Game Start
-    
-    public static let gameCountDown = Font.custom("SFProText-BlackItalic", size: 68)
-    public static let buttonTitle = Font.custom("NotoSansKR-Regular", size: 30).italic()
-    
-    // MARK: - Game Progress
-    
-    public static let zoneCapsule = Font.custom("SFCompactText-SemiboldItalic", size: 12)
-    public static let beatPerMinute = Font.custom("SFProText-BlackItalic", size: 56)
-    public static let distanceTimeNumber = Font.custom("SFCompactText-SemiboldItalic", size: 18)
-    public static let distanceTimeText = Font.custom("SFCompactText-Regular", size: 12)
-    public static let speedStop = Font.custom("SF-Compact-Text-LightItalic", size: 12)
-
-    // MARK: - Game Stop
-    
-    public static let stopEnd = Font.custom("SFCompactText-Medium", size: 14)
-    public static let wiseSaying = Font.custom("NotoSansKR-Regular", size: 26).italic()
-    
-    // MARK: - After Game Data, Summary View
-    public static let summaryContent = Font.custom("NotoSansKR-Regular", size: 26).italic()
-    public static let summaryTraillingTop = Font.custom("SFCompactText-Regular", size: 13.5)
-    public static let summaryLeadingBottom = Font.custom("SFCompactText-Regular", size: 13.5)
-}
-
 /*
  Family: SF Compact Text
  - SFCompactText-Regular
@@ -44,36 +18,87 @@ extension Font {
  - SFProText-BlackItalic
  
  - NotoSansKR-Regular
+*/
 
 extension Font {
-    static func SFCompactText(size fontSize: CGFloat, weight: Font.Weight) -> Font {
-        let familyName = "SFCompactText"
+    
+    // MARK: - Game Start
+    
+    public static let gameCountDown = Font.sfProText(size: 68, isItalic: true)
+    public static let buttonTitle = Font.notoSans(size: 30, isItalic: true)
+    
+    // MARK: - Game Progress
+    
+    public static let zoneCapsule = Font.sfCompactText(size: 12, weight: .semibold, isItalic: true)
+    public static let beatPerMinute = Font.sfProText(size: 56, weight: .black, isItalic: true)
+    public static let distanceTimeNumber = Font.sfCompactText(size: 18, weight: .semibold, isItalic: true)
+    public static let distanceTimeText = Font.sfCompactText(size: 12)
+    public static let speedStop = Font.sfCompactText(size: 12, weight: .light, isItalic: true)
 
-        var weightString: String
-        switch weight {
-        case .black:
-            weightString = "Black"
-        case .bold:
-            weightString = "Blod"
-        case .heavy:
-            weightString = "ExtraBold"
-        case .ultraLight:
-            weightString = "ExtraLight"
-        case .light:
-            weightString = "Light"
-        case .medium:
-            weightString = "Medium"
-        case .regular:
-            weightString = "Regular"
-        case .semibold:
-            weightString = "SemiBold"
-        case .thin:
-            weightString = "Thin"
-        default:
-            weightString = "Regular"
-        }
-        return Font.custom("\(familyName)-\(weightString)", size: fontSize)
+    // MARK: - Game Stop
+    
+    public static let stopEnd = Font.sfCompactText(size: 14, weight: .medium)
+    public static let wiseSaying = Font.notoSans(size: 26, isItalic: true)
+    
+    // MARK: - After Game Data, Summary View
+    
+    public static let summaryContent = Font.notoSans(size: 26, isItalic: true)
+    public static let summaryTraillingTop = Font.sfCompactText(size: 13.5)
+    public static let summaryLeadingBottom = Font.sfCompactText(size: 13.5)
+}
+
+fileprivate extension Font {
+    static func sfCompactText(size fontSize: CGFloat, weight: SFCompactText = .regular,
+                              isItalic: Bool = false) -> Font {
+        let font = Font.custom("\(SoccerBeat_Watch_App.SFCompactText.fontName)-\(weight.capitalized)",
+                               size: fontSize)
+        return isItalic ? font.italic() : font
+    }
+    
+    static func sfProText(size fontSize: CGFloat, weight: SFProText = .black,
+                          isItalic: Bool = false) -> Font {
+        let font = Font.custom("\(SoccerBeat_Watch_App.SFProText.fontName)-\(weight.capitalized)",
+                               size: fontSize)
+        return isItalic ? font.italic() : font
+    }
+    
+    static func notoSans(size fontSize: CGFloat, weight: NotoSansKR = .regular, isItalic: Bool = false) -> Font {
+        let font = Font.custom("\(SoccerBeat_Watch_App.NotoSansKR.fontName)-\(weight.capitalized)",
+                               size: fontSize)
+        return isItalic ? font.italic() : font
     }
 }
 
- */
+public enum SFCompactText: String {
+    static let fontName = String(describing: Self.self)
+    
+    case medium
+    case light
+    case semibold
+    case regular
+    
+    var capitalized: String {
+        self.rawValue.capitalized
+    }
+}
+
+public enum SFProText: String {
+    static let fontName = String(describing: Self.self)
+    
+    case black
+    case heavy
+    
+    var capitalized: String {
+        self.rawValue.capitalized
+    }
+}
+
+public enum NotoSansKR: String {
+    static let fontName = String(describing: Self.self)
+    
+    case regular
+    
+    var capitalized: String {
+        self.rawValue.capitalized
+    }
+}

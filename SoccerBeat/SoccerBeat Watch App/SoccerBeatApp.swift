@@ -18,17 +18,6 @@ struct SoccerBeat_Watch_AppApp: App {
             }.sheet(isPresented: $workoutManager.showingSummaryView) {
                 SummaryView()
             }
-            .onAppear {
-
-                for family in UIFont.familyNames.sorted() {
-                    print("Family: \(family)")
-                    
-                    let names = UIFont.fontNames(forFamilyName: family)
-                    for fontName in names {
-                        print("- \(fontName)")
-                    }
-                }
-            }
             .environmentObject(workoutManager)
         }
     }
