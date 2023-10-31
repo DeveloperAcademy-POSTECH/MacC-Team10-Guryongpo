@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		681297392AE64432000CC957 /* PhraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681297382AE64432000CC957 /* PhraseView.swift */; };
 		6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812973A2AE648E0000CC957 /* SummaryComponent.swift */; };
+		6820884C2AF11EB200F51A3E /* PrecountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6820884B2AF11EB200F51A3E /* PrecountView.swift */; };
 		685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */; };
@@ -89,6 +90,7 @@
 /* Begin PBXFileReference section */
 		681297382AE64432000CC957 /* PhraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseView.swift; sourceTree = "<group>"; };
 		6812973A2AE648E0000CC957 /* SummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryComponent.swift; sourceTree = "<group>"; };
+		6820884B2AF11EB200F51A3E /* PrecountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecountView.swift; sourceTree = "<group>"; };
 		685D7B582AE38D1A00783433 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SoccerBeat Watch App.entitlements"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				BEB666BF2AE4E14B0090195A /* StartPauseControll */,
 				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
 				68B0732C2AF11847004C723F /* AlertView.swift */,
+				6820884B2AF11EB200F51A3E /* PrecountView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */,
 				BE22D6362AE586AA009035C9 /* BPMTextView.swift in Sources */,
 				6898F2852AEFD7FC0075A573 /* SprintView.swift in Sources */,
+				6820884C2AF11EB200F51A3E /* PrecountView.swift in Sources */,
 				BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */,
 				BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */,
 				681297392AE64432000CC957 /* PhraseView.swift in Sources */,
