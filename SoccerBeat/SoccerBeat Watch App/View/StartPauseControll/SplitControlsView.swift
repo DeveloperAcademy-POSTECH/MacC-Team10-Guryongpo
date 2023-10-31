@@ -39,6 +39,7 @@ struct SplitControlsView: View {
                     .buttonStyle(.plain)
                     
                     Text(workoutManager.running ? "일시 정지" : "재개")
+                        .font(.stopEnd)
                         .offset(x: 0, y: textYOffset)
                 }
                 .opacity(isMoving ? 1.0 : 0.0)
@@ -66,6 +67,7 @@ struct SplitControlsView: View {
                     .buttonStyle(.plain)
                     
                     Text("경기 종료")
+                        .font(.stopEnd)
                         .offset(x: 0, y: textYOffset)
                 }
                 .opacity(isMoving ? 1.0 : 0.0)

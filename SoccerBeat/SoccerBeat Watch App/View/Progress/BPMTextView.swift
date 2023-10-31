@@ -7,6 +7,8 @@
 //
 import SwiftUI
 
+// TODO: - Custom Font 적용
+
 struct BPMTextView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var firstCircle = 1.0
