@@ -84,15 +84,16 @@ struct GameProgressView: View {
                     }
                 }
                 
-                // Sprint Count Gague
-                //                SprintStatusView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm,
-                //                                 sprintableCount: 5,
-                //                                 restSprint: 4)
-                
                     SprintView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm, progress: workoutManager.speed)
                 
             }
             .padding(.horizontal)
+            .overlay {
+                if !workoutManager.running {
+                    Color.black.ignoresSafeArea()
+                    AlertView(text: "Take A Deep Breath")
+                }
+            }
         }
     }
 }

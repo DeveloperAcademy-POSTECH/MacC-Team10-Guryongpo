@@ -21,6 +21,7 @@ extension ShapeStyle where Self == Color {
     // MARK: - Sprint Progress
     
     static var gaugeBackground: Self { Self(hex: 0xD9D9D9, alpha: 0.3) }
+    static var precountTint: Self { Self(hex: 0x0EB7FF, alpha: 0.95) }
     
     // MARK: - HeartRate Tint
     
@@ -59,6 +60,12 @@ extension ShapeStyle where Self == Color {
 }
 
 extension ShapeStyle where Self == LinearGradient {
+    
+    // MARK: - PreCountView
+    
+    static var precountGradient: Self {
+        return .linearGradient(colors: [.precountTint, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
     
     // MARK: - SummaryView
     
