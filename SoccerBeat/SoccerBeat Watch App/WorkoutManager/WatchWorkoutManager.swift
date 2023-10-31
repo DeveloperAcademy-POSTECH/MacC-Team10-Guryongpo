@@ -7,8 +7,11 @@
 
 import SwiftUI
 import HealthKit
+import CoreLocation
 
-class WorkoutManager: NSObject, ObservableObject {
+class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    static let shared: WorkoutManager = WorkoutManager()
+    
     @Published var showingSummaryView: Bool = false {
         didSet {
             if showingSummaryView == false {
@@ -21,11 +24,12 @@ class WorkoutManager: NSObject, ObservableObject {
     
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
+    var locationManager = CLLocationManager()
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
+    var routeBuilder: HKWorkoutRouteBuilder?
     
     var maxHeartRate: Double?
-    
     func computeMaxHeartRate() {
         do {
             let birthYear = try healthStore.dateOfBirthComponents().year
@@ -42,9 +46,13 @@ class WorkoutManager: NSObject, ObservableObject {
         configuration.activityType = .running
         configuration.locationType = .outdoor
         
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+
         do {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
+            routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: nil)
             computeMaxHeartRate()
             
         } catch {
@@ -55,7 +63,7 @@ class WorkoutManager: NSObject, ObservableObject {
         // Setup session and builder.
         session?.delegate = self
         builder?.delegate = self
-        
+        locationManager.delegate = self
         // Set the workout builder's data source.
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
                                                       workoutConfiguration: configuration)
@@ -72,7 +80,7 @@ class WorkoutManager: NSObject, ObservableObject {
     func requestAuthorization() {
         
         // write
-        let typesToShare: Set = [HKQuantityType.workoutType()]
+        let typesToShare: Set = [HKQuantityType.workoutType(), HKSeriesType.workoutRoute()]
         
         // The quantity types to read from the health store.
         let typesToRead: Set = [
@@ -81,11 +89,15 @@ class WorkoutManager: NSObject, ObservableObject {
             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
             HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
+            HKSeriesType.workoutType(),
+            HKSeriesType.workoutRoute(),
             HKObjectType.activitySummaryType()
         ]
         healthStore.requestAuthorization(toShare: typesToShare,
                                          read: typesToRead) { (success, error) in
         }
+        
+        self.locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Session State Control
@@ -115,12 +127,10 @@ class WorkoutManager: NSObject, ObservableObject {
     // MARK: - Workout Metrics
     @Published var heartRate: Double = 0 {
         didSet {
-            print(heartRate)
             self.heartZone = computeHeartZone(heartRate)
         }
     }
-    @Published var heartZone: Int = 1
-    
+
     let sprintSpeed: Double = 5.5556 // modify it to test code
     
     var isSprint: Bool = false
@@ -143,7 +153,35 @@ class WorkoutManager: NSObject, ObservableObject {
     @Published var distance: Double = 0
     @Published var sprint: Int = 0 // default setup
     @Published var workout: HKWorkout?
-    @Published var isAlert: Bool = false
+    
+    // MARK: - Detact Zone 5
+    private var timer: Timer?
+    private var zone5Count = 0
+    @Published var isInZone5For2Min = false
+    @Published var heartZone: Int = 1 {
+        didSet {
+            if heartZone == 5 {
+                if timer == .none {
+                    timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                        self.zone5Count += 1
+                    }
+                } else {
+                    if zone5Count >= 120 {
+                        isInZone5For2Min = true
+                        resetZone5Timer()
+                    }
+                }
+            } else {
+                resetZone5Timer()
+            }
+        }
+    }
+    
+    private func resetZone5Timer() {
+        self.timer?.invalidate()
+        self.timer = .none
+        self.zone5Count = 0
+    }
     
     func updateForStatistics(_ statistics: HKStatistics?) {
         guard let statistics = statistics else { return }
@@ -164,6 +202,23 @@ class WorkoutManager: NSObject, ObservableObject {
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // Filter the raw data.
+        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
+            location.horizontalAccuracy <= 20.0
+        }
+        
+        guard !filteredLocations.isEmpty else { return }
+        
+        // Add the filtered data to the route.
+        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
+            if !success {
+                // Handle any errors here.
+            }
+        }
+    }
+
     func resetWorkout() {
         builder = nil
         workout = nil
@@ -209,6 +264,16 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                         self.workout = workout
                     }
                 }
+
+            }
+            
+            routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
+                
+                guard newRoute != nil else {
+                    // Handle any errors here.
+                    return
+                }
+                // Optional: Do something with the route here.
             }
         }
     }
