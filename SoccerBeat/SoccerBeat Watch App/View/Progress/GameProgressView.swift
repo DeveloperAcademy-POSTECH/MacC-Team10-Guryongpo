@@ -91,7 +91,7 @@ struct GameProgressView: View {
             .overlay {
                 if !workoutManager.running {
                     Color.black.ignoresSafeArea()
-                    AlertView(text: "BREATH IN! ")
+                    AlertView(text: "BREATHE IN! ")
                 }
             }
         }
