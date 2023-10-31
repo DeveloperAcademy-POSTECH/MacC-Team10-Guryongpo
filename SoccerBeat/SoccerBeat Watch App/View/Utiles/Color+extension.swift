@@ -50,6 +50,7 @@ extension ShapeStyle where Self == Color {
     
     static var columnTitle: Self { .init(hex: 0x474747) }
     static var columnContent: Self { .init(hex: 0x242424) }
+    static var columnFoot: Self { .init(hex: 0xAEB4BF) }
 
     // MARK: - SplitControlsView
     
