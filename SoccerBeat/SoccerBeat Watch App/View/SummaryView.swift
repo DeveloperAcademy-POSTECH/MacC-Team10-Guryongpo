@@ -26,13 +26,13 @@ struct SummaryView: View {
                 }
         } else {
             ScrollView {
-                SummaryComponent(title: "활동량", content: "2.1Km")
-                SummaryComponent(title: "최고속도", content: "18Km/h")
-                SummaryComponent(title: "스프린트 횟수", content: "6 times")
-                SummaryComponent(title: "칼로리", content: "200 Kcal")
+                SummaryComponent(title: "활동량", content: "2.1Km", playTime: "전반 25분")
+                SummaryComponent(title: "최고속도", content: "18Km/h", playTime: "전반 25분")
+                SummaryComponent(title: "스프린트 횟수", content: "6 times", playTime: "전반 25분")
+                SummaryComponent(title: "칼로리", content: "200 Kcal", playTime: "전반 25분")
                 
                 Button(action: { dismiss() }) {
-                    Text("완료")
+                    Text("완료")  // TODO: Font Design Pattern 추후 추가
                         .font(.title3)
                         .bold()
                         .foregroundStyle(.zone2Bpm)
