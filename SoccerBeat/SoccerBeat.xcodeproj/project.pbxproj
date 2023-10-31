@@ -148,6 +148,7 @@
 		685D7B662AE52A2100783433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 				685D7B672AE52A2900783433 /* Data.swift */,
 			);
@@ -265,7 +266,6 @@
 		D3C500112AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXGroup;
 			children = (
-				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 				685D7B702AE53D7E00783433 /* UI */,
 				D3E874D22AEE3EC1005DB7C5 /* Injected */,
 				D3E874D12AEE3EAA005DB7C5 /* Interactors */,
