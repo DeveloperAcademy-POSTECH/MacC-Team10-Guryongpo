@@ -69,7 +69,7 @@ fileprivate extension Font {
     }
 }
 
-public enum SFCompactText: String {
+private enum SFCompactText: String {
     static let fontName = String(describing: Self.self)
     
     case medium
@@ -82,7 +82,7 @@ public enum SFCompactText: String {
     }
 }
 
-public enum SFProText: String {
+private enum SFProText: String {
     static let fontName = String(describing: Self.self)
     
     case black
@@ -93,7 +93,7 @@ public enum SFProText: String {
     }
 }
 
-public enum NotoSansKR: String {
+private enum NotoSansKR: String {
     static let fontName = String(describing: Self.self)
     
     case regular
