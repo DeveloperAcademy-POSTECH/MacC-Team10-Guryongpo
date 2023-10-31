@@ -8,29 +8,38 @@
 import SwiftUI
 
 struct PhraseView: View {
-    var text: String = "..Like son\nGood\nPlayer"
+    @State private var text: String = "..Like son\nGood\nPlayer"
     @State private var beatAnimation: Bool = true
     var body: some View {
-        VStack {
+        VStack(spacing: 18) {
             Text(text)
-                .font(.title)
+                .fixedSize(horizontal: false, vertical: true)
+                .font(.system(size: 18))
+                .scaledToFit()
                 .fontWeight(.black)
                 .italic()
-                .scaledToFill()
+                .multilineTextAlignment(.center)
                 .foregroundStyle(.zone2Bpm)
+            
             Image("BlueHeart")
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(beatAnimation ? 1.1 : 1)
+                .frame(width: 42, height: 34)
                 .animation(.spring.repeatForever(autoreverses: true).speed(3), value: beatAnimation)
         }.onAppear(perform: {
             withAnimation {
                 beatAnimation.toggle()
             }
         })
+        .onAppear {
+            if let phrase = loadJson(filename: "Phrase")?.randomElement() {
+                self.text = phrase.saying
+            }
+        }
     }
 }
     
-    #Preview {
-        PhraseView()
-    }
+#Preview {
+    PhraseView()
+}
