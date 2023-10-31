@@ -32,7 +32,7 @@ struct SplitControlsView: View {
                             Image(systemName: workoutManager.running ? "pause" : "play.fill")
                                 .resizable()
                                 .frame(width:16, height: 16)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(.pauseTint)
                         }
                     }
                     .padding(16)
@@ -60,7 +60,8 @@ struct SplitControlsView: View {
                             Image(systemName: "stop.fill")
                                 .resizable()
                                 .frame(width: 16, height: 16)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(.stopTint
+                                )
                         }
                     }
                     .padding(16)

@@ -23,6 +23,9 @@ extension ShapeStyle where Self == Color {
     static var gaugeBackground: Self { Self(hex: 0xD9D9D9, alpha: 0.3) }
     static var precountTint: Self { Self(hex: 0x0EB7FF, alpha: 0.95) }
     
+    static var pauseTint: Self { Self(hex: 0x1CBBFF)}
+    static var stopTint: Self { Self(hex: 0x4C67F4)}
+    
     // MARK: - HeartRate Tint
     
     static var zone1Tint: Self { .init(hex: 0xFFE603) }
