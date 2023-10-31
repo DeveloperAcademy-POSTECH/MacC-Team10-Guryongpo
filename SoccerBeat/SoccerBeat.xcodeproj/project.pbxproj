@@ -44,8 +44,10 @@
 		BE9755822AF00DEC00326AC4 /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */; };
 		BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
-		BE40699C2AF0EB7700FA3030 /* PhraseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* PhraseData.swift */; };
-		BE40699D2AF0EB7700FA3030 /* PhraseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* PhraseData.swift */; };
+		BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
+		BE40699D2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
+		BE40699F2AF0F2F500FA3030 /* Bundle+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */; };
+		BE4069A02AF0F2F500FA3030 /* Bundle+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */; };
 		BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
@@ -122,7 +124,8 @@
 		BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 		BE4069972AF0E84800FA3030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE4069982AF0E8AC00FA3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Phrase.json; sourceTree = "<group>"; };
-		BE40699B2AF0EB7700FA3030 /* PhraseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseData.swift; sourceTree = "<group>"; };
+		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
+		BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+extension.swift"; sourceTree = "<group>"; };
 		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeView.swift; sourceTree = "<group>"; };
 		BEC1E5CF2AE6B4AF008B285E /* SoccerBeat-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SoccerBeat-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -232,6 +235,7 @@
 			children = (
 				BE22D6342AE586AA009035C9 /* Color+extension.swift */,
 				BE4498262AEFF2AC00252561 /* Font+extension.swift */,
+				BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */,
 			);
 			path = Utiles;
 			sourceTree = "<group>";
@@ -241,7 +245,7 @@
 			children = (
 				BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */,
 				BE4069962AF0E84300FA3030 /* Phrase.json */,
-				BE40699B2AF0EB7700FA3030 /* PhraseData.swift */,
+				BE40699B2AF0EB7700FA3030 /* Phrase.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -530,12 +534,13 @@
 				BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */,
 				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
+				BE40699F2AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,
 				FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
 				685D7B682AE52A2900783433 /* Data.swift in Sources */,
-				BE40699C2AF0EB7700FA3030 /* PhraseData.swift in Sources */,
+				BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */,
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
@@ -557,12 +562,13 @@
 				BE22D6362AE586AA009035C9 /* BPMTextView.swift in Sources */,
 				BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */,
 				BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */,
-				BE40699D2AF0EB7700FA3030 /* PhraseData.swift in Sources */,
+				BE40699D2AF0EB7700FA3030 /* Phrase.swift in Sources */,
 				681297392AE64432000CC957 /* PhraseView.swift in Sources */,
 				BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */,
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BEB666C22AE4E16D0090195A /* StartView.swift in Sources */,
+				BE4069A02AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,
 				68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */,
 				BE4498272AEFF2AC00252561 /* Font+extension.swift in Sources */,
 				6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */,

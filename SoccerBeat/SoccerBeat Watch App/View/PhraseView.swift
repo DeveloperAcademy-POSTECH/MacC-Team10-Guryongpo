@@ -33,7 +33,8 @@ struct PhraseView: View {
             }
         })
         .onAppear {
-            if let phrase = loadJson(filename: "Phrase")?.randomElement() {
+            if let decoded: PhraseResponse = Bundle.main.decode(by: "Phrase.json"),
+               let phrase = decoded.phrase.randomElement() {
                 self.text = phrase.saying
             }
         }
