@@ -11,7 +11,7 @@ struct GameProgressView: View {
     
     // MARK: - Data
     @EnvironmentObject var workoutManager: WorkoutManager
-
+    
     private var zone: HeartRateZone {
         switch workoutManager.heartRate {
         case ...80: return .one
@@ -53,7 +53,7 @@ struct GameProgressView: View {
     }
     
     // MARK: - Body
-        
+    
     var body: some View {
         TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
                                               isPaused: workoutManager.session?.state == .paused)) { context in
@@ -93,6 +93,15 @@ struct GameProgressView: View {
                 
             }
             .padding(.horizontal)
+            .fullScreenCover(isPresented: $workoutManager.isInZone5For2Min) {
+                AlertView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            workoutManager.isInZone5For2Min = false
+                        }
+                    }
+            }
+
         }
     }
 }
@@ -155,12 +164,12 @@ extension GameProgressView {
 private struct ProgressTimelineSchedule: TimelineSchedule {
     var startDate: Date
     var isPaused: Bool
-
+    
     init(from startDate: Date, isPaused: Bool) {
         self.startDate = startDate
         self.isPaused = isPaused
     }
-
+    
     func entries(from startDate: Date, mode: TimelineScheduleMode) -> AnyIterator<Date> {
         var baseSchedule = PeriodicTimelineSchedule(from: self.startDate,
                                                     by: (mode == .lowFrequency ? 1.0 : 1.0 / 30.0))

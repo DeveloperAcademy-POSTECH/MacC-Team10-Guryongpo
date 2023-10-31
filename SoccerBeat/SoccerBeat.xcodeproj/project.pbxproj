@@ -18,6 +18,7 @@
 		685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B742AE53DC400783433 /* LineGraphView.swift */; };
 		685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */; };
 		685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */; };
+		6898F2812AEEEFB00075A573 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6898F2802AEEEFB00075A573 /* AlertView.swift */; };
 		6898F2852AEFD7FC0075A573 /* SprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6898F2842AEFD7FC0075A573 /* SprintView.swift */; };
 		68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
 		68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */; };
@@ -36,6 +37,12 @@
 		BE4069892AF0800600FA3030 /* SF-Pro-Text-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069862AF0800600FA3030 /* SF-Pro-Text-Black.otf */; };
 		BE40698A2AF0800600FA3030 /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069872AF0800600FA3030 /* SF-Pro-Text-Heavy.otf */; };
 		BE40698B2AF0800600FA3030 /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069872AF0800600FA3030 /* SF-Pro-Text-Heavy.otf */; };
+		BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
+		BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
+		BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
+		BE40699D2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
+		BE40699F2AF0F2F500FA3030 /* Bundle+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */; };
+		BE4069A02AF0F2F500FA3030 /* Bundle+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */; };
 		BE4498272AEFF2AC00252561 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4498262AEFF2AC00252561 /* Font+extension.swift */; };
 		BE97554E2AEFFB3600326AC4 /* SF-Compact-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE97551B2AEFFB3300326AC4 /* SF-Compact-Text-Regular.otf */; };
 		BE97554F2AEFFB3600326AC4 /* SF-Compact-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE97551B2AEFFB3300326AC4 /* SF-Compact-Text-Regular.otf */; };
@@ -43,12 +50,6 @@
 		BE9755572AEFFB3600326AC4 /* SF-Compact-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE97551F2AEFFB3400326AC4 /* SF-Compact-Text-Medium.otf */; };
 		BE9755812AF00DEC00326AC4 /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */; };
 		BE9755822AF00DEC00326AC4 /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */; };
-		BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
-		BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
-		BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
-		BE40699D2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
-		BE40699F2AF0F2F500FA3030 /* Bundle+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */; };
-		BE4069A02AF0F2F500FA3030 /* Bundle+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */; };
 		BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
@@ -103,6 +104,7 @@
 		685D7B742AE53DC400783433 /* LineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraphView.swift; sourceTree = "<group>"; };
 		685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarMinMaxGraphView.swift; sourceTree = "<group>"; };
 		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
+		6898F2802AEEEFB00075A573 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		6898F2842AEFD7FC0075A573 /* SprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintView.swift; sourceTree = "<group>"; };
 		68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitControlsView.swift; sourceTree = "<group>"; };
@@ -116,14 +118,14 @@
 		BE4069812AF07FF500FA3030 /* SF-Compact-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Compact-Text-Semibold.otf"; path = "../../../../Obsidian Vault/Project/Macro/Fonts/SF-Compact-Text-Semibold.otf"; sourceTree = "<group>"; };
 		BE4069862AF0800600FA3030 /* SF-Pro-Text-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Black.otf"; path = "../../../../Obsidian Vault/Project/Macro/Fonts/SF-Pro-Text-Black.otf"; sourceTree = "<group>"; };
 		BE4069872AF0800600FA3030 /* SF-Pro-Text-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Heavy.otf"; path = "../../../../Obsidian Vault/Project/Macro/Fonts/SF-Pro-Text-Heavy.otf"; sourceTree = "<group>"; };
-		BE4498262AEFF2AC00252561 /* Font+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+extension.swift"; sourceTree = "<group>"; };
-		BE97551B2AEFFB3300326AC4 /* SF-Compact-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Text-Regular.otf"; sourceTree = "<group>"; };
-		BE97551F2AEFFB3400326AC4 /* SF-Compact-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Text-Medium.otf"; sourceTree = "<group>"; };
-		BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 		BE4069972AF0E84800FA3030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE4069982AF0E8AC00FA3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
 		BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+extension.swift"; sourceTree = "<group>"; };
+		BE4498262AEFF2AC00252561 /* Font+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+extension.swift"; sourceTree = "<group>"; };
+		BE97551B2AEFFB3300326AC4 /* SF-Compact-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Text-Regular.otf"; sourceTree = "<group>"; };
+		BE97551F2AEFFB3400326AC4 /* SF-Compact-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Text-Medium.otf"; sourceTree = "<group>"; };
+		BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeView.swift; sourceTree = "<group>"; };
 		BEC1E5CF2AE6B4AF008B285E /* SoccerBeat-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SoccerBeat-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -174,7 +176,6 @@
 		685D7B662AE52A2100783433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 				685D7B672AE52A2900783433 /* Data.swift */,
 			);
@@ -248,6 +249,7 @@
 				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
 				BEB666BF2AE4E14B0090195A /* StartPauseControll */,
 				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
+				6898F2802AEEEFB00075A573 /* AlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,6 +293,7 @@
 				685D7B662AE52A2100783433 /* Resources */,
 				D3C500182AE36F3F00EFAEFF /* Preview Content */,
 				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
+				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 			);
 			path = SoccerBeat;
 			sourceTree = "<group>";
@@ -450,7 +453,6 @@
 				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
 				BE9755562AEFFB3600326AC4 /* SF-Compact-Text-Medium.otf in Resources */,
 				BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */,
-				FBCED9232AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,7 +471,6 @@
 				D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */,
 				BE9755572AEFFB3600326AC4 /* SF-Compact-Text-Medium.otf in Resources */,
 				BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */,
-				FBCED9242AE3DE1D00C57BF9 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +560,7 @@
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BEB666C22AE4E16D0090195A /* StartView.swift in Sources */,
 				BE4069A02AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,
+				6898F2812AEEEFB00075A573 /* AlertView.swift in Sources */,
 				68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */,
 				BE4498272AEFF2AC00252561 /* Font+extension.swift in Sources */,
 				6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */,
@@ -790,7 +792,7 @@
 				DEVELOPMENT_TEAM = D7F6ZDDCV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SoccerBeat/Resources/Info.plist;
+				INFOPLIST_FILE = SoccerBeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -827,7 +829,7 @@
 				DEVELOPMENT_TEAM = D7F6ZDDCV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SoccerBeat/Resources/Info.plist;
+				INFOPLIST_FILE = SoccerBeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
