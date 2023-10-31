@@ -16,6 +16,9 @@ class WorkoutManager: NSObject, ObservableObject {
             }
         }
     }
+    
+    @Published var showingPrecount: Bool = false
+    
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
     var session: HKWorkoutSession?
@@ -106,7 +109,9 @@ class WorkoutManager: NSObject, ObservableObject {
 
     func endWorkout() {
         session?.end()
+        showingPrecount = false
         showingSummaryView = true
+        
     }
 
     // MARK: - Workout Metrics
