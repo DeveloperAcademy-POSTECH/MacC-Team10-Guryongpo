@@ -101,11 +101,6 @@
 		68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitControlsView.swift; sourceTree = "<group>"; };
 		BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPagingView.swift; sourceTree = "<group>"; };
-		BE22D6112AE4F85F009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
-		BE22D6132AE4F885009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
-		BE22D6172AE51461009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
-		BE22D6192AE519C8009035C9 /* HeartRateZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateZone.swift; sourceTree = "<group>"; };
-		BE22D6202AE57876009035C9 /* BPMTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMTextView.swift; sourceTree = "<group>"; };
 		BE22D6302AE586AA009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
 		BE22D6312AE586AA009035C9 /* BPMTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMTextView.swift; sourceTree = "<group>"; };
 		BE22D6322AE586AA009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
@@ -202,18 +197,6 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		BE22D6262AE58601009035C9 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				BE22D6172AE51461009035C9 /* SprintStatusView.swift */,
-				BE22D6112AE4F85F009035C9 /* GameProgressView.swift */,
-				BE22D6132AE4F885009035C9 /* Color+extension.swift */,
-				BE22D6192AE519C8009035C9 /* HeartRateZone.swift */,
-				BE22D6202AE57876009035C9 /* BPMTextView.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		BE22D62F2AE586AA009035C9 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,7 +255,6 @@
 				FBCED9212AE3DAC700C57BF9 /* Fonts */,
 				D3C500112AE36F3F00EFAEFF /* SoccerBeat */,
 				D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */,
-				BE22D6262AE58601009035C9 /* Recovered References */,
 				685D7B582AE38D1A00783433 /* .swiftlint.yml */,
 				D3C500102AE36F3F00EFAEFF /* Products */,
 			);
