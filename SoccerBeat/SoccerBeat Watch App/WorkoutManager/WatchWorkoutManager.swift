@@ -35,13 +35,13 @@ class WorkoutManager: NSObject, ObservableObject {
             maxHeartRate = 190
         }
     }
-
+    
     func startWorkout() {
         
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = .running
         configuration.locationType = .outdoor
-
+        
         do {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
@@ -51,15 +51,15 @@ class WorkoutManager: NSObject, ObservableObject {
             // Handle any exceptions.
             return
         }
-
+        
         // Setup session and builder.
         session?.delegate = self
         builder?.delegate = self
-
+        
         // Set the workout builder's data source.
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
-                                                     workoutConfiguration: configuration)
-
+                                                      workoutConfiguration: configuration)
+        
         // Start the workout session and begin data collection.
         let startDate = Date()
         session?.startActivity(with: startDate)
@@ -67,7 +67,7 @@ class WorkoutManager: NSObject, ObservableObject {
             // The workout has started.
         }
     }
-
+    
     // Request authorization to access HealthKit.
     func requestAuthorization() {
         
@@ -90,7 +90,7 @@ class WorkoutManager: NSObject, ObservableObject {
     
     // MARK: - Session State Control
     @Published var running = false
-
+    
     func togglePause() {
         if running == true {
             pause()
@@ -98,22 +98,20 @@ class WorkoutManager: NSObject, ObservableObject {
             resume()
         }
     }
-
+    
     private func pause() {
         session?.pause()
     }
-
+    
     private func resume() {
         session?.resume()
     }
-
+    
     func endWorkout() {
         session?.end()
-        showingPrecount = false
         showingSummaryView = true
-        
     }
-
+    
     // MARK: - Workout Metrics
     @Published var heartRate: Double = 0 {
         didSet {
@@ -124,12 +122,18 @@ class WorkoutManager: NSObject, ObservableObject {
     @Published var heartZone: Int = 1
     
     let sprintSpeed: Double = 5.5556 // modify it to test code
+    
     var isSprint: Bool = false
+    var maxSpeed: Double = 0.0
     var speed: Double = 0.0 {
         didSet {
+            
+            maxSpeed = max(maxSpeed, speed)
+            
             if !isSprint && speed >= sprintSpeed {
                 isSprint = true
-                sprint = max(0, sprint - 1)
+//                sprint = max(0, sprint - 1)
+                sprint += 1
             } else if isSprint && speed < sprintSpeed {
                 isSprint = false
             }
@@ -137,13 +141,13 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     
     @Published var distance: Double = 0
-    @Published var sprint: Int = 6 // default setup
+    @Published var sprint: Int = 0 // default setup
     @Published var workout: HKWorkout?
     @Published var isAlert: Bool = false
     
     func updateForStatistics(_ statistics: HKStatistics?) {
         guard let statistics = statistics else { return }
-
+        
         DispatchQueue.main.async {
             switch statistics.quantityType {
             case HKQuantityType.quantityType(forIdentifier: .heartRate):
@@ -159,13 +163,18 @@ class WorkoutManager: NSObject, ObservableObject {
             }
         }
     }
-
+    
     func resetWorkout() {
         builder = nil
         workout = nil
         session = nil
         heartRate = 0
+        heartZone = 0
         distance = 0
+        maxSpeed = 0
+        speed = 0
+        sprint = 0
+        
     }
     
     // MARK: - Heart Rate Setup
@@ -191,7 +200,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         DispatchQueue.main.async {
             self.running = toState == .running
         }
-
+        
         // Wait for the session to transition states before ending the builder.
         if toState == .ended {
             builder?.endCollection(withEnd: date) { (success, error) in
@@ -203,26 +212,26 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             }
         }
     }
-
+    
     func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-
+        
     }
 }
 
 // MARK: - HKLiveWorkoutBuilderDelegate
 extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
-
+        
     }
-
+    
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
         for type in collectedTypes {
             guard let quantityType = type as? HKQuantityType else {
                 return // Nothing to do.
             }
-
+            
             let statistics = workoutBuilder.statistics(for: quantityType)
-
+            
             // Update the published values.
             updateForStatistics(statistics)
         }
