@@ -56,8 +56,8 @@ struct GameProgressView: View {
     
     var body: some View {
         VStack {
-        TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
-                                              isPaused: workoutManager.session?.state == .paused)) { context in
+            TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
+                                                  isPaused: workoutManager.session?.state == .paused)) { context in
                 VStack(spacing: 0) {
                     // Zone Bar
                     zoneBar
@@ -68,7 +68,11 @@ struct GameProgressView: View {
                     // Game Ongoing Information
                     HStack(spacing: 30) {
                         VStack(spacing: 0) {
-                            Text(Measurement(value: workoutManager.distance, unit: UnitLength.meters).formatted(.measurement(width: .abbreviated, usage: .road)))
+                            let distanceText = String(Measurement(value: workoutManager.distance,
+                                                                  unit: UnitLength.meters)
+                                .formatted(.measurement(width: .abbreviated, usage: .road)))
+                            
+                            Text(workoutManager.isDistanceActive ? distanceText : "--'--")
                                 .font(.distanceTimeNumber)
                                 .foregroundStyle(.ongoingNumber)
                             Text("뛴 거리")
@@ -88,6 +92,7 @@ struct GameProgressView: View {
                     SprintView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm, progress: workoutManager.speed)
                     
                 }
+                .padding(.horizontal)
                 .fullScreenCover(isPresented: $workoutManager.isInZone5For2Min) {
                     AlertView()
                         .onAppear {
