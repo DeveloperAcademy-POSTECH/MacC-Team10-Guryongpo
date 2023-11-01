@@ -115,7 +115,7 @@ struct GameProgressView: View {
 extension GameProgressView {
     @ViewBuilder
     private var zoneBar: some View {
-        let circleHeight = CGFloat(14.0)
+        let circleHeight = CGFloat(16.0)
         let currentZoneWidth = CGFloat(51.0)
         
         HStack {
@@ -134,7 +134,7 @@ extension GameProgressView {
     
     @ViewBuilder
     private var currentZone: some View {
-        let circleHeight = CGFloat(14.0)
+        let circleHeight = CGFloat(16.0)
         let strokeWidth = CGFloat(0.6)
         let roundedRectangle = RoundedRectangle(cornerRadius: circleHeight / 2)
         let text = Text(zone.text)

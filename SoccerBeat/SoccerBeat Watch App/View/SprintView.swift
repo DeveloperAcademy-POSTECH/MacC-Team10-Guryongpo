@@ -42,7 +42,7 @@ struct SprintView: View {
                 .italic()
                 .padding(.horizontal)
         }
-        .padding(.horizontal)
+        .padding()
     }
 }
 
