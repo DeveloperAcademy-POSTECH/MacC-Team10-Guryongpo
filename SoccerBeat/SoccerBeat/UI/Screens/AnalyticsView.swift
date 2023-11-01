@@ -19,9 +19,6 @@ struct AnalyticsView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.darkblue, .black], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea(.all)
-            
             VStack {
                 HStack {
                     VStack(alignment: .leading, spacing: 0.0) {
