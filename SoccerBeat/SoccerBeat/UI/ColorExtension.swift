@@ -13,6 +13,7 @@ extension Color {
     static let hotpink = Color(hex: "FF00B8")
     static let brightmint = Color(hex: "03FFC3")
     static let titlegray = Color(hex: "8F8F8F")
+    static let deeppink = Color(hex: "FF007A")
 }
 
 extension Color {

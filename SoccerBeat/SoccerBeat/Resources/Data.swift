@@ -59,10 +59,10 @@ let SpeedDummyData: [Series] = [
 ]
 
 let HeartBeatlast12Months = [
-    (month: date(year: 2022, month: 5), values: 395, dailyAverage: 127, dailyMin: 95, dailyMax: 194),
-    (month: date(year: 2022, month: 6), values: 404, dailyAverage: 130, dailyMin: 96, dailyMax: 189),
-    (month: date(year: 2022, month: 7), values: 393, dailyAverage: 131, dailyMin: 101, dailyMax: 184),
-    (month: date(year: 2022, month: 8), values: 421, dailyAverage: 136, dailyMin: 96, dailyMax: 193),
+    (month: date(year: 2022, month: 5), values: 395, dailyAverage: 127, dailyMin: 89, dailyMax: 103),
+    (month: date(year: 2022, month: 6), values: 404, dailyAverage: 130, dailyMin: 78, dailyMax: 189),
+    (month: date(year: 2022, month: 7), values: 393, dailyAverage: 131, dailyMin: 41, dailyMax: 144),
+    (month: date(year: 2022, month: 8), values: 421, dailyAverage: 136, dailyMin: 56, dailyMax: 193),
     (month: date(year: 2022, month: 9), values: 400, dailyAverage: 134, dailyMin: 104, dailyMax: 202),
-    (month: date(year: 2022, month: 10), values: 399, dailyAverage: 129, dailyMin: 96, dailyMax: 200)
+    (month: date(year: 2022, month: 10), values: 399, dailyAverage: 129, dailyMin: 84, dailyMax: 200)
 ]
