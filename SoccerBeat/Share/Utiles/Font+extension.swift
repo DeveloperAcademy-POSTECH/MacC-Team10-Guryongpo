@@ -51,21 +51,26 @@ extension Font {
     public static let summaryTraillingTop = Font.sfCompactText(size: 13.5)
     public static let summaryLeadingBottom = Font.sfCompactText(size: 13.5)
     public static let summaryDoneButton = Font.sfCompactText(size: 13.5, weight: .semiboldItalic)
+    
+    // MARK: - MatchTotalView
+    
+    public static let matchTotalTitle = Font.sfProText(size: 36, weight: .heavyItalic)
+    public static let matchTotalSectionHeader = Font.sfProText(size: 14, weight: .lightItalic)
 }
 
 fileprivate extension Font {
     static func sfCompactText(size fontSize: CGFloat, weight: SFCompactText = .regular) -> Font {
-        Font.custom("\(SoccerBeat_Watch_App.SFCompactText.fontName)-\(weight.capitalized)",
+        Font.custom("\(SFCompactText.fontName)-\(weight.capitalized)",
                                size: fontSize)
     }
     
     static func sfProText(size fontSize: CGFloat, weight: SFProText = .blackItalic) -> Font {
-        Font.custom("\(SoccerBeat_Watch_App.SFProText.fontName)-\(weight.capitalized)",
+        Font.custom("\(SFProText.fontName)-\(weight.capitalized)",
                                size: fontSize)
     }
     
     static func notoSans(size fontSize: CGFloat, weight: NotoSans = .regular) -> Font {
-        Font.custom("\(SoccerBeat_Watch_App.NotoSans.fontName)-\(weight.capitalized)",
+        Font.custom("\(NotoSans.fontName)-\(weight.capitalized)",
                                size: fontSize)
     }
 }
@@ -88,6 +93,7 @@ private enum SFProText: String {
     
     case blackItalic
     case heavyItalic
+    case lightItalic
     
     var capitalized: String {
         self.rawValue.capitalized

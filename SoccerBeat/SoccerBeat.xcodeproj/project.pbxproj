@@ -55,6 +55,10 @@
 		BE4069D82AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069D62AF1F98B00FA3030 /* NotoSans-Regular.ttf */; };
 		BE4069DA2AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069D92AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf */; };
 		BE4069DB2AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069D92AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf */; };
+		BE4069E12AF2641800FA3030 /* MatchTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4069E02AF2641800FA3030 /* MatchTotalView.swift */; };
+		BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4498262AEFF2AC00252561 /* Font+extension.swift */; };
+		BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */; };
+		BE4069E52AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */; };
 		BE4498272AEFF2AC00252561 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4498262AEFF2AC00252561 /* Font+extension.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */; };
@@ -74,7 +78,6 @@
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
 		FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */; };
-		FBE203952AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +141,8 @@
 		BE4069C62AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
 		BE4069D62AF1F98B00FA3030 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		BE4069D92AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-BlackItalic.ttf"; sourceTree = "<group>"; };
+		BE4069E02AF2641800FA3030 /* MatchTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTotalView.swift; sourceTree = "<group>"; };
+		BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-LightItalic.otf"; sourceTree = "<group>"; };
 		BE4498262AEFF2AC00252561 /* Font+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+extension.swift"; sourceTree = "<group>"; };
 		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeView.swift; sourceTree = "<group>"; };
@@ -215,6 +220,7 @@
 			children = (
 				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
 				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
+				BE4069E02AF2641800FA3030 /* MatchTotalView.swift */,
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
 				685D7B642AE529E800783433 /* AnalyticsView.swift */,
@@ -393,6 +399,7 @@
 				BE4069C52AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf */,
 				BE4069C12AF1F80C00FA3030 /* SF-Pro-Text-BlackItalic.otf */,
 				BE4069C62AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf */,
+				BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -484,6 +491,7 @@
 				FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BE4069D72AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
+				BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				BE4069BE2AF1D22B00FA3030 /* NotoSans-Black.ttf in Resources */,
 				BE4069CF2AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
 				D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */,
@@ -505,6 +513,7 @@
 				FBE203952AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BE4069D82AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
+				BE4069E52AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				BE4069BF2AF1D22B00FA3030 /* NotoSans-Black.ttf in Resources */,
 				BE4069D02AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
 				D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */,
@@ -580,10 +589,12 @@
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
+				BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */,
 				D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */,
 				685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */,
 				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
+				BE4069E12AF2641800FA3030 /* MatchTotalView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
