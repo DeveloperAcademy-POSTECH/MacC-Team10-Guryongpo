@@ -63,6 +63,7 @@
 		D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500282AE36F4000EFAEFF /* Assets.xcassets */; };
 		D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */; };
+		D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4F1892AF248CE006C6B8A /* HealthInteractor.swift */; };
 		D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E874D32AEE3F2A005DB7C5 /* AppState.swift */; };
 		FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
@@ -527,6 +528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */,
 				BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */,
 				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
