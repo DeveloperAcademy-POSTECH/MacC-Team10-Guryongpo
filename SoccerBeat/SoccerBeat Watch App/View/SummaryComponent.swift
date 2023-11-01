@@ -22,6 +22,7 @@ struct SummaryComponent: View {
                     .italic()
                     .font(.title)
                     .padding()
+                    .scaledToFit()
                 
             }.padding(.init(top: 22, leading: 0, bottom: 0, trailing: 0))
             

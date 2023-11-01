@@ -267,14 +267,17 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
             }
             
-            routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
-                
-                guard newRoute != nil else {
-                    // Handle any errors here.
-                    return
+            if let workout = self.workout {
+                routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
+                    
+                    guard newRoute != nil else {
+                        // Handle any errors here.
+                        return
+                    }
+                    // Optional: Do something with the route here.
                 }
-                // Optional: Do something with the route here.
             }
+        
         }
     }
     
