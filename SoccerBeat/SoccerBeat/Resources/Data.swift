@@ -32,7 +32,7 @@ let SprintDatalast30Days = [
     (month: date(year: 2022, month: 7), values: 150, dailyAverage: 130, dailyMin: 0, dailyMax: 189),
     (month: date(year: 2022, month: 8), values: 140, dailyAverage: 136, dailyMin: 0, dailyMax: 193),
     (month: date(year: 2022, month: 9), values: 160, dailyAverage: 134, dailyMin: 0, dailyMax: 202),
-    (month: date(year: 2022, month: 10), values: 130, dailyAverage: 131, dailyMin: 0, dailyMax: 184),
+    (month: date(year: 2022, month: 10), values: 130, dailyAverage: 131, dailyMin: 0, dailyMax: 184)
     
 ]
 

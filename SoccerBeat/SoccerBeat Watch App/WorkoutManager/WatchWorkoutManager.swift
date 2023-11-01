@@ -130,7 +130,21 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.heartZone = computeHeartZone(heartRate)
         }
     }
+    
+    // MARK: - BPM
+    
+    private var bpmString: String {
+        String(heartRate.formatted(.number.precision(.fractionLength(0))))
+    }
 
+    public var isBPMActive: Bool {
+        return bpmString != "0"
+    }
+    
+    public var bpmForText: String {
+        return isBPMActive ? bpmString : "---"
+    }
+    
     let sprintSpeed: Double = 5.5556 // modify it to test code
     
     var isSprint: Bool = false
@@ -149,8 +163,12 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
+    // MARK: - Distance
     
     @Published var distance: Double = 0
+    public var isDistanceActive: Bool {
+        distance != 0
+    }
     @Published var sprint: Int = 0 // default setup
     @Published var workout: HKWorkout?
     
@@ -267,14 +285,17 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
             }
             
-            routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
-                
-                guard newRoute != nil else {
-                    // Handle any errors here.
-                    return
+            if let workout = self.workout {
+                routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
+                    
+                    guard newRoute != nil else {
+                        // Handle any errors here.
+                        return
+                    }
+                    // Optional: Do something with the route here.
                 }
-                // Optional: Do something with the route here.
             }
+        
         }
     }
     

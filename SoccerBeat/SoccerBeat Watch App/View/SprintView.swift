@@ -18,7 +18,7 @@ struct SprintView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 15.0)
                     .foregroundStyle(.gray)
-                    .frame(maxWidth: .infinity, maxHeight: 18)
+                    .frame(maxWidth: .infinity, maxHeight: 16)
                     .overlay {
                         ZStack {
                             ProgressView(value: progress, total: 22)
@@ -27,6 +27,7 @@ struct SprintView: View {
                             
                             HStack {
                                 Text(Measurement(value: workoutManager.speed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)))
+                                    .font(.system(size: 11))
                                     .padding(.horizontal)
                                     .bold()
                                     .italic()
@@ -39,7 +40,7 @@ struct SprintView: View {
             }
             Text(workoutManager.sprint.formatted(.number))
                 .italic()
-                .padding()
+                .padding(.horizontal)
         }
         .padding(.horizontal)
     }
@@ -53,7 +54,7 @@ struct GucciBarProgressStyle: ProgressViewStyle {
     
     let accentGradient: LinearGradient
     private let cornerRadius = CGFloat(10.0)
-    private let height: Double = 15.0
+    private let height: Double = 13.0
     
     func makeBody(configuration: Configuration) -> some View {
         

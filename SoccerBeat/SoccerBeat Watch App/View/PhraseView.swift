@@ -14,10 +14,7 @@ struct PhraseView: View {
         VStack(spacing: 18) {
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
-                .font(.system(size: 18))
-                .scaledToFit()
-                .fontWeight(.black)
-                .italic()
+                .font(.wiseSaying)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.zone2Bpm)
             

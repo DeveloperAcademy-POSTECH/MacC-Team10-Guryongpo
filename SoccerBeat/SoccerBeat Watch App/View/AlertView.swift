@@ -3,8 +3,6 @@
 //  SoccerBeat Watch App
 //
 //  Created by jose Yun on 10/31/23.
-
-
 //
 
 import SwiftUI
@@ -34,8 +32,7 @@ struct AlertView: View {
                 .lineSpacing(-1.0)
                 .multilineTextAlignment(.center)
             .foregroundStyle(LinearGradient(colors: [.white, .yellow], startPoint: .leading, endPoint: .trailing))
-        }
-        .toolbar {
+        }.toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
                     dismiss()

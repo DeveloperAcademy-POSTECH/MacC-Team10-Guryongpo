@@ -18,10 +18,9 @@ struct SummaryComponent: View {
                     .foregroundStyle(Color.columnContent)
                 Text("\(content)")
                     .foregroundStyle(.summaryGradient)
-                    .fontWeight(.black)
-                    .italic()
-                    .font(.title)
+                    .font(.summaryContent)
                     .padding()
+                    .scaledToFit()
                 
             }.padding(.init(top: 22, leading: 0, bottom: 0, trailing: 0))
             

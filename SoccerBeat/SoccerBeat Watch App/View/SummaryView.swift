@@ -40,9 +40,8 @@ struct SummaryView: View {
                                             numberFormatStyle: .number.precision(.fractionLength(0)))), playTime: "")
                 
                 Button(action: { dismiss() }) {
-                    Text("완료")  // TODO: Font Design Pattern 추후 추가
-                        .font(.title3)
-                        .bold()
+                    Text("완료")
+                        .font(.summaryDoneButton)
                         .foregroundStyle(.zone2Bpm)
                 }
             }

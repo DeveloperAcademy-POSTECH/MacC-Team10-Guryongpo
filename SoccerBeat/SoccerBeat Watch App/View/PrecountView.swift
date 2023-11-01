@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PrecountView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
-    @State var count: Int = 1
+    @State var count: Int = 3
     @State var showingSession = false
     var body: some View {
         NavigationStack {
@@ -23,7 +23,6 @@ struct PrecountView: View {
                     Circle()
                         .frame(width: 11, height: 11)
                         .foregroundStyle(.precountGradient)
-                        .opacity(0.6)
                     
                     Circle()
                         .frame(width: 11, height: 11)
@@ -33,18 +32,19 @@ struct PrecountView: View {
                     Circle()
                         .frame(width: 11, height: 11)
                         .foregroundStyle(.precountGradient)
-                        .opacity(count > 2 ? 1 : 0)
+                    
+                        .opacity(count > 2 ? 0.6 : 0)
                     
                 }.padding()
                 
             }.onAppear {
-                count = 1
+                count = 3
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    count += 1
+                    count -= 1
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    count += 1
+                    count -= 1
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -57,6 +57,8 @@ struct PrecountView: View {
                     .navigationBarBackButtonHidden()
             }.onDisappear {
                 workoutManager.showingPrecount = false
+                // MARK: - Session Start
+                workoutManager.startWorkout()
             }
         }
     }
