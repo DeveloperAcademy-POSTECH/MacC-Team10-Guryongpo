@@ -32,7 +32,7 @@ struct PrecountView: View {
                     Circle()
                         .frame(width: 11, height: 11)
                         .foregroundStyle(.precountGradient)
-                        
+                    
                         .opacity(count > 2 ? 0.6 : 0)
                     
                 }.padding()
@@ -57,6 +57,8 @@ struct PrecountView: View {
                     .navigationBarBackButtonHidden()
             }.onDisappear {
                 workoutManager.showingPrecount = false
+                // MARK: - Session Start
+                workoutManager.startWorkout()
             }
         }
     }
