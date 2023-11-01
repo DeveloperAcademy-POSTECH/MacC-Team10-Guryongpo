@@ -7,8 +7,6 @@
 //
 import SwiftUI
 
-// TODO: - Custom Font 적용
-
 struct BPMTextView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var firstCircle = 1.0
@@ -23,11 +21,11 @@ struct BPMTextView: View {
             HStack(alignment: .lastTextBaseline, spacing: 8) {
                 Group {
                     text
-                        .font(.system(size: 56).bold().italic())
+                        .font(.beatPerMinute)
                 }
 
                 Text(" bpm")
-                    .font(.system(size: 18).bold().italic())
+                    .font(.bpmUnit)
                     .scaleEffect(workoutManager.running ? 1.1 : 1)
                     .animation(.spring.repeatForever(autoreverses: true).speed(2), value: workoutManager.running)
             }
@@ -118,8 +116,7 @@ struct BasicLineView: View {
             HStack(alignment: .lastTextBaseline, spacing: 8) {
                 Group {
                     text
-                        .font(.system(size: 56)
-                            .italic())
+                        .font(.beatPerMinute)
                 }
                 .scaleEffect(startAnimation ? 3 : 1)
                 .opacity(startAnimation ? 0 : 0.2 )
@@ -130,7 +127,7 @@ struct BasicLineView: View {
                 })
 
                 Text(" bpm")
-                    .font(.system(size: 18).bold().italic())
+                    .font(.bpmUnit)
                     .foregroundStyle(.clear)
             }
         }
