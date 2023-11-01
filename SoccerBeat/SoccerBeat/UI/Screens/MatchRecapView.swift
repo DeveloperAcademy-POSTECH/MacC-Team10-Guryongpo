@@ -11,8 +11,23 @@ class MatchItemData: ObservableObject {
     @Published var matchitems = [
         MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
         MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
+        MatchDetail(date: "2023.11.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
+        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
+        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
+        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
+        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
+        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
         MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03")
     ]
+    
+    var monthly: [String: [MatchDetail]] {
+        var dict = [String: [MatchDetail]]()
+        matchitems.forEach { match in
+            let yearMonth = Array(match.date.split(separator: ".")[...1]).joined(separator: ".")
+            dict[yearMonth, default: []].append(match)
+        }
+        return dict 
+    }
 }
 
 struct MatchRecapView: View {
@@ -153,4 +168,9 @@ struct MatchDetail: Identifiable, Hashable {
 
 #Preview {
     MatchRecapView()
+}
+
+#Preview {
+    let detail = MatchItemData().matchitems[0]
+    return MatchListItemView(matchDetail: detail)
 }

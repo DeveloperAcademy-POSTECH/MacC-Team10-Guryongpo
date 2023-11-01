@@ -19,13 +19,16 @@ struct PhraseView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.zone2Bpm)
             
+            Spacer()
+            
             Image(.blueHeart)
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(beatAnimation ? 1.1 : 1)
                 .frame(width: 42, height: 34)
                 .animation(.spring.repeatForever(autoreverses: true).speed(3), value: beatAnimation)
-        }.onAppear(perform: {
+        }
+        .onAppear(perform: {
             withAnimation {
                 beatAnimation.toggle()
             }
