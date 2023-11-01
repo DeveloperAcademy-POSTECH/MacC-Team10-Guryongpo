@@ -40,9 +40,9 @@ struct SprintView: View {
             }
             Text(workoutManager.sprint.formatted(.number))
                 .italic()
-                .padding(.horizontal)
+                .padding(.leading)
         }
-        .padding()
+        .padding(.vertical)
     }
 }
 

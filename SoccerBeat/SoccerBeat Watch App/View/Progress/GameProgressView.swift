@@ -66,7 +66,8 @@ struct GameProgressView: View {
                     BPMTextView(textGradient: zoneBPMGradient)
                     
                     // Game Ongoing Information
-                    HStack(spacing: 30) {
+                    HStack {
+                        Spacer()
                         VStack(spacing: 0) {
                             let distanceText = String(Measurement(value: workoutManager.distance,
                                                                   unit: UnitLength.meters)
@@ -79,6 +80,10 @@ struct GameProgressView: View {
                                 .font(.distanceTimeText)
                                 .foregroundStyle(.ongoingText)
                         }
+                        
+                        Spacer()
+                            .frame(maxWidth: 30)
+                        
                         VStack(spacing: 0) {
                             ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
                                 .foregroundStyle(.ongoingNumber)
@@ -87,6 +92,7 @@ struct GameProgressView: View {
                                 .font(.distanceTimeText)
                                 .foregroundStyle(.ongoingText)
                         }
+                        Spacer()
                     }
                     
                     SprintView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm, progress: workoutManager.speed)
