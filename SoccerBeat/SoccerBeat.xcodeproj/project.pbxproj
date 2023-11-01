@@ -67,6 +67,7 @@
 		D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500282AE36F4000EFAEFF /* Assets.xcassets */; };
 		D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */; };
+		D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4F1892AF248CE006C6B8A /* HealthInteractor.swift */; };
 		D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E874D32AEE3F2A005DB7C5 /* AppState.swift */; };
 		FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
@@ -151,6 +152,8 @@
 		D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
 		D3C500282AE36F4000EFAEFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D3D4F1892AF248CE006C6B8A /* HealthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInteractor.swift; sourceTree = "<group>"; };
+		D3D7D1262AF23CA000B89196 /* SoccerBeat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoccerBeat.entitlements; sourceTree = "<group>"; };
 		D3E874D32AEE3F2A005DB7C5 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardView.swift; sourceTree = "<group>"; };
 		FBCED9252AE3DF5900C57BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -328,10 +331,11 @@
 			children = (
 				685D7B702AE53D7E00783433 /* UI */,
 				D3E874D22AEE3EC1005DB7C5 /* Injected */,
-				D3E874D12AEE3EAA005DB7C5 /* Interactors */,
+				D3D4F1882AF248C2006C6B8A /* Interactors */,
 				685D7B662AE52A2100783433 /* Resources */,
 				D3C500182AE36F3F00EFAEFF /* Preview Content */,
 				D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
+				D3D7D1262AF23CA000B89196 /* SoccerBeat.entitlements */,
 				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 			);
 			path = SoccerBeat;
@@ -368,9 +372,10 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		D3E874D12AEE3EAA005DB7C5 /* Interactors */ = {
+		D3D4F1882AF248C2006C6B8A /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
+				D3D4F1892AF248CE006C6B8A /* HealthInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -586,6 +591,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */,
 				BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */,
 				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
@@ -852,6 +858,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SoccerBeat/SoccerBeat.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -861,6 +868,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "축구 기록을 활용하기 위해 건강 정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -889,6 +897,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SoccerBeat/SoccerBeat.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -898,6 +907,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoccerBeat;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "축구 기록을 활용하기 위해 건강 정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
