@@ -61,12 +61,11 @@ struct AnalyticsDetailView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text("The quality of a")
                     .font(.custom("SFProText-HeavyItalic", size: 36))
-                    .foregroundStyle(.zone2Bpm)
+                    .foregroundStyle(mainColor)
                 
                 Text("\(englishTitle)")
                     .font(.custom("SFProText-HeavyItalic", size: 36))
-                    .foregroundStyle(.zone2Bpm)
-            }
+                .foregroundStyle(mainColor)            }
             
             VStack {
                 HStack {
@@ -112,7 +111,7 @@ struct AnalyticsDetailView: View {
 }
 
 #Preview {
-    AnalyticsDetailView(graphType: .distance)
+    AnalyticsDetailView(graphType: .BPM)
 }
 
 struct FormattedRecordAnalytics: View {
@@ -132,8 +131,6 @@ struct FormattedRecordAnalytics: View {
         }
     }
 }
-
-import SwiftUI
 
 struct RandomComment: View {
     @State private var text: String = "..Like son\nGood\nPlayer"
