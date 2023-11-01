@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var healthInteractor = HealthInteractor.shared
     var body: some View {
         ScrollView {
             ZStack {
@@ -34,6 +35,9 @@ struct ContentView: View {
                     }
                 }
             }
+        }.task {
+            await healthInteractor.fetchAllData()
+            await print(healthInteractor.allWorkouts.first?.description)
         }
     }
 }

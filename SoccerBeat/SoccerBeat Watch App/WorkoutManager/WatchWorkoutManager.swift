@@ -80,7 +80,11 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func requestAuthorization() {
         
         // write
-        let typesToShare: Set = [HKQuantityType.workoutType(), HKSeriesType.workoutRoute()]
+        let typesToShare: Set = [HKQuantityType.workoutType(), HKSeriesType.workoutRoute(),
+                                 HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+                                 HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                                 HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+                                 HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!]
         
         // The quantity types to read from the health store.
         let typesToRead: Set = [

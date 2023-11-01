@@ -28,7 +28,7 @@ class HealthInteractor: ObservableObject {
                               HKObjectType.quantityType(forIdentifier: .walkingSpeed)!,
                               HKSeriesType.workoutType(),
                               HKSeriesType.workoutRoute(),
-                              HKObjectType.activitySummaryType(),
+                              HKObjectType.activitySummaryType()
                              ])
         
         guard HKHealthStore.isHealthDataAvailable() else {
@@ -46,15 +46,20 @@ class HealthInteractor: ObservableObject {
     }
     
     func fetchAllData() async {
-        print("fetchAllData: attempting to fetch all data..")
+//        print("fetchAllData: attempting to fetch all data..")
         
         allWorkouts = await getAllWorkout() ?? []
-        allRoutes = await getWorkoutRoute(workout: allWorkouts.last!)!
+//        allRoutes = await getWorkoutRoute(workout: allWorkouts.last!)!
     }
     
     func getAllWorkout() async -> [HKWorkout]? {
-        let soccer = HKQuery.predicateForWorkouts(with: .running)
+        // TODO: workout data from out application
+        // How to get from SoccerBeat
+        let soccer = HKQuery.predicateForObjects(from: .default())
+//        print(HKSource.default())
+//        let soccer = HKQuery.predicateForWorkouts(with: .running)
         
+        // TODO: how to seperate workout data ?
         let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
             healthStore.execute(HKSampleQuery(sampleType: .workoutType(), predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
                 if let hasError = error {
