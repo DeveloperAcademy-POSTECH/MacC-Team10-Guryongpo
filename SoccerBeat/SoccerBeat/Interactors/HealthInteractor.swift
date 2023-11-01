@@ -7,12 +7,13 @@
 
 import Foundation
 import HealthKit
+import CoreLocation
 
 class HealthInteractor: ObservableObject {
     var healthStore = HKHealthStore()
     
     var allWorkouts: [HKWorkout] = []
-    var allRoutes: [HKWorkoutRoute] = []
+    var allRoutes: [CLLocation] = []
     
     static let shared = HealthInteractor()
     
@@ -48,7 +49,7 @@ class HealthInteractor: ObservableObject {
         print("fetchAllData: attempting to fetch all data..")
         
         allWorkouts = await getAllWorkout() ?? []
-        allRoutes = await getWorkoutRoute(workout: allWorkouts[0]) ?? []
+        allRoutes = await getWorkoutRoute(workout: allWorkouts.last!)!
     }
     
     func getAllWorkout() async -> [HKWorkout]? {
@@ -69,21 +70,41 @@ class HealthInteractor: ObservableObject {
         return workouts
     }
     
-    func getWorkoutRoute(workout: HKWorkout) async -> [HKWorkoutRoute]? {
+    func getWorkoutRoute(workout: HKWorkout) async -> [CLLocation]? {
         let byWorkout = HKQuery.predicateForObjects(from: workout)
         
-        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+        let samples = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
             healthStore.execute(HKAnchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: byWorkout, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: { (query, samples, deletedObjects, anchor, error) in
                 if let hasError = error {
-                    continuation.resume(throwing: hasError)
-                    return
+                    continuation.resume(throwing: hasError); return
                 }
-                continuation.resume(returning: samples!)
+                
+                guard let samples = samples else { return }
+                
+                continuation.resume(returning: samples)
             }))
         }
-        guard let workouts = data as? [HKWorkoutRoute] else {
-            return nil
+        
+        guard let route = (samples as? [HKWorkoutRoute])?.first else { return nil }
+        
+        let locations = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
+            var allLocations = [CLLocation]() // built up over time as and when HK tells us
+            healthStore.execute(HKWorkoutRouteQuery(route: route) { (query, locationsOrNil, done, errorOrNil) in
+                // This block may be called multiple times.
+                if let error = errorOrNil {
+                    continuation.resume(throwing: error); return
+                }
+                
+                guard let locations = locationsOrNil else {
+                    fatalError("Invalid State: This can only fail if there was an error.")
+                }
+                allLocations += locations
+                
+                if done {
+                    continuation.resume(returning: allLocations)
+                }
+            })
         }
-        return workouts
+        return locations
     }
 }

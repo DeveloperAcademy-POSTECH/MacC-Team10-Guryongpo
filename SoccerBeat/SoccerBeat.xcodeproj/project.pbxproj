@@ -68,14 +68,11 @@
 		D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500282AE36F4000EFAEFF /* Assets.xcassets */; };
 		D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */; };
 		D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4F1892AF248CE006C6B8A /* HealthInteractor.swift */; };
+		D3D4F18D2AF26662006C6B8A /* WorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */; };
 		D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E874D32AEE3F2A005DB7C5 /* AppState.swift */; };
 		FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
-		FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */; };
-		FBE203952AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */; };
-		FBE203972AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203962AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf */; };
-		FBE203982AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203962AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +150,7 @@
 		D3C500282AE36F4000EFAEFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3C5002B2AE36F4000EFAEFF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D3D4F1892AF248CE006C6B8A /* HealthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInteractor.swift; sourceTree = "<group>"; };
+		D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutData.swift; sourceTree = "<group>"; };
 		D3D7D1262AF23CA000B89196 /* SoccerBeat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoccerBeat.entitlements; sourceTree = "<group>"; };
 		D3E874D32AEE3F2A005DB7C5 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardView.swift; sourceTree = "<group>"; };
@@ -160,8 +158,6 @@
 		FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRecapView.swift; sourceTree = "<group>"; };
 		FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailView.swift; sourceTree = "<group>"; };
-		FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansDisplay-BlackItalic.ttf"; sourceTree = "<group>"; };
-		FBE203962AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +191,7 @@
 			children = (
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 				685D7B672AE52A2900783433 /* Data.swift */,
+				D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -391,12 +388,6 @@
 		FBCED9212AE3DAC700C57BF9 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				68B0731D2AF110C4004C723F /* SF-Pro-Text-Light.otf */,
-				68B073202AF110D0004C723F /* SF-Compact-Text-Semibold.otf */,
-				68B073232AF110D7004C723F /* SF-Pro-Text-Black.otf */,
-				68B073262AF110E4004C723F /* SF-Pro-Text-Heavy.otf */,
-				BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */,
-				FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */,
 				BE4069BD2AF1D22B00FA3030 /* NotoSans-Black.ttf */,
 				BE4069D92AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf */,
 				BE4069D62AF1F98B00FA3030 /* NotoSans-Regular.ttf */,
@@ -494,15 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68B0731E2AF110C4004C723F /* SF-Pro-Text-Light.otf in Resources */,
-				BE9755812AF00DEC00326AC4 /* NotoSansKR-Regular.ttf in Resources */,
-				FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
-				68B073272AF110E4004C723F /* SF-Pro-Text-Heavy.otf in Resources */,
-				BE97554E2AEFFB3600326AC4 /* SF-Compact-Text-Regular.otf in Resources */,
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
-				68B073242AF110D7004C723F /* SF-Pro-Text-Black.otf in Resources */,
-				FBE203972AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */,
-				68B073212AF110D0004C723F /* SF-Compact-Text-Semibold.otf in Resources */,
 				BE4069D72AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069BE2AF1D22B00FA3030 /* NotoSans-Black.ttf in Resources */,
 				BE4069CF2AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
@@ -522,14 +505,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68B0731F2AF110C4004C723F /* SF-Pro-Text-Light.otf in Resources */,
-				BE9755822AF00DEC00326AC4 /* NotoSansKR-Regular.ttf in Resources */,
-				FBE203952AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
-				BE97554F2AEFFB3600326AC4 /* SF-Compact-Text-Regular.otf in Resources */,
-				68B073282AF110E4004C723F /* SF-Pro-Text-Heavy.otf in Resources */,
 				685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */,
-				68B073252AF110D7004C723F /* SF-Pro-Text-Black.otf in Resources */,
-				FBE203982AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 				BE4069D82AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069BF2AF1D22B00FA3030 /* NotoSans-Black.ttf in Resources */,
 				BE4069D02AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
@@ -607,6 +583,7 @@
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
 				D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */,
 				685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */,
+				D3D4F18D2AF26662006C6B8A /* WorkoutData.swift in Sources */,
 				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
 			);
