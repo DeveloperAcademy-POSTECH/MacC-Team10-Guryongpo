@@ -67,7 +67,11 @@ struct GameProgressView: View {
                 // Game Ongoing Information
                 HStack(spacing: 30) {
                     VStack {
-                        Text(Measurement(value: workoutManager.distance, unit: UnitLength.meters).formatted(.measurement(width: .abbreviated, usage: .road)))
+                        let distanceText = String(Measurement(value: workoutManager.distance,
+                                                              unit: UnitLength.meters)
+                                            .formatted(.measurement(width: .abbreviated, usage: .road)))
+                        
+                        Text(workoutManager.isDistanceActive ? distanceText : "--'--")
                             .font(.distanceTimeNumber)
                             .foregroundStyle(.ongoingNumber)
                         Text("뛴 거리")
