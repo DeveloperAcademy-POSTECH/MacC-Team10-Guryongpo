@@ -67,6 +67,7 @@ struct SplitControlsView: View {
                     Button {
                         // End Workout
                         workoutManager.endWorkout()
+                        workoutManager.showingPrecount = false
                         dismiss()
                     } label: {
                         ZStack {

@@ -12,7 +12,7 @@ struct PrecountView: View {
     @State var count: Int = 3
     @State var showingSession = false
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Image("Precount-"+"\(count)")
                     .resizable()
@@ -38,6 +38,8 @@ struct PrecountView: View {
                 }.padding()
                 
             }.onAppear {
+                print("Appeared")
+                showingSession = false
                 count = 3
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     count -= 1
@@ -56,9 +58,9 @@ struct PrecountView: View {
                 SessionPagingView()
                     .navigationBarBackButtonHidden()
             }.onDisappear {
-                workoutManager.showingPrecount = false
                 // MARK: - Session Start
                 workoutManager.startWorkout()
+                print("Disappeared")
             }
         }
     }
