@@ -14,20 +14,15 @@ struct BPMTextView: View {
     let textGradient: LinearGradient
     
     var body: some View {
-        let text = Text(workoutManager.bpmForText)
-        return ZStack {
+        ZStack {
             Color.clear
-            // 기본 텍스트
+            
             HStack(alignment: .lastTextBaseline, spacing: 8) {
-                Group {
-                    text
-                        .font(.beatPerMinute)
-                }
-
+                Text(workoutManager.bpmForText)
+                    .font(.beatPerMinute)
+                
                 Text(" bpm")
                     .font(.bpmUnit)
-                    .scaleEffect(workoutManager.running ? 1.1 : 1)
-                    .animation(.spring.repeatForever(autoreverses: true).speed(2), value: workoutManager.running)
             }
             
             if workoutManager.running {
@@ -42,7 +37,7 @@ struct StrokeText: View {
     let text: String
     let width: CGFloat
     let color: Color
-
+    
     var body: some View {
         ZStack {
             ZStack {
@@ -111,23 +106,20 @@ struct BasicLineView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var startAnimation: Bool = false
     var body: some View {
-        let text = Text(workoutManager.bpmForText)
-        return ZStack {
+        ZStack {
             Color.clear
-            // 기본 텍스트
+    
             HStack(alignment: .lastTextBaseline, spacing: 8) {
-                Group {
-                    text
-                        .font(.beatPerMinute)
-                }
-                .scaleEffect(startAnimation ? 3 : 1)
-                .opacity(startAnimation ? 0 : 0.2 )
-                .onAppear(perform: {
-                    withAnimation(.linear(duration: 2)) {
-                        startAnimation = true
-                    }
-                })
-
+                Text(workoutManager.bpmForText)
+                    .font(.beatPerMinute)
+                    .scaleEffect(startAnimation ? 3 : 1)
+                    .opacity(startAnimation ? 0 : 0.2 )
+                    .onAppear(perform: {
+                        withAnimation(.linear(duration: 2)) {
+                            startAnimation = true
+                        }
+                    })
+                
                 Text(" bpm")
                     .font(.bpmUnit)
                     .foregroundStyle(.clear)

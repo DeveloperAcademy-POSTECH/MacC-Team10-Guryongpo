@@ -10,15 +10,16 @@ import SwiftUI
 struct PhraseView: View {
     @State private var text: String = "..Like son\nGood\nPlayer"
     @State private var beatAnimation: Bool = true
+    
     var body: some View {
-        VStack(spacing: 18) {
+        VStack(spacing: 0) {
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.wiseSaying)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.zone2Bpm)
             
-            Image("BlueHeart")
+            Image(.blueHeart)
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(beatAnimation ? 1.1 : 1)

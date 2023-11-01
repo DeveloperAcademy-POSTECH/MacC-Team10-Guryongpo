@@ -122,13 +122,13 @@ extension GameProgressView {
     @ViewBuilder
     private var zoneBar: some View {
         let circleHeight = CGFloat(16.0)
-        let currentZoneWidth = CGFloat(51.0)
         
         HStack {
             ForEach(1...5, id: \.self) { index in
                 if zone.rawValue == index {
                     currentZone
-                        .frame(width: currentZoneWidth, height: circleHeight)
+                        .frame(height: circleHeight)
+                        .frame(maxWidth: .infinity)
                 } else {
                     Circle()
                         .frame(width: circleHeight, height: circleHeight)
