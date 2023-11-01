@@ -13,7 +13,9 @@ struct StartView: View {
     var body: some View {
         NavigationStack {
             if !workoutManager.showingPrecount {
-                Button(action: { workoutManager.showingPrecount.toggle()} ) {
+                Button(action: { workoutManager.showingPrecount.toggle()
+                print(workoutManager.showingPrecount)
+                } ) {
                     Image(.startButton)
                 }
             } else {

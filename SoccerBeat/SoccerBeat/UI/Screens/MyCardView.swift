@@ -37,26 +37,12 @@ struct MyCardView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.darkblue, .black], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea(.all)
-            
             VStack {
-                Image("HeartBeatSign")
-                    .resizable()
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 229)
-                    .blur(radius: 5)
-                    .opacity(0.2)
-                Spacer()
-                    .frame(height: 230)
-            }
-            
-            VStack {                
                 HStack {
                     VStack(alignment: .leading, spacing: 0.0) {
                         Text("Hello, Son")
-                        Text("Are you")
-                        Text("World class?")
+                        Text("How you like")
+                        Text("that?")
                     }
                     .foregroundStyle(!isFlipped ?
                         .linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing) : .linearGradient(colors: [.titlegray, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -69,14 +55,13 @@ struct MyCardView: View {
                 .padding(.horizontal)
                 
                 Spacer()
-                
-                    ZStack {
-                        CardFront(width: width, height: height, degree: $frontDegree)
-                        CardBack(width: width, height: height, degree: $backDegree)
-                    }.onTapGesture {
-                        flipCard()
-                    }
-                Spacer()
+                    .frame(height: 80)
+                ZStack {
+                    CardFront(width: width, height: height, degree: $frontDegree)
+                    CardBack(width: width, height: height, degree: $backDegree)
+                }.onTapGesture {
+                    flipCard()
+                }
             }
             
         }

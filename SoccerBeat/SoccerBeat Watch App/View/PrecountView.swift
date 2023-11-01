@@ -12,7 +12,7 @@ struct PrecountView: View {
     @State var count: Int = 3
     @State var showingSession = false
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 Image("Precount-"+"\(count)")
                     .resizable()
