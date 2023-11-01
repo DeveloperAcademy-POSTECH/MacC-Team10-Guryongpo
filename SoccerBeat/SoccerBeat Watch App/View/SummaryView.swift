@@ -32,7 +32,7 @@ struct SummaryView: View {
                                             usage: .road,
                                             numberFormatStyle: .number.precision(.fractionLength(0)))), playTime: "")
                 SummaryComponent(title: "최고 속도", content: Measurement(value: workoutManager.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)), playTime: "")
-                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted(), playTime: "전반 25분")
+                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted(), playTime: "")
                 SummaryComponent(title: "칼로리", content: Measurement(value: workoutManager.workout?.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0,
                     unit: UnitEnergy.kilocalories)
                     .formatted(.measurement(width: .abbreviated,
