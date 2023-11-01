@@ -230,9 +230,7 @@
 		BE22D6332AE586AA009035C9 /* Utiles */ = {
 			isa = PBXGroup;
 			children = (
-				BE22D6342AE586AA009035C9 /* Color+extension.swift */,
-				BE4498262AEFF2AC00252561 /* Font+extension.swift */,
-				BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */,
+				BE4069DF2AF2139B00FA3030 /* Extension */,
 			);
 			path = Utiles;
 			sourceTree = "<group>";
@@ -254,11 +252,29 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		BE4069DC2AF212B500FA3030 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				BE22D6332AE586AA009035C9 /* Utiles */,
+				FBCED9212AE3DAC700C57BF9 /* Fonts */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		BE4069DF2AF2139B00FA3030 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BE22D6342AE586AA009035C9 /* Color+extension.swift */,
+				BE4498262AEFF2AC00252561 /* Font+extension.swift */,
+				BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
 		BEB666BE2AE4E13E0090195A /* View */ = {
 			isa = PBXGroup;
 			children = (
 				BE22D62F2AE586AA009035C9 /* Progress */,
-				BE22D6332AE586AA009035C9 /* Utiles */,
 				68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */,
 				681297382AE64432000CC957 /* PhraseView.swift */,
 				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
@@ -283,7 +299,7 @@
 		D3C500062AE36F3E00EFAEFF = {
 			isa = PBXGroup;
 			children = (
-				FBCED9212AE3DAC700C57BF9 /* Fonts */,
+				BE4069DC2AF212B500FA3030 /* Share */,
 				D3C500112AE36F3F00EFAEFF /* SoccerBeat */,
 				D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */,
 				685D7B582AE38D1A00783433 /* .swiftlint.yml */,
