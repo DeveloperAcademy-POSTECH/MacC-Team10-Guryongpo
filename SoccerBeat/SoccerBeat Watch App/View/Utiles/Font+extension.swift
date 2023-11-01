@@ -38,7 +38,7 @@ extension Font {
     // MARK: - Game Stop
     
     public static let stopEnd = Font.sfCompactText(size: 14, weight: .medium)
-    public static let wiseSaying = Font.notoSans(size: 26, isItalic: true)
+    public static let wiseSaying = Font.notoSans(size: 26, weight: .black, isItalic: true)
     
     // MARK: - After Game Data, Summary View
     
@@ -62,8 +62,8 @@ fileprivate extension Font {
         return isItalic ? font.italic() : font
     }
     
-    static func notoSans(size fontSize: CGFloat, weight: NotoSansKR = .regular, isItalic: Bool = false) -> Font {
-        let font = Font.custom("\(SoccerBeat_Watch_App.NotoSansKR.fontName)-\(weight.capitalized)",
+    static func notoSans(size fontSize: CGFloat, weight: NotoSans = .regular, isItalic: Bool = false) -> Font {
+        let font = Font.custom("\(SoccerBeat_Watch_App.NotoSans.fontName)-\(weight.capitalized)",
                                size: fontSize)
         return isItalic ? font.italic() : font
     }
@@ -93,10 +93,11 @@ private enum SFProText: String {
     }
 }
 
-private enum NotoSansKR: String {
+private enum NotoSans: String {
     static let fontName = String(describing: Self.self)
     
     case regular
+    case black
     
     var capitalized: String {
         self.rawValue.capitalized

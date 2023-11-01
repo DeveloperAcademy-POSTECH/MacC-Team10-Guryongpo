@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>NotoSansKR-Regular.ttf</string>
+		<string>NotoSans-Black.ttf</string>
 		<string>SF-Compact-Text-Medium.otf</string>
 		<string>SF-Compact-Text-Regular.otf</string>
 		<string>SF-Compact-Text-Light.otf</string>
