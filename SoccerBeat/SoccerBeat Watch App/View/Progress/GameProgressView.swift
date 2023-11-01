@@ -88,12 +88,6 @@ struct GameProgressView: View {
                 
             }
             .padding(.horizontal)
-//            .overlay {
-//                if !workoutManager.running {
-//                    Color.black.ignoresSafeArea()
-//                    AlertView(text: "BREATHE IN! ")
-//                }
-//            }
             .fullScreenCover(isPresented: $workoutManager.isInZone5For2Min) {
                 AlertView()
                     .onAppear {
