@@ -34,7 +34,7 @@ extension Font {
     // MARK: - Game Progress
     
     public static let zoneCapsule = Font.sfCompactText(size: 12, weight: .semiboldItalic)
-    public static let beatPerMinute = Font.sfProText(size: 48, weight: .heavyItalic)
+    public static let beatPerMinute = Font.sfProText(size: 36, weight: .heavyItalic)
     public static let bpmUnit = Font.sfProText(size: 18, weight: .heavyItalic)
     public static let distanceTimeNumber = Font.sfCompactText(size: 18, weight: .semiboldItalic)
     public static let distanceTimeText = Font.sfCompactText(size: 12)
