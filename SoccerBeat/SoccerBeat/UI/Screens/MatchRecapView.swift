@@ -11,21 +11,23 @@ class MatchItemData: ObservableObject {
     @Published var matchitems = [
         MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
         MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
-        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
-//        MatchDetail(date: "2023.7.5", location: "효자동", time: "74:12", distance: 3.3, velocity: 30, sprint: 7, heatmap: "Heatmap01")
+        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03")
     ]
 }
 
 struct MatchRecapView: View {
     @ObservedObject var matchItemData = MatchItemData()
     @State var showingMatchDetail = false
+    @State var path: [NavigationStackViewType] = []
+    
+    enum NavigationStackViewType {
+        case firstView
+        case secondView
+    }
     
     var body: some View {
-        ZStack {
-            LinearGradient(colors: [.darkblue, .black], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea(.all)
-            
-            VStack {
+        NavigationStack(path: $path) {
+            VStack(spacing: 10) {
                 HStack {
                     VStack(alignment: .leading, spacing: 0.0) {
                         Text("Hello, Son")
@@ -42,6 +44,22 @@ struct MatchRecapView: View {
                 .padding(.horizontal)
                 
                 Spacer()
+                    .frame(height: 75)
+                
+                HStack {
+                    Spacer()
+                        .frame(width: 30)
+                    Text("최근 3경기 기록")
+                        .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
+                    Spacer()
+                    Button(action: { path.append(.firstView) }) {
+                        Text("모든 기록 보기 +")
+                            .foregroundStyle(.white)
+                            .font(.custom("NotoSansDisplay-BlackItalic", size: 14))
+                    }
+                    Spacer()
+                        .frame(width: 30)
+                }
                 
                 List {
                     ForEach(matchItemData.matchitems, id: \.self) { matchDetail in
@@ -56,10 +74,15 @@ struct MatchRecapView: View {
                 .scrollIndicators(.hidden)
                 .scrollContentBackground(.hidden)
             }
-        }.sheet(isPresented: $showingMatchDetail, content: {
-            MatchDetailView()
-                .presentationDetents([.height(630)])
-        })
+            .navigationDestination(for: NavigationStackViewType.self) { navigationStackViewType in
+                switch navigationStackViewType {
+                case .firstView:
+                    AnalyticsView()
+                case .secondView:
+                    MatchDetailView()
+                }
+            }
+        }
     }
 }
 

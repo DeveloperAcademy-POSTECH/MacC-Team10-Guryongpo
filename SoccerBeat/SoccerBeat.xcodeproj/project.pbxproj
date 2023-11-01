@@ -67,6 +67,10 @@
 		FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
+		FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */; };
+		FBE203952AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */; };
+		FBE203972AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203962AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf */; };
+		FBE203982AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBE203962AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +151,8 @@
 		FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRecapView.swift; sourceTree = "<group>"; };
 		FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailView.swift; sourceTree = "<group>"; };
+		FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansDisplay-BlackItalic.ttf"; sourceTree = "<group>"; };
+		FBE203962AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +363,8 @@
 				68B073232AF110D7004C723F /* SF-Pro-Text-Black.otf */,
 				68B073262AF110E4004C723F /* SF-Pro-Text-Heavy.otf */,
 				BE97557F2AF0002300326AC4 /* NotoSansKR-Regular.ttf */,
+				FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */,
+				FBE203962AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -447,10 +455,12 @@
 			files = (
 				68B0731E2AF110C4004C723F /* SF-Pro-Text-Light.otf in Resources */,
 				BE9755812AF00DEC00326AC4 /* NotoSansKR-Regular.ttf in Resources */,
+				FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				68B073272AF110E4004C723F /* SF-Pro-Text-Heavy.otf in Resources */,
 				BE97554E2AEFFB3600326AC4 /* SF-Compact-Text-Regular.otf in Resources */,
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				68B073242AF110D7004C723F /* SF-Pro-Text-Black.otf in Resources */,
+				FBE203972AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 				68B073212AF110D0004C723F /* SF-Compact-Text-Semibold.otf in Resources */,
 				D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */,
 				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
@@ -465,10 +475,12 @@
 			files = (
 				68B0731F2AF110C4004C723F /* SF-Pro-Text-Light.otf in Resources */,
 				BE9755822AF00DEC00326AC4 /* NotoSansKR-Regular.ttf in Resources */,
+				FBE203952AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				BE97554F2AEFFB3600326AC4 /* SF-Compact-Text-Regular.otf in Resources */,
 				68B073282AF110E4004C723F /* SF-Pro-Text-Heavy.otf in Resources */,
 				685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				68B073252AF110D7004C723F /* SF-Pro-Text-Black.otf in Resources */,
+				FBE203982AF1ED90000E47FE /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 				D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */,
 				68B073222AF110D0004C723F /* SF-Compact-Text-Semibold.otf in Resources */,
 				D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */,

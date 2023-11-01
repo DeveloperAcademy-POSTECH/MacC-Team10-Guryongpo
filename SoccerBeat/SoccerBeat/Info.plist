@@ -4,6 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-Pro-Text-HeavyItalic.otf</string>
+		<string>NotoSansDisplay-BlackItalic.ttf</string>
 		<string>NotoSansKR-Regular.ttf</string>
 		<string>SF-Compact-Text-Medium.otf</string>
 		<string>SF-Compact-Text-Regular.otf</string>
