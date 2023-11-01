@@ -16,6 +16,23 @@ struct SplitControlsView: View {
     @State var offset: CGFloat = 12
     @State private var textYOffset = -40.0
     
+    private var zoneBPMGradient: LinearGradient {
+        switch workoutManager.heartZone {
+        case 1:
+            return .zone1Bpm
+        case 2:
+            return .zone2Bpm
+        case 3:
+            return .zone3Bpm
+        case 4:
+            return .zone4Bpm
+        case 5:
+            return .zone5Bpm
+        default:
+            return .zone1Bpm
+        }
+    }
+    
     var body: some View {
         ZStack {
             HStack {
@@ -32,7 +49,7 @@ struct SplitControlsView: View {
                             Image(systemName: workoutManager.running ? "pause" : "play.fill")
                                 .resizable()
                                 .frame(width:16, height: 16)
-                                .foregroundStyle(.pauseTint)
+                                .foregroundStyle(zoneBPMGradient)
                         }
                     }
                     .padding(16)
@@ -60,8 +77,7 @@ struct SplitControlsView: View {
                             Image(systemName: "stop.fill")
                                 .resizable()
                                 .frame(width: 16, height: 16)
-                                .foregroundStyle(.stopTint
-                                )
+                                .foregroundStyle(zoneBPMGradient)
                         }
                     }
                     .padding(16)

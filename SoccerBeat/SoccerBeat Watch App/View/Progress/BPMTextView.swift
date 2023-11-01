@@ -25,16 +25,37 @@ struct BPMTextView: View {
                     text
                         .font(.system(size: 56).bold().italic())
                 }
-                .scaleEffect(workoutManager.running ? 1.1 : 1)
-                .animation(.spring.repeatForever(autoreverses: true).speed(2), value: workoutManager.running)
 
                 Text(" bpm")
                     .font(.system(size: 18).bold().italic())
+                    .scaleEffect(workoutManager.running ? 1.1 : 1)
+                    .animation(.spring.repeatForever(autoreverses: true).speed(2), value: workoutManager.running)
             }
             
-            LineBPMView()
+            if workoutManager.running {
+                LineBPMView()
+            }
         }
         .foregroundStyle(textGradient)
+    }
+}
+
+struct StrokeText: View {
+    let text: String
+    let width: CGFloat
+    let color: Color
+
+    var body: some View {
+        ZStack{
+            ZStack{
+                Text(text).offset(x:  width, y:  width)
+                Text(text).offset(x: -width, y: -width)
+                Text(text).offset(x: -width, y:  width)
+                Text(text).offset(x:  width, y: -width)
+            }
+            .foregroundColor(color)
+            Text(text)
+        }
     }
 }
 
@@ -42,6 +63,7 @@ struct Particle: Identifiable {
     var id: UUID = .init()
 }
 
+// MARK: BasicLineView 를 여러 개 퍼트려서 파동처럼 퍼지고 사라지게 만드는 뷰
 struct LineBPMView: View {
     
     @EnvironmentObject var workoutManager: WorkoutManager
@@ -83,6 +105,7 @@ struct LineBPMView: View {
     }
 }
 
+// MARK: 파동처럼 퍼지는 기본 뷰
 struct BasicLineView: View {
     
     @EnvironmentObject var workoutManager: WorkoutManager
@@ -105,8 +128,6 @@ struct BasicLineView: View {
                         startAnimation = true
                     }
                 })
-                
-                
 
                 Text(" bpm")
                     .font(.system(size: 18).bold().italic())
