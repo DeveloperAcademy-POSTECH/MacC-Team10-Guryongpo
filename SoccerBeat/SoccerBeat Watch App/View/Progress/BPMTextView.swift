@@ -26,8 +26,6 @@ struct BPMTextView: View {
 
                 Text(" bpm")
                     .font(.bpmUnit)
-                    .scaleEffect(workoutManager.running ? 1.1 : 1)
-                    .animation(.spring.repeatForever(autoreverses: true).speed(2), value: workoutManager.running)
             }
             
             if workoutManager.running {
