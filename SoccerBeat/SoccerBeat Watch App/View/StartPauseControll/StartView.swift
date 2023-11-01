@@ -11,10 +11,10 @@ struct StartView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
 
     var body: some View {
-        NavigationStack {
+        VStack {
             if !workoutManager.showingPrecount {
                 Button(action: { workoutManager.showingPrecount.toggle()
-                print(workoutManager.showingPrecount)
+                    print(workoutManager.showingPrecount)
                 } ) {
                     Image(.startButton)
                 }
