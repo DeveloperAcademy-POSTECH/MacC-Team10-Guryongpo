@@ -43,7 +43,7 @@ extension Font {
     // MARK: - Game Stop
     
     public static let stopEnd = Font.sfCompactText(size: 14, weight: .medium)
-    public static let wiseSaying = Font.notoSans(size: 26, weight: .black).italic()
+    public static let wiseSaying = Font.notoSans(size: 18, weight: .black).italic()
     
     // MARK: - After Game Data, Summary View
     
