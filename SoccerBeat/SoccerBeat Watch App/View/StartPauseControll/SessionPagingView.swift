@@ -36,10 +36,7 @@ struct SessionPagingView: View {
             displayMetricsView()
 
         }
-        .onAppear {
-            // MARK: - Session Start
-            workoutManager.startWorkout()
-        }
+
     }
 
     private func displayMetricsView() {

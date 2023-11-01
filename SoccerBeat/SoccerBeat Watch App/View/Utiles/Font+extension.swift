@@ -31,8 +31,8 @@ extension Font {
     
     public static let zoneCapsule = Font.sfCompactText(size: 12, weight: .semibold, isItalic: true)
     public static let beatPerMinute = Font.sfProText(size: 56, weight: .black, isItalic: true)
-    public static let distanceTimeNumber = Font.sfCompactText(size: 18, weight: .semibold, isItalic: true)
-    public static let distanceTimeText = Font.sfCompactText(size: 12)
+    public static let distanceTimeNumber = Font.sfCompactText(size: 16, weight: .semibold, isItalic: true)
+    public static let distanceTimeText = Font.sfCompactText(size: 11)
     public static let speedStop = Font.sfCompactText(size: 12, weight: .light, isItalic: true)
 
     // MARK: - Game Stop

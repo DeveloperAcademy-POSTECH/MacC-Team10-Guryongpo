@@ -23,7 +23,7 @@ struct BPMTextView: View {
             HStack(alignment: .lastTextBaseline, spacing: 8) {
                 Group {
                     text
-                        .font(.system(size: 56).bold().italic())
+                        .font(.system(size: 50).bold().italic())
                 }
 
                 Text(" bpm")
@@ -118,7 +118,7 @@ struct BasicLineView: View {
             HStack(alignment: .lastTextBaseline, spacing: 8) {
                 Group {
                     text
-                        .font(.system(size: 56)
+                        .font(.system(size: 50)
                             .italic())
                 }
                 .scaleEffect(startAnimation ? 3 : 1)
