@@ -73,8 +73,6 @@ struct ContentView: View {
                     })
                 }
             }
-            
-            
         }
         .frame(width: 280, height: 60)
         .compositingGroup()

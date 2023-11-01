@@ -75,7 +75,7 @@ struct GameProgressView: View {
                             .foregroundStyle(.ongoingText)
                     }
                     VStack {
-                        ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0, showSubseconds: context.cadence == .live)
+                        ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
                             .foregroundStyle(.ongoingNumber)
                             .font(.distanceTimeNumber)
                         Text("경기 시간")
