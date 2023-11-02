@@ -14,6 +14,7 @@ class HealthInteractor: ObservableObject {
     
     var allWorkouts: [HKWorkout] = []
     var allRoutes: [CLLocation] = []
+    var speedData: [HKQuantitySample] = []
     
     static let shared = HealthInteractor()
     
@@ -56,8 +57,6 @@ class HealthInteractor: ObservableObject {
         // TODO: workout data from out application
         // How to get from SoccerBeat
         let soccer = HKQuery.predicateForObjects(from: .default())
-//        print(HKSource.default())
-//        let soccer = HKQuery.predicateForWorkouts(with: .running)
         
         // TODO: how to seperate workout data ?
         let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
@@ -72,7 +71,32 @@ class HealthInteractor: ObservableObject {
         guard let workouts = data as? [HKWorkout] else {
             return nil
         }
+        await speedData = getSpeedSprint()!
         return workouts
+    }
+    
+    func getSpeedSprint() async -> [HKQuantitySample]? {
+        
+        guard let speedType =
+                HKObjectType.quantityType(forIdentifier:
+                HKQuantityTypeIdentifier.runningSpeed) else {
+            fatalError("*** Unable to create a distance type ***")
+        }
+        
+        let soccer = HKQuery.predicateForObjects(from: .default())
+        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+            self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
+                if let hasError = error {
+                    continuation.resume(throwing: hasError)
+                    return
+                }
+                continuation.resume(returning: samples!)
+            }))
+        }
+        guard let speedData = data as? [HKQuantitySample] else {
+            return nil
+        }
+        return speedData
     }
     
     func getWorkoutRoute(workout: HKWorkout) async -> [CLLocation]? {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct ContentView: View {
     @StateObject var healthInteractor = HealthInteractor.shared
@@ -37,7 +38,7 @@ struct ContentView: View {
             }
         }.task {
             await healthInteractor.fetchAllData()
-            await print(healthInteractor.allWorkouts.first?.description)
+            print("stop ..")
         }
     }
 }
