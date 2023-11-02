@@ -21,7 +21,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     @Published var showingPrecount: Bool = false
-    
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
     var locationManager = CLLocationManager()
@@ -29,7 +28,42 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
     
+    var saveMinHeartRate: Int = 200
+    var saveMaxHeartRate: Int = 0
     var maxHeartRate: Double?
+    
+    let sprintSpeed: Double = 5.5556 // modify it to test code
+//    let sprintSpeed: Double = 1.0 // modify it to test code
+        
+    var isSprint: Bool = false
+    var maxSpeed: Double = 0.0
+    var speed: Double = 0.0 {
+            didSet {
+                maxSpeed = max(maxSpeed, speed)
+                if !isSprint && speed >= sprintSpeed {
+                    isSprint = true
+                    sprint += 1
+                } else if isSprint && speed < sprintSpeed {
+                    isSprint = false
+                }
+            }
+        }
+    
+    // MARK: - Workout Metrics
+    @Published var heartRate: Double = 0 {
+        didSet {
+            self.heartZone = computeHeartZone(heartRate)
+            
+            if saveMinHeartRate > Int(heartRate) {
+                saveMinHeartRate = Int(heartRate)
+            }
+            
+            if saveMaxHeartRate < Int(heartRate) {
+                saveMaxHeartRate = Int(heartRate)
+            }
+        }
+    }
+    
     func computeMaxHeartRate() {
         do {
             let birthYear = try healthStore.dateOfBirthComponents().year
@@ -141,24 +175,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         
     }
     
-    // MARK: - Workout Metrics
-    @Published var heartRate: Double = 0 {
-        didSet {
-            self.heartZone = computeHeartZone(heartRate)
-            
-            if saveMinHeartRate > Int(heartRate) {
-                saveMinHeartRate = Int(heartRate)
-            }
-            
-            if saveMaxHeartRate < Int(heartRate) {
-                saveMaxHeartRate = Int(heartRate)
-            }
-        }
-    }
-    
-    var saveMinHeartRate: Int = 200
-    var saveMaxHeartRate: Int = 0
-    
     // MARK: - BPM
     
     private var bpmString: String {
@@ -173,23 +189,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         return isBPMActive ? bpmString : "---"
     }
     
-//    let sprintSpeed: Double = 5.5556 // modify it to test code
-    let sprintSpeed: Double = 1.0 // modify it to test code
-    
-    var isSprint: Bool = false
-    var maxSpeed: Double = 0.0
-    var speed: Double = 0.0 {
-        didSet {
-            maxSpeed = max(maxSpeed, speed)
-            if !isSprint && speed >= sprintSpeed {
-                isSprint = true
-//                sprint = max(0, sprint - 1)
-                sprint += 1
-            } else if isSprint && speed < sprintSpeed {
-                isSprint = false
-            }
-        }
-    }
     // MARK: - Distance
     
     @Published var distance: Double = 0
@@ -279,7 +278,10 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         maxSpeed = 0
         speed = 0
         sprint = 0
-        
+        saveMaxHeartRate = 0
+        saveMinHeartRate = 0
+        zone5Count = 0
+        heartZone = 1
     }
     
     // MARK: - Heart Rate Setup
@@ -302,7 +304,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 extension WorkoutManager: HKWorkoutSessionDelegate {
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
                         from fromState: HKWorkoutSessionState, date: Date) {
-//        print("called")
         DispatchQueue.main.async {
             self.running = toState == .running
         }
@@ -321,7 +322,6 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             
             if let workout = self.workout {
                 routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
-                    
                     guard newRoute != nil else {
                         // Handle any errors here.
                         return
