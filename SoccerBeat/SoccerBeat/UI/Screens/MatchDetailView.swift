@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 
 struct MatchDetailView: View {
+    let workoutData: WorkoutData
     var body: some View {
         ScrollView {
             ZStack {
@@ -19,11 +20,11 @@ struct MatchDetailView: View {
                     .frame(height: 0)
                 
                 VStack {
-                    MatchDetailView01()
-                    MatchDetailView02()
+                    MatchDetailView01(workoutData: workoutData)
+                    MatchDetailView02(workoutData: workoutData)
 // MARK: 추후 HeartRate 추가
 //                    MatchDetailView03()
-                    MatchDetailView04()
+                    MatchDetailView04(workoutData: workoutData)
                 }
             }
         }
@@ -32,17 +33,18 @@ struct MatchDetailView: View {
 }
 
 struct MatchDetailView01: View {
+    let workoutData: WorkoutData
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("2023.11.11")
+                    Text(workoutData.date)
                         .font(.custom("나중에 추가", size: 10))
                     Spacer()
                         .frame(height: 10)
                     Text("경기 시간")
                         .font(.custom("SFProText-HeavyItalic", size: 25))
-                    Text("74:12")
+                    Text(workoutData.time)
                         .font(.custom("SFProText-HeavyItalic", size: 25))
                 }
                 .foregroundStyle(.white)
@@ -79,7 +81,7 @@ struct MatchDetailView01: View {
                     Image("HeartbeatSignPink")
                     Text("뛴 거리")
                         .font(.custom("나중에 추가", size: 16))
-                    Text("2.2 km")
+                    Text(workoutData.distance.formatted() + " km")
                         .font(.custom("SFProText-HeavyItalic", size: 30))
                         .foregroundStyle(Color.deeppink)
                 }
@@ -88,7 +90,7 @@ struct MatchDetailView01: View {
                     Image("HeartbeatSign")
                     Text("칼로리")
                         .font(.custom("나중에 추가", size: 16))
-                    Text("320 Kcal")
+                    Text(workoutData.calorie.formatted() + " Kcal")
                         .font(.custom("SFProText-HeavyItalic", size: 30))
                 }
                 Spacer()
@@ -108,7 +110,7 @@ struct MatchDetailView01: View {
                     Image("HeartbeatSign")
                     Text("스프린트")
                         .font(.custom("나중에 추가", size: 16))
-                    Text("3 Times")
+                    Text(workoutData.sprint + workoutData.sprint < 2 ? " Time" : " Times")
                         .font(.custom("SFProText-HeavyItalic", size: 30))
                 }
                 Spacer()
@@ -116,7 +118,7 @@ struct MatchDetailView01: View {
                     Image("HeartbeatSign")
                     Text("최고 속도")
                         .font(.custom("나중에 추가", size: 16))
-                    Text("22 km/h")
+                    Text(workoutData.velocity.formatted() + " km/h")
                         .font(.custom("SFProText-HeavyItalic", size: 30))
                 }
                 Spacer()
@@ -133,6 +135,7 @@ struct MatchDetailView01: View {
 }
 
 struct MatchDetailView02: View {
+    let workoutData: WorkoutData
     var body: some View {
         VStack {
             HStack {
@@ -253,6 +256,7 @@ struct MatchDetailView03: View {
 }
 
 struct MatchDetailView04: View {
+    let workoutData: WorkoutData
     var body: some View {
         VStack {
             HStack {
@@ -325,5 +329,5 @@ struct MatchDetailView04: View {
 }
 
 #Preview {
-    MatchDetailView()
+    MatchDetailView(workoutData: fakeWorkoutData)
 }

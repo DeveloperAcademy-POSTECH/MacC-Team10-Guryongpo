@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-let fakeWorkoutData: WorkoutData = WorkoutData(dataId: 10, date: Date(), time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81])
+let fakeWorkoutData: WorkoutData = WorkoutData(dataId: 10, date: "1999-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81])
 
 //class MatchItemData: ObservableObject {
 //    @Published var matchitems = [
@@ -21,15 +21,6 @@ let fakeWorkoutData: WorkoutData = WorkoutData(dataId: 10, date: Date(), time: "
 //        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
 //        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03")
 //    ]
-//    
-//    var monthly: [String: [MatchDetail]] {
-//        var dict = [String: [MatchDetail]]()
-//        matchitems.forEach { match in
-//            let yearMonth = Array(match.date.split(separator: ".")[...1]).joined(separator: ".")
-//            dict[yearMonth, default: []].append(match)
-//        }
-//        return dict
-//    }
 //}
 
 struct MatchRecapView: View {
@@ -60,7 +51,7 @@ struct MatchRecapView: View {
                     .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
                 Spacer()
                 NavigationLink {
-//                    MatchTotalView()
+                    MatchTotalView()
                 } label: {
                     Text("모든 기록 보기 +")
                 }
@@ -71,7 +62,7 @@ struct MatchRecapView: View {
             VStack {
                 ForEach(healthInteractor.userWorkouts, id: \.self) { workout in
                     NavigationLink {
-                        MatchDetailView()
+                        MatchDetailView(workoutData: workout)
                     } label: {
                         MatchListItemView(workoutData: workout)
                     }
@@ -114,7 +105,7 @@ struct MatchListItemView: View {
                         
                         VStack(alignment: .leading) {
                             Text("최고 속도")
-                            Text("\(workoutData.velocity)km/h")
+                            Text("\(workoutData.velocity.formatted()) km/h")
                         }.foregroundStyle(
                             .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .font(.custom("SFProText-HeavyItalic", size: 16))
@@ -131,7 +122,7 @@ struct MatchListItemView: View {
                 Spacer()
             }
             .padding(.vertical, 10)
-        }
+        }.frame(height: 400)
     }
 }
 

@@ -27,11 +27,7 @@ struct ContentView: View {
                         Spacer()
                             .frame(height: 114) 
                         
-                        NavigationLink {
                             MatchRecapView()
-                        } label: {
-                            Text("마음 속으로 3초 세고 누르기! 잇힝 >-<")
-                        }
                         
                         Spacer()
                             .frame(height: 60)
@@ -46,10 +42,7 @@ struct ContentView: View {
             }
         }
         .environmentObject(healthInteractor)
-        .task {
-            await healthInteractor.fetchAllData()
-            print("stop ..")
-        }
+
     }
 }
 
