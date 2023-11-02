@@ -26,14 +26,12 @@ struct SummaryView: View {
                 }
         } else {
             ScrollView {
-                SummaryComponent(title: "활동량", content: Measurement(value: workoutManager.workout?.totalDistance?.doubleValue(for: .meter()) ?? 0,
-                        unit: UnitLength.meters)
-                    .formatted(.measurement(width: .abbreviated,
-                                            usage: .road,
-                                            numberFormatStyle: .number.precision(.fractionLength(0)))), playTime: "")
+                SummaryComponent(title: "활동량", content: String(Measurement(value: workoutManager.distance,
+                                                                           unit: UnitLength.meters)
+                                         .formatted(.measurement(width: .abbreviated, usage: .road))), playTime: "")
                 SummaryComponent(title: "최고 속도", content: Measurement(value: workoutManager.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)), playTime: "")
                 SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted(), playTime: "")
-                SummaryComponent(title: "칼로리", content: Measurement(value: workoutManager.workout?.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0,
+                SummaryComponent(title: "칼로리", content:  Measurement(value: workoutManager.energy,
                     unit: UnitEnergy.kilocalories)
                     .formatted(.measurement(width: .abbreviated,
                                             usage: .workout,
@@ -44,6 +42,10 @@ struct SummaryView: View {
                         .font(.summaryDoneButton)
                         .foregroundStyle(.zone2Bpm)
                 }
+            }
+            .onAppear {
+                print(
+                workoutManager.workout?.totalEnergyBurned!)
             }
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)

@@ -21,7 +21,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     @Published var showingPrecount: Bool = false
-    
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
     var locationManager = CLLocationManager()
@@ -29,7 +28,44 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
     
+    var saveMinHeartRate: Int = 200
+    var saveMaxHeartRate: Int = 0
     var maxHeartRate: Double?
+    
+    var energy: Double = 0
+    
+    let sprintSpeed: Double = 5.5556 // modify it to test code
+//    let sprintSpeed: Double = 1.0 // modify it to test code
+        
+    var isSprint: Bool = false
+    var maxSpeed: Double = 0.0
+    var speed: Double = 0.0 {
+            didSet {
+                maxSpeed = max(maxSpeed, speed)
+                if !isSprint && speed >= sprintSpeed {
+                    isSprint = true
+                    sprint += 1
+                } else if isSprint && speed < sprintSpeed {
+                    isSprint = false
+                }
+            }
+        }
+    
+    // MARK: - Workout Metrics
+    @Published var heartRate: Double = 0 {
+        didSet {
+            self.heartZone = computeHeartZone(heartRate)
+            
+            if saveMinHeartRate > Int(heartRate) {
+                saveMinHeartRate = Int(heartRate)
+            }
+            
+            if saveMaxHeartRate < Int(heartRate) {
+                saveMaxHeartRate = Int(heartRate)
+            }
+        }
+    }
+    
     func computeMaxHeartRate() {
         do {
             let birthYear = try healthStore.dateOfBirthComponents().year
@@ -80,7 +116,13 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func requestAuthorization() {
         
         // write
-        let typesToShare: Set = [HKQuantityType.workoutType(), HKSeriesType.workoutRoute()]
+        let typesToShare: Set = [HKQuantityType.workoutType(), 
+                                 HKSeriesType.workoutRoute(),
+                                 HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+                                 HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                                 HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+                                 
+        ]
         
         // The quantity types to read from the health store.
         let typesToRead: Set = [
@@ -89,6 +131,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
             HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
+            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
             HKSeriesType.workoutType(),
             HKSeriesType.workoutRoute(),
             HKObjectType.activitySummaryType()
@@ -122,13 +165,19 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func endWorkout() {
         session?.end()
         showingSummaryView = true
-    }
-    
-    // MARK: - Workout Metrics
-    @Published var heartRate: Double = 0 {
-        didSet {
-            self.heartZone = computeHeartZone(heartRate)
-        }
+        
+        let nowDate: Date = Date()
+        
+        let speed = Measurement(value: self.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general))
+        
+        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed), quantity: HKQuantity(unit:HKUnit.init(from: "m/s"), doubleValue: self.maxSpeed), start: nowDate, end: nowDate, metadata: ["MaxSpeed": speed, "SprintCount": self.sprint, "MinHeartRate": saveMinHeartRate, "MaxHeartRate": saveMaxHeartRate, "Distance": self.distance, "Calorie": self.energy])
+        
+        self.healthStore.save(dataSample, withCompletion: { (success, error) in
+            if (error != nil) {
+              NSLog("error occurred saving water data")
+            }
+          })
+        
     }
     
     // MARK: - BPM
@@ -145,24 +194,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         return isBPMActive ? bpmString : "---"
     }
     
-    let sprintSpeed: Double = 5.5556 // modify it to test code
-    
-    var isSprint: Bool = false
-    var maxSpeed: Double = 0.0
-    var speed: Double = 0.0 {
-        didSet {
-            
-            maxSpeed = max(maxSpeed, speed)
-            
-            if !isSprint && speed >= sprintSpeed {
-                isSprint = true
-//                sprint = max(0, sprint - 1)
-                sprint += 1
-            } else if isSprint && speed < sprintSpeed {
-                isSprint = false
-            }
-        }
-    }
     // MARK: - Distance
     
     @Published var distance: Double = 0
@@ -201,9 +232,12 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         self.zone5Count = 0
     }
     
+    let meterUnit = HKUnit.meter()
+    
     func updateForStatistics(_ statistics: HKStatistics?) {
         guard let statistics = statistics else { return }
-        
+//        print(statistics)
+//        
         DispatchQueue.main.async {
             switch statistics.quantityType {
             case HKQuantityType.quantityType(forIdentifier: .heartRate):
@@ -214,8 +248,11 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.distance = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
             case HKQuantityType.quantityType(forIdentifier: .runningSpeed), HKQuantityType.quantityType(forIdentifier: .walkingSpeed):
                 self.speed = statistics.mostRecentQuantity()?.doubleValue(for:  HKUnit.init(from: "m/s")) ?? 0
+            case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
+                self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit(from: "kcal")) ?? 0
             default:
                 return
+                
             }
         }
     }
@@ -247,7 +284,10 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         maxSpeed = 0
         speed = 0
         sprint = 0
-        
+        saveMaxHeartRate = 0
+        saveMinHeartRate = 0
+        zone5Count = 0
+        heartZone = 1
     }
     
     // MARK: - Heart Rate Setup
@@ -276,6 +316,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         
         // Wait for the session to transition states before ending the builder.
         if toState == .ended {
+            
             builder?.endCollection(withEnd: date) { (success, error) in
                 self.builder?.finishWorkout { (workout, error) in
                     DispatchQueue.main.async {
@@ -287,7 +328,6 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             
             if let workout = self.workout {
                 routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
-                    
                     guard newRoute != nil else {
                         // Handle any errors here.
                         return
@@ -317,7 +357,6 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
             }
             
             let statistics = workoutBuilder.statistics(for: quantityType)
-            
             // Update the published values.
             updateForStatistics(statistics)
         }

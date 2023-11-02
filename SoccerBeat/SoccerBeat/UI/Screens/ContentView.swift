@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct ContentView: View {
+    @StateObject var healthInteractor = HealthInteractor.shared
     var body: some View {
         ScrollView {
             ZStack {
@@ -36,6 +38,9 @@ struct ContentView: View {
                     
                 }
             }
+        }.task {
+            await healthInteractor.fetchAllData()
+            print("stop ..")
         }
     }
 }

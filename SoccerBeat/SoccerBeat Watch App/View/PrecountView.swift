@@ -38,7 +38,6 @@ struct PrecountView: View {
                 }.padding()
                 
             }.onAppear {
-                print("Appeared")
                 showingSession = false
                 count = 3
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -60,7 +59,6 @@ struct PrecountView: View {
             }.onDisappear {
                 // MARK: - Session Start
                 workoutManager.startWorkout()
-                print("Disappeared")
             }
         }
     }
