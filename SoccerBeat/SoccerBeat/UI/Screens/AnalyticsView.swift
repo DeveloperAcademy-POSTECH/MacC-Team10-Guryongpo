@@ -9,59 +9,96 @@ import SwiftUI
 
 struct AnalyticsView: View {
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 20) {
             HStack {
                 Text("최근 경기 분석")
                 Spacer()
             }
             .padding(.leading)
             .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
-            Spacer()
-                .frame(height: 5)
-            VStack {
+            
+            VStack(spacing: 15) {
                 HStack {
-                    VStack {
+                    VStack(alignment: .leading) {
                         HStack {
                             Image("Running")
+                                .resizable()
+                                .frame(width: 22, height: 22)
                             Text("활동량 (MF)")
                         }
                         Text("2.2 Km")
+                            .font(.custom("SFProText-HeavyItalic", size: 32))
+                            .foregroundStyle(.zone2Bpm)
                     }
                     Spacer()
+                    Image("ActivityGraph")
                 }
+                .padding()
+                .padding(.horizontal)
                 .overlay {
                     LightRectangleView()
                 }
                 HStack {
-                    VStack {
+                    VStack(alignment: .leading) {
                         HStack {
                             Image("Running")
-                            Text("활동량 (MF)")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                            Text("스프린트 (FW)")
                         }
-                        Text("2.2 Km")
+                        Text("10 Times")
+                            .font(.custom("SFProText-HeavyItalic", size: 32))
+                            .foregroundStyle(.zone3Bpm)
                     }
                     Spacer()
+                    Image("SprintGraph")
+                }
+                .padding()
+                .padding(.horizontal)
+                .overlay {
+                    LightRectangleView()
                 }
                 HStack {
-                    VStack {
+                    VStack(alignment: .leading) {
                         HStack {
                             Image("Running")
-                            Text("활동량 (MF)")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                            Text("최고 속도 (DF)")
                         }
-                        Text("2.2 Km")
+                        Text("20 Km/h")
+                            .font(.custom("SFProText-HeavyItalic", size: 32))
+                            .foregroundStyle(.zone1Bpm)
                     }
                     Spacer()
+                    Image("MaxSpeedGraph")
+                }
+                .padding()
+                .padding(.horizontal)
+                .overlay {
+                    LightRectangleView()
                 }
                 HStack {
-                    VStack {
+                    VStack(alignment: .leading) {
                         HStack {
                             Image("Running")
-                            Text("활동량 (MF)")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                            Text("심박수")
                         }
-                        Text("2.2 Km")
+                        Text("180 Bpm")
+                            .font(.custom("SFProText-HeavyItalic", size: 32))
+                            .foregroundStyle(.zone4Bpm)
                     }
                     Spacer()
+                    Image("HeartrateGraph")
                 }
+                .padding()
+                .padding(.horizontal)
+                .overlay {
+                    LightRectangleView()
+                }
+                
             }
             .padding(.horizontal)
         }
