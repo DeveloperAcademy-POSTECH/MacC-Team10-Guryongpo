@@ -18,6 +18,21 @@ class HealthInteractor: ObservableObject {
     var allRoutes: [CLLocation] = []
     var customData: [HKQuantitySample] = []
     
+    private let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-mm-dd"
+            return formatter
+        }()
+    
+    var monthly: [String: [WorkoutData]] {
+        var dict = [String: [WorkoutData]]()
+        userWorkouts.forEach { match in
+            let yearMonth = Array(match.date.split(separator: "-")[...1]).joined(separator: "-")
+            dict[yearMonth, default: []].append(match)
+        }
+        return dict
+    }
+    
     static let shared = HealthInteractor()
     
     init() {
@@ -68,13 +83,12 @@ class HealthInteractor: ObservableObject {
                 }
                 
                 let custom = customData[dataId]
-                print(custom.metadata!)
                 
                 var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
                 
 //                await userWorkouts.append(WorkoutData(dataId: dataId, date: allWorkout.startDate, time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: 0, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int], route: routes, center: (latSum / Double(routes.count), lonSum / Double(routes.count))))
                 
-                await userWorkouts.append(WorkoutData(dataId: dataId, date: allWorkout.startDate, time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: 0, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int]))
+                await userWorkouts.append(WorkoutData(dataId: dataId, date: dateFormatter.string(from: allWorkout.startDate), time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: custom.metadata?["SprintCount"] as! Int, calorie: custom.metadata?["Calorie"] as! Double, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int]))
                 
                 dataId += 1
             }
@@ -101,7 +115,6 @@ class HealthInteractor: ObservableObject {
         guard let workouts = data as? [HKWorkout] else {
             return nil
         }
-        await customData = getCustomData()!
         return workouts
     }
     

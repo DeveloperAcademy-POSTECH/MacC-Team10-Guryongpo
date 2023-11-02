@@ -15,6 +15,7 @@ enum ActivityEnum {
 }
 
 struct AnalyticsView: View {
+    @EnvironmentObject private var healthInteractor: HealthInteractor
     
     var body: some View {
         VStack(spacing: 20) {
