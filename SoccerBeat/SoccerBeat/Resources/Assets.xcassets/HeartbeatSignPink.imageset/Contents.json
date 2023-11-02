@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "HeartbeatSignPink.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -9,7 +10,6 @@
       "scale" : "2x"
     },
     {
-      "filename" : "ArchiveTabIconNotSelected.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -30,6 +30,19 @@ struct BarMinMaxGraphView: View {
                 }
                 .foregroundStyle(color)
             }
+            .chartYAxis {
+                AxisMarks() { _ in
+                    AxisGridLine().foregroundStyle(.clear)
+                    AxisTick().foregroundStyle(.clear)
+                }
+            }
+            .chartYScale(domain: [60,200])
+            .chartXAxis {
+                AxisMarks() { _ in
+                     AxisGridLine().foregroundStyle(.clear)
+                     AxisTick().foregroundStyle(.clear)
+                }
+            }
         }
 }
 

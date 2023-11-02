@@ -59,7 +59,6 @@ extension ShapeStyle where Self == Color {
     // MARK: - SplitControlsView
     
     static var circleBackground: Self { .init(hex: 0xD9D9D9, alpha: 0.2) }
-
 }
 
 extension ShapeStyle where Self == LinearGradient {
@@ -139,6 +138,7 @@ extension ShapeStyle where Self == LinearGradient {
     }
     
     // MARK: - Stop State
+    
     static var stopCurrentZoneBar: Self {
         let start = Color(hex: 0x000000, alpha: 0.35)
         let end = Color(hex: 0x838383)
@@ -152,5 +152,20 @@ extension ShapeStyle where Self == LinearGradient {
         let start = Color(hex: 0x333333)
         return .linearGradient(colors: [start, .white],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    // MARK: - MatchTotalView
+    
+    static var matchTotalTitle: Self {
+        let start = Color(hex: 0xFF00B8)
+        return .linearGradient(colors: [start, .white],
+                               startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    static var matchTotalSectionHeader: Self {
+        let start = Color(hex: 0xFFFFFF)
+        let end = Color(hex: 0xFFFFFF7A)
+        return .linearGradient(colors: [start, end],
+                               startPoint: .leading, endPoint: .trailing)
     }
 }
