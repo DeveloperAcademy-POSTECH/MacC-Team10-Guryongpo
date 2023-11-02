@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MatchTotalView: View {
     @StateObject private var matchData = MatchItemData()
-    let userName = "Gucci"
+    let userName = "Son"
     
     var body: some View {
         ScrollView {
@@ -30,9 +30,7 @@ struct MatchTotalView: View {
                     ForEach(matchData.monthly[monthDate, default: []]) { matchDetail in
                         
                         NavigationLink {
-                            // TEMP: MatchDetailView
-                            Text("스프린트 개수: \(matchDetail.sprint)")
-                                .navigationTitle(matchDetail.date)
+                            MatchDetailView()
                         } label: {
                             MatchListItemView(matchDetail: matchDetail)
                                 .padding(10)
@@ -74,7 +72,5 @@ extension MatchTotalView {
 }
 
 #Preview {
-    NavigationStack {
         MatchTotalView()
-    }
 }

@@ -9,31 +9,33 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ScrollView {
-            ZStack {
-                Image("BackgroundPattern")
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 0)
-                
-                VStack {
-                    MyCardView()
+        NavigationStack {
+            ScrollView {
+                ZStack {
+                    Image("BackgroundPattern")
+                        .resizable()
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 0)
                     
-                    Spacer()
-                        .frame(height: 114)
-                    
-                    
-                    MatchRecapView()
-                    
-                    Spacer()
-                        .frame(height: 60)
-                    
-                    AnalyticsView()
-                    
-                    Spacer()
-                        .frame(height: 60)
-                    
+                    VStack {
+                        
+                        MyCardView()
+                        
+                        Spacer()
+                            .frame(height: 114) 
+                        
+                        MatchRecapView()
+                        
+                        Spacer()
+                            .frame(height: 60)
+                        
+                        AnalyticsView()
+                        
+                        Spacer()
+                            .frame(height: 60)
+                        
+                    }
                 }
             }
         }

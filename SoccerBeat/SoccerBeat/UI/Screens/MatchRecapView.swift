@@ -33,61 +33,51 @@ class MatchItemData: ObservableObject {
 struct MatchRecapView: View {
     @ObservedObject var matchItemData = MatchItemData()
     @State var showingMatchDetail = false
-    @State var path: [NavigationStackViewType] = []
-    
-    enum NavigationStackViewType {
-        case firstView
-        case secondView
-    }
     
     var body: some View {
-//        NavigationStack(path: $path) {
-            VStack(spacing: 10) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 0.0) {
-                        Text("Hello, Son")
-                        Text("Your archive")
-                    }
-                    .foregroundStyle(
-                        .linearGradient(colors: [.hotpink, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .font(.custom("SFProText-HeavyItalic", size: 36))
-                    .kerning(-1.5)
-                    .padding(.leading, 10)
-                    Spacer()
+        VStack(spacing: 10) {
+            HStack {
+                VStack(alignment: .leading, spacing: 0.0) {
+                    Text("Hello, Son")
+                    Text("Your archive")
                 }
-                .padding(.top, 30)
-                
+                .foregroundStyle(
+                    .linearGradient(colors: [.hotpink, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .font(.custom("SFProText-HeavyItalic", size: 36))
+                .kerning(-1.5)
+                .padding(.leading, 10)
                 Spacer()
-                    .frame(height: 60)
-                
-                HStack {
-                    Text("최근 경기 기록")
-                        .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
-                    Spacer()
-                    Button(action: { path.append(.firstView) }) {
-                        Text("모든 기록 보기 +")
-                            .foregroundStyle(.white)
-                            .font(.custom("NotoSansDisplay-BlackItalic", size: 14))
-                    }
+            }
+            .padding(.top, 30)
+            
+            Spacer()
+                .frame(height: 60)
+            
+            HStack {
+                Text("최근 경기 기록")
+                    .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
+                Spacer()
+                NavigationLink {
+                    MatchTotalView()
+                } label: {
+                    Text("모든 기록 보기 +")
                 }
-                .padding(.horizontal)
-                VStack {
-                    ForEach(matchItemData.matchitems.prefix(3), id: \.self) { matchDetail in
-                            MatchListItemView(matchDetail: matchDetail)
-                            .padding(.vertical, 5)
-                    }
-                }
+                .foregroundStyle(.white)
+                .font(.custom("NotoSansDisplay-BlackItalic", size: 14))
             }
             .padding(.horizontal)
-//            .navigationDestination(for: NavigationStackViewType.self) { navigationStackViewType in
-//                switch navigationStackViewType {
-//                case .firstView:
-//                    AnalyticsDetailView(graphType: .BPM)
-//                case .secondView:
-//                    MatchDetailView()
-//                }
-//            }
-//        }
+            VStack {
+                ForEach(matchItemData.matchitems.prefix(3), id: \.self) { matchDetail in
+                    NavigationLink {
+                        MatchDetailView()
+                    } label: {
+                        MatchListItemView(matchDetail: matchDetail)
+                    }
+                    .padding(.vertical, 10)
+                }
+            }
+        }
+        .padding(.horizontal)
     }
 }
 
@@ -96,6 +86,7 @@ struct MatchListItemView: View {
     
     var body: some View {
         ZStack {
+            LightRectangleView()
             HStack {
                 Spacer ()
                 
@@ -138,9 +129,6 @@ struct MatchListItemView: View {
                 Spacer()
             }
             .padding(.vertical, 10)
-            .overlay {
-                LightRectangleView()
-            }
         }
     }
 }
@@ -159,8 +147,3 @@ struct MatchDetail: Identifiable, Hashable {
 #Preview {
     MatchRecapView()
 }
-
-//#Preview {
-//    let detail = MatchItemData().matchitems[0]
-//    return MatchListItemView(matchDetail: detail)
-//}

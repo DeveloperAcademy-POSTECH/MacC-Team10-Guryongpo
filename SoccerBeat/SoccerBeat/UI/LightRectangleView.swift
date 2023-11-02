@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LightRectangleView: View {
-    var backgroundColor: Color = .gray.opacity(0.2)
+    var backgroundColor: Color = .gray.opacity(0.3)
     var intensity: CGFloat = 0.5
     var gradient = Gradient(colors: [
         Color.white,
