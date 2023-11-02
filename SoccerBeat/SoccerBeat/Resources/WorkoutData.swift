@@ -9,9 +9,14 @@ import Foundation
 import CoreLocation
 
 struct WorkoutData {
-    var distance: Double
-    var sprint: Int
-    var speed: Double
-    var heartRate: Double
-    var route: [CLLocation]
+    var dataId: Int // id
+    let date: Date
+    let time: String
+    let distance: Double // total distance
+    let location: String
+    let sprint: Int // sprint counter
+    let velocity: Double // maximum velocity
+    var heartRate: [String: Int] // min, max of heartRate
+    var route: [CLLocationCoordinate2D] // whole route
+    var center: (Double, Double) // center of heatmap
 }
