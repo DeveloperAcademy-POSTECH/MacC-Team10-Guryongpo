@@ -11,7 +11,7 @@ enum GraphEnum {
     case distance
     case sprint
     case speed
-    case BPM
+    case heartrate
 }
 
 struct AnalyticsDetailView: View {
@@ -22,11 +22,11 @@ struct AnalyticsDetailView: View {
         case .distance:
             return .zone2Bpm
         case .sprint:
-            return .zone4Bpm
+            return .zone3Bpm
         case .speed:
             return .zone1Bpm
-        case .BPM:
-            return .zone3Bpm
+        case .heartrate:
+            return .zone4Bpm
         }
     }
     
@@ -38,7 +38,7 @@ struct AnalyticsDetailView: View {
             return "FW - sprint"
         case .speed:
             return "DF - speed"
-        case .BPM:
+        case .heartrate:
             return "Soccer BPM"
         }
     }
@@ -51,7 +51,7 @@ struct AnalyticsDetailView: View {
             return "스프린트 횟수 (FW)"
         case .speed:
             return "속도 (DF)"
-        case .BPM:
+        case .heartrate:
             return "심박수"
         }
     }

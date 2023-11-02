@@ -21,7 +21,8 @@ struct MatchDetailView: View {
                 VStack {
                     MatchDetailView01()
                     MatchDetailView02()
-                    MatchDetailView03()
+// MARK: 추후 HeartRate 추가
+//                    MatchDetailView03()
                     MatchDetailView04()
                 }
             }

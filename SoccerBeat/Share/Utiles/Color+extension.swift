@@ -164,7 +164,7 @@ extension ShapeStyle where Self == LinearGradient {
     
     static var matchTotalSectionHeader: Self {
         let start = Color(hex: 0xFFFFFF)
-        let end = Color(hex: 0xFFFFFF7A)
+        let end = Color(hex: 0xFFFFFF).opacity(0.5)
         return .linearGradient(colors: [start, end],
                                startPoint: .leading, endPoint: .trailing)
     }
