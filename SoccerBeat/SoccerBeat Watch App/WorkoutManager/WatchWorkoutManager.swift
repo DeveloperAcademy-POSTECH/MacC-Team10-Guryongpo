@@ -32,6 +32,8 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var saveMaxHeartRate: Int = 0
     var maxHeartRate: Double?
     
+    var energy: Double = 0
+    
     let sprintSpeed: Double = 5.5556 // modify it to test code
 //    let sprintSpeed: Double = 1.0 // modify it to test code
         
@@ -116,8 +118,10 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         // write
         let typesToShare: Set = [HKQuantityType.workoutType(), 
                                  HKSeriesType.workoutRoute(),
-                                 HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-                                 HKQuantityType.quantityType(forIdentifier: .runningSpeed)!
+                                 HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+                                 HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                                 HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+                                 
         ]
         
         // The quantity types to read from the health store.
@@ -127,6 +131,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
             HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
+            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
             HKSeriesType.workoutType(),
             HKSeriesType.workoutRoute(),
             HKObjectType.activitySummaryType()
@@ -165,7 +170,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         let speed = Measurement(value: self.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general))
         
-        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed), quantity: HKQuantity(unit:HKUnit.init(from: "m/s"), doubleValue: self.maxSpeed), start: nowDate, end: nowDate, metadata: ["MaxSpeed": speed, "SprintCount": self.sprint, "MinHeartRate": saveMinHeartRate, "MaxHeartRate": saveMaxHeartRate])
+        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed), quantity: HKQuantity(unit:HKUnit.init(from: "m/s"), doubleValue: self.maxSpeed), start: nowDate, end: nowDate, metadata: ["MaxSpeed": speed, "SprintCount": self.sprint, "MinHeartRate": saveMinHeartRate, "MaxHeartRate": saveMaxHeartRate, "Distance": self.distance, "Calorie": self.energy])
         
         self.healthStore.save(dataSample, withCompletion: { (success, error) in
             if (error != nil) {
@@ -243,7 +248,8 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.distance = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
             case HKQuantityType.quantityType(forIdentifier: .runningSpeed), HKQuantityType.quantityType(forIdentifier: .walkingSpeed):
                 self.speed = statistics.mostRecentQuantity()?.doubleValue(for:  HKUnit.init(from: "m/s")) ?? 0
-                
+            case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
+                self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit(from: "kcal")) ?? 0
             default:
                 return
                 
