@@ -14,7 +14,7 @@ class HealthInteractor: ObservableObject {
     
     var allWorkouts: [HKWorkout] = []
     var allRoutes: [CLLocation] = []
-    var speedData: [HKQuantitySample] = []
+    var customData: [HKQuantitySample] = []
     
     static let shared = HealthInteractor()
     
@@ -71,11 +71,11 @@ class HealthInteractor: ObservableObject {
         guard let workouts = data as? [HKWorkout] else {
             return nil
         }
-        await speedData = getSpeedSprint()!
+        await customData = getCustomData()!
         return workouts
     }
     
-    func getSpeedSprint() async -> [HKQuantitySample]? {
+    func getCustomData() async -> [HKQuantitySample]? {
         
         guard let speedType =
                 HKObjectType.quantityType(forIdentifier:
