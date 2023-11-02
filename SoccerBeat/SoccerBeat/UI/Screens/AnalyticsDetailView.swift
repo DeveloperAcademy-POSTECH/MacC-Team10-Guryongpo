@@ -65,7 +65,9 @@ struct AnalyticsDetailView: View {
                 
                 Text("\(englishTitle)")
                     .font(.custom("SFProText-HeavyItalic", size: 36))
-                .foregroundStyle(mainColor)            }
+                    .foregroundStyle(mainColor)
+            }
+            .padding(.horizontal)
             
             VStack {
                 HStack {
@@ -73,59 +75,106 @@ struct AnalyticsDetailView: View {
                         .font(.custom("SFProText-Regular", size: 14))
                     Spacer()
                 }
+                .padding()
                 
                 ZStack {
                     LightRectangleView()
+                    VStack {
+                        Text("2023.10.01 - 11.12")
+                        BarMinMaxGraphView(color: Gradient(colors:[Color(hex: "FF007A")]), data: HeartBeatlast12Months)
+                            .frame(width: 260, height: 90)
+                            .padding(.vertical)
+                        HStack(spacing: 15) {
+                            VStack {
+                                Text("110")
+                                    .font(.custom("나중에 추가", size: 12))
+                                Text("1일")
+                                    .font(.custom("나중에 추가", size: 10))
+                            }
+                            VStack {
+                                Text("110")
+                                    .font(.custom("나중에 추가", size: 12))
+                                Text("11일")
+                                    .font(.custom("나중에 추가", size: 10))
+                            }
+                            VStack {
+                                Text("180")
+                                    .font(.custom("SFProText-HeavyItalic", size: 12))
+                                Text("13일")
+                                    .font(.custom("나중에 추가", size: 10))
+                            }
+                            VStack {
+                                Text("120")
+                                    .font(.custom("나중에 추가", size: 12))
+                                Text("15일")
+                                    .font(.custom("나중에 추가", size: 10))
+                            }
+                            VStack {
+                                Text("110")
+                                    .font(.custom("나중에 추가", size: 12))
+                                Text("17일")
+                                    .font(.custom("나중에 추가", size: 10))
+                            }
+                        }
+                        .frame(width: 222, height: 41)
+                    }
                 }
                 .frame(height: 230)
             }
             .padding()
             
-            
             ZStack {
                 LightRectangleView()
-                
                 HStack {
-                    FormattedRecordAnalytics(recordType: "최고 기록" )
+                    FormattedRecordAnalytics(recordType: "최고 기록", value: "1.5")
                         .frame(maxWidth: .infinity)
                         .padding()
                     
-                    FormattedRecordAnalytics(recordType: "최저 기록")
+                    FormattedRecordAnalytics(recordType: "최저 기록", value: "1.0")
                         .frame(maxWidth: .infinity)
                         .padding()
                 }
-            }.frame(height: 80)
-                .padding()
+            }
+            .frame(height: 80)
+            .padding()
+            
+            Spacer()
+                .frame(height: 35)
             
             VStack(alignment: .leading) {
-                HStack {
-                    Text("SoccerBeat의 한 마디")
-                        .font(.custom("SFProText-Medium", size: 16))
-                    Spacer()
-                }
+                Text("SoccerBeat의 한 마디")
+                    .font(.custom("나중에 추가", size: 16))
                 RandomComment()
-                    .font(.custom("SFProText-Heavy", size: 28))
-            }.padding()
-        }.padding(.horizontal)
+                    .font(.custom("나중에 추가", size: 28))
+                Spacer()
+            }
+            .frame(width: 280)
+        }
+        .padding(.horizontal)
     }
 }
 
 #Preview {
-    AnalyticsDetailView(graphType: .BPM)
+    AnalyticsDetailView(graphType: .distance)
 }
 
 struct FormattedRecordAnalytics: View {
     var recordType: String
-    var value: Double = 1.5
+    var value: String = "-"
     var date: Date = Date()
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        return formatter
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(recordType)
                 .font(.custom("SFProText-Regular", size: 10))
-            Text("\(date.formatted())")
+            Text("\(dateFormatter.string(from: date))")
                 .font(.custom("SFProText-Regular", size: 10))
-            Text("\(value)")
+            Text("\(value) km")
                 .font(.custom("SFProText-HeavyItalic", size: 14))
                 .padding(.top)
         }
