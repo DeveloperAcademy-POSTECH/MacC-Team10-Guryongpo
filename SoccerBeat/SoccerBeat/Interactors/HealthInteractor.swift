@@ -12,6 +12,8 @@ import CoreLocation
 class HealthInteractor: ObservableObject {
     var healthStore = HKHealthStore()
     
+    var userWorkouts: [WorkoutData] = []
+    
     var allWorkouts: [HKWorkout] = []
     var allRoutes: [CLLocation] = []
     var customData: [HKQuantitySample] = []
@@ -47,10 +49,35 @@ class HealthInteractor: ObservableObject {
     }
     
     func fetchAllData() async {
-//        print("fetchAllData: attempting to fetch all data..")
+        print("fetchAllData: attempting to fetch all data..")
         
         allWorkouts = await getAllWorkout() ?? []
-//        allRoutes = await getWorkoutRoute(workout: allWorkouts.last!)!
+        customData = await getCustomData() ?? []
+//        await getWorkoutDistance(workout: allWorkouts.last!)
+        if !allWorkouts.isEmpty {
+            var dataId = 0
+            for allWorkout in allWorkouts {
+                var latSum = 0.0
+                var lonSum = 0.0
+                var routes: [CLLocationCoordinate2D] = []
+                let routeWorkouts = await getWorkoutRoute(workout: allWorkout) ?? []
+                for routeWorkout in routeWorkouts {
+                    routes.append(CLLocationCoordinate2D(latitude: routeWorkout.coordinate.latitude, longitude: routeWorkout.coordinate.longitude))
+                    latSum += routeWorkout.coordinate.latitude
+                    lonSum += routeWorkout.coordinate.longitude
+                }
+                
+                let custom = customData[dataId]
+                print(custom.metadata!)
+                
+                var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
+                
+                await userWorkouts.append(WorkoutData(dataId: dataId, date: allWorkout.startDate, time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: 0, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int], route: routes, center: (latSum / Double(routes.count), lonSum / Double(routes.count))))
+                dataId += 1
+            }
+        }
+        
+        print(userWorkouts)
     }
     
     func getAllWorkout() async -> [HKWorkout]? {
@@ -76,30 +103,30 @@ class HealthInteractor: ObservableObject {
     }
     
     func getCustomData() async -> [HKQuantitySample]? {
-        
-        guard let speedType =
-                HKObjectType.quantityType(forIdentifier:
-                HKQuantityTypeIdentifier.runningSpeed) else {
-            fatalError("*** Unable to create a distance type ***")
-        }
-        
-        let soccer = HKQuery.predicateForObjects(from: .default())
-        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-            self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
-                if let hasError = error {
-                    continuation.resume(throwing: hasError)
-                    return
-                }
-                continuation.resume(returning: samples!)
-            }))
-        }
-        guard let speedData = data as? [HKQuantitySample] else {
-            return nil
-        }
-        return speedData
-    }
+           
+           guard let speedType =
+                   HKObjectType.quantityType(forIdentifier:
+                   HKQuantityTypeIdentifier.runningSpeed) else {
+               fatalError("*** Unable to create a distance type ***")
+           }
+           
+           let soccer = HKQuery.predicateForObjects(from: .default())
+           let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+               self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
+                   if let hasError = error {
+                       continuation.resume(throwing: hasError)
+                       return
+                   }
+                   continuation.resume(returning: samples!)
+               }))
+           }
+           guard let speedData = data as? [HKQuantitySample] else {
+               return nil
+           }
+           return speedData
+       }
     
-    func getWorkoutRoute(workout: HKWorkout) async -> [CLLocation]? {
+    func getWorkoutRoute(workout: HKWorkout) async -> ([CLLocation]?) {
         let byWorkout = HKQuery.predicateForObjects(from: workout)
         
         let samples = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
