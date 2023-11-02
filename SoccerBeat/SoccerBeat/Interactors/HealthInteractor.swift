@@ -12,7 +12,7 @@ import CoreLocation
 class HealthInteractor: ObservableObject {
     var healthStore = HKHealthStore()
     
-    var allWorkots: [HKWorkout] = []
+    var allWorkouts: [HKWorkout] = []
     var allRoutes: [CLLocation] = []
     var customData: [HKQuantitySample] = []
     
