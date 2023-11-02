@@ -14,24 +14,26 @@ struct ContentView: View {
                 Image("BackgroundPattern")
                     .resizable()
                     .scaledToFit()
-                    .frame(maxHeight: .infinity)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 0)
                 
                 VStack {
-                    VStack {
-                        MyCardView()
-                        
-                        Spacer()
-                            .frame(height: 114)
-                        
-                        MatchRecapView()
-                        
-                        Spacer()
-                            .frame(height: 60)
-                        
-                        AnalyticsView()
-                        
-                        Spacer()
-                    }
+                    MyCardView()
+                    
+                    Spacer()
+                        .frame(height: 114)
+                    
+                    
+                    MatchRecapView()
+                    
+                    Spacer()
+                        .frame(height: 60)
+                    
+                    AnalyticsView()
+                    
+                    Spacer()
+                        .frame(height: 60)
+                    
                 }
             }
         }

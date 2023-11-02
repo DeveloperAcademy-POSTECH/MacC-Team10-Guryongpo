@@ -224,9 +224,9 @@
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
 				685D7B642AE529E800783433 /* AnalyticsView.swift */,
+				6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */,
 				685D7B742AE53DC400783433 /* LineGraphView.swift */,
 				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
-				6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -510,7 +510,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBE203952AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BE4069D82AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069E52AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,

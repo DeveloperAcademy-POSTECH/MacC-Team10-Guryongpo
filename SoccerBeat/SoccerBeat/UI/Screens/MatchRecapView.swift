@@ -26,7 +26,7 @@ class MatchItemData: ObservableObject {
             let yearMonth = Array(match.date.split(separator: ".")[...1]).joined(separator: ".")
             dict[yearMonth, default: []].append(match)
         }
-        return dict 
+        return dict
     }
 }
 
@@ -41,7 +41,7 @@ struct MatchRecapView: View {
     }
     
     var body: some View {
-        NavigationStack(path: $path) {
+//        NavigationStack(path: $path) {
             VStack(spacing: 10) {
                 HStack {
                     VStack(alignment: .leading, spacing: 0.0) {
@@ -59,12 +59,12 @@ struct MatchRecapView: View {
                 .padding(.horizontal)
                 
                 Spacer()
-                    .frame(height: 75)
+                    .frame(height: 60)
                 
                 HStack {
                     Spacer()
                         .frame(width: 30)
-                    Text("최근 3경기 기록")
+                    Text("최근 경기 기록")
                         .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
                     Spacer()
                     Button(action: { path.append(.firstView) }) {
@@ -75,29 +75,23 @@ struct MatchRecapView: View {
                     Spacer()
                         .frame(width: 30)
                 }
-                
-                List {
-                    ForEach(matchItemData.matchitems, id: \.self) { matchDetail in
-                        MatchListItemView(matchDetail: matchDetail)
-                            .listRowSeparator(.hidden)
-                            .onTapGesture {
-                                showingMatchDetail.toggle()
-                            }
+                VStack {
+                    ForEach(matchItemData.matchitems.prefix(3), id: \.self) { matchDetail in
+                        ZStack {
+                            MatchListItemView(matchDetail: matchDetail)
+                        }
                     }
                 }
-                .listStyle(.plain)
-                .scrollIndicators(.hidden)
-                .scrollContentBackground(.hidden)
             }
-            .navigationDestination(for: NavigationStackViewType.self) { navigationStackViewType in
-                switch navigationStackViewType {
-                case .firstView:
-                    AnalyticsView()
-                case .secondView:
-                    MatchDetailView()
-                }
-            }
-        }
+//            .navigationDestination(for: NavigationStackViewType.self) { navigationStackViewType in
+//                switch navigationStackViewType {
+//                case .firstView:
+//                    AnalyticsDetailView(graphType: .BPM)
+//                case .secondView:
+//                    MatchDetailView()
+//                }
+//            }
+//        }
     }
 }
 
@@ -151,7 +145,7 @@ struct MatchListItemView: View {
             .overlay {
                 LightRectangleView()
             }
-        }.listRowBackground(Color.clear)
+        }
     }
 }
 
@@ -170,7 +164,7 @@ struct MatchDetail: Identifiable, Hashable {
     MatchRecapView()
 }
 
-#Preview {
-    let detail = MatchItemData().matchitems[0]
-    return MatchListItemView(matchDetail: detail)
-}
+//#Preview {
+//    let detail = MatchItemData().matchitems[0]
+//    return MatchListItemView(matchDetail: detail)
+//}
