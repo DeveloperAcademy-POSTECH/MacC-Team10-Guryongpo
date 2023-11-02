@@ -72,7 +72,10 @@ class HealthInteractor: ObservableObject {
                 
                 var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
                 
-                await userWorkouts.append(WorkoutData(dataId: dataId, date: allWorkout.startDate, time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: 0, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int], route: routes, center: (latSum / Double(routes.count), lonSum / Double(routes.count))))
+//                await userWorkouts.append(WorkoutData(dataId: dataId, date: allWorkout.startDate, time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: 0, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int], route: routes, center: (latSum / Double(routes.count), lonSum / Double(routes.count))))
+                
+                await userWorkouts.append(WorkoutData(dataId: dataId, date: allWorkout.startDate, time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: 0, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int]))
+                
                 dataId += 1
             }
         }

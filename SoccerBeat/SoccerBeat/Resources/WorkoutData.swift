@@ -8,7 +8,11 @@
 import Foundation
 import CoreLocation
 
-struct WorkoutData {
+struct WorkoutData: Hashable, Equatable {
+//    static func == (lhs: WorkoutData, rhs: WorkoutData) -> Bool {
+//        lhs.dataId == rhs.dataId
+//    }
+//    var id: UUID = UUID()
     var dataId: Int // id
     let date: Date
     let time: String
@@ -17,6 +21,6 @@ struct WorkoutData {
     let sprint: Int // sprint counter
     let velocity: Double // maximum velocity
     var heartRate: [String: Int] // min, max of heartRate
-    var route: [CLLocationCoordinate2D] // whole route
-    var center: (Double, Double) // center of heatmap
+//    var route: [CLLocationCoordinate2D] // whole route
+//    var center: (Double, Double) // center of heatmap
 }
