@@ -7,32 +7,34 @@
 
 import SwiftUI
 
-class MatchItemData: ObservableObject {
-    @Published var matchitems = [
-        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
-        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
-        MatchDetail(date: "2023.11.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
-        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
-        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
-        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
-        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
-        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
-        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03")
-    ]
-    
-    var monthly: [String: [MatchDetail]] {
-        var dict = [String: [MatchDetail]]()
-        matchitems.forEach { match in
-            let yearMonth = Array(match.date.split(separator: ".")[...1]).joined(separator: ".")
-            dict[yearMonth, default: []].append(match)
-        }
-        return dict
-    }
-}
+let fakeWorkoutData: WorkoutData = WorkoutData(dataId: 10, date: Date(), time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81])
+
+//class MatchItemData: ObservableObject {
+//    @Published var matchitems = [
+//        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
+//        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
+//        MatchDetail(date: "2023.11.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
+//        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
+//        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
+//        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
+//        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
+//        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
+//        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03")
+//    ]
+//    
+//    var monthly: [String: [MatchDetail]] {
+//        var dict = [String: [MatchDetail]]()
+//        matchitems.forEach { match in
+//            let yearMonth = Array(match.date.split(separator: ".")[...1]).joined(separator: ".")
+//            dict[yearMonth, default: []].append(match)
+//        }
+//        return dict
+//    }
+//}
 
 struct MatchRecapView: View {
-    @ObservedObject var matchItemData = MatchItemData()
-    @State var showingMatchDetail = false
+    
+    @EnvironmentObject private var healthInteractor: HealthInteractor
     
     var body: some View {
         VStack(spacing: 10) {
@@ -58,7 +60,7 @@ struct MatchRecapView: View {
                     .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
                 Spacer()
                 NavigationLink {
-                    MatchTotalView()
+//                    MatchTotalView()
                 } label: {
                     Text("모든 기록 보기 +")
                 }
@@ -67,11 +69,11 @@ struct MatchRecapView: View {
             }
             .padding(.horizontal)
             VStack {
-                ForEach(matchItemData.matchitems.prefix(3), id: \.self) { matchDetail in
+                ForEach(healthInteractor.userWorkouts, id: \.self) { workout in
                     NavigationLink {
                         MatchDetailView()
                     } label: {
-                        MatchListItemView(matchDetail: matchDetail)
+                        MatchListItemView(workoutData: workout)
                     }
                     .padding(.vertical, 10)
                 }
@@ -82,7 +84,7 @@ struct MatchRecapView: View {
 }
 
 struct MatchListItemView: View {
-    let matchDetail: MatchDetail
+    let workoutData: WorkoutData
     
     var body: some View {
         ZStack {
@@ -90,36 +92,36 @@ struct MatchListItemView: View {
             HStack {
                 Spacer ()
                 
-                Image("\(matchDetail.heatmap)")
+                Image("Heatmap01")
                     .resizable()
                     .frame(width: 80, height: 120)
                     .padding(.leading, 5)
                 
                 VStack(alignment: .leading) {
-                    Text(matchDetail.date + " - " + matchDetail.location)
+                    Text(workoutData.date.description + " - " + workoutData.location)
                         .foregroundStyle(Color.white.opacity(0.5))
-                    Text("경기 시간 " + matchDetail.time)
+                    Text("경기 시간 " + workoutData.time)
                         .foregroundStyle(Color.white)
                         .padding(.bottom)
                     
                     HStack {
                         VStack(alignment: .leading) {
                             Text("활동량")
-                            Text(String(format: "%.1f", matchDetail.distance) + "km")
+                            Text(String(format: "%.1f", workoutData.distance) + "km")
                         }.foregroundStyle(
                             .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .font(.custom("SFProText-HeavyItalic", size: 16))
                         
                         VStack(alignment: .leading) {
                             Text("최고 속도")
-                            Text("\(matchDetail.velocity)km/h")
+                            Text("\(workoutData.velocity)km/h")
                         }.foregroundStyle(
                             .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .font(.custom("SFProText-HeavyItalic", size: 16))
                         
                         VStack(alignment: .leading) {
                             Text("스프린트 횟수")
-                            Text("\(matchDetail.sprint)회")
+                            Text("\(workoutData.sprint)회")
                         }
                         .foregroundStyle(
                             .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -133,17 +135,10 @@ struct MatchListItemView: View {
     }
 }
 
-struct MatchDetail: Identifiable, Hashable {
-    let id = UUID()
-    let date: String
-    let location: String
-    let time: String
-    let distance: Float
-    let velocity: Int
-    let sprint: Int
-    let heatmap: String
+#Preview {
+    MatchRecapView()
 }
 
 #Preview {
-    MatchRecapView()
+    MatchListItemView(workoutData: fakeWorkoutData)
 }
