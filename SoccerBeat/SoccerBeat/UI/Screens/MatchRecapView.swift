@@ -56,14 +56,11 @@ struct MatchRecapView: View {
                     Spacer()
                 }
                 .padding(.top, 30)
-                .padding(.horizontal)
                 
                 Spacer()
                     .frame(height: 60)
                 
                 HStack {
-                    Spacer()
-                        .frame(width: 30)
                     Text("최근 경기 기록")
                         .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
                     Spacer()
@@ -72,17 +69,16 @@ struct MatchRecapView: View {
                             .foregroundStyle(.white)
                             .font(.custom("NotoSansDisplay-BlackItalic", size: 14))
                     }
-                    Spacer()
-                        .frame(width: 30)
                 }
+                .padding(.horizontal)
                 VStack {
                     ForEach(matchItemData.matchitems.prefix(3), id: \.self) { matchDetail in
-                        ZStack {
                             MatchListItemView(matchDetail: matchDetail)
-                        }
+                            .padding(.vertical, 5)
                     }
                 }
             }
+            .padding(.horizontal)
 //            .navigationDestination(for: NavigationStackViewType.self) { navigationStackViewType in
 //                switch navigationStackViewType {
 //                case .firstView:
