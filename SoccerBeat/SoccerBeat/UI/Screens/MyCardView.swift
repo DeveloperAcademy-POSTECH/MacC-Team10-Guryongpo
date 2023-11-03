@@ -40,7 +40,7 @@ struct MyCardView: View {
             VStack {
                 HStack {
                     VStack(alignment: .leading, spacing: 0.0) {
-                        Text("Hello, Son")
+                        Text("Hello, Isaac")
                         Text("How you like")
                         Text("that?")
                     }

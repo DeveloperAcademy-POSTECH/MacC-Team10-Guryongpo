@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MatchTotalView: View {
     @EnvironmentObject private var healthInteractor: HealthInteractor
-    let userName = "Son"
+    let userName = "Isaac"
     
     var body: some View {
         ScrollView {

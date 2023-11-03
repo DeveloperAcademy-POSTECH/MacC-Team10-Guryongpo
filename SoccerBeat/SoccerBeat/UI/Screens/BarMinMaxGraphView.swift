@@ -39,12 +39,9 @@ struct BarMinMaxGraphView: View {
             Chart {
                 ForEach(userWorkouts ?? [], id: \.id) { workout in
                     BarMark(
-                        x: .value("Month", workout.dataId ),
-//                        yStart: .value("", graphType == .heartrate ?
-//                                       workout.heartRate["min", default: 0] : 0),
-//                        yEnd: .value("Max Sales", foo(workout)),
-                        yStart: graphType == .heartrate ? CGFloat(workout.heartRate["min", default: 0]) : 0,
-                        yEnd: foo(workout),
+                        x: .value("", workout.dataId),
+                        yStart: .value("", graphType == .heartrate ? CGFloat(workout.heartRate["min", default: 0]) : 0.0),
+                        yEnd: .value("", foo(workout)),
                         width: .ratio(0.6)
                     ).cornerRadius(16.5)
                         .opacity(0.6)

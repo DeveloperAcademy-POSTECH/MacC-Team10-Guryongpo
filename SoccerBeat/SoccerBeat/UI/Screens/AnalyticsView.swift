@@ -69,13 +69,29 @@ struct ActivityComponent: View {
     private var value: String {
         switch activityType {
         case .distance:
-            return "\(userWorkouts?.first?.distance) Km"
+            var buffer = "\(userWorkouts?.first?.distance)"
+            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
+            buffer = buffer.replacingOccurrences(of: "(", with: "")
+            buffer = buffer.replacingOccurrences(of: ")", with: "")
+            return "\(buffer) Km"
         case .sprint:
-            return "\(userWorkouts?.first?.sprint) Times"
+            var buffer = "\(userWorkouts?.first?.sprint)"
+            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
+            buffer = buffer.replacingOccurrences(of: "(", with: "")
+            buffer = buffer.replacingOccurrences(of: ")", with: "")
+            return "\(buffer) Times"
         case .speed:
-            return "\(userWorkouts?.first?.velocity) Km/h"
+            var buffer = "\(userWorkouts?.first?.velocity)"
+            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
+            buffer = buffer.replacingOccurrences(of: "(", with: "")
+            buffer = buffer.replacingOccurrences(of: ")", with: "")
+            return "\(buffer) Km/h"
         case .heartrate:
-            return "\(userWorkouts?.first?.heartRate) Bpm"
+            var buffer = "\(userWorkouts?.first?.heartRate["max"])"
+            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
+            buffer = buffer.replacingOccurrences(of: "(", with: "")
+            buffer = buffer.replacingOccurrences(of: ")", with: "")
+            return "\(buffer) Bpm"
         }
     }
     

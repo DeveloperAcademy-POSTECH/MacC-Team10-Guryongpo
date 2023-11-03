@@ -42,7 +42,7 @@ struct MatchRecapView: View {
         VStack(spacing: 10) {
             HStack {
                 VStack(alignment: .leading, spacing: 0.0) {
-                    Text("Hello, Son")
+                    Text("Hello, Isaac")
                     Text("Your archive")
                 }
                 .foregroundStyle(
