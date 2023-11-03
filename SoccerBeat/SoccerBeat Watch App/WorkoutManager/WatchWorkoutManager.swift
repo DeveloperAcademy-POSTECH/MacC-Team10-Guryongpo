@@ -88,7 +88,7 @@ class WorkoutManager: NSObject, ObservableObject {
         do {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
-            routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: nil)
+            routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: .local())
         } catch {
             return
         }
@@ -100,14 +100,15 @@ class WorkoutManager: NSObject, ObservableObject {
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
                                                       workoutConfiguration: configuration)
         
-//        locationManager.requestWhenInUseAuthorization()
         // Start the workout session and begin data collection.
         let startDate = Date()
         session?.startActivity(with: startDate)
-        builder?.beginCollection(withStart: startDate) { (success, error) in
+        builder?.beginCollection(withStart: startDate) { (_, _) in
             // The workout has started.
         }
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = locationManager.accuracyAuthorization == .fullAccuracy 
+        ? kCLLocationAccuracyBestForNavigation
+        : kCLLocationAccuracyBest
         
         // 위치 정보 수집
         startLocationUpdates()
@@ -185,6 +186,7 @@ class WorkoutManager: NSObject, ObservableObject {
                     return
                 }
                 // Optional: Do something with the route here.
+                self.stopLocationUpdates()
             }
         }
         
@@ -356,11 +358,13 @@ extension WorkoutManager: CLLocationManagerDelegate {
             location.horizontalAccuracy <= 20.0
         }
         
-        guard !filteredLocations.isEmpty else { return }
-        guard let firstLocation = filteredLocations.first else { return }
         // TODO: - print 문 지우기
-        print("🧭현재 위도: \(firstLocation.coordinate.latitude)")
-        print("🧭현재 경도: \(firstLocation.coordinate.longitude)")
+
+        guard !filteredLocations.isEmpty else {
+            routeBuilder?.insertRouteData(locations, completion: { _, _ in
+            })
+            return
+        }
         
         // Add the filtered data to the route.
         routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
@@ -377,14 +381,19 @@ extension WorkoutManager: CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .notDetermined:
             print("위치 권한 결정 안됨")
+            manager.requestWhenInUseAuthorization()
         case .restricted:
             print("위치 권한 제한됨")
+            manager.requestAlwaysAuthorization()
         case .denied:
             print("위치 권한 거부")
+            manager.requestAlwaysAuthorization()
         case .authorizedAlways:
             print("위치 권한 항상 허용")
+            startLocationUpdates()
         case .authorizedWhenInUse:
             print("위치 권한 사용중 허용")
+            startLocationUpdates()
         @unknown default:
             print(manager.authorizationStatus)
         }
@@ -398,5 +407,6 @@ extension WorkoutManager: CLLocationManagerDelegate {
     
     private func stopLocationUpdates() {
         print("Stopping location updates")
+        locationManager.stopUpdatingHeading()
     }
 }
