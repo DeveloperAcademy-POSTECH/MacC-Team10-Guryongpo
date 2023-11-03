@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import HealthKit
+import Combine
 import CoreLocation
+import HealthKit
 
 class HealthInteractor: ObservableObject {
     var healthStore = HKHealthStore()
@@ -17,6 +18,9 @@ class HealthInteractor: ObservableObject {
     var allWorkouts: [HKWorkout] = []
     var allRoutes: [CLLocation] = []
     var customData: [HKQuantitySample] = []
+    
+    var authSuccess = PassthroughSubject<(), Never>()
+    var fetchSuccess = PassthroughSubject<(), Never>()
     
     private let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -35,11 +39,13 @@ class HealthInteractor: ObservableObject {
     
     static let shared = HealthInteractor()
     
-    init() {
-        requestAuthorization()
-    }
+//    init() {
+//        requestAuthorization()
+//    }
     
+    @MainActor
     func requestAuthorization() {
+        print("requestAuthorization: request user authorization..")
         let typeToRead = Set([HKObjectType.quantityType(forIdentifier: .heartRate)!,
                               HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
                               HKObjectType.quantityType(forIdentifier: .runningSpeed)!,
@@ -56,13 +62,12 @@ class HealthInteractor: ObservableObject {
         
         healthStore.requestAuthorization(toShare: nil, read: typeToRead) { success, error in
             if success {
-                Task {
-                    await self.fetchAllData()
-                }
+                self.authSuccess.send()
             }
         }
     }
     
+    @MainActor
     func fetchAllData() async {
         print("fetchAllData: attempting to fetch all data..")
         
@@ -92,6 +97,7 @@ class HealthInteractor: ObservableObject {
                 
                 dataId += 1
             }
+            self.fetchSuccess.send()
         }
         
         print(userWorkouts)

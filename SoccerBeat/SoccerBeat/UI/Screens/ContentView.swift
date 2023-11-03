@@ -9,7 +9,9 @@ import SwiftUI
 import HealthKit
 
 struct ContentView: View {
-    @StateObject var healthInteractor = HealthInteractor.shared
+    @ObservedObject var healthInteractor = HealthInteractor.shared
+    @State var userWorkouts: [WorkoutData]?
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -27,7 +29,7 @@ struct ContentView: View {
                         Spacer()
                             .frame(height: 114) 
                         
-                            MatchRecapView()
+                        MatchRecapView(userWorkouts: $userWorkouts)
                         
                         Spacer()
                             .frame(height: 60)
@@ -42,8 +44,20 @@ struct ContentView: View {
             }
             .navigationTitle("")
         }
+        .task {
+            healthInteractor.requestAuthorization()
+        }
+        .onReceive(healthInteractor.authSuccess, perform: {
+            Task {
+                print("ContentView: attempting to fetch all data..")
+                await healthInteractor.fetchAllData()
+            }
+        })
+        .onReceive(healthInteractor.fetchSuccess, perform: {
+            print("ContentView: fetching user data success..")
+            self.userWorkouts = healthInteractor.userWorkouts
+        })
         .tint(.white)
-        .environmentObject(healthInteractor)
 
     }
 }
