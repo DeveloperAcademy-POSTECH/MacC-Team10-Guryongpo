@@ -9,8 +9,8 @@ import SwiftUI
 import Charts
 
 struct BarMinMaxGraphView: View {
+    @Binding var userWorkouts: [WorkoutData]?
     
-    @EnvironmentObject private var healthInteractor: HealthInteractor
     var graphType: GraphEnum
     
     private var mainColor: LinearGradient {
@@ -37,7 +37,7 @@ struct BarMinMaxGraphView: View {
     
     var body: some View {
             Chart {
-                ForEach(healthInteractor.userWorkouts, id: \.id) { workout in
+                ForEach(userWorkouts ?? [], id: \.id) { workout in
                     BarMark(
                         x: .value("Month", workout.dataId ),
 //                        yStart: .value("", graphType == .heartrate ?
