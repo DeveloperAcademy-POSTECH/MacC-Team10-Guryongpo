@@ -776,7 +776,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = V7Y2HCV8V2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -785,13 +785,13 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.Guryongpo;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.GuryongpoIOS;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -813,7 +813,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = V7Y2HCV8V2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -822,13 +822,13 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.Guryongpo;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.GuryongpoIOS;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -852,7 +852,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = V7Y2HCV8V2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
@@ -870,7 +870,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -891,7 +891,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = V7Y2HCV8V2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
@@ -909,7 +909,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;

@@ -34,7 +34,7 @@ struct ContentView: View {
                         Spacer()
                             .frame(height: 60)
                         
-                        AnalyticsView()
+//                        AnalyticsView()
                         
                         Spacer()
                             .frame(height: 60)

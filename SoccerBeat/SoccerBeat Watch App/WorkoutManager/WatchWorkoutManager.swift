@@ -170,7 +170,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         let speed = Measurement(value: self.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general))
         
-        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed), quantity: HKQuantity(unit:HKUnit.init(from: "m/s"), doubleValue: self.maxSpeed), start: nowDate, end: nowDate, metadata: ["MaxSpeed": Double(Int(self.maxSpeed * 100.rounded()))/100 , "SprintCount": self.sprint, "MinHeartRate": saveMinHeartRate, "MaxHeartRate": saveMaxHeartRate, "Distance": (Double(Int(self.distance/1000 * 100 ))) / 100, "Calorie": Double(Int(self.energy * 100.rounded()))/100])
+        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed), quantity: HKQuantity(unit:HKUnit.init(from: "m/s"), doubleValue: self.maxSpeed), start: nowDate, end: nowDate, metadata: ["MaxSpeed": Double(Int(self.maxSpeed * 100.rounded()))/100 , "SprintCount": self.sprint, "MinHeartRate": saveMinHeartRate == 200 ? 0 : saveMinHeartRate, "MaxHeartRate": saveMaxHeartRate, "Distance": (Double(Int(self.distance/1000 * 100 ))) / 100, "Calorie": Double(Int(self.energy * 100.rounded()))/100])
         
         self.healthStore.save(dataSample, withCompletion: { (success, error) in
             if (error != nil) {
