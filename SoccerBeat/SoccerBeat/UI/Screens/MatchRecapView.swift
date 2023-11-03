@@ -52,13 +52,13 @@ struct MatchRecapView: View {
                 Text("최근 경기 기록")
                     .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
                 Spacer()
-                NavigationLink {
-                    MatchTotalView()
-                } label: {
-                    Text("모든 기록 보기 +")
-                }
-                .foregroundStyle(.white)
-                .font(.custom("NotoSansDisplay-BlackItalic", size: 14))
+//                NavigationLink {
+//                    MatchTotalView()
+//                } label: {
+//                    Text("모든 기록 보기 +")
+//                }
+//                .foregroundStyle(.white)
+//                .font(.custom("NotoSansDisplay-BlackItalic", size: 14))
             }
             .padding(.horizontal)
             VStack {
@@ -124,7 +124,7 @@ struct MatchListItemView: View {
                 Spacer()
             }
             .padding(.vertical, 10)
-        }.frame(height: 400)
+        }.frame(height: 150)
     }
 }
 
