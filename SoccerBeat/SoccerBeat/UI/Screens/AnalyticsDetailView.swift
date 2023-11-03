@@ -84,7 +84,8 @@ struct AnalyticsDetailView: View {
                     LightRectangleView()
                     VStack {
 //                        Text("2023.10.01 - 11.12")
-                        BarMinMaxGraphView(userWorkouts: $userWorkouts, graphType: graphType)
+//                        BarMinMaxGraphView(userWorkouts: $userWorkouts, graphType: graphType)
+                        BarMinMaxGraphView()
                             .frame(width: 260, height: 90)
                             .padding(.vertical)
 //                        HStack(spacing: 15) {
