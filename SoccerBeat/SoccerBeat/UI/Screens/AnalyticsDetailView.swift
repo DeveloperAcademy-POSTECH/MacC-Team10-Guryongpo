@@ -84,8 +84,7 @@ struct AnalyticsDetailView: View {
                     LightRectangleView()
                     VStack {
 //                        Text("2023.10.01 - 11.12")
-//                        BarMinMaxGraphView(userWorkouts: $userWorkouts, graphType: graphType)
-                        BarMinMaxGraphView()
+                        BarMinMaxGraphView(userWorkouts: $userWorkouts, graphType: graphType)
                             .frame(width: 260, height: 90)
                             .padding(.vertical)
 //                        HStack(spacing: 15) {
@@ -147,9 +146,12 @@ struct AnalyticsDetailView: View {
             
             VStack(alignment: .leading) {
                 Text("SoccerBeat의 한 마디")
-                    .font(.custom("나중에 추가", size: 16))
-                RandomComment()
-                    .font(.custom("나중에 추가", size: 28))
+//                    .font(.custom("나중에 추가", size: 16))
+                    .font(.custom("SFProText-HeavyItalic", size: 16))
+//                RandomComment()
+                Text("To be continued!")
+//                    .font(.custom("나중에 추가", size: 28))
+                    .font(.custom("SFProText-HeavyItalic", size: 28))
                 Spacer()
             }
             .frame(width: 280)
