@@ -15,7 +15,7 @@ enum ActivityEnum {
 }
 
 struct AnalyticsView: View {
-    @EnvironmentObject private var healthInteractor: HealthInteractor
+    @Binding var userWorkouts: [WorkoutData]?
     
     var body: some View {
         VStack(spacing: 20) {
@@ -29,17 +29,17 @@ struct AnalyticsView: View {
             VStack(spacing: 15) {
                 HStack {
                     VStack(alignment: .leading) {
-                        NavigationLink { AnalyticsDetailView(graphType: .distance) } label: {
-                            ActivityComponent(activityType: .distance)
+                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .distance) } label: {
+                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .distance)
                         }
-                        NavigationLink { AnalyticsDetailView(graphType: .sprint) } label: {
-                            ActivityComponent(activityType: .sprint)
+                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .sprint) } label: {
+                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .sprint)
                         }
-                        NavigationLink { AnalyticsDetailView(graphType: .speed) } label: {
-                            ActivityComponent(activityType: .speed)
+                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .speed) } label: {
+                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .speed)
                         }
-                        NavigationLink { AnalyticsDetailView(graphType: .heartrate) } label: {
-                            ActivityComponent(activityType: .heartrate)
+                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .heartrate) } label: {
+                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .heartrate)
                         }
                     }
                 }
@@ -50,8 +50,8 @@ struct AnalyticsView: View {
 }
 
 struct ActivityComponent: View {
-    @EnvironmentObject private var healthInteractor: HealthInteractor
-
+    @Binding var userWorkouts: [WorkoutData]?
+    
     var activityType: ActivityEnum
     
     private var title: String {
@@ -69,15 +69,13 @@ struct ActivityComponent: View {
     private var value: String {
         switch activityType {
         case .distance:
-            return "\(healthInteractor.userWorkouts.first?.distance) Km"
+            return "\(userWorkouts?.first?.distance) Km"
         case .sprint:
-            let sprint = healthInteractor.userWorkouts.first?.sprint
-            let time = sprint! < 2 ? " Time" : " Times"
-            return "\(sprint)" + time
+            return "\(userWorkouts?.first?.sprint) Times"
         case .speed:
-            return "\(healthInteractor.userWorkouts.first?.velocity) Km/h"
+            return "\(userWorkouts?.first?.velocity) Km/h"
         case .heartrate:
-            return "\(healthInteractor.userWorkouts.first?.heartRate) Bpm"
+            return "\(userWorkouts?.first?.heartRate) Bpm"
         }
     }
     
@@ -131,7 +129,7 @@ struct ActivityComponent: View {
         }
     }
 }
-
-#Preview {
-    AnalyticsView()
-}
+//
+//#Preview {
+//    AnalyticsView()
+//}

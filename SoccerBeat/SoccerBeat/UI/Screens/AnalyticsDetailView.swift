@@ -17,6 +17,7 @@ enum GraphEnum {
 }
 
 struct AnalyticsDetailView: View {
+    @Binding var userWorkouts: [WorkoutData]?
     
     var graphType: GraphEnum
     private var mainColor: LinearGradient {
@@ -83,42 +84,42 @@ struct AnalyticsDetailView: View {
                     LightRectangleView()
                     VStack {
 //                        Text("2023.10.01 - 11.12")
-                        BarMinMaxGraphView(graphType: graphType)
+                        BarMinMaxGraphView(userWorkouts: $userWorkouts, graphType: graphType)
                             .frame(width: 260, height: 90)
                             .padding(.vertical)
-                        HStack(spacing: 15) {
-                            VStack {
-                                Text("110")
-                                    .font(.custom("나중에 추가", size: 12))
-                                Text("1일")
-                                    .font(.custom("나중에 추가", size: 10))
-                            }
-                            VStack {
-                                Text("110")
-                                    .font(.custom("나중에 추가", size: 12))
-                                Text("11일")
-                                    .font(.custom("나중에 추가", size: 10))
-                            }
-                            VStack {
-                                Text("180")
-                                    .font(.custom("SFProText-HeavyItalic", size: 12))
-                                Text("13일")
-                                    .font(.custom("나중에 추가", size: 10))
-                            }
-                            VStack {
-                                Text("120")
-                                    .font(.custom("나중에 추가", size: 12))
-                                Text("15일")
-                                    .font(.custom("나중에 추가", size: 10))
-                            }
-                            VStack {
-                                Text("110")
-                                    .font(.custom("나중에 추가", size: 12))
-                                Text("17일")
-                                    .font(.custom("나중에 추가", size: 10))
-                            }
-                        }
-                        .frame(width: 222, height: 41)
+//                        HStack(spacing: 15) {
+//                            VStack {
+//                                Text("110")
+//                                    .font(.custom("나중에 추가", size: 12))
+//                                Text("1일")
+//                                    .font(.custom("나중에 추가", size: 10))
+//                            }
+//                            VStack {
+//                                Text("110")
+//                                    .font(.custom("나중에 추가", size: 12))
+//                                Text("11일")
+//                                    .font(.custom("나중에 추가", size: 10))
+//                            }
+//                            VStack {
+//                                Text("180")
+//                                    .font(.custom("SFProText-HeavyItalic", size: 12))
+//                                Text("13일")
+//                                    .font(.custom("나중에 추가", size: 10))
+//                            }
+//                            VStack {
+//                                Text("120")
+//                                    .font(.custom("나중에 추가", size: 12))
+//                                Text("15일")
+//                                    .font(.custom("나중에 추가", size: 10))
+//                            }
+//                            VStack {
+//                                Text("110")
+//                                    .font(.custom("나중에 추가", size: 12))
+//                                Text("17일")
+//                                    .font(.custom("나중에 추가", size: 10))
+//                            }
+//                        }
+//                        .frame(width: 222, height: 41)
                     }
                 }
                 .frame(height: 230)
@@ -156,9 +157,9 @@ struct AnalyticsDetailView: View {
     }
 }
 
-#Preview {
-    AnalyticsDetailView(graphType: .distance)
-}
+//#Preview {
+//    AnalyticsDetailView(graphType: .distance)
+//}
 
 struct FormattedRecordAnalytics: View {
     var recordType: String
