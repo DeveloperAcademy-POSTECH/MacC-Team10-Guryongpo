@@ -8,8 +8,9 @@
 import SwiftUI
 import HealthKit
 import CoreLocation
+import OSLog
 
-class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class WorkoutManager: NSObject, ObservableObject {
     static let shared: WorkoutManager = WorkoutManager()
     
     @Published var showingSummaryView: Bool = false {
@@ -23,7 +24,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var showingPrecount: Bool = false
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
-    var locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
@@ -76,43 +77,44 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
+    // MARK: - 데이터 수집 및 경기 시작
     func startWorkout() {
         
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = .running
         configuration.locationType = .outdoor
         
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-
+        // 세션, 빌더, 루트 빌더, 로케이션 매니저 초기화
         do {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
             routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: nil)
-            computeMaxHeartRate()
-            
         } catch {
-            // Handle any exceptions.
             return
         }
         
-        // Setup session and builder.
+        // 델리게이트 선언
+        locationManager.delegate = self
         session?.delegate = self
         builder?.delegate = self
-        locationManager.delegate = self
-        // Set the workout builder's data source.
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
                                                       workoutConfiguration: configuration)
         
+//        locationManager.requestWhenInUseAuthorization()
         // Start the workout session and begin data collection.
         let startDate = Date()
         session?.startActivity(with: startDate)
         builder?.beginCollection(withStart: startDate) { (success, error) in
             // The workout has started.
         }
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        // 위치 정보 수집
+        startLocationUpdates()
+        computeMaxHeartRate()
     }
     
-    // Request authorization to access HealthKit.
+    // MARK: - Request authorization to access HealthKit And LocationManager.
     func requestAuthorization() {
         
         // write
@@ -139,8 +141,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         healthStore.requestAuthorization(toShare: typesToShare,
                                          read: typesToRead) { (success, error) in
         }
-        
-        self.locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Session State Control
@@ -177,7 +177,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
               NSLog("error occurred saving water data")
             }
           })
-        
         
         if let workout = self.workout {
             routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
@@ -267,24 +266,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        // Filter the raw data.
-        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
-            location.horizontalAccuracy <= 20.0
-        }
-        
-        guard !filteredLocations.isEmpty else { return }
-        
-        // Add the filtered data to the route.
-        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
-            if !success {
-                // Handle any errors here.
-            }
-            print(filteredLocations)
-        }
-    }
 
     func resetWorkout() {
         builder = nil
@@ -352,7 +333,8 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
         
     }
     
-    func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
+    func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder,
+                        didCollectDataOf collectedTypes: Set<HKSampleType>) {
         for type in collectedTypes {
             guard let quantityType = type as? HKQuantityType else {
                 return // Nothing to do.
@@ -362,5 +344,59 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
             // Update the published values.
             updateForStatistics(statistics)
         }
+    }
+}
+
+extension WorkoutManager: CLLocationManagerDelegate {
+    // MARK: - 위치 정보가 수집되면 불리는 메서드
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // Filter the raw data.
+        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
+            location.horizontalAccuracy <= 20.0
+        }
+        
+        guard !filteredLocations.isEmpty else { return }
+        guard let firstLocation = filteredLocations.first else { return }
+        // TODO: - print 문 지우기
+        print("🧭현재 위도: \(firstLocation.coordinate.latitude)")
+        print("🧭현재 경도: \(firstLocation.coordinate.longitude)")
+        
+        // Add the filtered data to the route.
+        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
+            if !success {
+                // Handle any errors here.
+                print(error.debugDescription)
+            }
+        
+        }
+    }
+    
+    // MARK: - 위치 공유 권한 정보가 업데이트 되면 불리는 메서드
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .notDetermined:
+            print("위치 권한 결정 안됨")
+        case .restricted:
+            print("위치 권한 제한됨")
+        case .denied:
+            print("위치 권한 거부")
+        case .authorizedAlways:
+            print("위치 권한 항상 허용")
+        case .authorizedWhenInUse:
+            print("위치 권한 사용중 허용")
+        @unknown default:
+            print(manager.authorizationStatus)
+        }
+    }
+    
+    private func startLocationUpdates() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    private func stopLocationUpdates() {
+        print("Stopping location updates")
     }
 }
