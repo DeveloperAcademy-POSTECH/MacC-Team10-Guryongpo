@@ -7,7 +7,16 @@
 
 import SwiftUI
 
-let fakeWorkoutData: WorkoutData = WorkoutData(dataId: 10, date: "1999-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81])
+let fakeWorkoutData: [WorkoutData] = [
+    WorkoutData(dataId: 10, date: "1999-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81]),
+    WorkoutData(dataId: 10, date: "2000-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81]),
+    WorkoutData(dataId: 10, date: "2359-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81]),
+    WorkoutData(dataId: 10, date: "1569-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81]),
+    WorkoutData(dataId: 10, date: "2639-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81]),
+    WorkoutData(dataId: 10, date: "5659-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81]),
+    WorkoutData(dataId: 10, date: "1922-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81])
+]
+
 
 //class MatchItemData: ObservableObject {
 //    @Published var matchitems = [
@@ -131,5 +140,5 @@ struct MatchListItemView: View {
 }
 
 #Preview {
-    MatchListItemView(workoutData: fakeWorkoutData)
+    MatchListItemView(workoutData: fakeWorkoutData[0])
 }

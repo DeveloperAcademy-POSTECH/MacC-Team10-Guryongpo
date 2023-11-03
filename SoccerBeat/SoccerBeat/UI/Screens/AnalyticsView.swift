@@ -50,7 +50,8 @@ struct AnalyticsView: View {
 }
 
 struct ActivityComponent: View {
-    
+    @EnvironmentObject private var healthInteractor: HealthInteractor
+
     var activityType: ActivityEnum
     
     private var title: String {
@@ -65,17 +66,18 @@ struct ActivityComponent: View {
             return "심박수"
         }
     }
-    
     private var value: String {
         switch activityType {
         case .distance:
-            return "2.2 Km"
+            return "\(healthInteractor.userWorkouts.first?.distance) Km"
         case .sprint:
-            return "10 Times"
+            let sprint = healthInteractor.userWorkouts.first?.sprint
+            let time = sprint! < 2 ? " Time" : " Times"
+            return "\(sprint)" + time
         case .speed:
-            return "20 Km/h"
+            return "\(healthInteractor.userWorkouts.first?.velocity) Km/h"
         case .heartrate:
-            return "180 Bpm"
+            return "\(healthInteractor.userWorkouts.first?.heartRate) Bpm"
         }
     }
     

@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
-
+/*
+let fakeWorkoutData: WorkoutData = WorkoutData(dataId: 10, date: "1999-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, calorie: 3.5, velocity: 8.5, heartRate: ["max": 83, "min": 81])
+*/
 enum GraphEnum {
     case distance
     case sprint
@@ -80,8 +82,8 @@ struct AnalyticsDetailView: View {
                 ZStack {
                     LightRectangleView()
                     VStack {
-                        Text("2023.10.01 - 11.12")
-                        BarMinMaxGraphView(color: Gradient(colors:[Color(hex: "FF007A")]), data: HeartBeatlast12Months)
+//                        Text("2023.10.01 - 11.12")
+                        BarMinMaxGraphView(graphType: graphType)
                             .frame(width: 260, height: 90)
                             .padding(.vertical)
                         HStack(spacing: 15) {

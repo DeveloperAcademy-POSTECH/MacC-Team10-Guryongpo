@@ -24,7 +24,7 @@ struct MatchDetailView: View {
                     MatchDetailView02(workoutData: workoutData)
 // MARK: 추후 HeartRate 추가
 //                    MatchDetailView03()
-                    MatchDetailView04(workoutData: workoutData)
+//                    MatchDetailView04(workoutData: workoutData)
                 }
             }
         }
@@ -177,157 +177,157 @@ struct MatchDetailView02: View {
     }
 }
 
-struct MatchDetailView03: View {
-    var body: some View {
-        VStack {
-            HStack {
-                Text("Heartbeat")
-                    .padding()
-                Spacer()
-            }
-            .foregroundStyle(
-                .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            .font(.custom("SFProText-HeavyItalic", size: 14))
-            
-            Spacer()
-                .frame(height: 20)
-            
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .strokeBorder()
-                    .frame(width: 358, height: 311)
-                VStack {
-                    Image("HeartbeatSign")
-                    Text("BPM")
-                        .font(.custom("SFProText-HeavyItalic", size: 14))
-                    BarMinMaxGraphView(color: Gradient(colors:[Color(hex: "FF007A")]), data: HeartBeatlast12Months)
-                        .frame(width: 217, height: 87)
-                    Spacer()
-                        .frame(height: 15)
-                    HStack(spacing: 15) {
-                        VStack {
-                            Text("110")
-                                .font(.custom("나중에 추가", size: 12))
-                            Text("1일")
-                                .font(.custom("나중에 추가", size: 10))
-                        }
-                        VStack {
-                            Text("110")
-                                .font(.custom("나중에 추가", size: 12))
-                            Text("11일")
-                                .font(.custom("나중에 추가", size: 10))
-                        }
-                        VStack {
-                            Text("180")
-                                .font(.custom("SFProText-HeavyItalic", size: 12))
-                            Text("13일")
-                                .font(.custom("나중에 추가", size: 10))
-                        }
-                        VStack {
-                            Text("120")
-                                .font(.custom("나중에 추가", size: 12))
-                            Text("15일")
-                                .font(.custom("나중에 추가", size: 10))
-                        }
-                        VStack {
-                            Text("110")
-                                .font(.custom("나중에 추가", size: 12))
-                            Text("17일")
-                                .font(.custom("나중에 추가", size: 10))
-                        }
-                    }
-                    .frame(width: 222, height: 41)
-                    Spacer()
-                        .frame(height: 40)
-                    VStack(alignment: .leading) {
-                        Text("최고 심박수")
-                            .font(.custom("나중에 추가", size: 10))
-                        Text("180 BPM")
-                            .font(.custom("SFProText-HeavyItalic", size: 24))
-                    }
-                    .padding(.leading, 20)
-                    .kerning(-0.41)
-                }
-            }
-            Spacer()
-                .frame(height: 120)
-        }
-    }
-}
+//struct MatchDetailView03: View {
+//    var body: some View {
+//        VStack {
+//            HStack {
+//                Text("Heartbeat")
+//                    .padding()
+//                Spacer()
+//            }
+//            .foregroundStyle(
+//                .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
+//            .font(.custom("SFProText-HeavyItalic", size: 14))
+//            
+//            Spacer()
+//                .frame(height: 20)
+//            
+//            ZStack {
+//                RoundedRectangle(cornerRadius: 20)
+//                    .strokeBorder()
+//                    .frame(width: 358, height: 311)
+//                VStack {
+//                    Image("HeartbeatSign")
+//                    Text("BPM")
+//                        .font(.custom("SFProText-HeavyItalic", size: 14))
+//                    BarMinMaxGraphView(color: Gradient(colors:[Color(hex: "FF007A")]), data: HeartBeatlast12Months)
+//                        .frame(width: 217, height: 87)
+//                    Spacer()
+//                        .frame(height: 15)
+//                    HStack(spacing: 15) {
+//                        VStack {
+//                            Text("110")
+//                                .font(.custom("나중에 추가", size: 12))
+//                            Text("1일")
+//                                .font(.custom("나중에 추가", size: 10))
+//                        }
+//                        VStack {
+//                            Text("110")
+//                                .font(.custom("나중에 추가", size: 12))
+//                            Text("11일")
+//                                .font(.custom("나중에 추가", size: 10))
+//                        }
+//                        VStack {
+//                            Text("180")
+//                                .font(.custom("SFProText-HeavyItalic", size: 12))
+//                            Text("13일")
+//                                .font(.custom("나중에 추가", size: 10))
+//                        }
+//                        VStack {
+//                            Text("120")
+//                                .font(.custom("나중에 추가", size: 12))
+//                            Text("15일")
+//                                .font(.custom("나중에 추가", size: 10))
+//                        }
+//                        VStack {
+//                            Text("110")
+//                                .font(.custom("나중에 추가", size: 12))
+//                            Text("17일")
+//                                .font(.custom("나중에 추가", size: 10))
+//                        }
+//                    }
+//                    .frame(width: 222, height: 41)
+//                    Spacer()
+//                        .frame(height: 40)
+//                    VStack(alignment: .leading) {
+//                        Text("최고 심박수")
+//                            .font(.custom("나중에 추가", size: 10))
+//                        Text("180 BPM")
+//                            .font(.custom("SFProText-HeavyItalic", size: 24))
+//                    }
+//                    .padding(.leading, 20)
+//                    .kerning(-0.41)
+//                }
+//            }
+//            Spacer()
+//                .frame(height: 120)
+//        }
+//    }
+//}
 
-struct MatchDetailView04: View {
-    let workoutData: WorkoutData
-    var body: some View {
-        VStack {
-            HStack {
-                Text("Sprint Time")
-                    .padding()
-                Spacer()
-            }
-            .foregroundStyle(
-                .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            .font(.custom("SFProText-HeavyItalic", size: 14))
-            
-            Spacer()
-                .frame(height: 20)
-            
-            VStack(spacing: 10) {
-                VStack {
-                    HStack {
-                        Image("Running")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 28)
-                        Text("1회")
-                            .font(.custom("나중에 추가", size: 24))
-                    }
-                Text("15분, 속력: 21km/h")
-                        .font(.custom("나중에 추가", size: 30))
-                }
-                .frame(width: 360, height: 120)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 20)
-                        .strokeBorder()
-                }
-                VStack {
-                    HStack {
-                        Image("Running")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 28)
-                        Text("2회")
-                            .font(.custom("나중에 추가", size: 24))
-                    }
-                Text("15분, 속력: 21km/h")
-                        .font(.custom("나중에 추가", size: 30))
-                }
-                .frame(width: 360, height: 120)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 20)
-                        .strokeBorder()
-                }
-                VStack {
-                    HStack {
-                        Image("Running")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 28)
-                        Text("3회")
-                            .font(.custom("나중에 추가", size: 24))
-                    }
-                Text("15분, 속력: 21km/h")
-                        .font(.custom("나중에 추가", size: 30))
-                }
-                .frame(width: 360, height: 120)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 20)
-                        .strokeBorder()
-                }
-            }
-        }
-    }
-}
+//struct MatchDetailView04: View {
+//    let workoutData: WorkoutData
+//    var body: some View {
+//        VStack {
+//            HStack {
+//                Text("Sprint Time")
+//                    .padding()
+//                Spacer()
+//            }
+//            .foregroundStyle(
+//                .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
+//            .font(.custom("SFProText-HeavyItalic", size: 14))
+//            
+//            Spacer()
+//                .frame(height: 20)
+//            
+//            VStack(spacing: 10) {
+//                VStack {
+//                    HStack {
+//                        Image("Running")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 28)
+//                        Text("1회")
+//                            .font(.custom("나중에 추가", size: 24))
+//                    }
+//                Text("15분, 속력: 21km/h")
+//                        .font(.custom("나중에 추가", size: 30))
+//                }
+//                .frame(width: 360, height: 120)
+//                .overlay {
+//                    RoundedRectangle(cornerRadius: 20)
+//                        .strokeBorder()
+//                }
+//                VStack {
+//                    HStack {
+//                        Image("Running")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 28)
+//                        Text("2회")
+//                            .font(.custom("나중에 추가", size: 24))
+//                    }
+//                Text("15분, 속력: 21km/h")
+//                        .font(.custom("나중에 추가", size: 30))
+//                }
+//                .frame(width: 360, height: 120)
+//                .overlay {
+//                    RoundedRectangle(cornerRadius: 20)
+//                        .strokeBorder()
+//                }
+//                VStack {
+//                    HStack {
+//                        Image("Running")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 28)
+//                        Text("3회")
+//                            .font(.custom("나중에 추가", size: 24))
+//                    }
+//                Text("15분, 속력: 21km/h")
+//                        .font(.custom("나중에 추가", size: 30))
+//                }
+//                .frame(width: 360, height: 120)
+//                .overlay {
+//                    RoundedRectangle(cornerRadius: 20)
+//                        .strokeBorder()
+//                }
+//            }
+//        }
+//    }
+//}
 
 #Preview {
-    MatchDetailView(workoutData: fakeWorkoutData)
+    MatchDetailView(workoutData: fakeWorkoutData[0])
 }
