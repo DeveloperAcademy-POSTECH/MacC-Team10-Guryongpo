@@ -40,7 +40,9 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationTitle("")
         }
+        .tint(.white)
         .environmentObject(healthInteractor)
 
     }
