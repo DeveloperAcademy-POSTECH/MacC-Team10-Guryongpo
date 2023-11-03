@@ -25,7 +25,9 @@ let fakeWorkoutData: WorkoutData = WorkoutData(dataId: 10, date: "1999-10-28", t
 
 struct MatchRecapView: View {
     
-    @EnvironmentObject private var healthInteractor: HealthInteractor
+//    @EnvironmentObject private var healthInteractor: HealthInteractor
+    @Binding var userWorkouts: [WorkoutData]?
+    @ObservedObject var healthInteractor = HealthInteractor.shared
     
     var body: some View {
         VStack(spacing: 10) {
@@ -60,7 +62,7 @@ struct MatchRecapView: View {
             }
             .padding(.horizontal)
             VStack {
-                ForEach(healthInteractor.userWorkouts, id: \.self) { workout in
+                ForEach(userWorkouts ?? [], id: \.self) { workout in
                     NavigationLink {
                         MatchDetailView(workoutData: workout)
                     } label: {
@@ -126,9 +128,9 @@ struct MatchListItemView: View {
     }
 }
 
-#Preview {
-    MatchRecapView()
-}
+//#Preview {
+//    MatchRecapView(userWorkouts: <#Binding<[WorkoutData]?>#>)
+//}
 
 #Preview {
     MatchListItemView(workoutData: fakeWorkoutData)
