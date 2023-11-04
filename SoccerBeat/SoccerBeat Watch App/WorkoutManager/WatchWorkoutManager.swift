@@ -353,6 +353,7 @@ extension WorkoutManager: CLLocationManagerDelegate {
         
         // Filter the raw data.
         let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
+            // 필터 조정치 필요, 예시 121, 66등으로 20 미만인 필터 데이터가 존재하지 않음
             location.horizontalAccuracy <= 20.0
         }
         
