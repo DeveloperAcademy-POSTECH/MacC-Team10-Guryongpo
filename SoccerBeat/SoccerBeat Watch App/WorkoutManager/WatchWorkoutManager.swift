@@ -187,18 +187,6 @@ class WorkoutManager: NSObject, ObservableObject {
               NSLog("error occurred saving water data")
             }
           })
-        
-        if let workout = self.workout {
-            routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
-                guard newRoute != nil else {
-                    // Handle any errors here.
-                    return
-                }
-                // Optional: Do something with the route here.
-                self.stopLocationUpdates()
-            }
-        }
-        
     }
     
     // MARK: - BPM
@@ -326,6 +314,17 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                     DispatchQueue.main.async {
                         self.workout = workout
                     }
+            builder?.finishWorkout { (workout, error) in
+                if let error {
+                    NSLog("Failed Builder FinishWorkkout")
+                } else {
+                    guard let workout else { return }
+                    self.workout = workout
+                    self.routeBuilder?.finishRoute(with: workout, metadata: nil, completion: { hkRoute, routeError in
+                        if routeError == nil, let route = hkRoute {
+                            NSLog(route.debugDescription)
+                        }
+                    })
                 }
 
             }
