@@ -44,8 +44,7 @@ struct SummaryView: View {
                 }
             }
             .onAppear {
-                print(
-                workoutManager.workout?.totalEnergyBurned!)
+                print("Burned Calories: \(workoutManager.workout?.totalEnergyBurned ?? nil)")
             }
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
