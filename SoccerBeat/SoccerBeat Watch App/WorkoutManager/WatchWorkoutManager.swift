@@ -390,22 +390,22 @@ extension WorkoutManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .notDetermined:
-            print("위치 권한 결정 안됨")
+            NSLog("위치 권한 결정 안됨")
             manager.requestWhenInUseAuthorization()
         case .restricted:
-            print("위치 권한 제한됨")
+            NSLog("위치 권한 제한됨")
             manager.requestAlwaysAuthorization()
         case .denied:
-            print("위치 권한 거부")
+            NSLog("위치 권한 거부")
             manager.requestAlwaysAuthorization()
         case .authorizedAlways:
-            print("위치 권한 항상 허용")
+            NSLog("위치 권한 항상 허용")
             startLocationUpdates()
         case .authorizedWhenInUse:
-            print("위치 권한 사용중 허용")
+            NSLog("위치 권한 사용중 허용")
             startLocationUpdates()
         @unknown default:
-            print(manager.authorizationStatus)
+            NSLog(manager.authorizationStatus.rawValue.description)
         }
     }
     
