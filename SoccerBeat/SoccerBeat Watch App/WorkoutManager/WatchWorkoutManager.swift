@@ -36,7 +36,6 @@ class WorkoutManager: NSObject, ObservableObject {
     var energy: Double = 0
     
     let sprintSpeed: Double = 5.5556 // modify it to test code
-//    let sprintSpeed: Double = 1.0 // modify it to test code
         
     var isSprint: Bool = false
     var maxSpeed: Double = 0.0
@@ -169,7 +168,6 @@ class WorkoutManager: NSObject, ObservableObject {
         
         let nowDate: Date = Date()
         
-        let speed = Measurement(value: self.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general))
         
         let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed), quantity: HKQuantity(unit:HKUnit.init(from: "m/s"), doubleValue: self.maxSpeed), start: nowDate, end: nowDate, metadata: ["MaxSpeed": Double(Int(self.maxSpeed * 100.rounded()))/100 , "SprintCount": self.sprint, "MinHeartRate": saveMinHeartRate == 200 ? 0 : saveMinHeartRate, "MaxHeartRate": saveMaxHeartRate, "Distance": (Double(Int(self.distance/1000 * 100 ))) / 100, "Calorie": Double(Int(self.energy * 100.rounded()))/100])
         
@@ -358,8 +356,6 @@ extension WorkoutManager: CLLocationManagerDelegate {
             location.horizontalAccuracy <= 20.0
         }
         
-        // TODO: - print 문 지우기
-
         guard !filteredLocations.isEmpty else {
             routeBuilder?.insertRouteData(locations, completion: { _, _ in
             })
