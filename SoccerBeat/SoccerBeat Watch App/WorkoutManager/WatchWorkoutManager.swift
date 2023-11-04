@@ -302,18 +302,23 @@ class WorkoutManager: NSObject, ObservableObject {
 extension WorkoutManager: HKWorkoutSessionDelegate {
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
                         from fromState: HKWorkoutSessionState, date: Date) {
+        NSLog("WorkOutSession 변화 감지: \(toState)")
         DispatchQueue.main.async {
             self.running = toState == .running
         }
         
         // Wait for the session to transition states before ending the builder.
+        /// 종료시에도 여기가 불리지 않는 경우가 존재
         if toState == .ended {
             
             builder?.endCollection(withEnd: date) { (success, error) in
-                self.builder?.finishWorkout { (workout, error) in
-                    DispatchQueue.main.async {
-                        self.workout = workout
-                    }
+                if success {
+                    NSLog("Finished Builder endCollection")
+                } else {
+                    NSLog("Failed Builder endCollection")
+                }
+            }
+            
             builder?.finishWorkout { (workout, error) in
                 if let error {
                     NSLog("Failed Builder FinishWorkkout")
@@ -326,9 +331,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                         }
                     })
                 }
-
             }
-        
         }
     }
     
