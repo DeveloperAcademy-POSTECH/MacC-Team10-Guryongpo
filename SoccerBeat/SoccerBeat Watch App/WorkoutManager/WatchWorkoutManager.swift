@@ -307,30 +307,31 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             self.running = toState == .running
         }
         
-        // Wait for the session to transition states before ending the builder.
-        /// 종료시에도 여기가 불리지 않는 경우가 존재
         if toState == .ended {
             
             builder?.endCollection(withEnd: date) { (success, error) in
-                if success {
-                    NSLog("Finished Builder endCollection")
-                } else {
-                    NSLog("Failed Builder endCollection")
-                }
-            }
-            
-            builder?.finishWorkout { (workout, error) in
-                if let error {
-                    NSLog("Failed Builder FinishWorkkout")
-                } else {
-                    guard let workout else { return }
-                    self.workout = workout
-                    self.routeBuilder?.finishRoute(with: workout, metadata: nil, completion: { hkRoute, routeError in
-                        if routeError == nil, let route = hkRoute {
-                            NSLog(route.debugDescription)
+                self.builder?.finishWorkout { [weak self] (workout, error) in
+                    DispatchQueue.main.async {
+                        self?.workout = workout
+                    }
+                    
+                    guard let workout else {
+                        NSLog("workout is nil")
+                        return
+                    }
+                    
+                    self?.routeBuilder?.finishRoute(with: workout, metadata: nil) { (newRoute, error) in
+                        
+                        guard let newRoute else {
+                            // Handle any errors here.
+                            NSLog("새로운 루트가 없습니다.")
+                            return
                         }
-                    })
+                        // Optional: Do something with the route here.
+                        NSLog("새로운 루트가 저장되었습니다.")
+                    }
                 }
+                
             }
         }
     }
