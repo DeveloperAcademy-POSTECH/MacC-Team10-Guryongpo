@@ -362,6 +362,7 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
     }
 }
 
+// MARK: - CLLocationManagerDelegate
 extension WorkoutManager: CLLocationManagerDelegate {
     // MARK: - 위치 정보가 수집되면 불리는 메서드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
