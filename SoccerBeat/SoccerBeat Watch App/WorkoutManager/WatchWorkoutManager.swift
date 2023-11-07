@@ -8,8 +8,9 @@
 import SwiftUI
 import HealthKit
 import CoreLocation
+import OSLog
 
-class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class WorkoutManager: NSObject, ObservableObject {
     static let shared: WorkoutManager = WorkoutManager()
     
     @Published var showingSummaryView: Bool = false {
@@ -23,7 +24,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var showingPrecount: Bool = false
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
-    var locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
@@ -35,7 +36,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var energy: Double = 0
     
     let sprintSpeed: Double = 5.5556 // modify it to test code
-//    let sprintSpeed: Double = 1.0 // modify it to test code
         
     var isSprint: Bool = false
     var maxSpeed: Double = 0.0
@@ -76,43 +76,46 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
+    // MARK: - 데이터 수집 및 경기 시작
     func startWorkout() {
         
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = .running
         configuration.locationType = .outdoor
         
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-
+        // 세션, 빌더, 루트 빌더, 로케이션 매니저 초기화
         do {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
-            routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: nil)
-            computeMaxHeartRate()
-            
+            routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: .local())
         } catch {
-            // Handle any exceptions.
             return
         }
         
-        // Setup session and builder.
+        // 델리게이트 선언
+        locationManager.delegate = self
         session?.delegate = self
         builder?.delegate = self
-        locationManager.delegate = self
-        // Set the workout builder's data source.
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
                                                       workoutConfiguration: configuration)
         
         // Start the workout session and begin data collection.
         let startDate = Date()
         session?.startActivity(with: startDate)
-        builder?.beginCollection(withStart: startDate) { (success, error) in
+        builder?.beginCollection(withStart: startDate) { (_, _) in
             // The workout has started.
         }
+        
+        locationManager.desiredAccuracy = locationManager.accuracyAuthorization == .fullAccuracy
+        ? kCLLocationAccuracyBestForNavigation
+        : kCLLocationAccuracyBest
+        
+        // 위치 정보 수집
+        startLocationUpdates()
+        computeMaxHeartRate()
     }
     
-    // Request authorization to access HealthKit.
+    // MARK: - Request authorization to access HealthKit And LocationManager.
     func requestAuthorization() {
         
         // write
@@ -139,8 +142,6 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         healthStore.requestAuthorization(toShare: typesToShare,
                                          read: typesToRead) { (success, error) in
         }
-        
-        self.locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Session State Control
@@ -168,27 +169,25 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         let nowDate: Date = Date()
         
-        let speed = Measurement(value: self.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general))
+        let metadata: [String: Any] = [
+            "MaxSpeed": Double(Int(self.maxSpeed * 100.rounded()))/100 ,
+            "SprintCount": self.sprint,
+            "MinHeartRate": saveMinHeartRate,
+            "MaxHeartRate": saveMaxHeartRate,
+            "Distance": (Double(Int(self.distance/1000 * 100 ))) / 100,
+            "Calorie": Double(Int(self.energy * 100.rounded()))/100
+          ]
         
-        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed), quantity: HKQuantity(unit:HKUnit.init(from: "m/s"), doubleValue: self.maxSpeed), start: nowDate, end: nowDate, metadata: ["MaxSpeed": Double(Int(self.maxSpeed * 100.rounded()))/100 , "SprintCount": self.sprint, "MinHeartRate": saveMinHeartRate == 200 ? 0 : saveMinHeartRate, "MaxHeartRate": saveMaxHeartRate, "Distance": (Double(Int(self.distance/1000 * 100 ))) / 100, "Calorie": Double(Int(self.energy * 100.rounded()))/100])
+        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed),
+                                                            quantity: HKQuantity(unit:HKUnit.init(from: "m/s"),
+                                                                                 doubleValue: self.maxSpeed),
+                                                            start: nowDate, end: nowDate, metadata: metadata)
         
         self.healthStore.save(dataSample, withCompletion: { (success, error) in
             if (error != nil) {
               NSLog("error occurred saving water data")
             }
           })
-        
-        
-        if let workout = self.workout {
-            routeBuilder?.finishRoute(with: self.workout!, metadata: nil) { (newRoute, error) in
-                guard newRoute != nil else {
-                    // Handle any errors here.
-                    return
-                }
-                // Optional: Do something with the route here.
-            }
-        }
-        
     }
     
     // MARK: - BPM
@@ -263,26 +262,7 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit(from: "kcal")) ?? 0
             default:
                 return
-                
             }
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        // Filter the raw data.
-        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
-            location.horizontalAccuracy <= 20.0
-        }
-        
-        guard !filteredLocations.isEmpty else { return }
-        
-        // Add the filtered data to the route.
-        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
-            if !success {
-                // Handle any errors here.
-            }
-            print(filteredLocations)
         }
     }
 
@@ -322,22 +302,38 @@ class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 extension WorkoutManager: HKWorkoutSessionDelegate {
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
                         from fromState: HKWorkoutSessionState, date: Date) {
+        NSLog("WorkOutSession 변화 감지: \(toState)")
         DispatchQueue.main.async {
             self.running = toState == .running
         }
         
-        // Wait for the session to transition states before ending the builder.
+        /// Save Wokrout, Route
         if toState == .ended {
             
             builder?.endCollection(withEnd: date) { (success, error) in
-                self.builder?.finishWorkout { (workout, error) in
+                self.builder?.finishWorkout { [weak self] (workout, error) in
                     DispatchQueue.main.async {
-                        self.workout = workout
+                        self?.workout = workout
+                    }
+                    
+                    guard let workout else {
+                        NSLog("workout is nil")
+                        return
+                    }
+                    
+                    self?.routeBuilder?.finishRoute(with: workout, metadata: nil) { (newRoute, error) in
+                        
+                        guard let newRoute else {
+                            // Handle any errors here.
+                            NSLog("새로운 루트가 없습니다.")
+                            return
+                        }
+                        // Optional: Do something with the route here.
+                        NSLog("새로운 루트가 저장되었습니다.")
                     }
                 }
-
+                
             }
-        
         }
     }
     
@@ -352,7 +348,8 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
         
     }
     
-    func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
+    func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder,
+                        didCollectDataOf collectedTypes: Set<HKSampleType>) {
         for type in collectedTypes {
             guard let quantityType = type as? HKQuantityType else {
                 return // Nothing to do.
@@ -362,5 +359,66 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
             // Update the published values.
             updateForStatistics(statistics)
         }
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+extension WorkoutManager: CLLocationManagerDelegate {
+    // MARK: - 위치 정보가 수집되면 불리는 메서드
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // Filter the raw data.
+        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
+            // 필터 조정치 필요, 예시 121, 66등으로 20 미만인 필터 데이터가 존재하지 않음
+            location.horizontalAccuracy <= 20.0
+        }
+        
+        guard !filteredLocations.isEmpty else {
+            routeBuilder?.insertRouteData(locations, completion: { _, _ in
+            })
+            return
+        }
+        
+        // Add the filtered data to the route.
+        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
+            if !success {
+                // Handle any errors here.
+                print(error.debugDescription)
+            }
+        
+        }
+    }
+    
+    // MARK: - 위치 공유 권한 정보가 업데이트 되면 불리는 메서드
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .notDetermined:
+            NSLog("위치 권한 결정 안됨")
+            manager.requestWhenInUseAuthorization()
+        case .restricted:
+            NSLog("위치 권한 제한됨")
+            manager.requestAlwaysAuthorization()
+        case .denied:
+            NSLog("위치 권한 거부")
+            manager.requestAlwaysAuthorization()
+        case .authorizedAlways:
+            NSLog("위치 권한 항상 허용")
+            startLocationUpdates()
+        case .authorizedWhenInUse:
+            NSLog("위치 권한 사용중 허용")
+            startLocationUpdates()
+        @unknown default:
+            NSLog(manager.authorizationStatus.rawValue.description)
+        }
+    }
+    
+    private func startLocationUpdates() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    private func stopLocationUpdates() {
+        print("Stopping location updates")
+        locationManager.stopUpdatingHeading()
     }
 }

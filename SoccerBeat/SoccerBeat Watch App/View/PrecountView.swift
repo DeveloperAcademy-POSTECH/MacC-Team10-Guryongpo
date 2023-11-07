@@ -56,9 +56,12 @@ struct PrecountView: View {
                 // to Session Page
                 SessionPagingView()
                     .navigationBarBackButtonHidden()
-            }.onDisappear {
+            }
+            .onChange(of: count) { newCount in
                 // MARK: - Session Start
-                workoutManager.startWorkout()
+                if newCount < 2 {
+                    workoutManager.startWorkout()
+                }
             }
         }
     }
