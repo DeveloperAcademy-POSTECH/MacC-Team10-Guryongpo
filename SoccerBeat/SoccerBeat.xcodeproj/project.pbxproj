@@ -784,6 +784,8 @@
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다. ";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.GuryongpoIOS;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -821,6 +823,8 @@
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다. ";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.GuryongpoIOS.Guryongpo;
 				LD_RUNPATH_SEARCH_PATHS = (
