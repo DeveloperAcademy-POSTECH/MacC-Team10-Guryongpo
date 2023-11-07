@@ -413,7 +413,6 @@ extension WorkoutManager: CLLocationManagerDelegate {
     
     private func startLocationUpdates() {
         locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
     }
     
