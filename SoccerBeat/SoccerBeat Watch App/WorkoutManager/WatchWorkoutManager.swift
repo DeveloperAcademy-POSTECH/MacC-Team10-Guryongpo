@@ -105,7 +105,8 @@ class WorkoutManager: NSObject, ObservableObject {
         builder?.beginCollection(withStart: startDate) { (_, _) in
             // The workout has started.
         }
-        locationManager.desiredAccuracy = locationManager.accuracyAuthorization == .fullAccuracy 
+        
+        locationManager.desiredAccuracy = locationManager.accuracyAuthorization == .fullAccuracy
         ? kCLLocationAccuracyBestForNavigation
         : kCLLocationAccuracyBest
         
