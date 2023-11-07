@@ -262,7 +262,6 @@ class WorkoutManager: NSObject, ObservableObject {
                 self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit(from: "kcal")) ?? 0
             default:
                 return
-                
             }
         }
     }
@@ -308,6 +307,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             self.running = toState == .running
         }
         
+        /// Save Wokrout, Route
         if toState == .ended {
             
             builder?.endCollection(withEnd: date) { (success, error) in
