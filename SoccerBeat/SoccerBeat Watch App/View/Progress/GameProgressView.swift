@@ -35,9 +35,6 @@ struct GameProgressView: View {
                 HStack {
                     // MARK: - 뛴 거리
                     VStack(alignment: .leading) {
-                        Text("뛴 거리")
-                            .font(.distanceTimeText)
-                            .foregroundStyle(.ongoingText)
                         
                         let distanceText = String(Measurement(value: workoutManager.distance,
                                                               unit: UnitLength.meters)
@@ -46,19 +43,23 @@ struct GameProgressView: View {
                         Text(workoutManager.isDistanceActive ? distanceText : "--'--")
                             .font(.distanceTimeNumber)
                             .foregroundStyle(.ongoingNumber)
+                        
+                        Text("뛴 거리")
+                            .font(.distanceTimeText)
+                            .foregroundStyle(.ongoingText)
                     }
                     
                     Spacer()
                     
                     // MARK: - 스프린트
                     VStack(alignment: .leading) {
-                        Text("스프린트")
-                            .font(.distanceTimeText)
-                            .foregroundStyle(.ongoingText)
-                        
                         Text("\(workoutManager.sprint) TIMES")
                             .font(.distanceTimeNumber)
                             .foregroundStyle(.ongoingNumber)
+                        
+                        Text("스프린트")
+                            .font(.distanceTimeText)
+                            .foregroundStyle(.ongoingText)
                     }
                 }
             }
