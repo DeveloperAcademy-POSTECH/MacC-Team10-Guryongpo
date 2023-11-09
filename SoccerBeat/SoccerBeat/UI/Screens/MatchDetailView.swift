@@ -88,9 +88,9 @@ struct MatchDetailView01: View {
                 Spacer()
                 VStack(alignment: .leading) {
                     Image("HeartbeatSign")
-                    Text("칼로리")
+                    Text("칼로리 -> 없어짐")
                         .font(.custom("나중에 추가", size: 16))
-                    Text(workoutData.calorie.formatted() + " Kcal")
+                    Text("0" + " Kcal")
                         .font(.custom("SFProText-HeavyItalic", size: 30))
                 }
                 Spacer()
@@ -110,7 +110,7 @@ struct MatchDetailView01: View {
                     Image("HeartbeatSign")
                     Text("스프린트")
                         .font(.custom("나중에 추가", size: 16))
-                    Text(workoutData.sprint + workoutData.sprint < 2 ? " Time" : " Times")
+                    Text(workoutData.sprint.formatted() + " Times")
                         .font(.custom("SFProText-HeavyItalic", size: 30))
                 }
                 Spacer()

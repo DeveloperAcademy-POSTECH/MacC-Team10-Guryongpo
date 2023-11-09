@@ -14,19 +14,18 @@ class HealthInteractor: ObservableObject {
     var healthStore = HKHealthStore()
     
     var userWorkouts: [WorkoutData] = []
-    
     var allWorkouts: [HKWorkout] = []
+    var allMetadata: [[String : Any]] = []
     var allRoutes: [CLLocation] = []
-    var customData: [HKQuantitySample] = []
     
     var authSuccess = PassthroughSubject<(), Never>()
     var fetchSuccess = PassthroughSubject<(), Never>()
     
     private let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-mm-dd"
-            return formatter
-        }()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-mm-dd"
+        return formatter
+    }()
     
     var monthly: [String: [WorkoutData]] {
         var dict = [String: [WorkoutData]]()
@@ -38,10 +37,6 @@ class HealthInteractor: ObservableObject {
     }
     
     static let shared = HealthInteractor()
-    
-//    init() {
-//        requestAuthorization()
-//    }
     
     @MainActor
     func requestAuthorization() {
@@ -72,10 +67,8 @@ class HealthInteractor: ObservableObject {
         print("fetchAllData: attempting to fetch all data..")
         
         allWorkouts = await getAllWorkout() ?? []
-        customData = await getCustomData() ?? []
-//        await getWorkoutDistance(workout: allWorkouts.last!)
         if !allWorkouts.isEmpty {
-            var dataId = 0
+            var dataID = 0
             for allWorkout in allWorkouts {
                 var latSum = 0.0
                 var lonSum = 0.0
@@ -87,28 +80,29 @@ class HealthInteractor: ObservableObject {
                     lonSum += routeWorkout.coordinate.longitude
                 }
                 
-                let custom = customData[dataId]
+                let custom = allMetadata[dataID]
                 
                 var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
-                
-//                await userWorkouts.append(WorkoutData(dataId: dataId, date: allWorkout.startDate, time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: 0, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int], route: routes, center: (latSum / Double(routes.count), lonSum / Double(routes.count))))
-                
-                await userWorkouts.append(WorkoutData(dataId: dataId, date: dateFormatter.string(from: allWorkout.startDate), time: time, distance: custom.metadata!["Distance"] as! Double, location: "Empty", sprint: custom.metadata?["SprintCount"] as! Int, calorie: custom.metadata?["Calorie"] as! Double, velocity: custom.metadata!["MaxSpeed"] as! Double, heartRate: ["max": custom.metadata?["MaxHeartRate"] as! Int, "min": custom.metadata!["MinHeartRate"] as! Int]))
-                
-                dataId += 1
+                userWorkouts.append(WorkoutData(dataID: dataID,
+                                                date: dateFormatter.string(from: allWorkout.startDate),
+                                                time: time as! String,
+                                                distance: custom["Distance"] as! Double,
+                                                location: "Empty",
+                                                sprint: custom["SprintCount"] as! Int,
+                                                velocity: custom["MaxSpeed"] as! Double,
+                                                heartRate: ["max": custom["MaxHeartRate"] as! Int,
+                                                            "min": custom["MinHeartRate"] as! Int],
+                                                route: routes,
+                                                center: [latSum / Double(routes.count),
+                                                         lonSum / Double(routes.count)]))
+                dataID += 1
             }
             self.fetchSuccess.send()
         }
-        
-        print(userWorkouts)
     }
     
     func getAllWorkout() async -> [HKWorkout]? {
-        // TODO: workout data from out application
-        // How to get from SoccerBeat
         let soccer = HKQuery.predicateForObjects(from: .default())
-        
-        // TODO: how to seperate workout data ?
         let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
             healthStore.execute(HKSampleQuery(sampleType: .workoutType(), predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
                 if let hasError = error {
@@ -125,28 +119,28 @@ class HealthInteractor: ObservableObject {
     }
     
     func getCustomData() async -> [HKQuantitySample]? {
-           
-           guard let speedType =
-                   HKObjectType.quantityType(forIdentifier:
-                   HKQuantityTypeIdentifier.runningSpeed) else {
-               fatalError("*** Unable to create a distance type ***")
-           }
-           
-           let soccer = HKQuery.predicateForObjects(from: .default())
-           let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-               self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
-                   if let hasError = error {
-                       continuation.resume(throwing: hasError)
-                       return
-                   }
-                   continuation.resume(returning: samples!)
-               }))
-           }
-           guard let speedData = data as? [HKQuantitySample] else {
-               return nil
-           }
-           return speedData
-       }
+        
+        guard let speedType =
+                HKObjectType.quantityType(forIdentifier:
+                                            HKQuantityTypeIdentifier.runningSpeed) else {
+            fatalError("*** Unable to create a distance type ***")
+        }
+        
+        let soccer = HKQuery.predicateForObjects(from: .default())
+        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+            self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
+                if let hasError = error {
+                    continuation.resume(throwing: hasError)
+                    return
+                }
+                continuation.resume(returning: samples!)
+            }))
+        }
+        guard let speedData = data as? [HKQuantitySample] else {
+            return nil
+        }
+        return speedData
+    }
     
     func getWorkoutRoute(workout: HKWorkout) async -> ([CLLocation]?) {
         let byWorkout = HKQuery.predicateForObjects(from: workout)
@@ -164,6 +158,10 @@ class HealthInteractor: ObservableObject {
         }
         
         guard let route = (samples as? [HKWorkoutRoute])?.first else { return nil }
+        // save Meta data in workoutRoute
+        samples?.forEach { sample in
+            allMetadata.append(sample.metadata!)
+        }
         
         let locations = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
             var allLocations = [CLLocation]() // built up over time as and when HK tells us
