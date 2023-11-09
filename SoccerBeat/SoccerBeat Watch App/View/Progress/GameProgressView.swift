@@ -12,101 +12,64 @@ struct GameProgressView: View {
     // MARK: - Data
     @EnvironmentObject var workoutManager: WorkoutManager
     
-    private var zone: HeartRateZone {
-        switch workoutManager.heartZone {
-        case 1: return .one
-        case 2: return .two
-        case 3: return .three
-        case 4: return .four
-        default: return .five
-        }
-    }
-    
-    private var zoneBPMGradient: LinearGradient {
-        switch zone {
-        case .one:
-            return .zone1Bpm
-        case .two:
-            return .zone2Bpm
-        case .three:
-            return .zone3Bpm
-        case .four:
-            return .zone4Bpm
-        case .five:
-            return .zone5Bpm
-        }
-    }
-    
-    private var currentZoneBarGradient: LinearGradient {
-        switch zone {
-        case .one:
-            return .zone1CurrentZoneBar
-        case .two:
-            return .zone2CurrentZoneBar
-        case .three:
-            return .zone3CurrentZoneBar
-        case .four:
-            return .zone4CurrentZoneBar
-        case .five:
-            return .zone5CurrentZoneBar
-        }
-    }
-    
     // MARK: - Body
     
     var body: some View {
-        VStack {
-            TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
-                                                  isPaused: workoutManager.session?.state == .paused)) { context in
-                VStack(spacing: 0) {
-                    // Zone Bar
-                    zoneBar
-                    
-                    // Heart Rate
-                    BPMTextView(textGradient: zoneBPMGradient)
-                    
-                    // Game Ongoing Information
-                    HStack {
-                        Spacer()
-                        VStack(spacing: 0) {
-                            let distanceText = String(Measurement(value: workoutManager.distance,
-                                                                  unit: UnitLength.meters)
-                                .formatted(.measurement(width: .abbreviated, usage: .road)))
-                            
-                            Text(workoutManager.isDistanceActive ? distanceText : "--'--")
-                                .font(.distanceTimeNumber)
-                                .foregroundStyle(.ongoingNumber)
-                            Text("뛴 거리")
-                                .font(.distanceTimeText)
-                                .foregroundStyle(.ongoingText)
-                        }
+        TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
+                                              isPaused: workoutManager.session?.state == .paused)) { context in
+            VStack(alignment: .leading) {
+                // MARK: - 경기 시간
+                VStack(alignment: .leading) {
+                    Text("경기 시간")
+                        .foregroundStyle(.ongoingText)
+                        .font(.playTimeText)
+                    GeometryReader { geo in
+                        ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
+                            .font(.playTimeNumber)
+                            .minimumScaleFactor(0.001)
+                            .frame(width: geo.size.width)
+                            .foregroundStyle(.playTimeNumber)
+                    }
+                }
+                
+                HStack {
+                    // MARK: - 뛴 거리
+                    VStack(alignment: .leading) {
+                        Text("뛴 거리")
+                            .font(.distanceTimeText)
+                            .foregroundStyle(.ongoingText)
                         
-                        Spacer()
-                            .frame(maxWidth: 30)
+                        let distanceText = String(Measurement(value: workoutManager.distance,
+                                                              unit: UnitLength.meters)
+                            .formatted(.measurement(width: .abbreviated, usage: .road)))
                         
-                        VStack(spacing: 0) {
-                            ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
-                                .foregroundStyle(.ongoingNumber)
-                                .font(.distanceTimeNumber)
-                            Text("경기 시간")
-                                .font(.distanceTimeText)
-                                .foregroundStyle(.ongoingText)
-                        }
-                        Spacer()
+                        Text(workoutManager.isDistanceActive ? distanceText : "--'--")
+                            .font(.distanceTimeNumber)
+                            .foregroundStyle(.ongoingNumber)
                     }
                     
-                    SprintView(accentGradient: workoutManager.running ? zoneBPMGradient : LinearGradient.stopBpm, progress: workoutManager.speed)
+                    Spacer()
                     
+                    // MARK: - 스프린트
+                    VStack(alignment: .leading) {
+                        Text("스프린트")
+                            .font(.distanceTimeText)
+                            .foregroundStyle(.ongoingText)
+                        
+                        Text("\(workoutManager.sprint) TIMES")
+                            .font(.distanceTimeNumber)
+                            .foregroundStyle(.ongoingNumber)
+                    }
                 }
-                .padding(.horizontal)
-                .fullScreenCover(isPresented: $workoutManager.isInZone5For2Min) {
-                    AlertView()
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                workoutManager.isInZone5For2Min = false
-                            }
+            }
+            .padding(.horizontal)
+            .fullScreenCover(isPresented: $workoutManager.isInZone5For2Min) {
+                AlertView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            workoutManager.isInZone5For2Min = false
                         }
-                }
+                    }
             }
         }
     }
@@ -114,57 +77,6 @@ struct GameProgressView: View {
 
 #Preview {
     GameProgressView()
-}
-
-// MARK: - Zone Bar
-
-extension GameProgressView {
-    @ViewBuilder
-    private var zoneBar: some View {
-        let circleHeight = CGFloat(16.0)
-        
-        HStack {
-            ForEach(1...5, id: \.self) { index in
-                if zone.rawValue == index {
-                    currentZone
-                        .frame(height: circleHeight)
-                        .frame(maxWidth: .infinity)
-                } else {
-                    Circle()
-                        .frame(width: circleHeight, height: circleHeight)
-                        .foregroundStyle(.inactiveZone)
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private var currentZone: some View {
-        let circleHeight = CGFloat(16.0)
-        let strokeWidth = CGFloat(0.6)
-        let roundedRectangle = RoundedRectangle(cornerRadius: circleHeight / 2)
-        let text = Text(zone.text)
-            .font(.zoneCapsule)
-            .foregroundStyle(.currentZoneText)
-        
-        if #available(watchOS 10.0, *) {
-            roundedRectangle
-                .stroke(.currentZoneStroke, lineWidth: strokeWidth)
-                .fill(workoutManager.running ? currentZoneBarGradient : LinearGradient.stopCurrentZoneBar)
-                .overlay {
-                    text
-                }
-        } else { // current watch version(9.0)
-            roundedRectangle
-                .strokeBorder(.currentZoneStroke, lineWidth: strokeWidth)
-                .background(
-                    roundedRectangle.foregroundStyle(workoutManager.running ? currentZoneBarGradient : .stopCurrentZoneBar)
-                )
-                .overlay {
-                    text
-                }
-        }
-    }
 }
 
 private struct ProgressTimelineSchedule: TimelineSchedule {
