@@ -17,6 +17,7 @@ import SwiftUI
  Family: SF Pro Text
  - SFProText-HeavyItalic
  - SFProText-BlackItalic
+ - SPProText-RegularItalic
  
  Family: Noto Sans
  - NotoSans-Regular
@@ -33,12 +34,13 @@ extension Font {
     
     // MARK: - Game Progress
     
-    public static let zoneCapsule = Font.sfCompactText(size: 12, weight: .semiboldItalic)
     public static let beatPerMinute = Font.sfProText(size: 36, weight: .heavyItalic)
     public static let bpmUnit = Font.sfProText(size: 18, weight: .heavyItalic)
     public static let distanceTimeNumber = Font.sfCompactText(size: 18, weight: .semiboldItalic)
     public static let distanceTimeText = Font.sfCompactText(size: 12)
     public static let speedStop = Font.sfCompactText(size: 12, weight: .lightItalic)
+    public static let playTimeText = Font.sfProText(size: 12, weight: .regularItalic)
+    public static let playTimeNumber = Font.sfProText(size: 48, weight: .blackItalic)
 
     // MARK: - Game Stop
     
@@ -94,6 +96,7 @@ private enum SFProText: String {
     case blackItalic
     case heavyItalic
     case lightItalic
+    case regularItalic
     
     var capitalized: String {
         self.rawValue.capitalized
