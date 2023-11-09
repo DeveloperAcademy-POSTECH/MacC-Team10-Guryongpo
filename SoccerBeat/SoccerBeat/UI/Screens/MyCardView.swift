@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct MyCardView: View {
     @State var backDegree = 0.0
@@ -71,12 +72,16 @@ struct CardFront : View {
     let width : CGFloat
     let height : CGFloat
     @Binding var degree : Double
+    @State private var selectedItem: PhotosPickerItem?
     
     var body: some View {
         ZStack {
-            Image("IsacCardFront")
-                .resizable()
+//            Image("IsacCardFront")
+//                .resizable()
+//            .frame(width: width, height: height)
+            Profile()
                 .frame(width: width, height: height)
+            
         }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
     }
 }
@@ -97,4 +102,19 @@ struct CardBack : View {
 
 #Preview {
     MyCardView()
+}
+
+private struct PhotoPicker: View {
+    
+    @Binding var selectedItem: PhotosPickerItem?
+    @ViewBuilder var label: any View
+    
+    var body: some View {
+        PhotosPicker(
+            selection: $selectedItem,
+            matching: .images,
+            photoLibrary: .shared()) {
+                AnyView(label)
+            }
+    }
 }

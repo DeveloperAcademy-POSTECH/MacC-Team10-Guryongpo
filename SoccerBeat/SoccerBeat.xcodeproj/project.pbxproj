@@ -10,6 +10,9 @@
 		681297392AE64432000CC957 /* PhraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681297382AE64432000CC957 /* PhraseView.swift */; };
 		6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812973A2AE648E0000CC957 /* SummaryComponent.swift */; };
 		6820884C2AF11EB200F51A3E /* PrecountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6820884B2AF11EB200F51A3E /* PrecountView.swift */; };
+		682D64832AFD1B6B00D7F07B /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64822AFD1B6B00D7F07B /* ProfileModel.swift */; };
+		682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64842AFD1BA000D7F07B /* ProfileImage.swift */; };
+		682D64872AFD1D8500D7F07B /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64862AFD1D8500D7F07B /* Profile.swift */; };
 		685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */; };
@@ -109,6 +112,9 @@
 		681297382AE64432000CC957 /* PhraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseView.swift; sourceTree = "<group>"; };
 		6812973A2AE648E0000CC957 /* SummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryComponent.swift; sourceTree = "<group>"; };
 		6820884B2AF11EB200F51A3E /* PrecountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecountView.swift; sourceTree = "<group>"; };
+		682D64822AFD1B6B00D7F07B /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		682D64842AFD1BA000D7F07B /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
+		682D64862AFD1D8500D7F07B /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		685D7B582AE38D1A00783433 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SoccerBeat Watch App.entitlements"; sourceTree = "<group>"; };
@@ -188,6 +194,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		682D64812AFD1B5700D7F07B /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				682D64822AFD1B6B00D7F07B /* ProfileModel.swift */,
+				682D64842AFD1BA000D7F07B /* ProfileImage.swift */,
+				682D64862AFD1D8500D7F07B /* Profile.swift */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
 		685D7B5D2AE3F3BD00783433 /* WorkoutManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +346,7 @@
 		D3C500112AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXGroup;
 			children = (
+				682D64812AFD1B5700D7F07B /* Photos */,
 				685D7B702AE53D7E00783433 /* UI */,
 				D3E874D22AEE3EC1005DB7C5 /* Injected */,
 				D3D4F1882AF248C2006C6B8A /* Interactors */,
@@ -577,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */,
+				682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */,
 				BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */,
 				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
@@ -591,10 +609,12 @@
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
+				682D64872AFD1D8500D7F07B /* Profile.swift in Sources */,
 				BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */,
 				D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */,
 				685D7B752AE53DC400783433 /* LineGraphView.swift in Sources */,
 				D3D4F18D2AF26662006C6B8A /* WorkoutData.swift in Sources */,
+				682D64832AFD1B6B00D7F07B /* ProfileModel.swift in Sources */,
 				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
 				BE4069E12AF2641800FA3030 /* MatchTotalView.swift in Sources */,
@@ -776,7 +796,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -787,13 +807,13 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다. ";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.Guryongpo;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.GuryongpoIOS;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -815,7 +835,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -826,13 +846,13 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다. ";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.Guryongpo;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.GuryongpoIOS;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -856,7 +876,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
@@ -874,7 +894,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -895,7 +915,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
@@ -913,7 +933,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
