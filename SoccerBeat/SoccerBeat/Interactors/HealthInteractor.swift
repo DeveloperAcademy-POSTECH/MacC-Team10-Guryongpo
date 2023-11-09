@@ -11,16 +11,21 @@ import CoreLocation
 import HealthKit
 
 class HealthInteractor: ObservableObject {
+    // Object to request permission to read HealthKit data.
     var healthStore = HKHealthStore()
-    
+    // Entire user workouts in HealthKit data.
     var userWorkouts: [WorkoutData] = []
     
     var allWorkouts: [HKWorkout] = []
     var allRoutes: [CLLocation] = []
     var customData: [HKQuantitySample] = []
     
+    // Send when permission is granted by the user.
     var authSuccess = PassthroughSubject<(), Never>()
+    // Send when data fetch is successful.
     var fetchSuccess = PassthroughSubject<(), Never>()
+    
+    static let shared = HealthInteractor()
     
     private let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -36,12 +41,6 @@ class HealthInteractor: ObservableObject {
         }
         return dict
     }
-    
-    static let shared = HealthInteractor()
-    
-//    init() {
-//        requestAuthorization()
-//    }
     
     @MainActor
     func requestAuthorization() {
@@ -61,6 +60,7 @@ class HealthInteractor: ObservableObject {
         }
         
         healthStore.requestAuthorization(toShare: nil, read: typeToRead) { success, error in
+            // Success means that the Permission window appears.
             if success {
                 self.authSuccess.send()
             }
@@ -99,8 +99,6 @@ class HealthInteractor: ObservableObject {
             }
             self.fetchSuccess.send()
         }
-        
-        print(userWorkouts)
     }
     
     func getAllWorkout() async -> [HKWorkout]? {

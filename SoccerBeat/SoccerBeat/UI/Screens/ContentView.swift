@@ -13,52 +13,56 @@ struct ContentView: View {
     @State var userWorkouts: [WorkoutData]?
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                ZStack {
-                    Image("BackgroundPattern")
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 0)
-                    
-                    VStack {
+        if userWorkouts == nil {
+            NilDataView()
+        } else {
+            NavigationStack {
+                ScrollView {
+                    ZStack {
+                        Image("BackgroundPattern")
+                            .resizable()
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 0)
                         
-                        MyCardView()
-                        
-                        Spacer()
-                            .frame(height: 114) 
-                        
-                        MatchRecapView(userWorkouts: $userWorkouts)
-                        
-                        Spacer()
-                            .frame(height: 60)
-                        
-                        AnalyticsView(userWorkouts: $userWorkouts)
-                        
-                        Spacer()
-                            .frame(height: 60)
-                        
+                        VStack {
+                            
+                            MyCardView()
+                            
+                            Spacer()
+                                .frame(height: 114) 
+                            
+                            MatchRecapView(userWorkouts: $userWorkouts)
+                            
+                            Spacer()
+                                .frame(height: 60)
+                            
+                            AnalyticsView(userWorkouts: $userWorkouts)
+                            
+                            Spacer()
+                                .frame(height: 60)
+                            
+                        }
                     }
                 }
+                .navigationTitle("")
             }
-            .navigationTitle("")
-        }
-        .task {
-            healthInteractor.requestAuthorization()
-        }
-        .onReceive(healthInteractor.authSuccess, perform: {
-            Task {
-                print("ContentView: attempting to fetch all data..")
-                await healthInteractor.fetchAllData()
+            .task {
+                healthInteractor.requestAuthorization()
             }
-        })
-        .onReceive(healthInteractor.fetchSuccess, perform: {
-            print("ContentView: fetching user data success..")
-            self.userWorkouts = healthInteractor.userWorkouts
-        })
-        .tint(.white)
-
+            .onReceive(healthInteractor.authSuccess, perform: {
+                Task {
+                    print("ContentView: attempting to fetch all data..")
+                    await healthInteractor.fetchAllData()
+                }
+            })
+            .onReceive(healthInteractor.fetchSuccess, perform: {
+                print("ContentView: fetching user data success..")
+                self.userWorkouts = healthInteractor.userWorkouts
+            })
+            .tint(.white)
+            
+        }
     }
 }
 
