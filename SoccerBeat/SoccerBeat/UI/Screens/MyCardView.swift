@@ -71,6 +71,9 @@ struct MyCardView: View {
                         soundManager.playBackSoundEffect()
                     }
                 }
+                .onChange(of: viewModel.imageSelection) { _ in
+                    soundManager.playPhotoSelectEffect()
+                }
             }
         }
     }

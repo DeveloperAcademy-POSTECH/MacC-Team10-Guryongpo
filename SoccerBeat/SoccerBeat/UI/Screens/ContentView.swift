@@ -66,7 +66,7 @@ struct ContentView: View {
         .tint(.white)
         .onAppear {
             // 시끄러우면 각주 처리해주세요 -호제가-
-            soundManager.playBackground()
+//            soundManager.playBackground()
         }
 
     }

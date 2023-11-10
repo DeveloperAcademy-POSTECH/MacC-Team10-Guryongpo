@@ -12,12 +12,6 @@ import CoreTransferable
 @MainActor
 class ProfileModel: ObservableObject {
     
-    // MARK: - Profile Details
-    
-    @Published var firstName: String = ""
-    @Published var lastName: String = ""
-    @Published var aboutMe: String = ""
-    
     // MARK: - Profile Image
     
     enum ImageState {

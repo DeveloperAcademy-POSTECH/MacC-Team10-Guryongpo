@@ -17,6 +17,7 @@
 		682D64A82AFE77D500D7F07B /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64A72AFE77D500D7F07B /* SoundManager.swift */; };
 		682D64AB2AFE80F200D7F07B /* FifaBackground.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */; };
 		682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */; };
+		682D64B32AFEA6F000D7F07B /* PhotoSelectEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64B22AFEA6F000D7F07B /* PhotoSelectEffect.mp3 */; };
 		685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */; };
@@ -124,6 +125,7 @@
 		682D64A72AFE77D500D7F07B /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FifaBackground.mp3; sourceTree = "<group>"; };
 		682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CardFlipEffect.mp3; sourceTree = "<group>"; };
+		682D64B22AFEA6F000D7F07B /* PhotoSelectEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PhotoSelectEffect.mp3; sourceTree = "<group>"; };
 		685D7B582AE38D1A00783433 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SoccerBeat Watch App.entitlements"; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			children = (
 				682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */,
 				682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */,
+				682D64B22AFEA6F000D7F07B /* PhotoSelectEffect.mp3 */,
 			);
 			path = MusicGroup;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				682D64B32AFEA6F000D7F07B /* PhotoSelectEffect.mp3 in Resources */,
 				FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BED269762AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
