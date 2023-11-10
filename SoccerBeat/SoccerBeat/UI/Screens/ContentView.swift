@@ -11,6 +11,8 @@ import HealthKit
 struct ContentView: View {
     @ObservedObject var healthInteractor = HealthInteractor.shared
     @State var userWorkouts: [WorkoutData]?
+    @State var isFlipped: Bool = false
+    @StateObject var viewModel = ProfileModel()
     
     var body: some View {
         NavigationStack {
@@ -24,7 +26,10 @@ struct ContentView: View {
                     
                     VStack {
                         
-                        MyCardView()
+                        MyCardView(isFlipped: $isFlipped, viewModel: viewModel)
+                        PhotoSelectButtonView(viewModel: viewModel)
+                            .opacity(isFlipped ? 1 : 0)
+                            .padding()
                         
                         Spacer()
                             .frame(height: 114) 

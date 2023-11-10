@@ -6,19 +6,23 @@
 //
 
 import SwiftUI
-
-import SwiftUI
 import PhotosUI
 
 struct Profile: View {
-    @StateObject var viewModel = ProfileModel()
+    @ObservedObject var viewModel: ProfileModel
+    let width : CGFloat
+    let height : CGFloat
     var body: some View {
         NavigationView {
-            ZStack {
-                Image("ProfileLayer")
-                    .resizable()
-                EditableCircularProfileImage(viewModel: viewModel)
-            }
+            EditableCircularProfileImage(viewModel: viewModel,
+                                         width: width,
+                                         height: height)
+                .mask {
+                    Image("MaskLayer")
+                        .resizable()
+                        .scaledToFit()
+                        .padding(8)
+                }
         }
     }
 }
