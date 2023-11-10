@@ -31,20 +31,12 @@ struct SummaryView: View {
                                          .formatted(.measurement(width: .abbreviated, usage: .road))), playTime: "")
                 SummaryComponent(title: "최고 속도", content: Measurement(value: workoutManager.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)), playTime: "")
                 SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted(), playTime: "")
-                SummaryComponent(title: "칼로리", content:  Measurement(value: workoutManager.energy,
-                    unit: UnitEnergy.kilocalories)
-                    .formatted(.measurement(width: .abbreviated,
-                                            usage: .workout,
-                                            numberFormatStyle: .number.precision(.fractionLength(0)))), playTime: "")
                 
                 Button(action: { dismiss() }) {
                     Text("완료")
                         .font(.summaryDoneButton)
                         .foregroundStyle(.zone2Bpm)
                 }
-            }
-            .onAppear {
-                print("Burned Calories: \(workoutManager.workout?.totalEnergyBurned ?? nil)")
             }
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)

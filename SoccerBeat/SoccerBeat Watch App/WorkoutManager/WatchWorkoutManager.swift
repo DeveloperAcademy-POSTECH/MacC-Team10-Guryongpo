@@ -36,20 +36,20 @@ class WorkoutManager: NSObject, ObservableObject {
     var energy: Double = 0
     
     let sprintSpeed: Double = 5.5556 // modify it to test code
-        
+    
     var isSprint: Bool = false
     var maxSpeed: Double = 0.0
     var speed: Double = 0.0 {
-            didSet {
-                maxSpeed = max(maxSpeed, speed)
-                if !isSprint && speed >= sprintSpeed {
-                    isSprint = true
-                    sprint += 1
-                } else if isSprint && speed < sprintSpeed {
-                    isSprint = false
-                }
+        didSet {
+            maxSpeed = max(maxSpeed, speed)
+            if !isSprint && speed >= sprintSpeed {
+                isSprint = true
+                sprint += 1
+            } else if isSprint && speed < sprintSpeed {
+                isSprint = false
             }
         }
+    }
     
     // MARK: - Workout Metrics
     @Published var heartRate: Double = 0 {
@@ -119,7 +119,7 @@ class WorkoutManager: NSObject, ObservableObject {
     func requestAuthorization() {
         
         // write
-        let typesToShare: Set = [HKQuantityType.workoutType(), 
+        let typesToShare: Set = [HKQuantityType.workoutType(),
                                  HKSeriesType.workoutRoute(),
                                  HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
                                  HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
@@ -166,28 +166,6 @@ class WorkoutManager: NSObject, ObservableObject {
     func endWorkout() {
         session?.end()
         showingSummaryView = true
-        
-        let nowDate: Date = Date()
-        
-        let metadata: [String: Any] = [
-            "MaxSpeed": Double(Int(self.maxSpeed * 100.rounded()))/100 ,
-            "SprintCount": self.sprint,
-            "MinHeartRate": saveMinHeartRate,
-            "MaxHeartRate": saveMaxHeartRate,
-            "Distance": (Double(Int(self.distance/1000 * 100 ))) / 100,
-            "Calorie": Double(Int(self.energy * 100.rounded()))/100
-          ]
-        
-        let dataSample: HKQuantitySample = HKQuantitySample(type: HKQuantityType(.runningSpeed),
-                                                            quantity: HKQuantity(unit:HKUnit.init(from: "m/s"),
-                                                                                 doubleValue: self.maxSpeed),
-                                                            start: nowDate, end: nowDate, metadata: metadata)
-        
-        self.healthStore.save(dataSample, withCompletion: { (success, error) in
-            if (error != nil) {
-              NSLog("error occurred saving water data")
-            }
-          })
     }
     
     // MARK: - BPM
@@ -195,7 +173,7 @@ class WorkoutManager: NSObject, ObservableObject {
     private var bpmString: String {
         String(heartRate.formatted(.number.precision(.fractionLength(0))))
     }
-
+    
     public var isBPMActive: Bool {
         return bpmString != "0"
     }
@@ -246,8 +224,8 @@ class WorkoutManager: NSObject, ObservableObject {
     
     func updateForStatistics(_ statistics: HKStatistics?) {
         guard let statistics = statistics else { return }
-//        print(statistics)
-//        
+        //        print(statistics)
+        //
         DispatchQueue.main.async {
             switch statistics.quantityType {
             case HKQuantityType.quantityType(forIdentifier: .heartRate):
@@ -265,7 +243,7 @@ class WorkoutManager: NSObject, ObservableObject {
             }
         }
     }
-
+    
     func resetWorkout() {
         builder = nil
         workout = nil
@@ -321,14 +299,22 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                         return
                     }
                     
-                    self?.routeBuilder?.finishRoute(with: workout, metadata: nil) { (newRoute, error) in
+                    // custom data 를 routedata의 metadata에 저장
+                    let metadata: [String: Any] = [
+                        "MaxSpeed": Double(Int(self!.maxSpeed * 100.rounded()))/100 ,
+                        "SprintCount": self!.sprint,
+                        "MinHeartRate": self!.saveMinHeartRate,
+                        "MaxHeartRate": self!.saveMaxHeartRate,
+                        "Distance": (Double(Int(self!.distance/1000 * 100 ))) / 100
+                    ]
+                    
+                    self?.routeBuilder?.finishRoute(with: workout, metadata: metadata) { (newRoute, error) in
                         
                         guard let newRoute else {
-                            // Handle any errors here.
                             NSLog("새로운 루트가 없습니다.")
                             return
                         }
-                        // Optional: Do something with the route here.
+                        
                         NSLog("새로운 루트가 저장되었습니다.")
                     }
                 }
@@ -385,7 +371,7 @@ extension WorkoutManager: CLLocationManagerDelegate {
                 // Handle any errors here.
                 print(error.debugDescription)
             }
-        
+            
         }
     }
     

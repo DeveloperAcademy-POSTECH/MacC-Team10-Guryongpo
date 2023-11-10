@@ -10,19 +10,24 @@ import CoreLocation
 
 struct WorkoutData: Hashable, Equatable, Identifiable {
     var id: UUID = UUID()
-//    static func == (lhs: WorkoutData, rhs: WorkoutData) -> Bool {
-//        lhs.dataId == rhs.dataId
-//    }
-//    var id: UUID = UUID()
-    var dataId: Int // id
+    var dataID: Int
     let date: String
     let time: String
     let distance: Double // total distance
     let location: String
     let sprint: Int // sprint counter
-    let calorie: Double // sprint counter
-    let velocity: Double // maximum velocity
-    var heartRate: [String: Int] // min, max of heartRate
-//    var route: [CLLocationCoordinate2D] // whole route
-//    var center: (Double, Double) // center of heatmap
+    let velocity: Double // maximum velocity. km/h
+    var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
+    var route: [CLLocationCoordinate2D] // whole route
+    var center: [Double] // center of heatmap
+}
+
+extension CLLocationCoordinate2D: Hashable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.latitude) 
+    }
 }
