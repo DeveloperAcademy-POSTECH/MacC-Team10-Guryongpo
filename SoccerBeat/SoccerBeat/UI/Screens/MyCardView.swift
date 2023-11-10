@@ -11,7 +11,8 @@ import PhotosUI
 struct MyCardView: View {
     @State var backDegree = 0.0
     @State var frontDegree = -90.0
-    @State var isFlipped = false
+    @Binding var isFlipped: Bool
+    @ObservedObject var viewModel: ProfileModel
     
     let width : CGFloat = 321
     let height : CGFloat = 445
@@ -58,9 +59,10 @@ struct MyCardView: View {
                 Spacer()
                     .frame(height: 80)
                 ZStack {
-                    CardFront(width: width, height: height, degree: $frontDegree)
+                    CardFront(width: width, height: height, degree: $frontDegree, viewModel: viewModel)
                     CardBack(width: width, height: height, degree: $backDegree)
-                }.onTapGesture {
+                }
+                .onTapGesture {
                     flipCard()
                 }
             }
@@ -73,15 +75,22 @@ struct CardFront : View {
     let height : CGFloat
     @Binding var degree : Double
     @State private var selectedItem: PhotosPickerItem?
+    @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
         ZStack {
 //            Image("IsacCardFront")
 //                .resizable()
 //            .frame(width: width, height: height)
-            Profile()
+            Profile(viewModel: viewModel,
+                    width: width,
+                    height: height)
+
+            Image("ProfileLayer")
+                .resizable()
+                .scaledToFit()
                 .frame(width: width, height: height)
-            
+//            
         }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
     }
 }
@@ -101,7 +110,7 @@ struct CardBack : View {
 }
 
 #Preview {
-    MyCardView()
+    MyCardView(isFlipped: .constant(true), viewModel: ProfileModel())
 }
 
 private struct PhotoPicker: View {

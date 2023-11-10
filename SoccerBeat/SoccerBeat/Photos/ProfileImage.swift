@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 
+// Render Image
 struct ProfileImage: View {
     let imageState: ProfileModel.ImageState
     
@@ -29,29 +30,13 @@ struct ProfileImage: View {
     }
 }
 
-struct CircularProfileImage: View {
-    let imageState: ProfileModel.ImageState
-    
-    var body: some View {
-        ProfileImage(imageState: imageState)
-            .scaledToFill()
-            .clipShape(.circle)
-            .frame(width: 300, height: 300)
-    }
-}
-
+// Transmit Profile ViewModel
 struct EditableCircularProfileImage: View {
     @ObservedObject var viewModel: ProfileModel
-    
+    let width : CGFloat
+    let height : CGFloat
     var body: some View {
-        CircularProfileImage(imageState: viewModel.imageState)
-            .overlay {
-                PhotosPicker(selection: $viewModel.imageSelection,
-                             matching: .images,
-                             photoLibrary: .shared()) {
-                    Text("내 사진\n추가하기 +")
-                }
-                .buttonStyle(.borderless)
-            }
+        ProfileImage(imageState: viewModel.imageState)
+            .frame(width: width, height: height)
     }
 }
