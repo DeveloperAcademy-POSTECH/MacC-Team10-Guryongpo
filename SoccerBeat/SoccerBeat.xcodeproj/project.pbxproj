@@ -64,7 +64,6 @@
 		BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */; };
 		BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
 		D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */; };
-		D3B5E3322AFCBBF6006A8876 /* NilDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B5E3312AFCBBF6006A8876 /* NilDataView.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
 		D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
@@ -150,7 +149,6 @@
 		BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeView.swift; sourceTree = "<group>"; };
 		BEC1E5CF2AE6B4AF008B285E /* SoccerBeat-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SoccerBeat-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
-		D3B5E3312AFCBBF6006A8876 /* NilDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilDataView.swift; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
 		D3C500142AE36F3F00EFAEFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */,
 				685D7B742AE53DC400783433 /* LineGraphView.swift */,
 				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
-				D3B5E3312AFCBBF6006A8876 /* NilDataView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -592,7 +589,6 @@
 				685D7B682AE52A2900783433 /* Data.swift in Sources */,
 				BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */,
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
-				D3B5E3322AFCBBF6006A8876 /* NilDataView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
 				BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */,
