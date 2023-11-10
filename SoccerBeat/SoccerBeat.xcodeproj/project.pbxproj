@@ -14,6 +14,9 @@
 		682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64842AFD1BA000D7F07B /* ProfileImage.swift */; };
 		682D64872AFD1D8500D7F07B /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64862AFD1D8500D7F07B /* Profile.swift */; };
 		682D64892AFDBF8C00D7F07B /* CapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64882AFDBF8C00D7F07B /* CapsuleView.swift */; };
+		682D64A82AFE77D500D7F07B /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64A72AFE77D500D7F07B /* SoundManager.swift */; };
+		682D64AB2AFE80F200D7F07B /* FifaBackground.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */; };
+		682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */; };
 		685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 685D7B582AE38D1A00783433 /* .swiftlint.yml */; };
 		685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */; };
@@ -118,6 +121,9 @@
 		682D64842AFD1BA000D7F07B /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		682D64862AFD1D8500D7F07B /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		682D64882AFDBF8C00D7F07B /* CapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleView.swift; sourceTree = "<group>"; };
+		682D64A72AFE77D500D7F07B /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FifaBackground.mp3; sourceTree = "<group>"; };
+		682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CardFlipEffect.mp3; sourceTree = "<group>"; };
 		685D7B582AE38D1A00783433 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SoccerBeat Watch App.entitlements"; sourceTree = "<group>"; };
@@ -205,6 +211,24 @@
 				682D64862AFD1D8500D7F07B /* Profile.swift */,
 			);
 			path = Photos;
+			sourceTree = "<group>";
+		};
+		682D64A62AFE768600D7F07B /* SoundEffect */ = {
+			isa = PBXGroup;
+			children = (
+				682D64A92AFE80E100D7F07B /* MusicGroup */,
+				682D64A72AFE77D500D7F07B /* SoundManager.swift */,
+			);
+			path = SoundEffect;
+			sourceTree = "<group>";
+		};
+		682D64A92AFE80E100D7F07B /* MusicGroup */ = {
+			isa = PBXGroup;
+			children = (
+				682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */,
+				682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */,
+			);
+			path = MusicGroup;
 			sourceTree = "<group>";
 		};
 		685D7B5D2AE3F3BD00783433 /* WorkoutManager */ = {
@@ -349,6 +373,7 @@
 		D3C500112AE36F3F00EFAEFF /* SoccerBeat */ = {
 			isa = PBXGroup;
 			children = (
+				682D64A62AFE768600D7F07B /* SoundEffect */,
 				682D64812AFD1B5700D7F07B /* Photos */,
 				685D7B702AE53D7E00783433 /* UI */,
 				D3E874D22AEE3EC1005DB7C5 /* Injected */,
@@ -517,6 +542,7 @@
 				BED269762AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				BE4069D72AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
+				682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */,
 				BE4069BE2AF1D22B00FA3030 /* NotoSans-Black.ttf in Resources */,
 				BE4069CF2AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
 				D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */,
@@ -525,6 +551,7 @@
 				BE4069CD2AF1F80D00FA3030 /* SF-Compact-Text-LightItalic.otf in Resources */,
 				BE4069C92AF1F80D00FA3030 /* SF-Compact-Text-Regular.otf in Resources */,
 				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
+				682D64AB2AFE80F200D7F07B /* FifaBackground.mp3 in Resources */,
 				BE4069CB2AF1F80D00FA3030 /* SF-Compact-Text-Medium.otf in Resources */,
 				BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */,
 				BE4069DA2AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf in Resources */,
@@ -616,6 +643,7 @@
 				682D64892AFDBF8C00D7F07B /* CapsuleView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
+				682D64A82AFE77D500D7F07B /* SoundManager.swift in Sources */,
 				682D64872AFD1D8500D7F07B /* Profile.swift in Sources */,
 				BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */,
 				D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */,

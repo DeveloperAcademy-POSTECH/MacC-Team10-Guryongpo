@@ -13,6 +13,7 @@ struct MyCardView: View {
     @State var frontDegree = -90.0
     @Binding var isFlipped: Bool
     @ObservedObject var viewModel: ProfileModel
+    @EnvironmentObject var soundManager: SoundManager
     
     let width : CGFloat = 321
     let height : CGFloat = 445
@@ -64,6 +65,11 @@ struct MyCardView: View {
                 }
                 .onTapGesture {
                     flipCard()
+                    if isFlipped {
+                        soundManager.playFrontSoundEffect()
+                    } else {
+                        soundManager.playBackSoundEffect()
+                    }
                 }
             }
         }

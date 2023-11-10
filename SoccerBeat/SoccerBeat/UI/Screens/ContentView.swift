@@ -10,6 +10,7 @@ import HealthKit
 
 struct ContentView: View {
     @ObservedObject var healthInteractor = HealthInteractor.shared
+    @EnvironmentObject var soundManager: SoundManager
     @State var userWorkouts: [WorkoutData]?
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
@@ -63,6 +64,10 @@ struct ContentView: View {
             self.userWorkouts = healthInteractor.userWorkouts
         })
         .tint(.white)
+        .onAppear {
+            // 시끄러우면 각주 처리해주세요 -호제가-
+            soundManager.playBackground()
+        }
 
     }
 }
