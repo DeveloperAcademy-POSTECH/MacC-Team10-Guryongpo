@@ -85,7 +85,7 @@ struct CardFront : View {
             Profile(viewModel: viewModel,
                     width: width,
                     height: height)
-//                .frame(width: width, height: height)
+
             Image("ProfileLayer")
                 .resizable()
                 .scaledToFit()
