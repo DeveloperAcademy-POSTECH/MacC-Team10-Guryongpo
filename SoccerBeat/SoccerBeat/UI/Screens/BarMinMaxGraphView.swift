@@ -48,21 +48,11 @@ struct BarMinMaxGraphView: View {
                 }
                 .foregroundStyle(mainColor)
             }
-//            .chartYAxis {
-//                AxisMarks() { _ in
-//                    AxisGridLine().foregroundStyle(.clear)
-//                    AxisTick().foregroundStyle(.clear)
-//                }
-//            }
-//            .chartXAxis {
-//                AxisMarks() { _ in
-//                     AxisGridLine().foregroundStyle(.clear)
-//                     AxisTick().foregroundStyle(.clear)
-//                }
-//            }
         }
 }
 
-//#Preview {
-//    BarMinMaxGraphView(graphType: GraphEnum.distance)
-//}
+#Preview {
+    @State var workoutData = fakeWorkoutData
+    return BarMinMaxGraphView(userWorkouts: .constant(workoutData),
+                              graphType: .distance)
+}

@@ -21,7 +21,7 @@ struct LineGraphView: View {
                         )
                     }
                     .foregroundStyle(color)
-                    .symbol() { 
+                    .symbol {
                         Circle()
                             .fill(color)
                             .frame(width: 6, height: 6)
