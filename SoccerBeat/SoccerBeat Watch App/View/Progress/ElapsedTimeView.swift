@@ -8,11 +8,6 @@
 import SwiftUI
 
 struct ElapsedTimeView: View {
-    let elapsedTime: TimeInterval
-    @EnvironmentObject var workoutManager: WorkoutManager
-    @State private var timeFormatter = ElapsedTimeFormatter()
-    @State private var firstCircle = 1.0
-    @State private var secondCircle = 1.0
 
     var body: some View {
         ZStack {
