@@ -1,5 +1,5 @@
 //
-//  TextBorderModifer.swift
+//  TextBorder+extension.swift
 //  SoccerBeat
 //
 //  Created by Gucci on 11/12/23.
@@ -7,12 +7,52 @@
 
 import SwiftUI
 
-struct TextBorderModifer: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+extension View {
+    @ViewBuilder
+    func viewBorder(color: Color = .black, radius: CGFloat = 0.4, outline: Bool = false) -> some View {
+        if outline {
+            self
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .invertedMask(
+                    self
+                )
+        } else {
+            self
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+                .shadow(color: color, radius: radius)
+        }
+    }
+}
+
+extension View {
+    private func invertedMask<Content : View>(_ content: Content) -> some View {
+        self
+            .mask(
+                ZStack {
+                    self
+                        .brightness(1)
+                    content
+                        .brightness(-1)
+                }.compositingGroup()
+                    .luminanceToAlpha()
+            )
     }
 }
 
 #Preview {
-    TextBorderModifer()
+    Text("Hello Wolrd")
+        .viewBorder(color: .white, radius: 0.15, outline: true)
 }
