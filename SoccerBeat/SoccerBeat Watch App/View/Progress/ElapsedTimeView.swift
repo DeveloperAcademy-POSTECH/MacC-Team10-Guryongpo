@@ -59,28 +59,4 @@ struct ElapsedTimeView: View {
     }
 }
 
-// MARK: 파동처럼 퍼지는 기본 뷰
-private struct BasicLineView: View {
-
-    @State private var startAnimation = false
-    @State private var timeFormatter = ElapsedTimeFormatter()
-    let elapsedTime: TimeInterval
-    
-    var body: some View {
-        ZStack {
-            Color.clear
-    
-            Text(NSNumber(value: elapsedTime), formatter: timeFormatter)
-                .font(.beatPerMinute)
-                .scaleEffect(startAnimation ? 3 : 1)
-                .opacity(startAnimation ? 0 : 0.2 )
-                .onAppear(perform: {
-                    withAnimation(.linear(duration: 2)) {
-                        startAnimation = true
-                    }
-                })
-        }
-        .foregroundStyle(.white)
-        .ignoresSafeArea()
-    }
 }
