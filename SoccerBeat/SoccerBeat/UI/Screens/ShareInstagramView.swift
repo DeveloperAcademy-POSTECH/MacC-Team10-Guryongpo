@@ -12,11 +12,12 @@ struct ShareInstagramView: View {
     @State var geoSize: CGSize = .init(width: 0, height: 0)
     @State var highresImage: UIImage = UIImage()
     @State var renderImage: UIImage?
+    @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
         VStack {
             GeometryReader { geo in
-                TargetImageView(cgSize: geo.size)
+                TargetImageView(cgSize: geo.size, degree: 0, viewModel: viewModel)
                     .onAppear {
                         self.geoSize = CGSize(width: geo.size.width, height: geo.size.height)
                     }
@@ -26,7 +27,7 @@ struct ShareInstagramView: View {
         .padding()
         .toolbar {
             Button {
-                renderImage = TargetImageView(cgSize: self.geoSize).asImage(size: self.geoSize)
+                renderImage = TargetImageView(cgSize: self.geoSize, viewModel: viewModel).asImage(size: self.geoSize)
                 
                 onClick()
             } label: {
@@ -35,7 +36,7 @@ struct ShareInstagramView: View {
             }
         }
     }
-    private func onClick(){
+    private func onClick() {
         guard let url = URL(string: "instagram-stories://share?source_application=com.SoccerBeat.Guryongpo"),
                  let image = renderImage,
                  let imageData = image.pngData() else { return }
@@ -53,9 +54,9 @@ struct ShareInstagramView: View {
     }
 }
 
-#Preview {
-    ShareInstagramView()
-}
+//#Preview {
+//    ShareInstagramView()
+//}
 
 extension UIView {
     func asImage(size: CGSize) -> UIImage {
@@ -78,6 +79,8 @@ extension View {
 
 struct TargetImageView: View {
     @State var cgSize: CGSize
+    @State var degree: Double = 0
+    @ObservedObject var viewModel: ProfileModel
 
     var body: some View {
         VStack(spacing: 0) {
@@ -92,9 +95,7 @@ struct TargetImageView: View {
                 Spacer()
             }
             
-            Image("MyCardFront")
-                .resizable()
-                .frame(width: 280, height: 405)
+            CardFront(width: 280, height: 405, degree: $degree, viewModel: viewModel)
             
             Image("PlayerAbilities")
                 .resizable()
