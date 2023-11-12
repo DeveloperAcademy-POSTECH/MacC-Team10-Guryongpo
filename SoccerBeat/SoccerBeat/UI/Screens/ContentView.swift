@@ -29,15 +29,30 @@ struct ContentView: View {
                         Spacer()
                             .frame(height: 114)
                         
+                        // No soccer data OR,
+                        // User does not allow permisson.
                         if userWorkouts == nil {
                             HStack {
                                 VStack(alignment: .leading, spacing: 0.0) {
-                                    Text("워치를 차고")
-                                    Text("경기를")
-                                    Text("기록해 볼까요?")
+                                    Button {
+                                        // healthInteractor.requestAuthorization()
+                                    } label: {
+                                        Text("# 헬스 정보 권한을 거절하신 건 아닌가요?")
+                                            .padding(5.0)
+                                            .overlay(
+                                                Capsule()
+                                                    .stroke(lineWidth: 1.0)
+                                            )
+                                    }
+                                    
+                                    Group {
+                                        Text("워치를 차고")
+                                        Text("경기를")
+                                        Text("기록해 볼까요?")
+                                    }
+                                    .foregroundStyle(.linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                    .font(.custom("SFProText-HeavyItalic", size: 36))
                                 }
-                                .foregroundStyle(.linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
-                                .font(.custom("SFProText-HeavyItalic", size: 36))
                                 .kerning(-1.5)
                                 .padding(.leading, 10.0)
                                 Spacer()
