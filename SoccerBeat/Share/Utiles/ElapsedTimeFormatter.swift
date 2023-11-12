@@ -16,8 +16,7 @@ final class ElapsedTimeFormatter: Formatter {
     }()
     
     // Minute - first, Secone - Last
-    func spendingTimeDevidedColone(_ timeInterval: Any?) -> [String] {
-        guard let elapsedTime = timeInterval as? TimeInterval else { return [] }
+    func spendingTimeDevidedColone(_ elapsedTime: TimeInterval) -> [String] {
         let calculatedSpendingTime = NSNumber(value: elapsedTime)
         var fourDigitSpendingTime = self.string(for: calculatedSpendingTime)
         if fourDigitSpendingTime?.count != 5 {
