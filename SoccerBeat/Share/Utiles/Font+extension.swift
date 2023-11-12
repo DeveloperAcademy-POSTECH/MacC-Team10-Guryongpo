@@ -59,6 +59,10 @@ extension Font {
     public static let matchTotalTitle = Font.sfProText(size: 36, weight: .heavyItalic)
     public static let matchTotalSectionHeader = Font.sfProText(size: 14, weight: .lightItalic)
     
+    // MARK: - ShareInstagramView
+    
+    public static let shareInstagramTitle = Font.sfProText(size: 36, weight: .heavyItalic)
+    
     // MARK: - MyCardView
     public static let selectPhotoButton = Font.notoSans(size: 14, weight: .regular)
 }

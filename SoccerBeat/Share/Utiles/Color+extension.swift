@@ -169,6 +169,14 @@ extension ShapeStyle where Self == LinearGradient {
                                startPoint: .leading, endPoint: .trailing)
     }
     
+    // MARK: - ShareInstagramView
+    
+    static var shareInstagramTitle: Self {
+        let start = Color(hex: 0x8F8F8F)
+        let end = Color(hex: 0xFFFFFF)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
     // MARK: - GameProgressView
     static var playTimeNumber: Self {
         let start = Color(hex: 0x03FFC3)
