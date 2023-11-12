@@ -11,30 +11,31 @@ struct GameProgressView: View {
     
     // MARK: - Data
     @EnvironmentObject var workoutManager: WorkoutManager
+    private var isGamePaused: Bool { workoutManager.session?.state == .paused }
+    private var whenTheGameStarted: Date { workoutManager.builder?.startDate ?? Date() }
     
     // MARK: - Body
-    
     var body: some View {
-        TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
-                                              isPaused: workoutManager.session?.state == .paused)) { context in
+        TimelineView(ProgressTimelineSchedule(from: whenTheGameStarted, isPaused: isGamePaused)) { context in
             VStack(alignment: .leading) {
                 // MARK: - 경기 시간
-                VStack(alignment: .leading) {
-                    Text("경기 시간")
-                        .foregroundStyle(.ongoingText)
-                        .font(.playTimeText)
-                    GeometryReader { geo in
-                        ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
-                            .font(.playTimeNumber)
-                            .minimumScaleFactor(0.001)
-                            .frame(width: geo.size.width)
-                            .foregroundStyle(.playTimeNumber)
+                VStack {
+                    HStack {
+                        Spacer()
+                        Text("경기 시간")
+                            .foregroundStyle(.ongoingText)
+                            .font(.playTimeText)
                     }
+                    
+                    ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
                 }
                 
                 HStack {
                     // MARK: - 뛴 거리
-                    VStack(alignment: .leading) {
+                    VStack {
+                        Text("뛴 거리")
+                            .font(.distanceTimeText)
+                            .foregroundStyle(.ongoingText)
                         
                         let distanceText = String(Measurement(value: workoutManager.distance,
                                                               unit: UnitLength.meters)
@@ -43,23 +44,21 @@ struct GameProgressView: View {
                         Text(workoutManager.isDistanceActive ? distanceText : "--'--")
                             .font(.distanceTimeNumber)
                             .foregroundStyle(.ongoingNumber)
-                        
-                        Text("뛴 거리")
-                            .font(.distanceTimeText)
-                            .foregroundStyle(.ongoingText)
                     }
+                    .frame(minWidth: 60, alignment: .trailing)
                     
                     Spacer()
                     
                     // MARK: - 스프린트
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .trailing) {
+                        Text("스프린트")
+                            .font(.distanceTimeText)
+                            .foregroundStyle(.ongoingText)
+                        
                         Text("\(workoutManager.sprint) TIMES")
                             .font(.distanceTimeNumber)
                             .foregroundStyle(.ongoingNumber)
                         
-                        Text("스프린트")
-                            .font(.distanceTimeText)
-                            .foregroundStyle(.ongoingText)
                     }
                 }
             }
@@ -78,6 +77,7 @@ struct GameProgressView: View {
 
 #Preview {
     GameProgressView()
+        .environmentObject(WorkoutManager.shared)
 }
 
 private struct ProgressTimelineSchedule: TimelineSchedule {
