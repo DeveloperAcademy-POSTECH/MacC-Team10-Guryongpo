@@ -9,13 +9,23 @@ import SwiftUI
 import UIKit
 
 class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChartDelegate, UITableViewDelegate {
+    var radarValue: [Double]
+    
+    init(radarValue: [Double]) {
+        self.radarValue = radarValue
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let w = view.bounds.width
-        let chart = TKRadarChart(frame: CGRect(x: 0, y: 0, width: w / 2, height: w / 2))
-        chart.configuration.radius = w/6
+        let chart = TKRadarChart(frame: CGRect(x: 0, y: 0, width: w, height: w))
+        chart.configuration.radius = w / 3
         chart.dataSource = self
         chart.delegate = self
         chart.center = view.center
@@ -34,42 +44,42 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
     }
     
     func titleOfRowForRadarChart(_ radarChart: TKRadarChart, row: Int) -> String {
-        return "NO.\(row + 1)"
+        switch row {
+        case 0:
+            return "최고 속도"
+        case 1:
+            return "평균 속도"
+        case 2:
+            return "평균\n가속도"
+        case 3:
+            return "어질리티"
+        case 4:
+            return "뛴 거리"
+        default:
+            return "스프린트\n횟수"
+        }
     }
     
     func valueOfSectionForRadarChart(withRow row: Int, section: Int) -> CGFloat {
-        if section == 0 {
-            return CGFloat(max(min(row + 1, 4), 3))
-        } else {
-            return 3
-        }
+        return radarValue[row]
     }
     
-    
+    // Color of the graph grid.
     func colorOfLineForRadarChart(_ radarChart: TKRadarChart) -> UIColor {
-        return UIColor(red:0.337,  green:0.847,  blue:0.976, alpha:1)
+        return UIColor.white
     }
     
+    // Color of entire inner area.
     func colorOfFillStepForRadarChart(_ radarChart: TKRadarChart, step: Int) -> UIColor {
-        switch step {
-        case 1:
-            return UIColor(red:0.545,  green:0.906,  blue:0.996, alpha:1)
-        case 2:
-            return UIColor(red:0.706,  green:0.929,  blue:0.988, alpha:1)
-        case 3:
-            return UIColor(red:0.831,  green:0.949,  blue:0.984, alpha:1)
-        case 4:
-            return UIColor(red:0.922,  green:0.976,  blue:0.988, alpha:1)
-        default:
-            return UIColor.white
-        }
+        return UIColor.white.withAlphaComponent(0.2)
     }
     
+    // Color of inside area of the graph.
     func colorOfSectionFillForRadarChart(_ radarChart: TKRadarChart, section: Int) -> UIColor {
         if section == 0 {
-            return UIColor(red:1,  green:0.867,  blue:0.012, alpha:0.4)
+            return UIColor.white.withAlphaComponent(0.9)
         } else {
-            return UIColor(red:0,  green:0.788,  blue:0.543, alpha:0.4)
+            return UIColor.clear
         }
     }
     
@@ -82,7 +92,7 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
     }
     
     func fontOfTitleForRadarChart(_ radarChart: TKRadarChart) -> UIFont {
-        return UIFont.systemFont(ofSize: 10)
+        return UIFont.systemFont(ofSize: 16)
     }
 }
 
