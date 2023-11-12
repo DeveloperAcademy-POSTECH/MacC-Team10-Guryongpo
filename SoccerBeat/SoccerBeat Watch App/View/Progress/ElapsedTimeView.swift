@@ -19,17 +19,6 @@ struct ElapsedTimeView: View {
             }
         }
     }
-
-private struct Particle: Identifiable {
-    var id: UUID = .init()
-}
-
-// MARK: BasicLineView 를 여러 개 퍼트려서 파동처럼 퍼지고 사라지게 만드는 뷰
-private struct LineBPMView: View {
-    
-    @EnvironmentObject var workoutManager: WorkoutManager
-    @State private var pulsedHearts: [Particle] = []
-    let elapsedTime: TimeInterval
     
     var body: some View {
         VStack {
