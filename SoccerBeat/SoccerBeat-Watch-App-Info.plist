@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>내 위치 확인을 위해 권한이 필요합니다. </string>
+	<string>내 위치 확인을 위해 권한을 요청합니다.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>내 위치 확인을 위해 권한이 필요합니다.</string>
+	<string>내 위치 확인을 위해 권한을 요청합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NotoSans-Black.ttf</string>
@@ -18,6 +18,7 @@
 		<string>SF-Pro-Text-BlackItalic.otf</string>
 		<string>SF-Pro-Text-HeavyItalic.otf</string>
 		<string>SF-Pro-Text-LightItalic.otf</string>
+		<string>SF-Pro-Text-RegularItalic.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

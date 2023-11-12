@@ -168,4 +168,11 @@ extension ShapeStyle where Self == LinearGradient {
         return .linearGradient(colors: [start, end],
                                startPoint: .leading, endPoint: .trailing)
     }
+    
+    // MARK: - GameProgressView
+    static var playTimeNumber: Self {
+        let start = Color(hex: 0x333333)
+        let end = Color(hex: 0xFFFFFF)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
 }
