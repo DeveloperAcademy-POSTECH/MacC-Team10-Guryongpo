@@ -11,12 +11,12 @@ struct GameProgressView: View {
     
     // MARK: - Data
     @EnvironmentObject var workoutManager: WorkoutManager
+    private var isGamePaused: Bool { workoutManager.session?.state == .paused }
+    private var whenTheGameStarted: Date { workoutManager.builder?.startDate ?? Date() }
     
     // MARK: - Body
-    
     var body: some View {
-        TimelineView(ProgressTimelineSchedule(from: workoutManager.builder?.startDate ?? Date(),
-                                              isPaused: workoutManager.session?.state == .paused)) { context in
+        TimelineView(ProgressTimelineSchedule(from: whenTheGameStarted, isPaused: isGamePaused)) { context in
             VStack(alignment: .leading) {
                 // MARK: - 경기 시간
                 VStack(alignment: .leading) {
