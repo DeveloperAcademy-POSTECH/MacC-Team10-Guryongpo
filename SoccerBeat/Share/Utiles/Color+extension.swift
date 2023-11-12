@@ -171,7 +171,7 @@ extension ShapeStyle where Self == LinearGradient {
     
     // MARK: - GameProgressView
     static var playTimeNumber: Self {
-        let start = Color(hex: 0x333333)
+        let start = Color(hex: 0x03FFC3)
         let end = Color(hex: 0xFFFFFF)
         return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
