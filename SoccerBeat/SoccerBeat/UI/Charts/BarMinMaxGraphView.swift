@@ -25,7 +25,7 @@ struct BarMinMaxGraphView: View {
             return .zone4Bpm
         }
     }
-
+    
     private func foo(_ workout: WorkoutData) -> Double {
         switch graphType {
         case .distance: return workout.distance
@@ -36,19 +36,19 @@ struct BarMinMaxGraphView: View {
     }
     
     var body: some View {
-            Chart {
-                ForEach(userWorkouts ?? [], id: \.id) { workout in
-                    BarMark(
-                        x: .value("Month", workout.dataID ),
-                        yStart: .value("", 0),
-                        yEnd: .value("", foo(workout)),
-                        width: .ratio(0.6)
-                    ).cornerRadius(16.5)
-                        .opacity(0.6)
-                }
-                .foregroundStyle(mainColor)
+        Chart {
+            ForEach(userWorkouts ?? [], id: \.id) { workout in
+                BarMark(
+                    x: .value("Month", workout.dataID ),
+                    yStart: .value("", 0),
+                    yEnd: .value("", foo(workout)),
+                    width: .ratio(0.6)
+                ).cornerRadius(16.5)
+                    .opacity(0.6)
             }
+            .foregroundStyle(mainColor)
         }
+    }
 }
 
 #Preview {
