@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import CoreLocation
 
 struct MatchDetailView: View {
     let workoutData: WorkoutData
@@ -167,10 +168,8 @@ struct MatchDetailView02: View {
             Spacer()
                 .frame(height: 40)
             
-            Image("MatchDetail02")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 240)
+            HeatmapView(coordinate: CLLocationCoordinate2D(latitude: workoutData.center[0], longitude: workoutData.center[1]), polylineCoordinates: workoutData.route)
+                .frame(height: 500)
         }
         Spacer()
             .frame(height: 120)

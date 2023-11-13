@@ -23,8 +23,8 @@ struct HeatmapView: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.region = MKCoordinateRegion(center: coordinate,
-                                                latitudinalMeters: 50,
-                                                longitudinalMeters: 50)
+                                                latitudinalMeters: 100,
+                                                longitudinalMeters: 100)
         for polylineCoordinate in polylineCoordinates {
             print(polylineCoordinate)
             let polyline = MKPolyline(points: [MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude, longitude: polylineCoordinate.longitude)), MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude + 0.0000001, longitude: polylineCoordinate.longitude + 0.0000001))], count: 2)
@@ -51,8 +51,9 @@ class Coordinator: NSObject, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let routePolyDot = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyDot)
-            renderer.strokeColor = .blue
-            renderer.lineWidth = 20
+            renderer.strokeColor = .red
+            renderer.alpha = CGFloat(0.1)
+            renderer.lineWidth = 30
             renderer.blendMode = .lighten
             return renderer
         }
