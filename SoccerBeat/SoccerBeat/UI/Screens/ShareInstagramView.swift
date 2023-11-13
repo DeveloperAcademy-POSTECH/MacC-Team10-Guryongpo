@@ -29,29 +29,34 @@ struct ShareInstagramView: View {
             Button {
                 renderImage = TargetImageView(cgSize: self.geoSize, viewModel: viewModel).asImage(size: self.geoSize)
                 
-                onClick()
+//                onClick()
+                share()
             } label: {
-                Text("확인")
+                Text("공유하기")
                     .frame(height: 200)
             }
         }
     }
-    private func onClick() {
-        guard let url = URL(string: "instagram-stories://share?source_application=com.SoccerBeat.Guryongpo"),
-                 let image = renderImage,
-                 let imageData = image.pngData() else { return }
-
-       let pasteboardItems: [String: Any] = ["com.instagram.sharedSticker.stickerImage": imageData]
-       let pasteboardOptions = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
-
-       UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
-
-       if UIApplication.shared.canOpenURL(url) {
-           UIApplication.shared.open(url)
-       } else {
-           print("인스타그램이 설치되어 있지 않습니다.")
-       }
+    func share() {
+        let activityVC = UIActivityViewController(activityItems: [renderImage], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
+//    private func onClick() {
+//        guard let url = URL(string: "instagram-stories://share?source_application=com.SoccerBeat.Guryongpo"),
+//                 let image = renderImage,
+//                 let imageData = image.pngData() else { return }
+//
+//       let pasteboardItems: [String: Any] = ["com.instagram.sharedSticker.stickerImage": imageData]
+//       let pasteboardOptions = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
+//
+//       UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
+//
+//       if UIApplication.shared.canOpenURL(url) {
+//           UIApplication.shared.open(url)
+//       } else {
+//           print("인스타그램이 설치되어 있지 않습니다.")
+//       }
+//    }
 }
 
 //#Preview {
