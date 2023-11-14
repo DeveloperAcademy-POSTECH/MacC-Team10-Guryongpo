@@ -31,18 +31,17 @@ extension CLLocationCoordinate2D: Hashable {
     }
 }
 
-
 // MARK: - 현재 위치 받아오는 코드
 extension WorkoutData {
     var location: String {
-        get async throws {
-            guard let last = route.last else { return "마지막 위치가 지정되지 않았습니다." }
-            guard let loadedAddress = try? await showCurrentAddress(last) else { return "주소값을 변환하는데 실패했습니다." }
+        get async {
+            let centerLocation = CLLocation(latitude: center[0], longitude: center[1]).coordinate
+            let loadedAddress =  await showCurrentAddress(centerLocation)
             return loadedAddress
         }
     }
     
-    private func showCurrentAddress(_ location: CLLocationCoordinate2D?) async throws -> String {
+    private func showCurrentAddress(_ location: CLLocationCoordinate2D?) async -> String {
         guard let position = location else { return "" }
         let locale = Locale(identifier: "Ko-kr")
         let geoCoder = CLGeocoder()
@@ -50,20 +49,14 @@ extension WorkoutData {
         let location : CLLocation = CLLocation(latitude: position.latitude, longitude: position.longitude)
         
         var currentAddress = ""
-        guard let marker = try await geoCoder.reverseGeocodeLocation(location, preferredLocale: locale).first
+        guard let marker = try? await geoCoder.reverseGeocodeLocation(location, preferredLocale: locale).first
             else { return "" }
         
-        if let administrativeArea = marker.administrativeArea {
-            currentAddress += administrativeArea + " "
-        }
         if let locality = marker.locality {
             currentAddress += locality + " "
         }
         if let subLocality = marker.subLocality {
             currentAddress += subLocality + " "
-        }
-        if let subThoroughfare = marker.subThoroughfare {
-            currentAddress += subThoroughfare + " "
         }
         return currentAddress
     }
