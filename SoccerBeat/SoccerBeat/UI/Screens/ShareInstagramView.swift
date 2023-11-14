@@ -28,8 +28,6 @@ struct ShareInstagramView: View {
         .toolbar {
             Button {
                 renderImage = TargetImageView(cgSize: self.geoSize, viewModel: viewModel).asImage(size: self.geoSize)
-                
-//                onClick()
                 share()
             } label: {
                 Text("공유하기")
@@ -41,27 +39,11 @@ struct ShareInstagramView: View {
         let activityVC = UIActivityViewController(activityItems: [renderImage], applicationActivities: nil)
         UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
-//    private func onClick() {
-//        guard let url = URL(string: "instagram-stories://share?source_application=com.SoccerBeat.Guryongpo"),
-//                 let image = renderImage,
-//                 let imageData = image.pngData() else { return }
-//
-//       let pasteboardItems: [String: Any] = ["com.instagram.sharedSticker.stickerImage": imageData]
-//       let pasteboardOptions = [UIPasteboard.OptionsKey.expirationDate: Date().addingTimeInterval(300)]
-//
-//       UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
-//
-//       if UIApplication.shared.canOpenURL(url) {
-//           UIApplication.shared.open(url)
-//       } else {
-//           print("인스타그램이 설치되어 있지 않습니다.")
-//       }
-//    }
 }
 
-//#Preview {
-//    ShareInstagramView()
-//}
+#Preview {
+    ShareInstagramView(viewModel: ProfileModel.init())
+}
 
 extension UIView {
     func asImage(size: CGSize) -> UIImage {
@@ -86,25 +68,52 @@ struct TargetImageView: View {
     @State var cgSize: CGSize
     @State var degree: Double = 0
     @ObservedObject var viewModel: ProfileModel
-
+    
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Spacer()
-                VStack(alignment: .leading) {
-                    Text("Super Son")
-                    Text("The best player")
+        ZStack(alignment: .top) {
+            Image("BackgroundPattern")
+            Image("FlameEffect")
+            VStack(spacing: 0) {
+                HStack {
+                    Text("# Soccer Beat")
+                    Spacer()
                 }
-                .font(.shareInstagramTitle)
-                .foregroundStyle(.shareInstagramTitle)
                 Spacer()
+                    .frame(height: 20)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("SBeat Card")
+                            .font(.shareInstagramSubTitle)
+                            .foregroundStyle(.shareInstagramSubTitleTint)
+                        VStack(alignment: .leading, spacing: -10) {
+                            HStack {
+                                Text("I'm, ")
+                                Text("Son").foregroundStyle(.shareInstagramTitleTint)
+                            }
+                            HStack {
+                                Text("The best ")
+                                Text("FW").foregroundStyle(.shareInstagramTitleTint)
+                            }
+                        }
+                        .font(.shareInstagramTitle)
+                    }
+                    
+                    Spacer()
+                }
+                
+                ZStack() {
+                    CardFront(width: 280, height: 405, degree: $degree, viewModel: viewModel)
+                    
+                    VStack {
+                        Spacer()
+                            .frame(height: 305)
+                        Image("PlayerAbilities")
+                            .resizable()
+                            .frame(width: 250, height: 240)
+                    }
+                }
+                .scaledToFit()
             }
-            
-            CardFront(width: 280, height: 405, degree: $degree, viewModel: viewModel)
-            
-            Image("PlayerAbilities")
-                .resizable()
-                .frame(width: 250, height: 240)
         }
     }
 }

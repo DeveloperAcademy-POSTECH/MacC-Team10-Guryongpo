@@ -19,6 +19,11 @@ import SwiftUI
  - SFProText-BlackItalic
  - SPProText-RegularItalic
  
+ Family: SF Pro Display
+ - SFProDisplay-HeavyItalic
+ - SFProDisplay-SemiboldItalic
+ - SFProDisplay-RegularItalic
+ 
  Family: Noto Sans
  - NotoSans-Regular
  - NotoSans-Black
@@ -61,7 +66,9 @@ extension Font {
     
     // MARK: - ShareInstagramView
     
-    public static let shareInstagramTitle = Font.sfProText(size: 36, weight: .heavyItalic)
+    public static let shareInstagramTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
+    public static let shareInstagramSubTitle = Font.sfProText(size: 24, weight: .regularItalic)
+    public static let shareInstagramHashTag = Font.notoSans(size: 14, weight: .regular)
     
     // MARK: - MyCardView
     public static let selectPhotoButton = Font.notoSans(size: 14, weight: .regular)
@@ -74,6 +81,11 @@ fileprivate extension Font {
     }
     
     static func sfProText(size fontSize: CGFloat, weight: SFProText = .blackItalic) -> Font {
+        Font.custom("\(SFProText.fontName)-\(weight.capitalized)",
+                               size: fontSize)
+    }
+    
+    static func sfProDisplay(size fontSize: CGFloat, weight: SFProDisplay = .heavyItalic) -> Font {
         Font.custom("\(SFProText.fontName)-\(weight.capitalized)",
                                size: fontSize)
     }
@@ -103,6 +115,19 @@ private enum SFProText: String {
     case blackItalic
     case heavyItalic
     case lightItalic
+    case regularItalic
+    case semiboldItalic
+    
+    var capitalized: String {
+        self.rawValue.capitalized
+    }
+}
+
+private enum SFProDisplay: String {
+    static let fontName = String(describing: Self.self)
+    
+    case heavyItalic
+    case semiboldItalic
     case regularItalic
     
     var capitalized: String {
