@@ -43,6 +43,12 @@ struct ShareInstagramView: View {
     ShareInstagramView(viewModel: ProfileModel.init())
 }
 
+extension UIScreen {
+   static let screenWidth = UIScreen.main.bounds.size.width
+   static let screenHeight = UIScreen.main.bounds.size.height
+   static let screenSize = UIScreen.main.bounds.size
+}
+
 extension UIView {
     func asImage(size: CGSize) -> UIImage {
         let format = UIGraphicsImageRendererFormat()
@@ -70,7 +76,9 @@ struct TargetImageView: View {
     var body: some View {
         ZStack(alignment: .top) {
             Image("BackgroundPattern")
+                .frame(maxHeight: UIScreen.screenHeight - 100)
             Image("FlameEffect")
+                .frame(maxHeight: UIScreen.screenHeight - 100)
             VStack(spacing: 0) {
                 HStack {
                     Text("# Soccer Beat")
@@ -95,10 +103,8 @@ struct TargetImageView: View {
                         }
                         .font(.shareInstagramTitle)
                     }
-                    
                     Spacer()
                 }
-                
                 ZStack(alignment: .top) {
                     CardFront(width: 321, height: 460, degree: $degree, viewModel: viewModel)
                     
