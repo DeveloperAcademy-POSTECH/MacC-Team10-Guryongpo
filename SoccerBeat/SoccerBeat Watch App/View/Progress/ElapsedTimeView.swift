@@ -23,7 +23,7 @@ struct ElapsedTimeView: View {
                 
                 Text(spendingTimeDevidedColone[0])
                     .fixedSize(horizontal: true, vertical: false)
-                    .viewBorder(color: .white, radius: 0.2, outline: true)
+                    .viewBorder(color: .white, radius: 0.15, outline: true)
                     .offset(x: 3, y: 3.5)
             }
             
@@ -39,7 +39,7 @@ struct ElapsedTimeView: View {
                 
                 Text(spendingTimeDevidedColone[1])
                     .fixedSize(horizontal: true, vertical: false)
-                    .viewBorder(color: .white, radius: 0.2, outline: true)
+                    .viewBorder(color: .white, radius: 0.15, outline: true)
                     .offset(x: 3, y: 3.5)
             }
             .multilineTextAlignment(.trailing)

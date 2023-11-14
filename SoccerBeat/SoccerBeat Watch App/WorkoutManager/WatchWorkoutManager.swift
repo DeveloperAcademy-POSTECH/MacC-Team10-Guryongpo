@@ -39,17 +39,32 @@ class WorkoutManager: NSObject, ObservableObject {
     
     var isSprint: Bool = false
     var maxSpeed: Double = 0.0
+    var recentSprintSpeed: Double = 0.0
     var speed: Double = 0.0 {
-        didSet {
+        didSet(oldValue) {
+            
+            // 가속도 측정
+            acceleration = max(speed - oldValue, acceleration)
+            
+            // 최고 속도
             maxSpeed = max(maxSpeed, speed)
+            
+            // 스프린트 카운트
             if !isSprint && speed >= sprintSpeed {
                 isSprint = true
                 sprint += 1
+                recentSprintSpeed = 0.0
             } else if isSprint && speed < sprintSpeed {
                 isSprint = false
             }
+            
+            // 직전 스프린트 최대 속도
+            if isSprint {
+                recentSprintSpeed = max(recentSprintSpeed, speed)
+            }
         }
     }
+    var acceleration: Double = 0.0
     
     // MARK: - Workout Metrics
     @Published var heartRate: Double = 0 {
@@ -140,7 +155,7 @@ class WorkoutManager: NSObject, ObservableObject {
             HKObjectType.activitySummaryType()
         ]
         healthStore.requestAuthorization(toShare: typesToShare,
-                                         read: typesToRead) { (success, error) in
+                                         read: typesToRead) { (_, _) in
         }
     }
     
@@ -288,8 +303,8 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         /// Save Wokrout, Route
         if toState == .ended {
             
-            builder?.endCollection(withEnd: date) { (success, error) in
-                self.builder?.finishWorkout { [weak self] (workout, error) in
+            builder?.endCollection(withEnd: date) { (_, _) in
+                self.builder?.finishWorkout { [weak self] (workout, _) in
                     DispatchQueue.main.async {
                         self?.workout = workout
                     }
@@ -301,20 +316,19 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                     
                     // custom data 를 routedata의 metadata에 저장
                     let metadata: [String: Any] = [
-                        "MaxSpeed": Double(Int(self!.maxSpeed * 100.rounded()))/100 ,
+                        "MaxSpeed": Double(Int(self!.maxSpeed * 100.rounded()))/100,
                         "SprintCount": self!.sprint,
                         "MinHeartRate": self!.saveMinHeartRate,
                         "MaxHeartRate": self!.saveMaxHeartRate,
-                        "Distance": (Double(Int(self!.distance/1000 * 100 ))) / 100
+                        "Distance": (Double(Int(self!.distance/1000 * 100 ))) / 100,
+                        "Acceleration": Double(Int(self!.acceleration * 100.rounded()))/100
                     ]
                     
-                    self?.routeBuilder?.finishRoute(with: workout, metadata: metadata) { (newRoute, error) in
-                        
-                        guard let newRoute else {
+                    self?.routeBuilder?.finishRoute(with: workout, metadata: metadata) { (newRoute, _) in
+                        guard newRoute != nil else {
                             NSLog("새로운 루트가 없습니다.")
                             return
                         }
-                        
                         NSLog("새로운 루트가 저장되었습니다.")
                     }
                 }

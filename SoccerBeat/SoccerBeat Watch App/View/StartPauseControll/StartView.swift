@@ -9,12 +9,11 @@ import SwiftUI
 
 struct StartView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
-
+    
     var body: some View {
         VStack {
             if !workoutManager.showingPrecount {
-                Button(action: {workoutManager.showingPrecount.toggle()}){
-                    Image(.startButton)
+                Button(action: { workoutManager.showingPrecount.toggle()}) { Image(.startButton)
                 }
             } else {
                 PrecountView()
@@ -29,7 +28,7 @@ struct StartView: View {
 
 #Preview {
     @StateObject var workoutManager = WorkoutManager()
-
+    
     return StartView()
         .environmentObject(workoutManager)
 }

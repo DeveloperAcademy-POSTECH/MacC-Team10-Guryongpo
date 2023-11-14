@@ -26,17 +26,20 @@ struct SummaryView: View {
                 }
         } else {
             ScrollView {
-                SummaryComponent(title: "활동량", content: String(Measurement(value: workoutManager.distance,
-                                                                           unit: UnitLength.meters)
-                                         .formatted(.measurement(width: .abbreviated, usage: .road))), playTime: "")
+                SummaryComponent(title: "뛴 거리",
+                                 content: String(Measurement(value: workoutManager.distance,
+                                   unit: UnitLength.meters)
+                    .formatted(.measurement(width: .abbreviated, usage: .road))), playTime: "")
                 SummaryComponent(title: "최고 속도", content: Measurement(value: workoutManager.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)), playTime: "")
-                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted(), playTime: "")
+                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted() + " Times", playTime: "")
                 
-                Button(action: { dismiss() }) {
+                SummaryComponent(title: "가속도", content:  Double(Int(workoutManager.acceleration * 100) / 100).formatted() + "m/s", playTime: "")
+                
+                Button(action: { dismiss() }, label: {
                     Text("완료")
                         .font(.summaryDoneButton)
-                        .foregroundStyle(.zone2Bpm)
-                }
+                        .foregroundStyle(.summaryGradient)
+                })
             }
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)

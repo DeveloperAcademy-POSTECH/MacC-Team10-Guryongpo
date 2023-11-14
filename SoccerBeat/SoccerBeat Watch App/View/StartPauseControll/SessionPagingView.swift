@@ -22,8 +22,14 @@ struct SessionPagingView: View {
         TabView(selection: $selection) {
             SplitControlsView()
                 .tag(TabSort.controls)
-            GameProgressView()
-                .tag(TabSort.progress)
+            
+                GameProgressView()
+                    .tag(TabSort.progress)
+                
+//            Paging for HeartRate
+//            TabView {}
+//            .tabViewStyle(.carousel)
+            
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(selection == .progress)
@@ -31,7 +37,7 @@ struct SessionPagingView: View {
         .onChange(of: isLuminanceReduced) { _ in
             displayMetricsView()
         }
-        .onChange(of: workoutManager.running) { isRunning in
+        .onChange(of: workoutManager.running) { _ in
             // MARK: When session is not started, the view will be automatically switched to Metrics
             displayMetricsView()
 

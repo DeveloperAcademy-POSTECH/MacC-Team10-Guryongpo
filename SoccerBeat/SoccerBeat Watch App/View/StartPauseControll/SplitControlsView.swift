@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO:  - 쪼개지기 전에 투명도 줬다가 쪼개지면서 애니메이션 주면서 불투명도 1
 struct SplitControlsView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @Environment(\.dismiss) var dismiss
@@ -94,10 +93,10 @@ struct SplitControlsView: View {
             .padding(.horizontal)
             
             // MARK: - 시작시 timeout 버튼 화면
-                Image(.timeOutButton)
-                    .opacity(isClicked ? 0 : 1)
-                    .buttonStyle(.borderless)
-                    .clipShape(Circle())
+            Image(.stopButton)
+                .opacity(isClicked ? 0 : 1)
+                .buttonStyle(.borderless)
+                .clipShape(Circle())
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ) {
