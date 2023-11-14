@@ -22,16 +22,14 @@ struct ShareInstagramView: View {
                         self.geoSize = CGSize(width: geo.size.width, height: geo.size.height)
                     }
             }
-            
         }
-        .padding()
         .toolbar {
             Button {
                 renderImage = TargetImageView(cgSize: self.geoSize, viewModel: viewModel).asImage(size: self.geoSize)
                 share()
             } label: {
                 Text("공유하기")
-                    .frame(height: 200)
+                    .foregroundStyle(.shareInstagramTitleTint)
             }
         }
     }
@@ -101,12 +99,12 @@ struct TargetImageView: View {
                     Spacer()
                 }
                 
-                ZStack() {
-                    CardFront(width: 280, height: 405, degree: $degree, viewModel: viewModel)
+                ZStack(alignment: .top) {
+                    CardFront(width: 321, height: 460, degree: $degree, viewModel: viewModel)
                     
                     VStack {
                         Spacer()
-                            .frame(height: 305)
+                            .frame(height: 370)
                         Image("PlayerAbilities")
                             .resizable()
                             .frame(width: 250, height: 240)
@@ -114,6 +112,7 @@ struct TargetImageView: View {
                 }
                 .scaledToFit()
             }
+            .padding()
         }
     }
 }
