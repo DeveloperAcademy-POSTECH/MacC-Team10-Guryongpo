@@ -15,6 +15,7 @@ struct ElapsedTimeView: View {
     }
     
     var body: some View {
+        let radius = CGFloat(0.15)
         HStack(spacing: 0) {
             // MARK: - Minute
             ZStack {
@@ -23,7 +24,7 @@ struct ElapsedTimeView: View {
                 
                 Text(spendingTimeDevidedColone[0])
                     .fixedSize(horizontal: true, vertical: false)
-                    .viewBorder(color: .white, radius: 0.15, outline: true)
+                    .viewBorder(color: .white, radius: radius, outline: true)
                     .offset(x: 3, y: 3.5)
             }
             
@@ -39,7 +40,7 @@ struct ElapsedTimeView: View {
                 
                 Text(spendingTimeDevidedColone[1])
                     .fixedSize(horizontal: true, vertical: false)
-                    .viewBorder(color: .white, radius: 0.15, outline: true)
+                    .viewBorder(color: .white, radius: radius, outline: true)
                     .offset(x: 3, y: 3.5)
             }
             .multilineTextAlignment(.trailing)

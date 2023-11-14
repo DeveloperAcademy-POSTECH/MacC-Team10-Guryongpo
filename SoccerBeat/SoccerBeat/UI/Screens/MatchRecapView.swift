@@ -8,13 +8,13 @@
 import SwiftUI
 
 let fakeWorkoutData: [WorkoutData] = [
-    WorkoutData(dataID: 1, date: "1999-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 2, date: "2000-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 3, date: "2359-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 4, date: "1569-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 5, date: "2639-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 6, date: "5659-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 7, date: "1922-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0])
+    WorkoutData(dataID: 1, date: "1999-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [.init(latitude: 37.58647414212885, longitude: 126.9748537678651)], center: [0, 0]),
+    WorkoutData(dataID: 2, date: "2000-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 3, date: "2359-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 4, date: "1569-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 5, date: "2639-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 6, date: "5659-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 7, date: "1922-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0])
 ]
 
 
@@ -87,6 +87,7 @@ struct MatchRecapView: View {
 
 struct MatchListItemView: View {
     let workoutData: WorkoutData
+    @State private var currentLocation = "--'--"
     
     var body: some View {
         ZStack {
@@ -100,8 +101,11 @@ struct MatchListItemView: View {
                     .padding(.leading, 5)
                 
                 VStack(alignment: .leading) {
-                    Text(workoutData.date.description + " - " + workoutData.location)
+                    Text(workoutData.date.description + " - " + currentLocation)
                         .foregroundStyle(Color.white.opacity(0.5))
+                        .task {
+                            currentLocation = await workoutData.location
+                        }
                     Text("경기 시간 " + workoutData.time)
                         .foregroundStyle(Color.white)
                         .padding(.bottom)
