@@ -32,6 +32,10 @@
 		68B0732E2AF11847004C723F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B0732C2AF11847004C723F /* AlertView.swift */; };
 		68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
 		68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */; };
+		BE010D392B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D382B0511CC0093A5FE /* FloatingCapsuleModifier.swift */; };
+		BE010D3A2B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D382B0511CC0093A5FE /* FloatingCapsuleModifier.swift */; };
+		BE010D3C2B0512680093A5FE /* Double+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D3B2B0512680093A5FE /* Double+extension.swift */; };
+		BE010D3D2B0512680093A5FE /* Double+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D3B2B0512680093A5FE /* Double+extension.swift */; };
 		BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */; };
 		BE0639DA2AE66D93008D1D4E /* SessionPagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */; };
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
@@ -153,6 +157,8 @@
 		6898F2842AEFD7FC0075A573 /* SprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintView.swift; sourceTree = "<group>"; };
 		68B0732C2AF11847004C723F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		BE010D382B0511CC0093A5FE /* FloatingCapsuleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCapsuleModifier.swift; sourceTree = "<group>"; };
+		BE010D3B2B0512680093A5FE /* Double+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+extension.swift"; sourceTree = "<group>"; };
 		BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitControlsView.swift; sourceTree = "<group>"; };
 		BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPagingView.swift; sourceTree = "<group>"; };
 		BE22D6302AE586AA009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
@@ -322,8 +328,9 @@
 		BE22D6332AE586AA009035C9 /* Utiles */ = {
 			isa = PBXGroup;
 			children = (
-				BE4069DF2AF2139B00FA3030 /* Extension */,
 				BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */,
+				BE010D382B0511CC0093A5FE /* FloatingCapsuleModifier.swift */,
+				BE4069DF2AF2139B00FA3030 /* Extension */,
 			);
 			path = Utiles;
 			sourceTree = "<group>";
@@ -354,6 +361,7 @@
 				BE4498262AEFF2AC00252561 /* Font+extension.swift */,
 				BE93F1902B00937000C33756 /* TextBorder+extension.swift */,
 				BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */,
+				BE010D3B2B0512680093A5FE /* Double+extension.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -690,6 +698,7 @@
 				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				BE4A91582B011C8B004AAFA3 /* SprintChart.swift in Sources */,
 				FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
+				BE010D392B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */,
 				6871CDAA2AF261D5006A4ACB /* AnalyticsDetailView.swift in Sources */,
 				BE4A91542B01101E004AAFA3 /* DistanceChart.swift in Sources */,
 				685D7B682AE52A2900783433 /* Data.swift in Sources */,
@@ -711,6 +720,7 @@
 				682D64832AFD1B6B00D7F07B /* ProfileModel.swift in Sources */,
 				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
+				BE010D3C2B0512680093A5FE /* Double+extension.swift in Sources */,
 				BEDE52402B04D26000BBFD94 /* BackgroundImageView.swift in Sources */,
 				BE4069E12AF2641800FA3030 /* MatchTotalView.swift in Sources */,
 			);
@@ -731,6 +741,8 @@
 				BE93F1922B00937000C33756 /* TextBorder+extension.swift in Sources */,
 				BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */,
 				BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */,
+				BE010D3A2B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */,
+				BE010D3D2B0512680093A5FE /* Double+extension.swift in Sources */,
 				BE40699D2AF0EB7700FA3030 /* Phrase.swift in Sources */,
 				681297392AE64432000CC957 /* PhraseView.swift in Sources */,
 				BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */,
