@@ -44,9 +44,9 @@ struct ShareInstagramView: View {
 }
 
 extension UIScreen {
-   static let screenWidth = UIScreen.main.bounds.size.width
-   static let screenHeight = UIScreen.main.bounds.size.height
-   static let screenSize = UIScreen.main.bounds.size
+    static let screenWidth = UIScreen.main.bounds.size.width
+    static let screenHeight = UIScreen.main.bounds.size.height
+    static let screenSize = UIScreen.main.bounds.size
 }
 
 extension UIView {
@@ -79,46 +79,36 @@ struct TargetImageView: View {
                 .frame(maxHeight: UIScreen.screenHeight - 100)
             Image("FlameEffect")
                 .frame(maxHeight: UIScreen.screenHeight - 100)
-            VStack(spacing: 0) {
-                HStack {
-                    Text("# Soccer Beat")
-                    Spacer()
-                }
-                Spacer()
-                    .frame(height: 20)
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("SBeat Card")
-                            .font(.shareInstagramSubTitle)
-                            .foregroundStyle(.shareInstagramSubTitleTint)
-                        VStack(alignment: .leading, spacing: -10) {
-                            HStack {
-                                Text("I'm, ")
-                                Text("Son").foregroundStyle(.shareInstagramTitleTint)
-                            }
-                            HStack {
-                                Text("The best ")
-                                Text("FW").foregroundStyle(.shareInstagramTitleTint)
-                            }
+            HStack(alignment: .bottom) {
+                CardFront(width: 100, height: 140, degree: $degree, viewModel: viewModel)
+                VStack(alignment: .leading, spacing: 0) {
+                    Capsule()
+                        .strokeBorder(.shareInstagramCapsuleStroke)
+                        .frame(width: 140, height: 30)
+                        .font(.shareInstagramHashTag)
+                        .overlay {
+                            Text("# Soccer Beat")
                         }
-                        .font(.shareInstagramTitle)
-                    }
                     Spacer()
-                }
-                ZStack(alignment: .top) {
-                    CardFront(width: 321, height: 460, degree: $degree, viewModel: viewModel)
+                        .frame(height: 20)
                     
-                    VStack {
-                        Spacer()
-                            .frame(height: 370)
-                        Image("PlayerAbilities")
-                            .resizable()
-                            .frame(width: 250, height: 240)
+                    Text("SBeat Card")
+                        .font(.shareInstagramSubTitle)
+                        .foregroundStyle(.shareInstagramSubTitleTint)
+                    VStack(alignment: .leading, spacing: -10) {
+                        HStack {
+                            Text("I'm, ")
+                            Text("Son").foregroundStyle(.shareInstagramTitleTint)
+                        }
+                        HStack {
+                            Text("Good ")
+                            Text("player").foregroundStyle(.shareInstagramTitleTint)
+                        }
                     }
+                    .font(.shareInstagramTitle)
                 }
-                .scaledToFit()
+                .padding()
             }
-            .padding()
         }
     }
 }

@@ -13,7 +13,7 @@ struct Profile: View {
     let width : CGFloat
     let height : CGFloat
     var body: some View {
-        NavigationView {
+//        NavigationView {
             EditableCircularProfileImage(viewModel: viewModel,
                                          width: width,
                                          height: height)
@@ -23,6 +23,6 @@ struct Profile: View {
                         .scaledToFit()
                         .padding(8)
                 }
-        }
+//        }
     }
 }

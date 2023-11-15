@@ -62,8 +62,9 @@ extension ShapeStyle where Self == Color {
         
     // MARK: - ShareInstagramView
     
-    static var shareInstagramTitleTint: Self { Self(hex: 0x03FFC3)}
-    static var shareInstagramSubTitleTint: Self { Self(hex: 0xB4B4B4)}
+    static var shareInstagramTitleTint: Self { .init(hex: 0x03FFC3)}
+    static var shareInstagramSubTitleTint: Self { .init(hex: 0xB4B4B4)}
+    static var shareInstagramCapsuleStroke: Self { .init(hex: 0x757575, alpha: 0.4) }
 }
 
 extension ShapeStyle where Self == LinearGradient {
