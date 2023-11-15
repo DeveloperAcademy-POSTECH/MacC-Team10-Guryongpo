@@ -19,6 +19,16 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
     var route: [CLLocationCoordinate2D] // whole route
     var center: [Double] // center of heatmap
+    
+    static let example = Self(dataID: 0,
+                              date: "2023.10.15",
+                              time: "34:43",
+                              distance: 4.5,
+                              sprint: 6,
+                              velocity: 24.5,
+                              heartRate: ["max": 190, "min": 70],
+                              route: [],
+                              center: [37.58647414212885, 126.9748537678651])
 }
 
 extension CLLocationCoordinate2D: Hashable {
@@ -63,11 +73,13 @@ extension WorkoutData {
 }
 
 let fakeWorkoutData: [WorkoutData] = [
-    WorkoutData(dataID: 1, date: "1999-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 2, date: "2000-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 3, date: "2359-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 4, date: "1569-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 5, date: "2639-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 6, date: "5659-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 7, date: "1922-10-28", time: "60:10", distance: 8.5, location: "지곡동", sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0])
+    WorkoutData(dataID: 1, date: "2023.10.09", time: "60:10", distance: 3.5, sprint: 3, velocity: 10.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 2, date: "2023.10.10", time: "60:10", distance: 2.1, sprint: 3, velocity: 11.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 3, date: "2023.10.11", time: "60:10", distance: 1.1, sprint: 3, velocity: 8.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 4, date: "2023.10.12", time: "60:10", distance: 5.1, sprint: 3, velocity: 12.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 5, date: "2023.10.13", time: "60:10", distance: 4.5, sprint: 3, velocity: 17.2, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 6, date: "2023.10.14", time: "60:10", distance: 3.6, sprint: 3, velocity: 24.4, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 7, date: "2023.10.15", time: "60:10", distance: 3.8, sprint: 3, velocity: 15.9, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 8, date: "2023.10.16", time: "60:10", distance: 2.9, sprint: 3, velocity: 17.3, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
+    WorkoutData(dataID: 9, date: "2023.10.17", time: "60:10", distance: 5.3, sprint: 3, velocity: 23.5, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0])
 ]
