@@ -59,6 +59,12 @@ extension ShapeStyle where Self == Color {
     // MARK: - SplitControlsView
     
     static var circleBackground: Self { .init(hex: 0xD9D9D9, alpha: 0.2) }
+    
+    // MARK: - SprintView
+    
+    static var SprintLeftColor: Self { .init(hex: 0x1A5AFF) }
+    static var SprintOnRightColor: Self { .init(hex: 0xFF259B) }
+    
 }
 
 extension ShapeStyle where Self == LinearGradient {
@@ -67,6 +73,16 @@ extension ShapeStyle where Self == LinearGradient {
     
     static var precountGradient: Self {
         return .linearGradient(colors: [.precountTint, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    // MARK: - SprintView
+    
+    static var sprintOffGradient: Self {
+        return .linearGradient(colors: [.SprintLeftColor, .zone3Tint], startPoint: .leading, endPoint: .trailing)
+    }
+    
+    static var sprintOnGradient: Self {
+        return .linearGradient(colors: [.SprintLeftColor, .SprintOnRightColor], startPoint: .leading, endPoint: .trailing)
     }
     
     // MARK: - SummaryView

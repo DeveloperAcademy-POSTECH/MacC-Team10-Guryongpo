@@ -51,7 +51,7 @@ class ProfileModel: ObservableObject {
     
     @Published private(set) var imageState: ImageState = .empty
     
-    @Published var imageSelection: PhotosPickerItem? = nil {
+    @Published var imageSelection: PhotosPickerItem? {
         didSet {
             if let imageSelection {
                 let progress = loadTransferable(from: imageSelection)
