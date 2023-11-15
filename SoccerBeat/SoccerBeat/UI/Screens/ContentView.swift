@@ -19,11 +19,7 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 ZStack {
-                    Image("BackgroundPattern")
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 0)
+                    BackgroundImageView()
                     
                     VStack {
                         
