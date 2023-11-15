@@ -79,7 +79,7 @@ struct DistanceChartView: View {
                     .padding(.leading, -10)
                 
                 Group {
-                    Text("My distance")
+                    Text("MY distance")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
                     Text("The quality of  a")

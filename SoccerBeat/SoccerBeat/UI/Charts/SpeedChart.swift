@@ -79,7 +79,7 @@ struct SpeedChartView: View {
                     .padding(.leading, -10)
                 
                 Group {
-                    Text("My speed")
+                    Text("MY speed")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
                     Text("The quality of  a")
