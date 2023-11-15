@@ -76,7 +76,7 @@ public struct TKRadarChartConfig {
                                   borderWidth: 4,
                                   lineWidth: 1,
                                   showPoint: false,
-                                  showBorder: false,
+                                  showBorder: true,
                                   showBgLine: true,
                                   showBgBorder: true,
                                   fillArea: true,
@@ -339,7 +339,7 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                 fillColor.setFill()
                 borderColor.setStroke()
                 
-                path.lineWidth = 2
+                path.lineWidth = 8
                 if configuration.fillArea {
                     path.fill()
                 }
