@@ -14,13 +14,6 @@ struct SpeedChart: View {
     let slowestWorkout: WorkoutData
     let averageSpeed: Double
     
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "Ko-kr")
-        formatter.dateFormat = "yyyy.MM.dd"
-        return formatter
-    }()
-    
     private func isMax(_ workout: WorkoutData) -> Bool {
         workout == fastestWorkout
     }
@@ -33,9 +26,9 @@ struct SpeedChart: View {
         Chart {
             ForEach(0..<workouts.count, id: \.self) { index in
                 let workout = workouts[index]
-                let thisDate = dateFormatter.date(from: workout.date) ?? Date()
+                
                 BarMark(
-                    x: .value("Day", thisDate, unit: .day),
+                    x: .value("Day", workout.formattedDate, unit: .day),
                     yStart: .value("Velocity", 1),
                     yEnd: .value("Velocity", workout.velocity),
                     width: .ratio(0.5)

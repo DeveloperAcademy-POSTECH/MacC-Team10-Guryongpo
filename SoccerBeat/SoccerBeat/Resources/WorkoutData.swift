@@ -19,6 +19,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
     var route: [CLLocationCoordinate2D] // whole route
     var center: [Double] // center of heatmap
+    var formattedDate: Date { dateFormatter.date(from: date) ?? Date() }
     
     static let example = Self(dataID: 0,
                               date: "2023.10.15",
@@ -29,6 +30,13 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               heartRate: ["max": 190, "min": 70],
                               route: [],
                               center: [37.58647414212885, 126.9748537678651])
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "Ko-kr")
+        formatter.dateFormat = "yyyy.MM.dd"
+        return formatter
+    }()
 }
 
 extension CLLocationCoordinate2D: Hashable {
