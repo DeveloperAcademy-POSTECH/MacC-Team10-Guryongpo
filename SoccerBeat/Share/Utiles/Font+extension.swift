@@ -78,7 +78,7 @@ extension Font {
     
     public static let durationStyle = Font.sfProText(size: 14, weight: .regularItalic)
     public static let maxHighlight = Font.sfProText(size: 12, weight: .semiboldItalic)
-    public static let dayUnit = Font.sfProText(size: 10, weight: .lightItalic)
+    public static let dayUnit = Font.sfProText(size: 14, weight: .lightItalic)
     public static let averageValue = Font.sfProText(size: 14, weight: .heavyItalic)
 }
 
