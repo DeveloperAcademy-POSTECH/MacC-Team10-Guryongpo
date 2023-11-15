@@ -20,7 +20,12 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var route: [CLLocationCoordinate2D] // whole route
     var center: [Double] // center of heatmap
     var formattedDate: Date { dateFormatter.date(from: date) ?? Date() }
-    
+    var maxHeartRate: Int {
+        heartRate["max", default: 110]
+    }
+    var minHeartRate: Int {
+        heartRate["min", default: 50]
+    }
     static let example = Self(dataID: 0,
                               date: "2023.10.15",
                               time: "34:43",
