@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ActivityEnum {
+enum ActivityEnum: CaseIterable {
     case distance
     case sprint
     case speed
@@ -15,10 +15,12 @@ enum ActivityEnum {
 }
 
 struct AnalyticsView: View {
-    @Binding var userWorkouts: [WorkoutData]?
+    @EnvironmentObject var healthInteracter: HealthInteractor
     
     var body: some View {
-        VStack(spacing: 20) {
+        let recent9Games = healthInteracter.readRecentMatches(for: 9)
+        let recent4Games = healthInteracter.readRecentMatches(for: 4)
+        return VStack(spacing: 20) {
             HStack {
                 Text("최근 경기 분석")
                 Spacer()
@@ -29,17 +31,17 @@ struct AnalyticsView: View {
             VStack(spacing: 15) {
                 HStack {
                     VStack(alignment: .leading) {
-                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .distance) } label: {
-                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .distance)
-                        }
-                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .sprint) } label: {
-                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .sprint)
-                        }
-                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .speed) } label: {
-                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .speed)
-                        }
-                        NavigationLink { AnalyticsDetailView(userWorkouts: $userWorkouts, graphType: .heartrate) } label: {
-                            ActivityComponent(userWorkouts: $userWorkouts, activityType: .heartrate)
+                        ForEach(ActivityEnum.allCases, id: \.self) { activityType in
+                            NavigationLink {
+                                switch activityType {
+                                case .distance: DistanceChartView(workouts: recent9Games)
+                                case .heartrate: BPMChartView(workouts: recent9Games)
+                                case .speed: SpeedChartView(workouts: recent9Games)
+                                case .sprint: SprintChartView(workouts: recent9Games)
+                                }
+                            } label: {
+                                ActivityComponent(userWorkouts: recent4Games, activityType: activityType)
+                            }
                         }
                     }
                 }
@@ -50,7 +52,7 @@ struct AnalyticsView: View {
 }
 
 struct ActivityComponent: View {
-    @Binding var userWorkouts: [WorkoutData]?
+    let userWorkouts: [WorkoutData]?
     
     var activityType: ActivityEnum
     
