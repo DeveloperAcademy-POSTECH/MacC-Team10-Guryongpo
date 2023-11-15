@@ -166,7 +166,7 @@ extension SpeedChartView {
             .frame(height: 100)
             .padding(.horizontal, 16)
             .overlay {
-                VStack {
+                VStack(spacing: 4) {
                     Text("해리케인의 평균 속도는 21 Km/h입니다.")
                         .opacity(0.7)
                     Text("\(workouts.count) 경기 평균")
