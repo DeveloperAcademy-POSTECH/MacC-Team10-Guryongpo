@@ -95,6 +95,7 @@ class HealthInteractor: ObservableObject {
                                                 location: "Empty",
                                                 sprint: custom["SprintCount"] as! Int,
                                                 velocity: custom["MaxSpeed"] as! Double,
+                                                acceleration: custom["Acceleration"] as! Double,
                                                 heartRate: ["max": custom["MaxHeartRate"] as! Int,
                                                             "min": custom["MinHeartRate"] as! Int],
                                                 route: routes,

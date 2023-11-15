@@ -17,6 +17,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     let location: String
     let sprint: Int // sprint counter
     let velocity: Double // maximum velocity. km/h
+    let acceleration: Double // maximum velocity. m/s
     var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
     var route: [CLLocationCoordinate2D] // whole route
     var center: [Double] // center of heatmap
