@@ -66,6 +66,7 @@ extension ShapeStyle where Self == Color {
     static var navigationSportySpeedTitle: Self { .init(hex: 0xFFE603) }
     static var navigationSportyDistanceTitle: Self { .init(hex: 0x00B3FF) }
     static var navigationSportyBPMTitle: Self { .init(hex: 0x03FFC3) }
+    static var navigationSportySprintTitle: Self { .init(hex: 0xFF007A) }
     
     // MARK: - In Chart Style
     
@@ -238,6 +239,19 @@ extension ShapeStyle where Self == LinearGradient {
     static var bpmMin: Self {
         let start = Color(hex: 0xFFFFFF, alpha: 0.3)
         let end = Color(hex: 0x03FFC3)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    // MARK: - Sprint Chart
+    static var sprintMax: Self {
+        let start = Color.navigationSportySprintTitle
+        let end = Color(hex: 0xFCFEFF, alpha: 0.8)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    static var sprintMin: Self {
+        let start = Color(hex: 0xFF007A, alpha: 0.0)
+        let end = Color(hex: 0xFF007A)
         return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
