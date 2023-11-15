@@ -67,18 +67,22 @@
 		BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */; };
 		BE4069E52AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */; };
 		BE4498272AEFF2AC00252561 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4498262AEFF2AC00252561 /* Font+extension.swift */; };
+		BE4A91542B01101E004AAFA3 /* DistanceChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91532B01101E004AAFA3 /* DistanceChart.swift */; };
+		BE4A91562B011A46004AAFA3 /* BPMChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91552B011A46004AAFA3 /* BPMChart.swift */; };
+		BE4A91582B011C8B004AAFA3 /* SprintChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91572B011C8B004AAFA3 /* SprintChart.swift */; };
 		BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
 		BE93F1922B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
 		BE93F1942B009FA300C33756 /* ElapsedTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */; };
 		BE93F1952B009FA300C33756 /* ElapsedTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */; };
-		BE4A91542B01101E004AAFA3 /* DistanceChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91532B01101E004AAFA3 /* DistanceChart.swift */; };
-		BE4A91562B011A46004AAFA3 /* BPMChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91552B011A46004AAFA3 /* BPMChart.swift */; };
-		BE4A91582B011C8B004AAFA3 /* SprintChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91572B011C8B004AAFA3 /* SprintChart.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */; };
 		BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */; };
 		BED269762AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BED269752AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf */; };
 		BED269772AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BED269752AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf */; };
+		BEDE523E2B03BFF800BBFD94 /* Analyzable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE523D2B03BFF800BBFD94 /* Analyzable.swift */; };
+		BEDE52402B04D26000BBFD94 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE523F2B04D26000BBFD94 /* BackgroundImageView.swift */; };
+		BEDE52422B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BEDE52412B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf */; };
+		BEDE52432B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BEDE52412B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf */; };
 		D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
 		D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500142AE36F3F00EFAEFF /* ContentView.swift */; };
@@ -171,15 +175,18 @@
 		BE4069E02AF2641800FA3030 /* MatchTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTotalView.swift; sourceTree = "<group>"; };
 		BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-LightItalic.otf"; sourceTree = "<group>"; };
 		BE4498262AEFF2AC00252561 /* Font+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+extension.swift"; sourceTree = "<group>"; };
-		BE93F1902B00937000C33756 /* TextBorder+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBorder+extension.swift"; sourceTree = "<group>"; };
-		BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeFormatter.swift; sourceTree = "<group>"; };
 		BE4A91532B01101E004AAFA3 /* DistanceChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceChart.swift; sourceTree = "<group>"; };
 		BE4A91552B011A46004AAFA3 /* BPMChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMChart.swift; sourceTree = "<group>"; };
 		BE4A91572B011C8B004AAFA3 /* SprintChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintChart.swift; sourceTree = "<group>"; };
+		BE93F1902B00937000C33756 /* TextBorder+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBorder+extension.swift"; sourceTree = "<group>"; };
+		BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeFormatter.swift; sourceTree = "<group>"; };
 		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeView.swift; sourceTree = "<group>"; };
 		BEC1E5CF2AE6B4AF008B285E /* SoccerBeat-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SoccerBeat-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		BED269752AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-RegularItalic.otf"; sourceTree = "<group>"; };
+		BEDE523D2B03BFF800BBFD94 /* Analyzable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analyzable.swift; sourceTree = "<group>"; };
+		BEDE523F2B04D26000BBFD94 /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
+		BEDE52412B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerBeatApp.swift; sourceTree = "<group>"; };
@@ -288,6 +295,7 @@
 		685D7B712AE53D8400783433 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				BEDE523F2B04D26000BBFD94 /* BackgroundImageView.swift */,
 				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
 				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
 				BE4069E02AF2641800FA3030 /* MatchTotalView.swift */,
@@ -358,6 +366,7 @@
 				BE4A91552B011A46004AAFA3 /* BPMChart.swift */,
 				BE4A91572B011C8B004AAFA3 /* SprintChart.swift */,
 				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
+				BEDE523D2B03BFF800BBFD94 /* Analyzable.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -486,6 +495,7 @@
 				BE4069C62AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf */,
 				BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */,
 				BED269752AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf */,
+				BEDE52412B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -578,6 +588,7 @@
 				FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BED269762AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
+				BEDE52422B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				BE4069D72AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */,
@@ -600,6 +611,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEDE52432B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BE4069D82AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069E52AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
@@ -686,6 +698,7 @@
 				BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */,
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
 				682D64892AFDBF8C00D7F07B /* CapsuleView.swift in Sources */,
+				BEDE523E2B03BFF800BBFD94 /* Analyzable.swift in Sources */,
 				FBA3DA622B00E6EF0025AD7B /* ShareInstagramView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
 				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
@@ -698,6 +711,7 @@
 				682D64832AFD1B6B00D7F07B /* ProfileModel.swift in Sources */,
 				685D7B652AE529E800783433 /* AnalyticsView.swift in Sources */,
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
+				BEDE52402B04D26000BBFD94 /* BackgroundImageView.swift in Sources */,
 				BE4069E12AF2641800FA3030 /* MatchTotalView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

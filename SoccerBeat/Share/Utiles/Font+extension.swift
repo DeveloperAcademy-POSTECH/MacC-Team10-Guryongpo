@@ -18,6 +18,7 @@ import SwiftUI
  - SFProText-HeavyItalic
  - SFProText-BlackItalic
  - SPProText-RegularItalic
+ - SFProText-SemiboldItalic
  
  Family: Noto Sans
  - NotoSans-Regular
@@ -64,7 +65,21 @@ extension Font {
     public static let shareInstagramTitle = Font.sfProText(size: 36, weight: .heavyItalic)
     
     // MARK: - MyCardView
+    
     public static let selectPhotoButton = Font.notoSans(size: 14, weight: .regular)
+    
+    
+    // MARK: - Navigation Title Style
+    
+    public static let navigationSportyTitle = Font.sfProText(size: 36, weight: .heavyItalic)
+    public static let navigationSportySubTitle = Font.sfProText(size: 24, weight: .semiboldItalic)
+    
+    // MARK: - In Chart Style
+    
+    public static let durationStyle = Font.sfProText(size: 14, weight: .regularItalic)
+    public static let maxHighlight = Font.sfProText(size: 12, weight: .semiboldItalic)
+    public static let dayUnit = Font.sfProText(size: 10, weight: .lightItalic)
+    public static let averageValue = Font.sfProText(size: 14, weight: .heavyItalic)
 }
 
 fileprivate extension Font {
@@ -104,6 +119,7 @@ private enum SFProText: String {
     case heavyItalic
     case lightItalic
     case regularItalic
+    case semiboldItalic
     
     var capitalized: String {
         self.rawValue.capitalized
