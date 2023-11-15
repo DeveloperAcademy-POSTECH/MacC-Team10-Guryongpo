@@ -64,6 +64,7 @@ extension ShapeStyle where Self == Color {
     
     static var navigationSportyHead: Self { .init(hex: 0xB4B4B4) }
     static var navigationSportySpeedTitle: Self { .init(hex: 0xFFE603) }
+    static var navigationSportyDistanceTitle: Self { .init(hex: 0x00B3FF) }
     
     // MARK: - In Chart Style
     
@@ -211,6 +212,19 @@ extension ShapeStyle where Self == LinearGradient {
     static var speedMin: Self {
         let start = Color(hex: 0xFFFFFF, alpha: 0.3)
         let end = Color(hex: 0xFFE603)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    // MARK: - Distance Chart
+    static var distanceMax: Self {
+        let start = Color(hex: 0x00B3FF)
+        let end = Color(hex: 0xFCFEFF, alpha: 0.8)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    static var distanceMin: Self {
+        let start = Color(hex: 0xFFFFFF, alpha: 0.0)
+        let end = Color(hex: 0x0EB7FF)
         return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
