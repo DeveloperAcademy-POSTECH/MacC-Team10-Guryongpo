@@ -10,10 +10,12 @@ import SwiftUI
 @main
 struct SoccerBeatApp: App {
     @StateObject var soundManager: SoundManager = SoundManager()
+    @StateObject var healthInteracter = HealthInteractor.shared
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(soundManager)
+                .environmentObject(healthInteracter)
         }
     }
 }
