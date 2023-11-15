@@ -92,7 +92,6 @@ class HealthInteractor: ObservableObject {
                                                 date: dateFormatter.string(from: allWorkout.startDate),
                                                 time: time as! String,
                                                 distance: custom["Distance"] as! Double,
-                                                location: "Empty",
                                                 sprint: custom["SprintCount"] as! Int,
                                                 velocity: custom["MaxSpeed"] as! Double,
                                                 acceleration: custom["Acceleration"] as! Double,

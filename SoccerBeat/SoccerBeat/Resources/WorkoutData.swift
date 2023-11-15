@@ -14,7 +14,6 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     let date: String
     let time: String
     let distance: Double // total distance
-    let location: String
     let sprint: Int // sprint counter
     let velocity: Double // maximum velocity. km/h
     let acceleration: Double // maximum velocity. m/s
@@ -30,5 +29,36 @@ extension CLLocationCoordinate2D: Hashable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.latitude) 
+    }
+}
+
+// MARK: - 현재 위치 받아오는 코드
+extension WorkoutData {
+    var location: String {
+        get async {
+            let centerLocation = CLLocation(latitude: center[0], longitude: center[1]).coordinate
+            let loadedAddress =  await showCurrentAddress(centerLocation)
+            return loadedAddress
+        }
+    }
+    
+    private func showCurrentAddress(_ location: CLLocationCoordinate2D?) async -> String {
+        guard let position = location else { return "" }
+        let locale = Locale(identifier: "Ko-kr")
+        let geoCoder = CLGeocoder()
+        
+        let location : CLLocation = CLLocation(latitude: position.latitude, longitude: position.longitude)
+        
+        var currentAddress = ""
+        guard let marker = try? await geoCoder.reverseGeocodeLocation(location, preferredLocale: locale).first
+            else { return "" }
+        
+        if let locality = marker.locality {
+            currentAddress += locality + " "
+        }
+        if let subLocality = marker.subLocality {
+            currentAddress += subLocality + " "
+        }
+        return currentAddress
     }
 }
