@@ -59,6 +59,15 @@ extension ShapeStyle where Self == Color {
     // MARK: - SplitControlsView
     
     static var circleBackground: Self { .init(hex: 0xD9D9D9, alpha: 0.2) }
+    
+    // MARK: - Navigation Title Style
+    
+    static var navigationSportyHead: Self { .init(hex: 0xB4B4B4) }
+    static var navigationSportySpeedTitle: Self { .init(hex: 0xFFE603) }
+    
+    // MARK: - In Chart Style
+    
+    static var durationUnit: Self { .init(hex: 0xD4D4D4) }
 }
 
 extension ShapeStyle where Self == LinearGradient {
@@ -181,6 +190,27 @@ extension ShapeStyle where Self == LinearGradient {
     static var playTimeNumber: Self {
         let start = Color(hex: 0x03FFC3)
         let end = Color(hex: 0xFFFFFF)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    // MARK: - Chart Default
+    
+    static var chartDefault: Self {
+        let start = Color(hex: 0xFFFFFF)
+        let end = Color(hex: 0xFFFFFF, alpha: 0.3)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    // MARK: - Speed Chart
+    static var speedMax: Self {
+        let start = Color(hex: 0xFFE603)
+        let end = Color(hex: 0xFCFEFF, alpha: 0.3)
+        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    static var speedMin: Self {
+        let start = Color(hex: 0xFFFFFF, alpha: 0.3)
+        let end = Color(hex: 0xFFE603)
         return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
