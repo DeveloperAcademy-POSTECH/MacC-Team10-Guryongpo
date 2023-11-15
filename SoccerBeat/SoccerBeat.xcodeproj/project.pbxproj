@@ -25,7 +25,6 @@
 		685D7B682AE52A2900783433 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B672AE52A2900783433 /* Data.swift */; };
 		685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B6D2AE5396200783433 /* LightRectangleView.swift */; };
 		685D7B752AE53DC400783433 /* SpeedChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B742AE53DC400783433 /* SpeedChart.swift */; };
-		685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */; };
 		685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */; };
 		6871CDAA2AF261D5006A4ACB /* AnalyticsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */; };
 		6898F2852AEFD7FC0075A573 /* SprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6898F2842AEFD7FC0075A573 /* SprintView.swift */; };
@@ -151,7 +150,6 @@
 		685D7B672AE52A2900783433 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		685D7B6D2AE5396200783433 /* LightRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightRectangleView.swift; sourceTree = "<group>"; };
 		685D7B742AE53DC400783433 /* SpeedChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedChart.swift; sourceTree = "<group>"; };
-		685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarMinMaxGraphView.swift; sourceTree = "<group>"; };
 		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsDetailView.swift; sourceTree = "<group>"; };
 		6898F2842AEFD7FC0075A573 /* SprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintView.swift; sourceTree = "<group>"; };
@@ -373,7 +371,6 @@
 				BE4A91532B01101E004AAFA3 /* DistanceChart.swift */,
 				BE4A91552B011A46004AAFA3 /* BPMChart.swift */,
 				BE4A91572B011C8B004AAFA3 /* SprintChart.swift */,
-				685D7B762AE53DD700783433 /* BarMinMaxGraphView.swift */,
 				BEDE523D2B03BFF800BBFD94 /* Analyzable.swift */,
 			);
 			path = Charts;
@@ -710,7 +707,6 @@
 				BEDE523E2B03BFF800BBFD94 /* Analyzable.swift in Sources */,
 				FBA3DA622B00E6EF0025AD7B /* ShareInstagramView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
-				685D7B772AE53DD700783433 /* BarMinMaxGraphView.swift in Sources */,
 				682D64A82AFE77D500D7F07B /* SoundManager.swift in Sources */,
 				682D64872AFD1D8500D7F07B /* Profile.swift in Sources */,
 				BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */,
