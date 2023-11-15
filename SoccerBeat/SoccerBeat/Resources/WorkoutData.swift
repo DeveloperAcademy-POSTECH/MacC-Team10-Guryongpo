@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-struct WorkoutData: Hashable, Equatable, Identifiable {
+struct WorkoutTotalData: Hashable, Equatable, Identifiable {
     var id: UUID = UUID()
     var dataID: Int
     let date: String
@@ -19,6 +19,18 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
     var route: [CLLocationCoordinate2D] // whole route
     var center: [Double] // center of heatmap
+}
+
+struct WorkoutSpiderData: Hashable, Equatable, Identifiable {
+    let id: UUID = UUID()
+    let maxHeartRate: Int // Maximum heart rate during the match.
+    let minHeartRate: Int // Minimum heart rate during the match.
+    let rangeHeartRate: Int // Range of heart rate during the match.
+    let totalDistance: Double // Total distance played during the match.
+    let maxAcceleration: Int // Maximum acceleration during the match.
+    let maxVelocity: Double // Maximum speed during the match.
+    let sprintCount: Int // Number of sprints during the match.
+    let totalMatchTime: Int // Total play time in the match.
 }
 
 extension CLLocationCoordinate2D: Hashable {
