@@ -33,12 +33,13 @@ struct SpeedChart: View {
                     yEnd: .value("Velocity", workout.velocity),
                     width: .ratio(0.5)
                 )
-                .foregroundStyle(isMax(workout) ? .speedMax : (isMin(workout) ? .speedMin : .chartDefault))
+                .foregroundStyle(isMax(workout) ? .speedMax 
+                                 : (isMin(workout) ? .speedMin : .chartDefault))
                 .cornerRadius(300, style: .continuous)
                 // MARK: - Min, Max 표시
                 .annotation(position: .top, alignment: .center) {
                     if isMax(workout) {
-                        Text("\(String(format: "%.1f", workout.velocity))")
+                        Text(workout.velocity.rounded())
                             .font(.maxHighlight)
                     }
                 }
@@ -98,11 +99,6 @@ struct SpeedChartView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        SpeedChartView(workouts: fakeWorkoutData)
-    }
-}
 // MARK: - Data Analyze Protocol
 extension SpeedChartView: Analyzable {
     func maximum(of workouts: [WorkoutData]) -> WorkoutData {
@@ -181,20 +177,8 @@ extension SpeedChartView {
     }
 }
 
-struct FloatingCapsuleModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .overlay {
-                Capsule()
-                    .strokeBorder(Color(hex: 0x757575, alpha: 0.4), lineWidth: 3.0)
-            }
-    }
-}
-
-extension View {
-    func floatingCapsuleStyle() -> some View {
-        modifier(FloatingCapsuleModifier())
+#Preview {
+    NavigationStack {
+        SpeedChartView(workouts: fakeWorkoutData)
     }
 }
