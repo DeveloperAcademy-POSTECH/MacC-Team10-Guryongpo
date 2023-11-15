@@ -64,11 +64,11 @@ extension Font {
     public static let matchTotalTitle = Font.sfProText(size: 36, weight: .heavyItalic)
     public static let matchTotalSectionHeader = Font.sfProText(size: 14, weight: .lightItalic)
     
-    // MARK: - ShareInstagramView
+    // MARK: - ShareView
     
-    public static let shareInstagramTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
-    public static let shareInstagramSubTitle = Font.sfProText(size: 24, weight: .regularItalic)
-    public static let shareInstagramHashTag = Font.notoSans(size: 14, weight: .regular)
+    public static let shareViewTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
+    public static let shareViewSubTitle = Font.sfProText(size: 24, weight: .regularItalic)
+    public static let shareViewHashTag = Font.notoSans(size: 14, weight: .regular)
     
     // MARK: - MyCardView
     public static let selectPhotoButton = Font.notoSans(size: 14, weight: .regular)

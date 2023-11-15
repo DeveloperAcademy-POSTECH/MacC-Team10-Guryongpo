@@ -60,11 +60,11 @@ extension ShapeStyle where Self == Color {
     
     static var circleBackground: Self { .init(hex: 0xD9D9D9, alpha: 0.2) }
         
-    // MARK: - ShareInstagramView
+    // MARK: - ShareView
     
-    static var shareInstagramTitleTint: Self { .init(hex: 0x03FFC3)}
-    static var shareInstagramSubTitleTint: Self { .init(hex: 0xB4B4B4)}
-    static var shareInstagramCapsuleStroke: Self { .init(hex: 0x757575, alpha: 0.4) }
+    static var shareViewTitleTint: Self { .init(hex: 0x03FFC3)}
+    static var shareViewSubTitleTint: Self { .init(hex: 0xB4B4B4)}
+    static var shareViewCapsuleStroke: Self { .init(hex: 0x757575, alpha: 0.4) }
 }
 
 extension ShapeStyle where Self == LinearGradient {

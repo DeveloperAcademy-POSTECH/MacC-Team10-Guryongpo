@@ -26,7 +26,7 @@ struct PhotoSelectButtonView: View {
                             .frame(height: 34)
                     }
                 NavigationLink {
-                    ShareInstagramView(viewModel: viewModel)
+                    ShareView(viewModel: viewModel)
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                         .font(.selectPhotoButton)
