@@ -155,6 +155,7 @@ extension SpeedChartView {
                     )
                     .frame(height: 120)
                     .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
                 }
             }
     }
