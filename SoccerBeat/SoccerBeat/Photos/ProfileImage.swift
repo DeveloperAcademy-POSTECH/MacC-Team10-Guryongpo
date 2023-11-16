@@ -37,6 +37,7 @@ struct EditableCircularProfileImage: View {
     let height : CGFloat
     var body: some View {
         ProfileImage(imageState: viewModel.imageState)
+            .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
             .frame(width: width, height: height)
     }
 }

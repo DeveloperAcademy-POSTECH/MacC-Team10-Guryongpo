@@ -10,51 +10,49 @@ import HealthKit
 
 struct SprintView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
-    let accentGradient: LinearGradient
-    var progress: Double
     var body: some View {
         
         HStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 15.0)
                     .foregroundStyle(.gray)
-                    .frame(maxWidth: .infinity, maxHeight: 16)
+                    .frame(height: 21)
+                    .frame(maxWidth: .infinity)
                     .overlay {
                         ZStack {
-                            ProgressView(value: progress, total: 22)
-                                .progressViewStyle(GucciBarProgressStyle(accentGradient: accentGradient))
-                                .padding(.horizontal, 5)
+                            ProgressView(value: workoutManager.speed, total: 22)
+                                .progressViewStyle(GucciBarProgressStyle(accentGradient: workoutManager.isSprint ? .sprintOnGradient : .sprintOffGradient))
+                                .padding(.horizontal, 2)
                             
                             HStack {
-                                Text(Measurement(value: workoutManager.speed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)))
-                                    .font(.system(size: 11))
-                                    .padding(.horizontal)
-                                    .bold()
-                                    .italic()
                                 Spacer()
+                                
+                                if workoutManager.isSprint {
+                                    Text("SPRINT!")
+                                        .font(.sprintText)
+                                        .padding(.horizontal)
+                                } else {
+                                    Text("LAST " + Measurement(value: workoutManager.recentSprintSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)))
+                                        .font(.sprintText)
+                                        .padding(.horizontal)
+                                }
                             }
                             .padding(.horizontal)
                             .foregroundStyle(.black)
                         }
                     }
+                    
             }
-            Text(workoutManager.sprint.formatted(.number))
-                .italic()
-                .padding(.leading)
         }
         .padding(.vertical)
     }
-}
-
-#Preview {
-    SprintView(accentGradient: .zone1Bpm, progress: 3)
 }
 
 struct GucciBarProgressStyle: ProgressViewStyle {
     
     let accentGradient: LinearGradient
     private let cornerRadius = CGFloat(10.0)
-    private let height: Double = 13.0
+    private let height: Double = 16.0
     
     func makeBody(configuration: Configuration) -> some View {
         

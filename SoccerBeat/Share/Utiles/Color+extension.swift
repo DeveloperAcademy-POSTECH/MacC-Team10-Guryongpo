@@ -65,6 +65,13 @@ extension ShapeStyle where Self == Color {
     static var shareViewTitleTint: Self { .init(hex: 0x03FFC3)}
     static var shareViewSubTitleTint: Self { .init(hex: 0xB4B4B4)}
     static var shareViewCapsuleStroke: Self { .init(hex: 0x757575, alpha: 0.4) }
+    
+    // MARK: - SprintView
+    
+    static var SprintLeftColor: Self { .init(hex: 0x1A5AFF) }
+    static var SprintOnRightColor: Self { .init(hex: 0xFF259B) }
+    
+
 }
 
 extension ShapeStyle where Self == LinearGradient {
@@ -73,6 +80,16 @@ extension ShapeStyle where Self == LinearGradient {
     
     static var precountGradient: Self {
         return .linearGradient(colors: [.precountTint, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    // MARK: - SprintView
+    
+    static var sprintOffGradient: Self {
+        return .linearGradient(colors: [.SprintLeftColor, .zone3Tint], startPoint: .leading, endPoint: .trailing)
+    }
+    
+    static var sprintOnGradient: Self {
+        return .linearGradient(colors: [.SprintLeftColor, .SprintOnRightColor], startPoint: .leading, endPoint: .trailing)
     }
     
     // MARK: - SummaryView

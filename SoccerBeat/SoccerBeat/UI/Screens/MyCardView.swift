@@ -97,6 +97,7 @@ struct CardFront : View {
                 .scaledToFit()
                 .frame(width: width, height: height)
         }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
+            .background(.clear)
     }
 }
 

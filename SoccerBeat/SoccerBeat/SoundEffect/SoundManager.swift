@@ -14,7 +14,7 @@ class SoundManager: ObservableObject {
     var cardBackPlayer: AVAudioPlayer?
     var photoSelectPlayer: AVAudioPlayer?
     
-    init(){
+    init() {
         setupPlayer()
     }
     

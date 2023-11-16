@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		681297392AE64432000CC957 /* PhraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681297382AE64432000CC957 /* PhraseView.swift */; };
 		6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812973A2AE648E0000CC957 /* SummaryComponent.swift */; };
+		681887EB2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 681887EA2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf */; };
+		681887EC2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 681887EA2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf */; };
 		6820884C2AF11EB200F51A3E /* PrecountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6820884B2AF11EB200F51A3E /* PrecountView.swift */; };
 		682D64832AFD1B6B00D7F07B /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64822AFD1B6B00D7F07B /* ProfileModel.swift */; };
 		682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64842AFD1BA000D7F07B /* ProfileImage.swift */; };
@@ -37,7 +39,6 @@
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
 		BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6322AE586AA009035C9 /* SprintStatusView.swift */; };
 		BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
-		BE22D63B2AE586CA009035C9 /* HeartRateZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */; };
 		BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
@@ -128,6 +129,7 @@
 /* Begin PBXFileReference section */
 		681297382AE64432000CC957 /* PhraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseView.swift; sourceTree = "<group>"; };
 		6812973A2AE648E0000CC957 /* SummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryComponent.swift; sourceTree = "<group>"; };
+		681887EA2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		6820884B2AF11EB200F51A3E /* PrecountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecountView.swift; sourceTree = "<group>"; };
 		682D64822AFD1B6B00D7F07B /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		682D64842AFD1BA000D7F07B /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
@@ -155,7 +157,6 @@
 		BE22D6302AE586AA009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
 		BE22D6322AE586AA009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
 		BE22D6342AE586AA009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
-		BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateZone.swift; sourceTree = "<group>"; };
 		BE4069972AF0E84800FA3030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE4069982AF0E8AC00FA3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
@@ -223,6 +224,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		681887F02B0374D400580DB9 /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */,
+				681297382AE64432000CC957 /* PhraseView.swift */,
+				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
+			);
+			path = Summary;
+			sourceTree = "<group>";
+		};
 		682D64812AFD1B5700D7F07B /* Photos */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,6 +316,8 @@
 		BE22D62F2AE586AA009035C9 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
+				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
+				68B0732C2AF11847004C723F /* AlertView.swift */,
 				BE22D6302AE586AA009035C9 /* GameProgressView.swift */,
 				BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */,
 				BE22D6322AE586AA009035C9 /* SprintStatusView.swift */,
@@ -324,7 +337,6 @@
 		BE22D6392AE586CA009035C9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */,
 				BE4069962AF0E84300FA3030 /* Phrase.json */,
 				BE40699B2AF0EB7700FA3030 /* Phrase.swift */,
 			);
@@ -354,14 +366,9 @@
 		BEB666BE2AE4E13E0090195A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BE22D62F2AE586AA009035C9 /* Progress */,
-				68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */,
-				681297382AE64432000CC957 /* PhraseView.swift */,
-				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
 				BEB666BF2AE4E14B0090195A /* StartPauseControll */,
-				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
-				68B0732C2AF11847004C723F /* AlertView.swift */,
-				6820884B2AF11EB200F51A3E /* PrecountView.swift */,
+				BE22D62F2AE586AA009035C9 /* Progress */,
+				681887F02B0374D400580DB9 /* Summary */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -369,6 +376,7 @@
 		BEB666BF2AE4E14B0090195A /* StartPauseControll */ = {
 			isa = PBXGroup;
 			children = (
+				6820884B2AF11EB200F51A3E /* PrecountView.swift */,
 				BEB666C12AE4E16D0090195A /* StartView.swift */,
 				BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */,
 				BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */,
@@ -477,6 +485,7 @@
 				BE4069C62AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf */,
 				BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */,
 				BED269752AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf */,
+				681887EA2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -569,6 +578,7 @@
 				FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BED269762AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
+				681887EB2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				BE4069D72AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */,
@@ -593,6 +603,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				681887EC2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				685D7B5A2AE38D1A00783433 /* .swiftlint.yml in Resources */,
 				BE4069D82AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
 				BE4069E52AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
@@ -699,7 +710,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE0639DA2AE66D93008D1D4E /* SessionPagingView.swift in Sources */,
-				BE22D63B2AE586CA009035C9 /* HeartRateZone.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */,
 				BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */,
@@ -870,7 +880,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -909,7 +919,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -950,7 +960,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
@@ -989,7 +999,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;

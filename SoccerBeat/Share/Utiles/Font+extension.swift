@@ -39,10 +39,13 @@ extension Font {
     
     // MARK: - Game Progress
     
+    public static let zoneCapsule = Font.sfCompactText(size: 12, weight: .semiboldItalic)
     public static let beatPerMinute = Font.sfProText(size: 36, weight: .heavyItalic)
     public static let bpmUnit = Font.sfProText(size: 18, weight: .heavyItalic)
     public static let distanceTimeNumber = Font.sfCompactText(size: 18, weight: .semiboldItalic)
+    public static let scaleText = Font.sfCompactText(size: 12, weight: .semiboldItalic)
     public static let distanceTimeText = Font.sfCompactText(size: 12)
+    public static let sprintText = Font.sfProText(size: 14, weight: .semiboldItalic)
     public static let speedStop = Font.sfCompactText(size: 12, weight: .lightItalic)
     public static let playTimeText = Font.sfProText(size: 12, weight: .regularItalic)
     public static let playTimeNumber = Font.sfProText(size: 44, weight: .blackItalic)
@@ -129,6 +132,7 @@ private enum SFProDisplay: String {
     case heavyItalic
     case semiboldItalic
     case regularItalic
+
     
     var capitalized: String {
         self.rawValue.capitalized
