@@ -28,10 +28,9 @@ struct DistanceChart: View {
                 let workout = workouts[index]
                 
                 BarMark(
-                    x: .value("Day", workout.formattedDate, unit: .day),
+                    x: .value("Order", index),
                     yStart: .value("Distance", 0.01),
-                    yEnd: .value("Distance", workout.distance),
-                    width: .ratio(0.5)
+                    yEnd: .value("Distance", workout.distance)
                 )
                 .foregroundStyle(isMax(workout) ? .distanceMax 
                                  : (isMin(workout) ? .distanceMin : .chartDefault))
@@ -42,6 +41,10 @@ struct DistanceChart: View {
                         Text(workout.distance.rounded())
                             .font(.maxHighlight)
                     }
+                }
+                .annotation(position: .bottom, alignment: .center) {
+                    Text(workout.monthDay)
+                        .font(.system(size: 12))
                 }
             }
         }

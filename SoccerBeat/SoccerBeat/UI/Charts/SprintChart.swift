@@ -28,10 +28,9 @@ struct SprintChart: View {
                 let workout = workouts[index]
                 
                 BarMark(
-                    x: .value("Day", workout.formattedDate, unit: .day),
+                    x: .value("Order", index),
                     yStart: .value("Sprint", 0),
-                    yEnd: .value("Sprint", workout.sprint),
-                    width: .ratio(0.5)
+                    yEnd: .value("Sprint", workout.sprint)
                 )
                 .foregroundStyle(isMax(workout) ? .sprintMax
                                  : (isMin(workout) ? .sprintMin : .chartDefault))
@@ -42,6 +41,10 @@ struct SprintChart: View {
                         Text(workout.sprint, format: .number)
                             .font(.maxHighlight)
                     }
+                }
+                .annotation(position: .bottom, alignment: .center) {
+                    Text(workout.monthDay)
+                        .font(.system(size: 12))
                 }
             }
         }
