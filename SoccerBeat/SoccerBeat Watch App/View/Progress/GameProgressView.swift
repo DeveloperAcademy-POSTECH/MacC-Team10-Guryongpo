@@ -37,13 +37,20 @@ struct GameProgressView: View {
                             .font(.distanceTimeText)
                             .foregroundStyle(.ongoingText)
                         
-                        let distanceText = String(Measurement(value: workoutManager.distance,
-                                                              unit: UnitLength.meters)
-                            .formatted(.measurement(width: .abbreviated, usage: .road)))
-                        
-                        Text(workoutManager.isDistanceActive ? distanceText : "--'--")
-                            .font(.distanceTimeNumber)
-                            .foregroundStyle(.ongoingNumber)
+                        if workoutManager.isDistanceActive {
+                            HStack(alignment: .bottom) {
+                                Text(String((Double(Int(workoutManager.distance/1000 * 100 ))) / 100))
+                                    .font(.distanceTimeNumber)
+                                    .foregroundStyle(.ongoingNumber)
+                                Text("KM")
+                                    .font(.scaleText)
+                                    .foregroundStyle(.ongoingNumber)
+                            }
+                        } else {
+                            Text("--'--")
+                                .font(.distanceTimeNumber)
+                                .foregroundStyle(.ongoingNumber)
+                        }
                     }
                     .frame(minWidth: 60, alignment: .trailing)
                     
@@ -55,12 +62,20 @@ struct GameProgressView: View {
                             .font(.distanceTimeText)
                             .foregroundStyle(.ongoingText)
                         
-                        Text("\(workoutManager.sprint) TIMES")
-                            .font(.distanceTimeNumber)
-                            .foregroundStyle(.ongoingNumber)
+                        HStack(alignment: .bottom) {
+                            Spacer()
+                            Text("\(workoutManager.sprint)")
+                                .font(.distanceTimeNumber)
+                                .foregroundStyle(.ongoingNumber)
+                            Text("TIMES")
+                                .font(.scaleText)
+                                .foregroundStyle(.ongoingNumber)
+                        }
                         
                     }
                 }
+                // Sprint Gauge bar
+                SprintView()
             }
             .padding(.horizontal)
             .fullScreenCover(isPresented: $workoutManager.isInZone5For2Min) {

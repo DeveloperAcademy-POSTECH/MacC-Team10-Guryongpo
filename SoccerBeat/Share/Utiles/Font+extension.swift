@@ -20,6 +20,11 @@ import SwiftUI
  - SPProText-RegularItalic
  - SFProText-SemiboldItalic
  
+ Family: SF Pro Display
+ - SFProDisplay-HeavyItalic
+ - SFProDisplay-SemiboldItalic
+ - SFProDisplay-RegularItalic
+ 
  Family: Noto Sans
  - NotoSans-Regular
  - NotoSans-Black
@@ -35,10 +40,13 @@ extension Font {
     
     // MARK: - Game Progress
     
+    public static let zoneCapsule = Font.sfCompactText(size: 12, weight: .semiboldItalic)
     public static let beatPerMinute = Font.sfProText(size: 36, weight: .heavyItalic)
     public static let bpmUnit = Font.sfProText(size: 18, weight: .heavyItalic)
     public static let distanceTimeNumber = Font.sfCompactText(size: 18, weight: .semiboldItalic)
+    public static let scaleText = Font.sfCompactText(size: 12, weight: .semiboldItalic)
     public static let distanceTimeText = Font.sfCompactText(size: 12)
+    public static let sprintText = Font.sfProText(size: 14, weight: .semiboldItalic)
     public static let speedStop = Font.sfCompactText(size: 12, weight: .lightItalic)
     public static let playTimeText = Font.sfProText(size: 12, weight: .regularItalic)
     public static let playTimeNumber = Font.sfProText(size: 44, weight: .blackItalic)
@@ -60,9 +68,11 @@ extension Font {
     public static let matchTotalTitle = Font.sfProText(size: 36, weight: .heavyItalic)
     public static let matchTotalSectionHeader = Font.sfProText(size: 14, weight: .lightItalic)
     
-    // MARK: - ShareInstagramView
+    // MARK: - ShareView
     
-    public static let shareInstagramTitle = Font.sfProText(size: 36, weight: .heavyItalic)
+    public static let shareViewTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
+    public static let shareViewSubTitle = Font.sfProText(size: 24, weight: .regularItalic)
+    public static let shareViewHashTag = Font.notoSans(size: 14, weight: .regular)
     
     // MARK: - MyCardView
     
@@ -89,6 +99,11 @@ fileprivate extension Font {
     }
     
     static func sfProText(size fontSize: CGFloat, weight: SFProText = .blackItalic) -> Font {
+        Font.custom("\(SFProText.fontName)-\(weight.capitalized)",
+                               size: fontSize)
+    }
+    
+    static func sfProDisplay(size fontSize: CGFloat, weight: SFProDisplay = .heavyItalic) -> Font {
         Font.custom("\(SFProText.fontName)-\(weight.capitalized)",
                                size: fontSize)
     }
@@ -120,6 +135,18 @@ private enum SFProText: String {
     case lightItalic
     case regularItalic
     case semiboldItalic
+    
+    var capitalized: String {
+        self.rawValue.capitalized
+    }
+}
+
+private enum SFProDisplay: String {
+    static let fontName = String(describing: Self.self)
+    
+    case heavyItalic
+    case semiboldItalic
+    case regularItalic
     
     var capitalized: String {
         self.rawValue.capitalized

@@ -53,6 +53,6 @@ extension View {
 }
 
 #Preview {
-    Text("Hello Wolrd")
+    Text("Hello World")
         .viewBorder(color: .white, radius: 0.15, outline: true)
 }

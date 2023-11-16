@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		681297392AE64432000CC957 /* PhraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681297382AE64432000CC957 /* PhraseView.swift */; };
 		6812973B2AE648E0000CC957 /* SummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812973A2AE648E0000CC957 /* SummaryComponent.swift */; };
+		681887EB2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 681887EA2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf */; };
+		681887EC2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 681887EA2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf */; };
 		6820884C2AF11EB200F51A3E /* PrecountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6820884B2AF11EB200F51A3E /* PrecountView.swift */; };
 		682D64832AFD1B6B00D7F07B /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64822AFD1B6B00D7F07B /* ProfileModel.swift */; };
 		682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64842AFD1BA000D7F07B /* ProfileImage.swift */; };
@@ -40,7 +42,6 @@
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
 		BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6322AE586AA009035C9 /* SprintStatusView.swift */; };
 		BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
-		BE22D63B2AE586CA009035C9 /* HeartRateZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */; };
 		BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
@@ -100,7 +101,11 @@
 		D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4F1892AF248CE006C6B8A /* HealthInteractor.swift */; };
 		D3D4F18D2AF26662006C6B8A /* WorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */; };
 		D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E874D32AEE3F2A005DB7C5 /* AppState.swift */; };
-		FBA3DA622B00E6EF0025AD7B /* ShareInstagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA3DA612B00E6EF0025AD7B /* ShareInstagramView.swift */; };
+		FBA3DA622B00E6EF0025AD7B /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA3DA612B00E6EF0025AD7B /* ShareView.swift */; };
+		FBA3DA812B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */; };
+		FBA3DA822B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */; };
+		FBA3DA872B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA862B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf */; };
+		FBA3DA882B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA862B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf */; };
 		FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
@@ -134,6 +139,7 @@
 /* Begin PBXFileReference section */
 		681297382AE64432000CC957 /* PhraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseView.swift; sourceTree = "<group>"; };
 		6812973A2AE648E0000CC957 /* SummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryComponent.swift; sourceTree = "<group>"; };
+		681887EA2B03602000580DB9 /* SF-Pro-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		6820884B2AF11EB200F51A3E /* PrecountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecountView.swift; sourceTree = "<group>"; };
 		682D64822AFD1B6B00D7F07B /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		682D64842AFD1BA000D7F07B /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
@@ -162,7 +168,6 @@
 		BE22D6302AE586AA009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
 		BE22D6322AE586AA009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
 		BE22D6342AE586AA009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
-		BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateZone.swift; sourceTree = "<group>"; };
 		BE4069972AF0E84800FA3030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE4069982AF0E8AC00FA3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
@@ -207,7 +212,9 @@
 		D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutData.swift; sourceTree = "<group>"; };
 		D3D7D1262AF23CA000B89196 /* SoccerBeat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoccerBeat.entitlements; sourceTree = "<group>"; };
 		D3E874D32AEE3F2A005DB7C5 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		FBA3DA612B00E6EF0025AD7B /* ShareInstagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInstagramView.swift; sourceTree = "<group>"; };
+		FBA3DA612B00E6EF0025AD7B /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-HeavyItalic.otf"; sourceTree = "<group>"; };
+		FBA3DA862B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-RegularItalic.otf"; sourceTree = "<group>"; };
 		FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardView.swift; sourceTree = "<group>"; };
 		FBCED9252AE3DF5900C57BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBCED9262AE3E5EF00C57BF9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
@@ -234,6 +241,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		681887F02B0374D400580DB9 /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */,
+				681297382AE64432000CC957 /* PhraseView.swift */,
+				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
+			);
+			path = Summary;
+			sourceTree = "<group>";
+		};
 		682D64812AFD1B5700D7F07B /* Photos */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,7 +321,7 @@
 				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
 				BE4069E02AF2641800FA3030 /* MatchTotalView.swift */,
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
-				FBA3DA612B00E6EF0025AD7B /* ShareInstagramView.swift */,
+				FBA3DA612B00E6EF0025AD7B /* ShareView.swift */,
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
 				685D7B642AE529E800783433 /* AnalyticsView.swift */,
 				6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */,
@@ -316,6 +333,8 @@
 		BE22D62F2AE586AA009035C9 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
+				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
+				68B0732C2AF11847004C723F /* AlertView.swift */,
 				BE22D6302AE586AA009035C9 /* GameProgressView.swift */,
 				BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */,
 				BE22D6322AE586AA009035C9 /* SprintStatusView.swift */,
@@ -336,7 +355,6 @@
 		BE22D6392AE586CA009035C9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BE22D63A2AE586CA009035C9 /* HeartRateZone.swift */,
 				BE4069962AF0E84300FA3030 /* Phrase.json */,
 				BE40699B2AF0EB7700FA3030 /* Phrase.swift */,
 			);
@@ -379,14 +397,9 @@
 		BEB666BE2AE4E13E0090195A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BE22D62F2AE586AA009035C9 /* Progress */,
-				68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */,
-				681297382AE64432000CC957 /* PhraseView.swift */,
-				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
 				BEB666BF2AE4E14B0090195A /* StartPauseControll */,
-				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
-				68B0732C2AF11847004C723F /* AlertView.swift */,
-				6820884B2AF11EB200F51A3E /* PrecountView.swift */,
+				BE22D62F2AE586AA009035C9 /* Progress */,
+				681887F02B0374D400580DB9 /* Summary */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -394,6 +407,7 @@
 		BEB666BF2AE4E14B0090195A /* StartPauseControll */ = {
 			isa = PBXGroup;
 			children = (
+				6820884B2AF11EB200F51A3E /* PrecountView.swift */,
 				BEB666C12AE4E16D0090195A /* StartView.swift */,
 				BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */,
 				BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */,
@@ -488,6 +502,8 @@
 		FBCED9212AE3DAC700C57BF9 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */,
+				FBA3DA862B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf */,
 				FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */,
 				BE4069BD2AF1D22B00FA3030 /* NotoSans-Black.ttf */,
 				BE4069D92AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf */,
@@ -598,6 +614,7 @@
 				BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */,
 				BE4069BE2AF1D22B00FA3030 /* NotoSans-Black.ttf in Resources */,
+				FBA3DA872B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf in Resources */,
 				BE4069CF2AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
 				D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */,
 				BE4069D12AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
@@ -605,6 +622,7 @@
 				BE4069CD2AF1F80D00FA3030 /* SF-Compact-Text-LightItalic.otf in Resources */,
 				BE4069C92AF1F80D00FA3030 /* SF-Compact-Text-Regular.otf in Resources */,
 				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
+				FBA3DA812B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				682D64AB2AFE80F200D7F07B /* FifaBackground.mp3 in Resources */,
 				BE4069CB2AF1F80D00FA3030 /* SF-Compact-Text-Medium.otf in Resources */,
 				BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */,
@@ -624,9 +642,11 @@
 				BE4069D02AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
 				D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */,
 				BE4069D22AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
+				FBA3DA882B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf in Resources */,
 				BED269772AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				BE4069C82AF1F80D00FA3030 /* SF-Pro-Text-BlackItalic.otf in Resources */,
 				BE4069CE2AF1F80D00FA3030 /* SF-Compact-Text-LightItalic.otf in Resources */,
+				FBA3DA822B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				BE4069CA2AF1F80D00FA3030 /* SF-Compact-Text-Regular.otf in Resources */,
 				D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */,
 				BE4069CC2AF1F80D00FA3030 /* SF-Compact-Text-Medium.otf in Resources */,
@@ -706,6 +726,7 @@
 				682D64892AFDBF8C00D7F07B /* CapsuleView.swift in Sources */,
 				BEDE523E2B03BFF800BBFD94 /* Analyzable.swift in Sources */,
 				FBA3DA622B00E6EF0025AD7B /* ShareInstagramView.swift in Sources */,
+				FBA3DA622B00E6EF0025AD7B /* ShareView.swift in Sources */,
 				D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */,
 				682D64A82AFE77D500D7F07B /* SoundManager.swift in Sources */,
 				682D64872AFD1D8500D7F07B /* Profile.swift in Sources */,
@@ -727,7 +748,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE0639DA2AE66D93008D1D4E /* SessionPagingView.swift in Sources */,
-				BE22D63B2AE586CA009035C9 /* HeartRateZone.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */,
 				BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */,
@@ -900,7 +920,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -939,7 +959,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SoccerBeat-Watch-App-Info.plist";
@@ -980,7 +1000,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;
@@ -1019,7 +1039,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoccerBeat/Preview Content\"";
-				DEVELOPMENT_TEAM = 8S86367NT3;
+				DEVELOPMENT_TEAM = CA6U2D2V45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoccerBeat/Info.plist;

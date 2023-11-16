@@ -60,8 +60,8 @@ struct BarProgressStyle: ProgressViewStyle {
                                                                 bottomTrailing: isFull ? cornerRadius : .zero,
                                                                 topTrailing: isFull ? cornerRadius : .zero)
                         UnevenRoundedRectangle(cornerRadii: cornerRaddi)
-                        .fill(accentGradient)
-                        .frame(width: geometry.size.width * progress)
+                            .fill(accentGradient)
+                            .frame(width: geometry.size.width * progress)
                     }
                 }
                 .overlay {

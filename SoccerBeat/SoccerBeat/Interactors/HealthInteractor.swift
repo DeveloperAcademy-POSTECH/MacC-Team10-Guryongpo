@@ -86,6 +86,7 @@ class HealthInteractor: ObservableObject {
                 
                 let custom = allMetadata[dataID]
                 
+                
                 var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
                 userWorkouts.append(WorkoutData(dataID: dataID,
                                                 date: dateFormatter.string(from: allWorkout.startDate),
@@ -93,6 +94,7 @@ class HealthInteractor: ObservableObject {
                                                 distance: custom["Distance"] as! Double,
                                                 sprint: custom["SprintCount"] as! Int,
                                                 velocity: custom["MaxSpeed"] as! Double,
+                                                acceleration: custom["Acceleration"] as! Double,
                                                 heartRate: ["max": custom["MaxHeartRate"] as! Int,
                                                             "min": custom["MinHeartRate"] as! Int],
                                                 route: routes,
