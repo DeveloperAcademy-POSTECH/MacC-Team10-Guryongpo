@@ -16,11 +16,11 @@ enum ActivityEnum: CaseIterable {
 
 struct AnalyticsView: View {
     @EnvironmentObject var healthInteracter: HealthInteractor
+    @State private var recent9Games = [WorkoutData]()
+    @State private var recent4Games = [WorkoutData]()
     
     var body: some View {
-        let recent9Games = healthInteracter.readRecentMatches(for: 9)
-        let recent4Games = healthInteracter.readRecentMatches(for: 4)
-        return VStack(spacing: 20) {
+        VStack(spacing: 20) {
             HStack {
                 Text("최근 경기 분석")
                 Spacer()
@@ -48,6 +48,12 @@ struct AnalyticsView: View {
             }
         }
         .padding(.horizontal)
+        .onReceive(healthInteracter.fetchSuccess) {
+            Task {
+                recent9Games = healthInteracter.readRecentMatches(for: 9)
+                recent4Games = healthInteracter.readRecentMatches(for: 4)
+            }
+        }
     }
 }
 
