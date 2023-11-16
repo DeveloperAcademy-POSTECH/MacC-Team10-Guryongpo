@@ -29,7 +29,7 @@ struct SpeedChart: View {
                 
                 BarMark(
                     x: .value("Order", index),
-                    yStart: .value("Velocity", 0.1),
+                    yStart: .value("Velocity", 0.0),
                     yEnd: .value("Velocity", workout.velocity)
                 )
                 .foregroundStyle(isMax(workout) ? .speedMax 

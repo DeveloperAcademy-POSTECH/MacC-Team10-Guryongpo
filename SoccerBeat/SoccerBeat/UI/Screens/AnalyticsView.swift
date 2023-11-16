@@ -58,102 +58,102 @@ struct AnalyticsView: View {
 }
 
 struct ActivityComponent: View {
-    let userWorkouts: [WorkoutData]?
+    let userWorkouts: [WorkoutData]
     
     var activityType: ActivityEnum
     
-    private var title: String {
+    private var navigationAssistantTitle: String {
+        let seeTotal = " 전체보기"
         switch activityType {
         case .distance:
-            return "활동량 (MF)"
+            return "뛴 거리" + seeTotal
         case .sprint:
-            return "스프린트 (FW)"
+            return "스프린트" + seeTotal
         case .speed:
-            return "최고 속도 (DF)"
+            return "최고 속도" + seeTotal
         case .heartrate:
-            return "심박수"
+            return "심박수" + seeTotal
         }
     }
     private var value: String {
         switch activityType {
         case .distance:
-            var buffer = "\(userWorkouts?.first?.distance)"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Km"
+            return "\(userWorkouts.last?.distance.rounded(at: 1) ?? "0.0")" + "Km"
         case .sprint:
-            var buffer = "\(userWorkouts?.first?.sprint)"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Times"
+            return "\(userWorkouts.last?.sprint ?? 0)" + "Times"
         case .speed:
-            var buffer = "\(userWorkouts?.first?.velocity)"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Km/h"
+            return "\(userWorkouts.last?.velocity.rounded(at: 1) ?? "0.0")" + "Km/h"
         case .heartrate:
-            var buffer = "\(userWorkouts?.first?.heartRate["max"])"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Bpm"
+            return "\(userWorkouts.last?.maxHeartRate ?? 0)" + "Bpm"
         }
     }
     
-    private var graphImage: String {
+    private var valueColor: Color {
         switch activityType {
         case .distance:
-            return "ActivityGraph"
+            return .navigationSportyDistanceTitle
         case .sprint:
-            return "SprintGraph"
+            return .navigationSportySprintTitle
         case .speed:
-            return "MaxSpeedGraph"
+            return .navigationSportySpeedTitle
         case .heartrate:
-            return "HeartrateGraph"
+            return .navigationSportyBPMTitle
         }
     }
     
-    private var valueColor: LinearGradient {
+    @ViewBuilder
+    private var overview: some View {
         switch activityType {
         case .distance:
-            return .zone2Bpm
+            DistanceChartOverview(workouts: userWorkouts)
         case .sprint:
-            return .zone3Bpm
+            SprintChartOverview(workouts: userWorkouts)
         case .speed:
-            return .zone1Bpm
+            SpeedChartOverview(workouts: userWorkouts)
         case .heartrate:
-            return .zone4Bpm
+            BPMChartOverview(workouts: userWorkouts)
+                .offset(y: 20)
         }
     }
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image("Running")
-                        .resizable()
-                        .frame(width: 22, height: 22)
-                    Text(title)
-                        .foregroundStyle(.white)
-                }
-                Text(value)
-                    .font(.custom("SFProText-HeavyItalic", size: 32))
-                    .foregroundStyle(valueColor)
+            HStack(alignment: .bottom) {
+                overview
+                    .frame(width: 50, height: 75)
+                    .padding(.leading, 8)
+                
+                Image("Running")
+                    .resizable()
+                    .frame(width: 22, height: 22)
             }
+            
             Spacer()
-            Image(graphImage)
+            
+            VStack(alignment: .leading) {
+                Text(value)
+                    .font(Font.sfProDisplay(size: 32,
+                                            weight: .heavyItalic))
+                Text(navigationAssistantTitle)
+                    .font(Font.notoSans(size: 12, weight: .regular))
+            }
+            
+//            Spacer(minLength: 10)
+            
+            Image(systemName: "chevron.right")
+                .resizable()
+                .foregroundStyle(valueColor)
+                .frame(width: 14, height: 20)
         }
-        .padding()
-        .padding(.horizontal)
+        .padding(.vertical)
+        .padding(.horizontal, 18)
         .overlay {
             LightRectangleView()
         }
     }
 }
-//
-//#Preview {
-//    AnalyticsView()
-//}
+
+#Preview {
+    ActivityComponent(userWorkouts: fakeWorkoutData,
+                      activityType: .distance)
+}

@@ -29,7 +29,7 @@ struct DistanceChart: View {
                 
                 BarMark(
                     x: .value("Order", index),
-                    yStart: .value("Distance", 0.01),
+                    yStart: .value("Distance", 0.0),
                     yEnd: .value("Distance", workout.distance)
                 )
                 .foregroundStyle(isMax(workout) ? .distanceMax 
