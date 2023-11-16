@@ -9,7 +9,7 @@ import SwiftUI
 import HealthKit
 
 struct ContentView: View {
-    @ObservedObject var healthInteractor = HealthInteractor.shared
+    @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
     @State var userWorkouts: [WorkoutData]?
     @State var isFlipped: Bool = false
@@ -19,11 +19,7 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 ZStack {
-                    Image("BackgroundPattern")
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 0)
+                    BackgroundImageView()
                     
                     VStack {
                         
@@ -72,8 +68,8 @@ struct ContentView: View {
                         Spacer()
                             .frame(height: 60)
                         
-                        AnalyticsView(userWorkouts: $userWorkouts)
-                        
+                        AnalyticsView()
+                            .environmentObject(healthInteractor)
                         Spacer()
                             .frame(height: 60)
                         

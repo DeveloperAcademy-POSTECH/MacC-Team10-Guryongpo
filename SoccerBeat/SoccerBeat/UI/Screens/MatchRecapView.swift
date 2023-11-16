@@ -7,36 +7,10 @@
 
 import SwiftUI
 
-let fakeWorkoutData: [WorkoutData] = [
-    WorkoutData(dataID: 1, date: "1999-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, acceleration: 3.8, heartRate: ["max": 83, "min": 81], route: [.init(latitude: 37.58647414212885, longitude: 126.9748537678651)], center: [0, 0]),
-    WorkoutData(dataID: 2, date: "2000-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, acceleration: 3.8, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 3, date: "2359-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, acceleration: 3.8, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 4, date: "1569-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, acceleration: 3.8, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 5, date: "2639-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, acceleration: 3.8, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 6, date: "5659-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, acceleration: 3.8, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0]),
-    WorkoutData(dataID: 7, date: "1922-10-28", time: "60:10", distance: 8.5, sprint: 3, velocity: 8.5, acceleration: 3.8, heartRate: ["max": 83, "min": 81], route: [], center: [0, 0])
-]
-
-
-//class MatchItemData: ObservableObject {
-//    @Published var matchitems = [
-//        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
-//        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
-//        MatchDetail(date: "2023.11.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
-//        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
-//        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
-//        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03"),
-//        MatchDetail(date: "2023.11.11", location: "지곡동", time: "94:12", distance: 1.3, velocity: 22, sprint: 3, heatmap: "Heatmap01"),
-//        MatchDetail(date: "2023.10.21", location: "산본동", time: "92:15", distance: 0.9, velocity: 21, sprint: 2, heatmap: "Heatmap02"),
-//        MatchDetail(date: "2023.9.8", location: "흑석동", time: "101:13", distance: 1.5, velocity: 25, sprint: 4, heatmap: "Heatmap03")
-//    ]
-//}
-
 struct MatchRecapView: View {
     
-//    @EnvironmentObject private var healthInteractor: HealthInteractor
+    @EnvironmentObject var healthInteractor: HealthInteractor
     @Binding var userWorkouts: [WorkoutData]?
-    @ObservedObject var healthInteractor = HealthInteractor.shared
     
     var body: some View {
         VStack(spacing: 10) {
@@ -141,10 +115,7 @@ struct MatchListItemView: View {
     }
 }
 
-//#Preview {
-//    MatchRecapView(userWorkouts: <#Binding<[WorkoutData]?>#>)
-//}
-
 #Preview {
     MatchListItemView(workoutData: fakeWorkoutData[0])
+        .environmentObject(HealthInteractor.shared)
 }

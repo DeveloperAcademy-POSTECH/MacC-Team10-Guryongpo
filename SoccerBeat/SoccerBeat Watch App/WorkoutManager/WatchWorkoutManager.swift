@@ -413,7 +413,9 @@ extension WorkoutManager: CLLocationManagerDelegate {
     }
     
     private func startLocationUpdates() {
-        locationManager.requestWhenInUseAuthorization()
+        if [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(locationManager.authorizationStatus) {
+            locationManager.requestWhenInUseAuthorization()
+        }
         locationManager.startUpdatingLocation()
     }
     

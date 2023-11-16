@@ -28,7 +28,7 @@ class HealthInteractor: ObservableObject {
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-mm-dd"
+        formatter.dateFormat = "yyyy.mm.dd"
         return formatter
     }()
     
@@ -187,5 +187,18 @@ class HealthInteractor: ObservableObject {
             })
         }
         return locations
+    }
+}
+
+extension HealthInteractor {
+    func readRecentMatches(for count: Int) -> [WorkoutData] {
+        guard userWorkouts.count >= count  else { return userWorkouts }
+        let startIndex = userWorkouts.count - count
+        let lastIndex = userWorkouts.count-1
+        var recentMatches = [WorkoutData]()
+        for i in startIndex...lastIndex {
+            recentMatches.append(userWorkouts[i])
+        }
+        return recentMatches
     }
 }

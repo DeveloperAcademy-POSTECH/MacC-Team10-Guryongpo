@@ -72,5 +72,6 @@ extension MatchTotalView {
 }
 
 #Preview {
-        MatchTotalView()
+    MatchTotalView()
+        .environmentObject(HealthInteractor.shared)
 }

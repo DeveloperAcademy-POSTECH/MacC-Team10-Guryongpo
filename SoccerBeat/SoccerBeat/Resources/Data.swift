@@ -16,7 +16,7 @@ struct Series: Identifiable {
     
     /// Average daily values for each weekday.
     /// The `weekday` property is a `Date` that represents a weekday.
-    let values: [(day: Date, values: Int)]
+    let values: [(day: Date, values: Double)]
     
     /// The identifier for the series.
     var id: String { play }
@@ -38,23 +38,57 @@ let SprintDatalast30Days = [
 
 let DistanceDummyData: [Series] = [
     .init(play: "", values: [
-        (day: date(year: 2022, month: 5, day: 2), values: 54),
-        (day: date(year: 2022, month: 5, day: 3), values: 42),
-        (day: date(year: 2022, month: 5, day: 4), values: 88),
-        (day: date(year: 2022, month: 5, day: 5), values: 49),
-        (day: date(year: 2022, month: 5, day: 6), values: 42),
-        (day: date(year: 2022, month: 5, day: 7), values: 125)
+        (day: date(year: 2022, month: 5, day: 2), values: 5),
+        (day: date(year: 2022, month: 5, day: 3), values: 2.1),
+        (day: date(year: 2022, month: 5, day: 4), values: 3.3),
+        (day: date(year: 2022, month: 5, day: 5), values: 1.1),
+        (day: date(year: 2022, month: 5, day: 6), values: 4.3),
+        (day: date(year: 2022, month: 5, day: 7), values: 3.3),
+        (day: date(year: 2022, month: 5, day: 8), values: 1.1),
+        (day: date(year: 2022, month: 5, day: 9), values: 2.3),
+        (day: date(year: 2022, month: 5, day: 10), values: 2.5)
     ])
 ]
 
 let SpeedDummyData: [Series] = [
     .init(play: "", values: [
-        (day: date(year: 2022, month: 5, day: 2), values: 42),
-        (day: date(year: 2022, month: 5, day: 3), values: 54),
-        (day: date(year: 2022, month: 5, day: 4), values: 42),
-        (day: date(year: 2022, month: 5, day: 5), values: 88),
-        (day: date(year: 2022, month: 5, day: 6), values: 39),
-        (day: date(year: 2022, month: 5, day: 7), values: 49)
+        (day: date(year: 2022, month: 5, day: 2), values: 24),
+        (day: date(year: 2022, month: 5, day: 3), values: 18),
+        (day: date(year: 2022, month: 5, day: 4), values: 22),
+        (day: date(year: 2022, month: 5, day: 5), values: 16),
+        (day: date(year: 2022, month: 5, day: 6), values: 15),
+        (day: date(year: 2022, month: 5, day: 7), values: 17),
+        (day: date(year: 2022, month: 5, day: 8), values: 19),
+        (day: date(year: 2022, month: 5, day: 9), values: 21),
+        (day: date(year: 2022, month: 5, day: 10), values: 22)
+    ])
+]
+
+let heartBeatDummyData: [Series] = [
+    .init(play: "", values: [
+        (day: date(year: 2022, month: 5, day: 2), values: 110),
+        (day: date(year: 2022, month: 5, day: 3), values: 140),
+        (day: date(year: 2022, month: 5, day: 4), values: 166),
+        (day: date(year: 2022, month: 5, day: 5), values: 169),
+        (day: date(year: 2022, month: 5, day: 6), values: 185),
+        (day: date(year: 2022, month: 5, day: 7), values: 171),
+        (day: date(year: 2022, month: 5, day: 8), values: 194),
+        (day: date(year: 2022, month: 5, day: 9), values: 137),
+        (day: date(year: 2022, month: 5, day: 10), values: 145)
+    ])
+]
+
+let sprintCountDummyData: [Series] = [
+    .init(play: "", values: [
+        (day: date(year: 2022, month: 5, day: 2), values: 4),
+        (day: date(year: 2022, month: 5, day: 3), values: 6),
+        (day: date(year: 2022, month: 5, day: 4), values: 6),
+        (day: date(year: 2022, month: 5, day: 5), values: 9),
+        (day: date(year: 2022, month: 5, day: 6), values: 5),
+        (day: date(year: 2022, month: 5, day: 7), values: 1),
+        (day: date(year: 2022, month: 5, day: 8), values: 8),
+        (day: date(year: 2022, month: 5, day: 9), values: 3),
+        (day: date(year: 2022, month: 5, day: 10), values: 7)
     ])
 ]
 
