@@ -192,6 +192,7 @@ class HealthInteractor: ObservableObject {
 
 extension HealthInteractor {
     func readRecentMatches(for count: Int) -> [WorkoutData] {
+        guard !userWorkouts.isEmpty else { return [] }
         guard userWorkouts.count >= count  else { return userWorkouts }
         let startIndex = userWorkouts.count - count
         let lastIndex = userWorkouts.count-1

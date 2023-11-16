@@ -28,10 +28,9 @@ struct BPMChart: View {
                 let workout = workouts[index]
                 
                 BarMark(
-                    x: .value("Day", workout.formattedDate, unit: .day),
+                    x: .value("Order", index),
                     yStart: .value("HeartRate", workout.minHeartRate),
-                    yEnd: .value("HeartRate", workout.maxHeartRate),
-                    width: .ratio(0.5)
+                    yEnd: .value("HeartRate", workout.maxHeartRate)
                 )
                 .foregroundStyle(isMax(workout) ? .bpmMax
                                  : (isMin(workout) ? .bpmMin : .chartDefault))
@@ -42,6 +41,10 @@ struct BPMChart: View {
                         Text(workout.maxHeartRate, format: .number)
                             .font(.maxHighlight)
                     }
+                }
+                .annotation(position: .bottom, alignment: .center) {
+                    Text(workout.monthDay)
+                        .font(.system(size: 12))
                 }
             }
         }
