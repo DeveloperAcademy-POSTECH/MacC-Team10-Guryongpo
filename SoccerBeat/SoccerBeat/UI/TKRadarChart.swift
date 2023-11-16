@@ -76,7 +76,7 @@ public struct TKRadarChartConfig {
                                   borderWidth: 4,
                                   lineWidth: 1,
                                   showPoint: false,
-                                  showBorder: false,
+                                  showBorder: true,
                                   showBgLine: true,
                                   showBgBorder: true,
                                   fillArea: true,
@@ -247,17 +247,33 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
             for index in 0...numOfRow {
                 let i = CGFloat(index)
                 if index == 0 {
-                    let x = centerPoint.x
-                    let y = centerPoint.y -  innserRadius
+                    // Set hexagon starting point.
+                    let x = centerPoint.x + innserRadius * sin(3.0 * Double.pi / 180)
+                    let y = centerPoint.y - innserRadius * cos(3.0 * Double.pi / 180)
                     path.move(to: CGPoint(x: x, y: y))
                 } else if index == numOfRow {
-                    let x = centerPoint.x
-                    let y = centerPoint.y - innserRadius
-                    path.addLine(to: CGPoint(x: x, y: y))
+                    // Set hexagon ending point.
+                    let x = centerPoint.x - innserRadius * sin(i * perAngle) * (1 - 0.05874 * 1.5)
+                    let y = centerPoint.y - innserRadius * cos(i * perAngle) * (1 - 0.05874 * 1.5)
+                    path.addArc(withCenter: CGPoint(x: x, y: y),
+                                radius: innserRadius * 0.05874 * sqrt(3.0),
+                                startAngle: i * -perAngle - 120.0 * Double.pi / 180,
+                                endAngle: i * -perAngle - 60.0 * Double.pi / 180,
+                                clockwise: true)
                 }else {
-                    let x = centerPoint.x - innserRadius * sin(i * perAngle)
-                    let y = centerPoint.y - innserRadius * cos(i * perAngle)
+                    // Draw straight lines.
+                    var x = centerPoint.x - innserRadius * sin(i * perAngle + 3.0 * Double.pi / 180)
+                    var y = centerPoint.y - innserRadius * cos(i * perAngle + 3.0 * Double.pi / 180)
                     path.addLine(to: CGPoint(x: x, y: y))
+                    
+                    // Draw curve lines.
+                    x = centerPoint.x - innserRadius * sin(i * perAngle) * (1 - 0.05874 * 1.5)
+                    y = centerPoint.y - innserRadius * cos(i * perAngle) * (1 - 0.05874 * 1.5)
+                    path.addArc(withCenter: CGPoint(x: x, y: y),
+                                radius: innserRadius * 0.05874 * sqrt(3.0),
+                                startAngle: i * -perAngle - 120.0 * Double.pi / 180,
+                                endAngle: i * -perAngle - 60.0 * Double.pi / 180,
+                                clockwise: true)
                 }
             }
             
@@ -323,7 +339,7 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                 fillColor.setFill()
                 borderColor.setStroke()
                 
-                path.lineWidth = 2
+                path.lineWidth = 8
                 if configuration.fillArea {
                     path.fill()
                 }
