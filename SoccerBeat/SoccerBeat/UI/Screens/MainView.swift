@@ -35,6 +35,7 @@ struct MainView: View {
                             Spacer()
                             
                             NavigationLink {
+                                ProfileView()
                             } label: {
                                 Image(systemName: "person.circle")
                                     .font(.title)
@@ -42,6 +43,7 @@ struct MainView: View {
                         }.padding()
                         
                         NavigationLink {
+                            MatchDetailView(workoutData: fakeWorkoutData[0])
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -63,7 +65,9 @@ struct MainView: View {
                         }
                         
                         NavigationLink {
-                            MatchRecapView(userWorkouts: $userWorkouts)
+                            ScrollView {
+                                MatchRecapView(userWorkouts: .constant(fakeWorkoutData))
+                            }
                         } label: {
                             HStack {
                                 Spacer()
@@ -79,11 +83,19 @@ struct MainView: View {
                             }.padding(.horizontal)
                         }
                         
+                        Spacer()
+                            .frame(height: 80)
+                        
+                        HStack {
+                            Text("# 경기당 기록을 비교합니다.")
+                                .floatingCapsuleStyle()
+                                .padding(.horizontal)
+                            
+                            Spacer()
+                        }
+                        
                         AnalyticsView()
                             .environmentObject(healthInteractor)
-                        Spacer()
-                            .frame(height: 60)
-                        
                     }
                 }
             }
