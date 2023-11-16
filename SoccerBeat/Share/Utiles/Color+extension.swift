@@ -59,12 +59,19 @@ extension ShapeStyle where Self == Color {
     // MARK: - SplitControlsView
     
     static var circleBackground: Self { .init(hex: 0xD9D9D9, alpha: 0.2) }
+        
+    // MARK: - ShareView
+    
+    static var shareViewTitleTint: Self { .init(hex: 0x03FFC3)}
+    static var shareViewSubTitleTint: Self { .init(hex: 0xB4B4B4)}
+    static var shareViewCapsuleStroke: Self { .init(hex: 0x757575, alpha: 0.4) }
     
     // MARK: - SprintView
     
     static var SprintLeftColor: Self { .init(hex: 0x1A5AFF) }
     static var SprintOnRightColor: Self { .init(hex: 0xFF259B) }
     
+
 }
 
 extension ShapeStyle where Self == LinearGradient {
@@ -184,14 +191,7 @@ extension ShapeStyle where Self == LinearGradient {
         return .linearGradient(colors: [start, end],
                                startPoint: .leading, endPoint: .trailing)
     }
-    
-    // MARK: - ShareInstagramView
-    
-    static var shareInstagramTitle: Self {
-        let start = Color(hex: 0x8F8F8F)
-        let end = Color(hex: 0xFFFFFF)
-        return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
-    }
+
     
     // MARK: - GameProgressView
     static var playTimeNumber: Self {

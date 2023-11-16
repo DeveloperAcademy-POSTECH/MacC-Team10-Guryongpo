@@ -8,6 +8,8 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-Pro-Display-RegularItalic.otf</string>
+		<string>SF-Pro-Display-HeavyItalic.otf</string>
 		<string>NotoSansDisplay-BlackItalic.ttf</string>
 		<string>NotoSans-Black.ttf</string>
 		<string>NotoSans-BlackItalic.ttf</string>
