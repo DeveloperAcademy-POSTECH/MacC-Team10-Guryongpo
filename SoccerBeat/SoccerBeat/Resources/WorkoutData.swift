@@ -27,6 +27,8 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var minHeartRate: Int {
         heartRate["min", default: 50]
     }
+    var matchBadge: [Int]
+    
     static let example = Self(dataID: 0,
                               date: "2023.10.15",
                               time: "34:43",
@@ -36,7 +38,8 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               acceleration: 3.0,
                               heartRate: ["max": 190, "min": 70],
                               route: [],
-                              center: [37.58647414212885, 126.9748537678651])
+                              center: [37.58647414212885, 126.9748537678651],
+                              matchBadge: [-1, 2, 0])
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
