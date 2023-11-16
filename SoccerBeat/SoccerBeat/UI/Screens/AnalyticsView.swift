@@ -128,8 +128,6 @@ struct ActivityComponent: View {
                     .frame(width: 22, height: 22)
             }
             
-            Spacer()
-            
             VStack(alignment: .leading) {
                 Text(value)
                     .font(Font.sfProDisplay(size: 32,
@@ -137,8 +135,7 @@ struct ActivityComponent: View {
                 Text(navigationAssistantTitle)
                     .font(Font.notoSans(size: 12, weight: .regular))
             }
-            
-//            Spacer(minLength: 10)
+            .padding(.leading, 32)
             
             Image(systemName: "chevron.right")
                 .resizable()
