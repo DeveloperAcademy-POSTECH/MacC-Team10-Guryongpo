@@ -27,6 +27,10 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var minHeartRate: Int {
         heartRate["min", default: 50]
     }
+    var monthDay: String {
+        Array(date.split(separator: "."))[1...2].joined(separator: ".")
+    }
+    
     static let example = Self(dataID: 0,
                               date: "2023.10.15",
                               time: "34:43",
