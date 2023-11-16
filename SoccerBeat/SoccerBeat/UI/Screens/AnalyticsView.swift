@@ -141,7 +141,6 @@ struct ActivityComponent: View {
             Image(graphImage)
         }
         .padding()
-        .padding(.horizontal)
         .overlay {
             LightRectangleView()
         }

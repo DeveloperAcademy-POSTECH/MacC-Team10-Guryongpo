@@ -315,17 +315,17 @@
 		685D7B712AE53D8400783433 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
+				D3A1F10E2B067E8F00EB2049 /* MainView.swift */,
 				BEDE523F2B04D26000BBFD94 /* BackgroundImageView.swift */,
 				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
 				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
 				BE4069E02AF2641800FA3030 /* MatchTotalView.swift */,
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
 				FBA3DA612B00E6EF0025AD7B /* ShareView.swift */,
-				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
 				685D7B642AE529E800783433 /* AnalyticsView.swift */,
 				6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */,
 				682D64882AFDBF8C00D7F07B /* CapsuleView.swift */,
-				D3A1F10E2B067E8F00EB2049 /* MainView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";

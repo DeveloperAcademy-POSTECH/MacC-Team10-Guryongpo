@@ -40,6 +40,45 @@ struct MainView: View {
                                     .font(.title)
                             }
                         }.padding()
+                        
+                        NavigationLink {
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        let average = [3.0, 2.4, 3.4, 3.2, 2.8, 3.3]
+                                        let recent = [4.1, 3.0, 3.5, 3.8, 3.5, 2.8]
+                                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                                            .scaleEffect(CGSize(width: 0.7, height: 0.7))
+                                            .fixedSize()
+                                            .frame(width: 210, height: 210)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding()
+                            .overlay {
+                                LightRectangleView()
+                            }.padding(.horizontal)
+                        }
+                        
+                        NavigationLink {
+                            MatchRecapView(userWorkouts: $userWorkouts)
+                        } label: {
+                            HStack {
+                                Spacer()
+                                
+                                Image(systemName: "soccerball")
+                                Text("이전 경기")
+                                
+                                Spacer()
+                            }
+                            .padding()
+                            .overlay {
+                                LightRectangleView()
+                            }.padding(.horizontal)
+                        }
+                        
                         AnalyticsView()
                             .environmentObject(healthInteractor)
                         Spacer()
