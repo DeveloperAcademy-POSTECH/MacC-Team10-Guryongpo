@@ -35,7 +35,7 @@ struct PrecountView: View {
                     
                         .opacity(count > 2 ? 0.6 : 0)
                     
-                }.padding()
+                }
                 
             }.onAppear {
                 showingSession = false

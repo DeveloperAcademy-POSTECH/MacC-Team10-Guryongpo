@@ -90,6 +90,10 @@ extension Font {
     public static let maxHighlight = Font.sfProText(size: 12, weight: .semiboldItalic)
     public static let dayUnit = Font.sfProText(size: 14, weight: .lightItalic)
     public static let averageValue = Font.sfProText(size: 18, weight: .heavyItalic)
+    
+    // MARK: - AlertView
+    public static let alertSpeed = Font.notoSans(size: 36, weight: .blackItalic)
+    public static let lastSprint = Font.notoSans(size: 15, weight: .blackItalic)
 }
 
 fileprivate extension Font {
