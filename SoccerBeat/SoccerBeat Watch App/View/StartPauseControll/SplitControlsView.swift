@@ -34,6 +34,9 @@ struct SplitControlsView: View {
     
     var body: some View {
         ZStack {
+                Image("backgroundGlow")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
             HStack {
                 // MARK: - 나눠진 후 왼쪽, pause & resume
                 VStack {

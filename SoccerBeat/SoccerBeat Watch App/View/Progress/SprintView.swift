@@ -15,13 +15,14 @@ struct SprintView: View {
         HStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 15.0)
-                    .foregroundStyle(.gray)
+                    .stroke(lineWidth: /*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                    .foregroundStyle(.white)
                     .frame(height: 21)
                     .frame(maxWidth: .infinity)
                     .overlay {
                         ZStack {
-                            ProgressView(value: workoutManager.speed, total: 22)
-                                .progressViewStyle(GucciBarProgressStyle(accentGradient: workoutManager.isSprint ? .sprintOnGradient : .sprintOffGradient))
+                            ProgressView(value: min(workoutManager.speed, workoutManager.sprintSpeed), total: workoutManager.sprintSpeed)
+                                .progressViewStyle(GucciBarProgressStyle(accentGradient: .sprintOnGradient))
                                 .padding(.horizontal, 2)
                             
                             HStack {
@@ -38,10 +39,9 @@ struct SprintView: View {
                                 }
                             }
                             .padding(.horizontal)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.white)
                         }
                     }
-                    
             }
         }
         .padding(.vertical)
