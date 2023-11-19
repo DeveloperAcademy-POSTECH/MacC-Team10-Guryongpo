@@ -14,6 +14,7 @@ import UIKit
 // radarValue should be [최고 속도, 평균 속도, 평균 가속도, 어질리티, 뛴 거리, 스프린트 횟수].
 // Call ViewControllerContainer with modifier fixedSize(), frame(width, height)
 
+// General Radar Chart Implementation.
 class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChartDelegate, UITableViewDelegate {
     var radarAverageValue: [Double]
     var radarAtypicalValue: [Double]
@@ -108,6 +109,7 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
     }
 }
 
+// Thumbnail Radar Chart Implementation.
 class ThumbnailViewController: UIViewController, TKRadarChartDataSource, TKRadarChartDelegate, UITableViewDelegate {
     var radarAverageValue: [Double]
     var radarAtypicalValue: [Double]

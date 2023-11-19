@@ -113,7 +113,8 @@ struct MatchListItemView: View {
                 Spacer()
             }
             .padding(.vertical, 10)
-        }.frame(height: 150)
+        }
+        .frame(height: 114)
     }
 }
 
