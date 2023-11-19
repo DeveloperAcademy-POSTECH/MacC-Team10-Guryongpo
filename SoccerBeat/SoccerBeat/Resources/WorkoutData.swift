@@ -51,6 +51,19 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     }()
 }
 
+// Average of the user workout data.
+struct WorkoutAverageData: Hashable, Equatable, Identifiable {
+    var id: UUID = UUID()
+    var maxHeartRate: Int // Maximum heart rate during the match.
+    var minHeartRate: Int // Minimum heart rate during the match.
+    var rangeHeartRate: Int // Range of heart rate during the match.
+    var totalDistance: Double // Total distance played during the match.
+    var maxAcceleration: Double // Maximum acceleration during the match.
+    var maxVelocity: Double // Maximum speed during the match.
+    var sprintCount: Int // Number of sprints during the match.
+    var totalMatchTime: Int // Total play time in the match.
+}
+
 extension CLLocationCoordinate2D: Hashable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
