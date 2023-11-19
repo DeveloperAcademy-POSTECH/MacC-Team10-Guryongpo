@@ -8,24 +8,25 @@
 import Foundation
 import CoreLocation
 
+// All of the user's workout data.
 struct WorkoutData: Hashable, Equatable, Identifiable {
     var id: UUID = UUID()
     var dataID: Int
     let date: String
-    let time: String
-    let distance: Double // total distance
-    let sprint: Int // sprint counter
-    let velocity: Double // maximum velocity. km/h
-    let acceleration: Double // maximum velocity. m/s
+    let time: String // Total play time in the match.
+    let distance: Double // Total distance played during the match.
+    let sprint: Int // Number of sprints during the match.
+    let velocity: Double // Maximum speed during the match.. km/h
+    let acceleration: Double // Maximum acceleration, velocity. m/s
     var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
     var route: [CLLocationCoordinate2D] // whole route
     var center: [Double] // center of heatmap
     var formattedDate: Date { dateFormatter.date(from: date) ?? Date() }
     var maxHeartRate: Int {
-        heartRate["max", default: 110]
+        heartRate["max", default: 110] // Maximum heart rate during the match.
     }
     var minHeartRate: Int {
-        heartRate["min", default: 50]
+        heartRate["min", default: 50] // Minimum heart rate during the match.
     }
     var monthDay: String {
         Array(date.split(separator: "."))[1...2].joined(separator: ".")
