@@ -19,6 +19,7 @@ class HealthInteractor: ObservableObject {
     var allMetadata: [[String : Any]] = []
     var allRoutes: [CLLocation] = []
     // Badges in ProfileView
+    // Value changes when the user gets the badge
     var allBadges: [[Bool]] = [[false, false, false, false],
                                [false, false, false, false],
                                [false, false, false, false]]
@@ -161,7 +162,7 @@ func getCustomData() async -> [HKQuantitySample]? {
 
 func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
     // matchBadge: [distance, sprint, velocity]
-    // 뱃지 미 획득 시: -1
+    // [nil, first trophy, second trophy, third trophy] == [-1, 0, 1, 2]
     var matchBadge: [Int] = [0, 0, 0]
     
     if distance < 1.5 {

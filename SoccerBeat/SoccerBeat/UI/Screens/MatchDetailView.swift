@@ -23,9 +23,9 @@ struct MatchDetailView: View {
                 VStack {
                     MatchDetailView01(workoutData: workoutData)
                     MatchDetailView02(workoutData: workoutData)
-// MARK: 추후 HeartRate 추가
-//                    MatchDetailView03()
-//                    MatchDetailView04(workoutData: workoutData)
+                    // MARK: 추후 HeartRate 추가
+                    //                    MatchDetailView03()
+                    //                    MatchDetailView04(workoutData: workoutData)
                 }
             }
         }
@@ -35,6 +35,12 @@ struct MatchDetailView: View {
 
 struct MatchDetailView01: View {
     let workoutData: WorkoutData
+    let badgeImages: [Int: String] = [
+        -1: "",
+         0: "TrophyTestUnlocked",
+         1: "TrophyTestLocked",
+         2: "TrophyTestUnlocked"
+    ]
     var body: some View {
         VStack {
             HStack {
@@ -65,11 +71,10 @@ struct MatchDetailView01: View {
             Spacer()
                 .frame(height: 45)
             
-            VStack(alignment: .leading) {
-                Text("장점")
-                    .font(.custom("나중에 추가", size: 16))
-                Text("당신은 두 개의 심장")
-                    .font(.custom("SFProText-HeavyItalic", size: 32))
+            HStack {
+                ForEach(workoutData.matchBadge, id: \.self) { value in
+                    self.getView(for: value)
+                }
             }
             .foregroundStyle(.white)
             
@@ -133,6 +138,22 @@ struct MatchDetailView01: View {
                 .frame(height: 120)
         }
     }
+    
+    @ViewBuilder
+    func getView(for value: Int) -> some View {
+        if let imageName = badgeImages[value] {
+            if imageName.isEmpty {
+                EmptyView()
+            } else {
+                Image(imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+            }
+        } else {
+            EmptyView()
+        }
+    }
 }
 
 struct MatchDetailView02: View {
@@ -187,10 +208,10 @@ struct MatchDetailView02: View {
 //            .foregroundStyle(
 //                .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
 //            .font(.custom("SFProText-HeavyItalic", size: 14))
-//            
+//
 //            Spacer()
 //                .frame(height: 20)
-//            
+//
 //            ZStack {
 //                RoundedRectangle(cornerRadius: 20)
 //                    .strokeBorder()
@@ -266,10 +287,10 @@ struct MatchDetailView02: View {
 //            .foregroundStyle(
 //                .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
 //            .font(.custom("SFProText-HeavyItalic", size: 14))
-//            
+//
 //            Spacer()
 //                .frame(height: 20)
-//            
+//
 //            VStack(spacing: 10) {
 //                VStack {
 //                    HStack {
