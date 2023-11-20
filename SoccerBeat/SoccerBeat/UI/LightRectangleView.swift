@@ -19,7 +19,7 @@ struct LightRectangleView: View {
         Color.white
     ])
     
-    init(alpha: Double = 0.3, color: Color = .gray, radius: Double = 20.0) {
+    init(alpha: Double = 1.0, color: Color = .black, radius: Double = 15.0) {
         self.backgroundAlpha = alpha
         self.backgroundColor = color
         self.radius = radius
