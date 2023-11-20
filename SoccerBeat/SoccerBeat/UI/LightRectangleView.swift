@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct LightRectangleView: View {
-    var backgroundColor: Color = .gray.opacity(0.3)
+    let backgroundAlpha: Double
+    let backgroundColor: Color
+    let radius: Double
     var intensity: CGFloat = 0.5
     var gradient = Gradient(colors: [
         Color.white,
@@ -17,31 +19,34 @@ struct LightRectangleView: View {
         Color.white
     ])
     
+    init(alpha: Double = 0.3, color: Color = .gray, radius: Double = 20.0) {
+        self.backgroundAlpha = alpha
+        self.backgroundColor = color
+        self.radius = radius
+    }
+    
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20.0)
-                .fill(backgroundColor)
-                .frame(maxWidth: .infinity)
-                .overlay(
-                    ZStack(alignment: .topLeading) {
-                        LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
-                            .mask(
-                                RoundedRectangle(cornerRadius: 20.0)
-                            )
-                            .opacity(0.12)
-                        
-                        LinearGradient(gradient: gradient, startPoint: .leading, endPoint: .trailing)
-                            .mask(
-                                RoundedRectangle(cornerRadius: 20.0)
-                                    .strokeBorder(lineWidth: 1)
-                            )
-                    }
-                        .opacity(0.5)
-                )
-        }
+        RoundedRectangle(cornerRadius: radius)
+            .fill(backgroundColor)
+            .overlay(
+                ZStack(alignment: .topLeading) {
+                    LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                        .mask(
+                            RoundedRectangle(cornerRadius: radius)
+                        )
+                        .opacity(0.12)
+                    
+                    LinearGradient(gradient: gradient, startPoint: .leading, endPoint: .trailing)
+                        .mask(
+                            RoundedRectangle(cornerRadius: radius)
+                                .strokeBorder(lineWidth: 1)
+                        )
+                }
+                    .opacity(0.5)
+            )
     }
 }
 
 #Preview {
-    LightRectangleView()
+    LightRectangleView(alpha: 1.0, color: .black, radius: 15.0)
 }

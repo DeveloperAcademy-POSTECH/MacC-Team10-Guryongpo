@@ -19,7 +19,7 @@ struct SprintChartOverview: View {
                 BarMark(
                     x: .value("Order", index),
                     yStart: .value("Sprint", 0),
-                    yEnd: .value("Sprint", workout.sprint)
+                    yEnd: .value("Sprint", amplifiedValue(workout))
                 )
                 .foregroundStyle(isLast ? .sprintMax : .chartDefault)
                 .cornerRadius(300, style: .continuous)
@@ -28,6 +28,10 @@ struct SprintChartOverview: View {
         // MARK: - 가장 밑에 일자 표시
         .chartXAxis(.hidden)
         .chartYAxis(.hidden)
+    }
+    
+    private func amplifiedValue(_ workout: WorkoutData) -> Int {
+        workout.sprint == 1 ? workout.sprint : workout.sprint * 5
     }
 }
 

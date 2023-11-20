@@ -51,9 +51,22 @@ struct AnalyticsView: View {
         .onReceive(healthInteracter.fetchSuccess) {
             Task {
                 recent9Games = healthInteracter.readRecentMatches(for: 9)
-                recent4Games = healthInteracter.readRecentMatches(for: 4)
+                let fourGames = healthInteracter.readRecentMatches(for: 4)
+                recent4Games = makeBlankWorkouts(with: fourGames)
             }
         }
+    }
+    
+    private func makeBlankWorkouts(with workouts: [WorkoutData]) -> [WorkoutData] {
+        var blanks = [WorkoutData]()
+        if workouts.count < 4 {
+            let count = workouts.count
+            let blankCount = 4-count
+            for _ in 0..<blankCount {
+                blanks.append(WorkoutData.blankExample)
+            }
+        }
+        return blanks + workouts
     }
 }
 
@@ -112,45 +125,55 @@ struct ActivityComponent: View {
             SpeedChartOverview(workouts: userWorkouts)
         case .heartrate:
             BPMChartOverview(workouts: userWorkouts)
-                .offset(y: 20)
+                .offset(y: 10)
         }
     }
     
     var body: some View {
-        HStack {
-            HStack(alignment: .bottom) {
-                overview
-                    .frame(width: 50, height: 75)
-                    .padding(.leading, 8)
+        ZStack {
+            LightRectangleView(alpha: 1.0, color: .black, radius: 15.0)
+                .frame(height: 90)
+            
+            HStack {
+                HStack(alignment: .bottom) {
+                    overview
+                        .frame(height: 64)
+                        .padding(.leading, 8)
+                    
+                    Image(systemName: "figure.run")
+                        .resizable()
+                        .foregroundStyle(valueColor)
+                        .scaleEffect(x: -1, y: 1)
+                        .frame(width: 22, height: 22)
+                }
+                .frame(width: 64)
                 
-                Image("Running")
+                VStack(alignment: .leading) {
+                    Text(value)
+                        .font(Font.sfProDisplay(size: 28,
+                                                weight: .heavyItalic))
+                    Text(navigationAssistantTitle)
+                        .font(Font.notoSans(size: 14, weight: .regular))
+                }
+                .padding(.leading, 100)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
                     .resizable()
-                    .frame(width: 22, height: 22)
+                    .foregroundStyle(valueColor)
+                    .frame(width: 10, height: 18)
             }
-            
-            VStack(alignment: .leading) {
-                Text(value)
-                    .font(Font.sfProDisplay(size: 32,
-                                            weight: .heavyItalic))
-                Text(navigationAssistantTitle)
-                    .font(Font.notoSans(size: 12, weight: .regular))
-            }
-            .padding(.leading, 32)
-            
-            Image(systemName: "chevron.right")
-                .resizable()
-                .foregroundStyle(valueColor)
-                .frame(width: 14, height: 20)
-        }
-        .padding(.vertical)
-        .padding(.horizontal, 18)
-        .overlay {
-            LightRectangleView()
+            .padding(.horizontal, 11)
         }
     }
 }
 
 #Preview {
-    ActivityComponent(userWorkouts: fakeWorkoutData,
-                      activityType: .distance)
+    ForEach(ActivityEnum.allCases, id: \.self) { act in
+        ActivityComponent(userWorkouts: fakeWorkoutData,
+                          activityType: act)
+    }
+    .padding(.horizontal, 16)
+    
 }
