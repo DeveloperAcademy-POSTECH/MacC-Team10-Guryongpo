@@ -13,6 +13,7 @@ struct MainView: View {
     @Binding var userWorkouts: [WorkoutData]
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
+    @State private var currentLocation = "--'--"
     
     var body: some View {
         NavigationStack {
@@ -23,7 +24,12 @@ struct MainView: View {
                     VStack {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading) {
-                                Text("# 경기를 시작해 볼까요?")
+                                HStack {
+                                    Text("# 가장 최근에 기록한 ")
+                                    Text("경기")
+                                        .bold()
+                                    Text("를 만나보세요.")
+                                }
                                     .floatingCapsuleStyle()
                                 
                                 Text("최근 경기")
@@ -66,7 +72,7 @@ struct MainView: View {
                                                             Image(badgeName)
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
-                                                                .frame(width: 74, height: 82)
+                                                                .frame(width: 32, height: 36)
                                                         }
                                                     } else {
                                                         EmptyView()
@@ -74,14 +80,20 @@ struct MainView: View {
                                                 }
                                             }
                                             HStack {
-                                                Text("2023.11.11")
+                                                Text(userWorkouts[0].date)
                                                 Text(" - ")
-                                                Text("지곡동")
+                                                Text(currentLocation)
+                                                    .task {
+                                                        currentLocation = await userWorkouts[0].location
+                                                    }
                                             }
+                                            .font(.mainDateLocation)
+                                            .foregroundStyle(.mainDateTime)
                                             HStack {
                                                 Text("경기 시간")
-                                                Text("74 : 12")
+                                                Text(userWorkouts[0].time)
                                             }
+                                            .font(.mainTime)
                                         }
                                     }
                                 }
