@@ -10,7 +10,10 @@ import SwiftUI
 struct MainView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
+    
     @Binding var userWorkouts: [WorkoutData]
+    @Binding var averageData: WorkoutAverageData
+    
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     @State private var currentLocation = "--'--"
@@ -40,7 +43,7 @@ struct MainView: View {
                             Spacer()
                             
                             NavigationLink {
-                                ProfileView()
+                                ProfileView(averageData: $averageData)
                             } label: {
                                 Image(systemName: "person.circle")
                                     .font(.title)

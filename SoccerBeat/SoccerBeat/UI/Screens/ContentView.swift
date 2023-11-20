@@ -11,20 +11,29 @@ import HealthKit
 struct ContentView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
-    @State var userWorkouts = [WorkoutData]()
+    
+    @State var workoutData: [WorkoutData]?
+    @State var userWorkouts: [WorkoutData] = []
+    @State var averageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
+                                                                    minHeartRate: 0,
+                                                                    rangeHeartRate: 0,
+                                                                    totalDistance: 0.0,
+                                                                    maxAcceleration: 0,
+                                                                    maxVelocity: 0.0,
+                                                                    sprintCount: 0,
+                                                                    totalMatchTime: 0)
+    
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                if userWorkouts.isEmpty {
-                    // No soccer data OR,
-                    // User does not allow permisson.
-                    NilDataView()
-                } else {
-                    MainView(userWorkouts: $userWorkouts)
-                }
+        ZStack {
+            if workoutData == nil {
+                // No soccer data OR,
+                // User does not allow permisson.
+                NilDataView()
+            } else {
+                MainView(userWorkouts: $userWorkouts, averageData: $averageData)
             }
             .task {
                 healthInteractor.requestAuthorization()
@@ -44,11 +53,22 @@ struct ContentView: View {
                 // 시끄러우면 각주 처리해주세요 -호제가-
                 soundManager.playBackground()
             }
+        })
+        .onReceive(healthInteractor.fetchSuccess, perform: {
+            print("ContentView: fetching user data success..")
+            self.workoutData = healthInteractor.userWorkouts
+            self.averageData = healthInteractor.userAverage
+            self.userWorkouts = workoutData!
+        })
+        .tint(.white)
+        .onAppear {
+            // 시끄러우면 각주 처리해주세요 -호제가-
+            soundManager.playBackground()
         }
     }
 }
 
-//#Preview {
-//    ContentView()
-//        .preferredColorScheme(.dark)
-//}
+#Preview {
+    ContentView(userWorkouts: [])
+        .preferredColorScheme(.dark)
+}
