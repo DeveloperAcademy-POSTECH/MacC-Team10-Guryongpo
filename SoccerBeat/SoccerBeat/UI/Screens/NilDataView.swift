@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NilDataView: View {
+    @State var workoutAverageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0, minHeartRate: 0, rangeHeartRate: 0, totalDistance: 0, maxAcceleration: 0, maxVelocity: 0, sprintCount: 0, totalMatchTime: 0)
     var body: some View {
         ZStack {
             BackgroundImageView()
@@ -28,7 +29,7 @@ struct NilDataView: View {
                     Spacer()
                     
                     NavigationLink {
-//                        ProfileView()
+                        ProfileView(averageData: $workoutAverageData)
                     } label: {
                         Image(systemName: "person.circle")
                             .font(.title)

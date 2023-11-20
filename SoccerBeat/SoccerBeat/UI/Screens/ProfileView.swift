@@ -119,52 +119,7 @@ struct ProfileView: View {
                         .fixedSize()
                         .frame(width: 304, height: 348)
                     
-                    HStack {
-                        Text("# 경기를 통해 획득한 트로피를 만나보세요.")
-                            .floatingCapsuleStyle()
-                            .padding(.horizontal)
-                        
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Text("경기의 순간들")
-                            .font(.custom("SFProText-HeavyItalic", size: 24))
-                            .foregroundStyle(.shareViewSubTitleTint)
-                        Spacer()
-                    }
-                    .padding(.top, 30)
-                    .padding(.leading)
-                    
-                    HStack {
-                        VStack(alignment: .leading, spacing: 0.0) {
-                            Text("My")
-                            Text("Trophy Collection")
-                        }
-                        .font(.custom("SFProText-HeavyItalic", size: 36))
-                        .kerning(-1.5)
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    
-                    HStack {
-                        Text("# 경기 중 뛴 거리에 따라 획득하는 트로피입니다.")
-                            .floatingCapsuleStyle()
-                        Spacer()
-                    }
-                    .padding(.leading)
-                    
-                    HStack {
-                        Text("# 경기 중 스프린트 횟수에 따라 획득하는 트로피입니다.")
-                            .floatingCapsuleStyle()
-                        Spacer()
-                    }.padding(.leading)
-                    
-                    HStack {
-                        Text("# 경기 중 최대 속도에 따라 획득하는 트로피입니다.")
-                            .floatingCapsuleStyle()
-                        Spacer()
-                    }.padding(.leading)
+                    TrophyCollectionView()
                     
                 }
             }
