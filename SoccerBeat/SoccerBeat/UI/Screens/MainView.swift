@@ -146,8 +146,8 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    return MainView(userWorkouts: .constant(fakeWorkoutData))
-        .environmentObject(healthInteractor)
-}
+//#Preview {
+//    @StateObject var healthInteractor = HealthInteractor.shared
+//    return MainView(userWorkouts: .constant(fakeWorkoutData))
+//        .environmentObject(healthInteractor)
+//}

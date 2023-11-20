@@ -27,13 +27,15 @@ struct ContentView: View {
     @StateObject var viewModel = ProfileModel()
     
     var body: some View {
-        ZStack {
-            if workoutData == nil {
-                // No soccer data OR,
-                // User does not allow permisson.
-                NilDataView()
-            } else {
-                MainView(userWorkouts: $userWorkouts, averageData: $averageData)
+        NavigationStack {
+            ZStack {
+                if workoutData == nil {
+                    // No soccer data OR,
+                    // User does not allow permisson.
+                    NilDataView()
+                } else {
+                    MainView(userWorkouts: $userWorkouts, averageData: $averageData)
+                }
             }
             .task {
                 healthInteractor.requestAuthorization()
@@ -46,24 +48,15 @@ struct ContentView: View {
             })
             .onReceive(healthInteractor.fetchSuccess, perform: {
                 print("ContentView: fetching user data success..")
-                self.userWorkouts = healthInteractor.userWorkouts
+                self.workoutData = healthInteractor.userWorkouts
+                self.averageData = healthInteractor.userAverage
+                self.userWorkouts = workoutData!
             })
             .tint(.white)
             .onAppear {
                 // 시끄러우면 각주 처리해주세요 -호제가-
                 soundManager.playBackground()
             }
-        })
-        .onReceive(healthInteractor.fetchSuccess, perform: {
-            print("ContentView: fetching user data success..")
-            self.workoutData = healthInteractor.userWorkouts
-            self.averageData = healthInteractor.userAverage
-            self.userWorkouts = workoutData!
-        })
-        .tint(.white)
-        .onAppear {
-            // 시끄러우면 각주 처리해주세요 -호제가-
-            soundManager.playBackground()
         }
     }
 }
