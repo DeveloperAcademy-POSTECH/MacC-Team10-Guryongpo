@@ -12,17 +12,36 @@ struct Profile: View {
     @ObservedObject var viewModel: ProfileModel
     let width : CGFloat
     let height : CGFloat
+    @State var image: UIImage?
     var body: some View {
-//        NavigationView {
-            EditableCircularProfileImage(viewModel: viewModel,
-                                         width: width,
-                                         height: height)
+        VStack {
+            if self.image != nil {
+                Image(uiImage: self.image!)
+                    .resizable()
+                    .frame(width: width, height: height)
+                    .mask {
+                        Image("MaskLayer")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(8)
+                    }
+            } else {
+                
+                EditableCircularProfileImage(viewModel: viewModel,
+                                             width: width,
+                                             height: height)
                 .mask {
                     Image("MaskLayer")
                         .resizable()
                         .scaledToFit()
                         .padding(8)
                 }
-//        }
+            }
+        }.onAppear {
+            if let imageData = UserDefaults.standard.object(forKey: "userImage") as? Data,
+               let image = UIImage(data: imageData) {
+                self.image = image
+            }
+        }
     }
 }

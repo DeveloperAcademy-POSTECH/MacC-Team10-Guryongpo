@@ -1,69 +1,14 @@
 //
-//  AnalyticsView.swift
+//  AnalyticsComponent.swift
 //  SoccerBeat
 //
-//  Created by jose Yun on 10/22/23.
+//  Created by Gucci on 11/20/23.
 //
 
 import SwiftUI
 
-struct AnalyticsView: View {
-    @EnvironmentObject var healthInteracter: HealthInteractor
-    @State private var recent9Games = [WorkoutData]()
-    @State private var recent4Games = [WorkoutData]()
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            HStack {
-                Text("최근 경기 분석")
-                Spacer()
-            }
-            .padding(.leading)
-            .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
-            
-            VStack(spacing: 15) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        ForEach(ActivityEnum.allCases, id: \.self) { activityType in
-                            NavigationLink {
-                                switch activityType {
-                                case .distance: DistanceChartView(workouts: recent9Games)
-                                case .heartrate: BPMChartView(workouts: recent9Games)
-                                case .speed: SpeedChartView(workouts: recent9Games)
-                                case .sprint: SprintChartView(workouts: recent9Games)
-                                }
-                            } label: {
-                                ActivityComponent(userWorkouts: recent4Games, activityType: activityType)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .padding(.horizontal)
-        .onReceive(healthInteracter.fetchSuccess) {
-            Task {
-                recent9Games = healthInteracter.readRecentMatches(for: 9)
-                let fourGames = healthInteracter.readRecentMatches(for: 4)
-                recent4Games = makeBlankWorkouts(with: fourGames)
-            }
-        }
-    }
-    
-    private func makeBlankWorkouts(with workouts: [WorkoutData]) -> [WorkoutData] {
-        var blanks = [WorkoutData]()
-        if workouts.count < 4 {
-            let count = workouts.count
-            let blankCount = 4-count
-            for _ in 0..<blankCount {
-                blanks.append(WorkoutData.blankExample)
-            }
-        }
-        return blanks + workouts
-    }
-}
+struct AnalyticsComponent: View {
 
-struct ActivityComponent: View {
     let userWorkouts: [WorkoutData]
     
     var activityType: ActivityEnum
@@ -139,7 +84,7 @@ struct ActivityComponent: View {
                         .scaleEffect(x: -1, y: 1)
                         .frame(width: 22, height: 22)
                 }
-                .frame(width: 64)
+                .frame(maxWidth: 86)
                 
                 VStack(alignment: .leading) {
                     Text(value)
@@ -164,7 +109,7 @@ struct ActivityComponent: View {
 
 #Preview {
     ForEach(ActivityEnum.allCases, id: \.self) { act in
-        ActivityComponent(userWorkouts: fakeWorkoutData,
+        AnalyticsComponent(userWorkouts: fakeWorkoutData,
                           activityType: act)
     }
     .padding(.horizontal, 16)

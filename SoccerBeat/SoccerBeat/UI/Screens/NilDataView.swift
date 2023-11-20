@@ -28,7 +28,7 @@ struct NilDataView: View {
                     Spacer()
                     
                     NavigationLink {
-                        ProfileView()
+//                        ProfileView()
                     } label: {
                         Image(systemName: "person.circle")
                             .font(.title)
@@ -68,7 +68,7 @@ struct NilDataView: View {
                     Spacer()
                 }.padding(.horizontal)
                 
-                LightRectangleView(alpha: 0.6, color: .black, radius: 15.0)
+                LightRectangleView(alpha: 0.15, color: .black, radius: 15.0)
                     .frame(height: 90)
                     .frame(maxWidth: .infinity)
                     .padding()

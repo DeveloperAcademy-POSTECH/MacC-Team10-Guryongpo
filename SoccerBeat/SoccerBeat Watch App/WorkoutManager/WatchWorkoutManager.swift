@@ -299,7 +299,6 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         DispatchQueue.main.async {
             self.running = toState == .running
         }
-        
         /// Save Wokrout, Route
         if toState == .ended {
             
