@@ -84,12 +84,8 @@ struct TargetImageView: View {
                     CardFront(width: 100, height: 140, degree: $degree, viewModel: viewModel)
                     VStack(alignment: .leading, spacing: 0) {
                         Text("# Soccer Beat")
-                            .padding(.horizontal)
-                            .padding(.vertical, 5)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.shareViewCapsuleStroke, lineWidth: 1)
-                                }
+                            .floatingCapsuleStyle()
+                        
                         Spacer()
                             .frame(height: 20)
                         

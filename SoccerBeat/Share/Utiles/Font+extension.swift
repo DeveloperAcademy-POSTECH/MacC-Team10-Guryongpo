@@ -19,6 +19,8 @@ import SwiftUI
  - SFProText-BlackItalic
  - SPProText-RegularItalic
  - SFProText-SemiboldItalic
+ - SFProText-Regular
+
  
  Family: SF Pro Display
  - SFProDisplay-HeavyItalic
@@ -78,6 +80,13 @@ extension Font {
     
     public static let selectPhotoButton = Font.notoSans(size: 14, weight: .regular)
     
+    // MARK: - MatchDetailView
+    public static let matchDetailTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
+    public static let matchDetailSubTitle = Font.sfProDisplay(size: 24, weight: .semiboldItalic)
+    public static let fieldRecordTitle = Font.sfProText(size: 20, weight: .regular)
+    public static let fieldRecordMeasure = Font.sfProText(size: 32, weight: .heavyItalic)
+    public static let fieldRecordUnit = Font.sfProText(size: 20, weight: .heavyItalic)
+    public static let fieldRecordSquare = Font.sfProText(size: 15, weight: .heavyItalic)
     
     // MARK: - Navigation Title Style
     
@@ -139,6 +148,7 @@ enum SFProText: String {
     case lightItalic
     case regularItalic
     case semiboldItalic
+    case regular
     
     var capitalized: String {
         self.rawValue.capitalized

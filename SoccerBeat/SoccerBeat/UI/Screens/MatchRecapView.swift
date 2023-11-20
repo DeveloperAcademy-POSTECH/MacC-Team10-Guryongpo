@@ -119,6 +119,6 @@ struct MatchListItemView: View {
 }
 
 #Preview {
-    MatchListItemView(workoutData: fakeWorkoutData[0])
+    MatchListItemView(workoutData: fakeWorkoutData[1])
         .environmentObject(HealthInteractor.shared)
 }

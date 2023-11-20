@@ -83,6 +83,11 @@ extension ShapeStyle where Self == Color {
     static var SprintLeftColor: Self { .init(hex: 0x1A5AFF) }
     static var SprintOnRightColor: Self { .init(hex: 0xFF259B) }
     
+    // MARK: - MatchDetailView
+    
+    static var matchDetailViewTitleColor: Self { .init(hex: 0xFF077E) }
+    static var matchDetailViewSubTitleColor: Self { .init(hex: 0xB4B4B4) }
+    static var matchDetailViewAverageStatColor: Self { .init(hex: 0x00FFE0) }
 }
 
 extension ShapeStyle where Self == LinearGradient {
@@ -202,7 +207,14 @@ extension ShapeStyle where Self == LinearGradient {
         return .linearGradient(colors: [start, end],
                                startPoint: .leading, endPoint: .trailing)
     }
-
+    
+    // MARK: - MatchDetailView
+    
+    static var matchDetailTitle: Self {
+        let start = Color(hex: 0xFF007A)
+        return .linearGradient(colors: [start, .white],
+                               startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
     
     // MARK: - GameProgressView
     static var playTimeNumber: Self {
