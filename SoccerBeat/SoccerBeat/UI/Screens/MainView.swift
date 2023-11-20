@@ -43,7 +43,7 @@ struct MainView: View {
                         }.padding()
                         
                         NavigationLink {
-                            MatchDetailView(workoutData: fakeWorkoutData[0])
+                            MatchDetailView(workoutData: userWorkouts![0])
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -66,7 +66,7 @@ struct MainView: View {
                         
                         NavigationLink {
                             ScrollView {
-                                MatchRecapView(userWorkouts: .constant(fakeWorkoutData))
+                                MatchRecapView(userWorkouts: $userWorkouts)
                             }
                         } label: {
                             HStack {

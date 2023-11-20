@@ -55,7 +55,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                                    acceleration: 1.0,
                                    heartRate: ["max": 80, "min": 60],
                                    route: [],
-                                   center: [37.58647414212885, 126.9748537678651])
+                                   center: [37.58647414212885, 126.9748537678651], matchBadge: [0, 0, 0])
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()

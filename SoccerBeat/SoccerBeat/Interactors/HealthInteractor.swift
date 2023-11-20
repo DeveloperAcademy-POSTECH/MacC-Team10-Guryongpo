@@ -123,19 +123,33 @@ class HealthInteractor: ObservableObject {
                                                 matchBadge: matchBadge))
                 
                 // Calculating average value..
-                let maxHeartRate = userWorkouts.last?.heartRate["max"] ?? 0
-                let minHeartRate = userWorkouts.last?.heartRate["max"] ?? 0
+                let maxHeartRate = userWorkouts.first?.heartRate["max"] ?? 0
+                let minHeartRate = userWorkouts.first?.heartRate["max"] ?? 0
                 userAverage.maxHeartRate += maxHeartRate
                 userAverage.minHeartRate += minHeartRate
                 userAverage.rangeHeartRate += maxHeartRate - minHeartRate
-                userAverage.totalDistance += userWorkouts.last?.distance ?? 0.0
-                userAverage.maxAcceleration += userWorkouts.last?.acceleration ?? 0.0
-                userAverage.maxVelocity += userWorkouts.last?.velocity ?? 0.0
-                userAverage.sprintCount += userWorkouts.last?.sprint ?? 0
-//                userAverage.totalMatchTime += userWorkouts.last?.time ?? 0.0
+                userAverage.totalDistance += userWorkouts.first?.distance ?? 0.0
+                userAverage.maxAcceleration += userWorkouts.first?.acceleration ?? 0.0
+                userAverage.maxVelocity += userWorkouts.first?.velocity ?? 0.0
+                userAverage.sprintCount += userWorkouts.first?.sprint ?? 0
+                let rawTime = userWorkouts.first?.time ?? "00:00"
+                let separatedTime = rawTime.components(separatedBy: ":")
+                userAverage.totalMatchTime += Int(separatedTime[0])! * 60 + Int(separatedTime[0])!
                 
                 dataID += 1
             }
+            // Calculating average value..
+            userAverage.maxHeartRate /= dataID
+            userAverage.minHeartRate /= dataID
+            userAverage.rangeHeartRate /= dataID
+            userAverage.totalDistance /= Double(dataID)
+            userAverage.maxAcceleration /= Double(dataID)
+            userAverage.maxVelocity /= Double(dataID)
+            userAverage.sprintCount /= dataID
+            let rawTime = userWorkouts.first?.time ?? "00:00"
+            let separatedTime = rawTime.components(separatedBy: ":")
+            userAverage.totalMatchTime /= dataID
+            
             self.fetchSuccess.send()
         }
     }
