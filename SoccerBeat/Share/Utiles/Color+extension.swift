@@ -50,6 +50,10 @@ extension ShapeStyle where Self == Color {
     static var currentZoneStroke: Self { .init(hex: 0xB1B1B1) }
     static var currentZoneText: Self { .init(hex: 0xCACACA) }
     
+    // MARK: - MainView
+    
+    static var mainDateTime: Self { .init(hex: 0xD4D4D4)}
+    
     // MARK: - SummaryView
     
     static var columnTitle: Self { .init(hex: 0x474747) }

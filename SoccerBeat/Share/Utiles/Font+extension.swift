@@ -20,6 +20,7 @@ import SwiftUI
  - SPProText-RegularItalic
  - SFProText-SemiboldItalic
  - SFProText-Regular
+ - SFProText-Bold
 
  
  Family: SF Pro Display
@@ -64,6 +65,11 @@ extension Font {
     public static let summaryTraillingTop = Font.sfCompactText(size: 13.5)
     public static let summaryLeadingBottom = Font.sfCompactText(size: 13.5)
     public static let summaryDoneButton = Font.sfCompactText(size: 13.5, weight: .semiboldItalic)
+    
+    // MARK: - MainView
+    
+    public static let mainDateLocation = Font.sfProText(size: 12, weight: .regular)
+    public static let mainTime = Font.sfProText(size: 14, weight: .bold)
     
     // MARK: - MatchTotalView
     
@@ -149,6 +155,7 @@ enum SFProText: String {
     case regularItalic
     case semiboldItalic
     case regular
+    case bold
     
     var capitalized: String {
         self.rawValue.capitalized

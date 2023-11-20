@@ -10,7 +10,7 @@ import SwiftUI
 struct MatchRecapView: View {
     
     @EnvironmentObject var healthInteractor: HealthInteractor
-    @Binding var userWorkouts: [WorkoutData]?
+    @Binding var userWorkouts: [WorkoutData]
     
     var body: some View {
         VStack(spacing: 10) {
@@ -35,13 +35,6 @@ struct MatchRecapView: View {
                 Text("최근 경기 기록")
                     .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
                 Spacer()
-//                NavigationLink {
-//                    MatchTotalView()
-//                } label: {
-//                    Text("모든 기록 보기 +")
-//                }
-//                .foregroundStyle(.white)
-//                .font(.custom("NotoSansDisplay-BlackItalic", size: 14))
             }
             .padding(.horizontal)
             VStack {

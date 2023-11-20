@@ -11,13 +11,13 @@ import HealthKit
 struct ContentView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
-    @State var userWorkouts: [WorkoutData]?
+    @State var userWorkouts = [WorkoutData]()
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     
     var body: some View {
         ZStack {
-            if userWorkouts == nil {
+            if userWorkouts.isEmpty {
                 // No soccer data OR,
                 // User does not allow permisson.
                 NilDataView()
@@ -46,7 +46,7 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
-        .preferredColorScheme(.dark)
-}
+//#Preview {
+//    ContentView()
+//        .preferredColorScheme(.dark)
+//}
