@@ -30,7 +30,7 @@ struct MainView: View {
                                         .bold()
                                     Text("를 만나보세요.")
                                 }
-                                    .floatingCapsuleStyle()
+                                .floatingCapsuleStyle()
                                 
                                 Text("최근 경기")
                                     .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
@@ -100,9 +100,9 @@ struct MainView: View {
                                 Spacer()
                             }
                             .padding()
-//                            .overlay {
-//                                LightRectangleView()
-//                            }.padding(.horizontal)
+                            //                            .overlay {
+                            //                                LightRectangleView()
+                            //                            }.padding(.horizontal)
                         }
                         
                         NavigationLink {
@@ -119,9 +119,9 @@ struct MainView: View {
                                 Spacer()
                             }
                             .padding()
-//                            .overlay {
-//                                LightRectangleView()
-//                            }.padding(.horizontal)
+                            //                            .overlay {
+                            //                                LightRectangleView()
+                            //                            }.padding(.horizontal)
                         }
                         
                         Spacer()
@@ -145,6 +145,8 @@ struct MainView: View {
     }
 }
 
-//#Preview {
-//    MainView(userWorkouts: .constant(fakeWorkoutData))
-//}
+#Preview {
+    @StateObject var healthInteractor = HealthInteractor.shared
+    return MainView(userWorkouts: .constant(fakeWorkoutData))
+        .environmentObject(healthInteractor)
+}
