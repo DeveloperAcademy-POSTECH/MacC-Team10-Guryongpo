@@ -15,8 +15,8 @@ struct MyCardView: View {
     @ObservedObject var viewModel: ProfileModel
     @EnvironmentObject var soundManager: SoundManager
     
-    let width : CGFloat = 321
-    let height : CGFloat = 445
+    let width : CGFloat = 103
+    let height : CGFloat = 138
     let durationAndDelay : CGFloat = 0.25
     
     func flipCard () {
@@ -41,24 +41,6 @@ struct MyCardView: View {
     var body: some View {
         ZStack {
             VStack {
-//                HStack {
-//                    VStack(alignment: .leading, spacing: 0.0) {
-//                        Text("Hello, Isaac")
-//                        Text("How you like")
-//                        Text("that?")
-//                    }
-//                    .foregroundStyle(!isFlipped ?
-//                        .linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing) : .linearGradient(colors: [.titlegray, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
-//                    .font(.custom("SFProText-HeavyItalic", size: 36))
-//                    .kerning(-1.5)
-//                    .padding(.leading, 10.0)
-//                    Spacer()
-//                }
-//                .padding(.top, 30)
-//                .padding(.horizontal)
-//                
-//                Spacer()
-//                    .frame(height: 80)
                 ZStack {
                     CardFront(width: width, height: height, degree: $frontDegree, viewModel: viewModel)
                     CardBack(width: width, height: height, degree: $backDegree)
