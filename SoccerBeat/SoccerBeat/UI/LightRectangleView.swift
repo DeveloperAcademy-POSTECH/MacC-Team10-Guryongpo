@@ -28,6 +28,7 @@ struct LightRectangleView: View {
     var body: some View {
         RoundedRectangle(cornerRadius: radius)
             .fill(backgroundColor)
+            .opacity(backgroundAlpha)
             .overlay(
                 ZStack(alignment: .topLeading) {
                     LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
