@@ -19,7 +19,7 @@ struct BPMChartOverview: View {
                 BarMark(
                     x: .value("Order", index),
                     yStart: .value("HeartRate", workout.minHeartRate),
-                    yEnd: .value("HeartRate", workout.maxHeartRate)
+                    yEnd: .value("HeartRate", amplifiedValue(workout))
                 )
                 .foregroundStyle(isLast ? .bpmMax : .chartDefault)
                 .cornerRadius(300, style: .continuous)
@@ -28,6 +28,10 @@ struct BPMChartOverview: View {
         // MARK: - 가장 밑에 일자 표시
         .chartXAxis(.hidden)
         .chartYAxis(.hidden)
+    }
+    
+    private func amplifiedValue(_ workout: WorkoutData) -> Int {
+        workout.maxHeartRate == 80 ? workout.maxHeartRate : workout.maxHeartRate * 2
     }
 }
 
