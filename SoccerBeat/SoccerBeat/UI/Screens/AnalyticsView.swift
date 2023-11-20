@@ -124,7 +124,7 @@ struct ActivityComponent: View {
     
     var body: some View {
         ZStack {
-            LightRectangleView(alpha: 1.0, color: .black, radius: 15.0)
+            LightRectangleView(alpha: 0.15, color: .black, radius: 15.0)
                 .frame(height: 90)
             
             HStack {
