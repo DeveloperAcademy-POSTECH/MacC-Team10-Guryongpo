@@ -23,7 +23,7 @@ struct MainView: View {
                     VStack {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading) {
-                                HStack {
+                                HStack(spacing: 0) {
                                     Text("# 가장 최근에 기록한 ")
                                     Text("경기")
                                         .bold()
