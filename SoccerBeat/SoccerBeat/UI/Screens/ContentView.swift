@@ -11,13 +11,14 @@ import HealthKit
 struct ContentView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
-    @State var userWorkouts: [WorkoutData]?
+    @State var workoutData: [WorkoutData]?
+    @State var userWorkouts: [WorkoutData] = []
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     
     var body: some View {
         ZStack {
-            if userWorkouts == nil {
+            if workoutData == nil {
                 // No soccer data OR,
                 // User does not allow permisson.
                 NilDataView()
@@ -36,7 +37,8 @@ struct ContentView: View {
         })
         .onReceive(healthInteractor.fetchSuccess, perform: {
             print("ContentView: fetching user data success..")
-            self.userWorkouts = healthInteractor.userWorkouts
+            self.workoutData = healthInteractor.userWorkouts
+            self.userWorkouts = workoutData!
         })
         .tint(.white)
         .onAppear {
@@ -47,6 +49,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(userWorkouts: [])
         .preferredColorScheme(.dark)
 }

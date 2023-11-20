@@ -134,7 +134,9 @@ class HealthInteractor: ObservableObject {
                 userAverage.sprintCount += userWorkouts.first?.sprint ?? 0
                 let rawTime = userWorkouts.first?.time ?? "00:00"
                 let separatedTime = rawTime.components(separatedBy: ":")
-                userAverage.totalMatchTime += Int(separatedTime[0])! * 60 + Int(separatedTime[0])!
+                let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                userAverage.totalMatchTime += Int(separatedMinutes)! * 60 + Int(separatedSeconds)!
                 
                 dataID += 1
             }
@@ -146,8 +148,6 @@ class HealthInteractor: ObservableObject {
             userAverage.maxAcceleration /= Double(dataID)
             userAverage.maxVelocity /= Double(dataID)
             userAverage.sprintCount /= dataID
-            let rawTime = userWorkouts.first?.time ?? "00:00"
-            let separatedTime = rawTime.components(separatedBy: ":")
             userAverage.totalMatchTime /= dataID
             
             self.fetchSuccess.send()

@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
-    @Binding var userWorkouts: [WorkoutData]?
+    @Binding var userWorkouts: [WorkoutData]
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     
@@ -43,7 +43,7 @@ struct MainView: View {
                         }.padding()
                         
                         NavigationLink {
-                            MatchDetailView(workoutData: userWorkouts![0])
+                            MatchDetailView(workoutData: userWorkouts[0])
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
