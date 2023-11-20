@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-enum ActivityEnum: CaseIterable {
-    case distance
-    case sprint
-    case speed
-    case heartrate
-}
-
 struct AnalyticsView: View {
     @EnvironmentObject var healthInteracter: HealthInteractor
     @State private var recent9Games = [WorkoutData]()
