@@ -45,7 +45,8 @@ struct MatchTimeView: View {
                     Text("를 만나보세요")
                 }
                 .floatingCapsuleStyle()
-                
+                Spacer()
+                    .frame(minHeight: 30)
                 Text("세부 리포트")
                     .font(.matchDetailSubTitle)
                     .foregroundStyle(.matchDetailViewSubTitleColor)
@@ -76,6 +77,9 @@ struct PlayerAbilityView: View {
                     .font(.matchDetailTitle)
                     .foregroundStyle(.matchDetailTitle)
                     
+                    Spacer()
+                        .frame(minHeight: 30)
+                    
                     HStack(spacing: 0) {
                         Text("# ")
                         Text("빨간색")
@@ -104,19 +108,11 @@ struct PlayerAbilityView: View {
 
 struct FieldRecordView: View {
     let workoutData: WorkoutData
-    let badgeImages: [Int: String] = [
-        -1: "",
-         0: "TrophyTestUnlocked",
-         1: "TrophyTestLocked",
-         2: "TrophyTestUnlocked"
-    ]
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    
                     Spacer()
-                    
                     VStack(alignment: .leading, spacing: -8) {
                         Text("My")
                         Text("Field Record")
@@ -126,25 +122,32 @@ struct FieldRecordView: View {
                 }
                 Spacer()
             }
-            
+            Spacer()
+                .frame(minHeight: 30)
             HStack {
-                ForEach(workoutData.matchBadge, id: \.self) { value in
-                    self.getView(for: value)
+                ForEach(workoutData.matchBadge.indices, id: \.self) { index in
+                    if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                        if badgeName.isEmpty {
+                            EmptyView()
+                        } else {
+                            Image(badgeName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 74, height: 82)
+                        }
+                    } else {
+                        EmptyView()
+                    }
                 }
             }
-            
             Spacer()
-            
+                .frame(minHeight: 30)
             ZStack {
-                LightRectangleView()
-                
+                LightRectangleView(alpha: 0.4, color: .black, radius: 15)
                 VStack {
-                    
                     Spacer()
-                    
                     HStack {
                         Spacer()
-                        
                         VStack(alignment: .leading) {
                             Image("HeartbeatSign")
                             Text("뛴 거리")
@@ -176,9 +179,7 @@ struct FieldRecordView: View {
                                     .font(.fieldRecordUnit)
                             }
                         }
-                        
                         Spacer()
-                        
                         VStack(alignment: .leading) {
                             Image("HeartbeatSign")
                             Text("최고 속도")
@@ -209,32 +210,12 @@ struct FieldRecordView: View {
                             Text(workoutData.maxHeartRate.formatted() + " bpm")
                                 .font(.fieldRecordMeasure)
                         }
-                        
                         Spacer()
-                        
                     }
-                    
                     Spacer()
-                    
                 }
             }
             .kerning(-0.41)
-        }
-    }
-    
-    @ViewBuilder
-    func getView(for value: Int) -> some View {
-        if let imageName = badgeImages[value] {
-            if imageName.isEmpty {
-                EmptyView()
-            } else {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 74, height: 82)
-            }
-        } else {
-            EmptyView()
         }
     }
 }
@@ -244,11 +225,13 @@ struct FieldMovementView: View {
     var body: some View {
         VStack {
             Spacer()
+                .frame(minHeight: 60)
             HStack {
                 VStack(alignment: .leading) {
                     Text("# 터치하면 자세한 정보를 볼 수 있어요.")
                         .floatingCapsuleStyle()
-                    
+                    Spacer()
+                        .frame(minHeight: 30)
                     VStack(alignment: .leading, spacing: -8) {
                         Text("My")
                         Text("Field Movement")
@@ -259,6 +242,7 @@ struct FieldMovementView: View {
                 Spacer()
             }
             Spacer()
+                .frame(minHeight: 30)
             HeatmapView(coordinate: CLLocationCoordinate2D(latitude: workoutData.center[0], longitude: workoutData.center[1]), polylineCoordinates: workoutData.route)
                 .frame(height: 500)
                 .cornerRadius(15.0)

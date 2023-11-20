@@ -50,6 +50,11 @@ extension ShapeStyle where Self == Color {
     static var currentZoneStroke: Self { .init(hex: 0xB1B1B1) }
     static var currentZoneText: Self { .init(hex: 0xCACACA) }
     
+    // MARK: - MainView
+    
+    static var mainDateTime: Self { .init(hex: 0xD4D4D4)}
+    static var seeAllMatch: Self { .init(hex: 0x565656)}
+    
     // MARK: - SummaryView
     
     static var columnTitle: Self { .init(hex: 0x474747) }
@@ -88,6 +93,8 @@ extension ShapeStyle where Self == Color {
     static var matchDetailViewTitleColor: Self { .init(hex: 0xFF077E) }
     static var matchDetailViewSubTitleColor: Self { .init(hex: 0xB4B4B4) }
     static var matchDetailViewAverageStatColor: Self { .init(hex: 0x00FFE0) }
+    
+    static var raderMaximumColor: Self { .init(hex: 0x369EFF) }
 }
 
 extension ShapeStyle where Self == LinearGradient {

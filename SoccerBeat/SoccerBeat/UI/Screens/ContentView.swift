@@ -35,14 +35,23 @@ struct ContentView: View {
             } else {
                 MainView(userWorkouts: $userWorkouts, averageData: $averageData)
             }
-        }
-        .task {
-            healthInteractor.requestAuthorization()
-        }
-        .onReceive(healthInteractor.authSuccess, perform: {
-            Task {
-                print("ContentView: attempting to fetch all data..")
-                await healthInteractor.fetchAllData()
+            .task {
+                healthInteractor.requestAuthorization()
+            }
+            .onReceive(healthInteractor.authSuccess, perform: {
+                Task {
+                    print("ContentView: attempting to fetch all data..")
+                    await healthInteractor.fetchAllData()
+                }
+            })
+            .onReceive(healthInteractor.fetchSuccess, perform: {
+                print("ContentView: fetching user data success..")
+                self.userWorkouts = healthInteractor.userWorkouts
+            })
+            .tint(.white)
+            .onAppear {
+                // 시끄러우면 각주 처리해주세요 -호제가-
+                soundManager.playBackground()
             }
         })
         .onReceive(healthInteractor.fetchSuccess, perform: {

@@ -35,7 +35,7 @@ struct NilDataView: View {
                     }
                 }.padding(.horizontal)
                 
-                LightRectangleView(alpha: 0.3, color: .black, radius: 15.0)
+                LightRectangleView(alpha: 0.6, color: .black, radius: 15.0)
                     .frame(height: 234)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -68,7 +68,7 @@ struct NilDataView: View {
                     Spacer()
                 }.padding(.horizontal)
                 
-                LightRectangleView(alpha: 0.3, color: .black, radius: 15.0)
+                LightRectangleView(alpha: 0.15, color: .black, radius: 15.0)
                     .frame(height: 90)
                     .frame(maxWidth: .infinity)
                     .padding()

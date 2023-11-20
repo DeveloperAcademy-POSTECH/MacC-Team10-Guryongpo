@@ -43,9 +43,12 @@ class HealthInteractor: ObservableObject {
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.mm.dd"
+        formatter.dateFormat = "yyyy.MM.dd"
         return formatter
     }()
+    
+    @Published var recent9Games = [WorkoutData]()
+    @Published var recent4Games = [WorkoutData]()
     
     var monthly: [String: [WorkoutData]] {
         var dict = [String: [WorkoutData]]()
@@ -98,7 +101,6 @@ class HealthInteractor: ObservableObject {
                     latSum += routeWorkout.coordinate.latitude
                     lonSum += routeWorkout.coordinate.longitude
                 }
-                
                 let custom = allMetadata[dataID]
                 
                 var distance = custom["Distance"] as! Double
@@ -150,6 +152,7 @@ class HealthInteractor: ObservableObject {
             userAverage.sprintCount /= dataID
             userAverage.totalMatchTime /= dataID
             
+            settingForChartView()
             self.fetchSuccess.send()
         }
     }
@@ -294,8 +297,25 @@ class HealthInteractor: ObservableObject {
     }
 }
 
+// MARK: - Chart Methods
+
 extension HealthInteractor {
-    func readRecentMatches(for count: Int) -> [WorkoutData] {
+    
+    private func settingForChartView() {
+        let nineGames: [WorkoutData] = {
+            let games = readRecentMatches(for: 9)
+            return sortWorkoutsForChart(games)
+        }()
+        let fourGames: [WorkoutData] = {
+            let games = readRecentMatches(for: 4)
+            let sorted = sortWorkoutsForChart(games)
+            return makeBlankWorkouts(with: sorted)
+        }()
+        recent4Games = fourGames
+        recent9Games = nineGames
+    }
+    
+    private func readRecentMatches(for count: Int) -> [WorkoutData] {
         guard !userWorkouts.isEmpty else { return [] }
         guard userWorkouts.count >= count  else { return userWorkouts }
         let startIndex = userWorkouts.count - count
@@ -305,5 +325,23 @@ extension HealthInteractor {
             recentMatches.append(userWorkouts[i])
         }
         return recentMatches
+    }
+    
+    private func makeBlankWorkouts(with workouts: [WorkoutData]) -> [WorkoutData] {
+        var blanks = [WorkoutData]()
+        if workouts.count < 4 {
+            let count = workouts.count
+            let blankCount = 4-count
+            for _ in 0..<blankCount {
+                blanks.append(WorkoutData.blankExample)
+            }
+        }
+        return blanks + workouts
+    }
+    
+    private func sortWorkoutsForChart(_ workouts: [WorkoutData]) -> [WorkoutData] {
+        return workouts.sorted { preWork, postWork in
+            preWork.formattedDate < postWork.formattedDate
+        }
     }
 }

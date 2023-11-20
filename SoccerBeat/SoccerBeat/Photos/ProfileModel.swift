@@ -30,6 +30,7 @@ class ProfileModel: ObservableObject {
         
         static var transferRepresentation: some TransferRepresentation {
             DataRepresentation(importedContentType: .image) { data in
+                print("data transported")
             #if canImport(AppKit)
                 guard let nsImage = NSImage(data: data) else {
                     throw TransferError.importFailed
@@ -41,6 +42,11 @@ class ProfileModel: ObservableObject {
                     throw TransferError.importFailed
                 }
                 let image = Image(uiImage: uiImage)
+                // MARK: save User Defaults Image
+                let data = uiImage.jpegData(compressionQuality: 0.5)
+                let encoded = try! PropertyListEncoder().encode(data)
+                UserDefaults.standard.set(encoded, forKey: "userImage")
+                
                 return ProfileImage(image: image)
             #else
                 throw TransferError.importFailed
@@ -79,6 +85,7 @@ class ProfileModel: ObservableObject {
                 case .failure(let error):
                     self.imageState = .failure(error)
                 }
+                
             }
         }
     }
