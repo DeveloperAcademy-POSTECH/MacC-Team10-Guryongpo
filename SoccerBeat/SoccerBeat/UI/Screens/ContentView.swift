@@ -11,8 +11,18 @@ import HealthKit
 struct ContentView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
+    
     @State var workoutData: [WorkoutData]?
     @State var userWorkouts: [WorkoutData] = []
+    @State var averageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
+                                                                    minHeartRate: 0,
+                                                                    rangeHeartRate: 0,
+                                                                    totalDistance: 0.0,
+                                                                    maxAcceleration: 0,
+                                                                    maxVelocity: 0.0,
+                                                                    sprintCount: 0,
+                                                                    totalMatchTime: 0)
+    
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     
@@ -38,6 +48,7 @@ struct ContentView: View {
         .onReceive(healthInteractor.fetchSuccess, perform: {
             print("ContentView: fetching user data success..")
             self.workoutData = healthInteractor.userWorkouts
+            self.averageData = healthInteractor.userAverage
             self.userWorkouts = workoutData!
         })
         .tint(.white)

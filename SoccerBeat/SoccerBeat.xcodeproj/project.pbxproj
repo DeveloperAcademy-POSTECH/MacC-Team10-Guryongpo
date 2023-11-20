@@ -96,6 +96,7 @@
 		BEDE52432B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BEDE52412B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf */; };
 		D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */; };
 		D31B4ABE2B0AF35B00DD9100 /* NilDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B4ABD2B0AF35B00DD9100 /* NilDataView.swift */; };
+		D31B4AC02B0B819000DD9100 /* DataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B4ABF2B0B819000DD9100 /* DataConverter.swift */; };
 		D3A1F10F2B067E8F00EB2049 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A1F10E2B067E8F00EB2049 /* MainView.swift */; };
 		D3A1F1112B06847600EB2049 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A1F1102B06847600EB2049 /* ProfileView.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
@@ -216,6 +217,7 @@
 		BEDE52412B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
 		D31B4ABD2B0AF35B00DD9100 /* NilDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilDataView.swift; sourceTree = "<group>"; };
+		D31B4ABF2B0B819000DD9100 /* DataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConverter.swift; sourceTree = "<group>"; };
 		D3A1F10E2B067E8F00EB2049 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D3A1F1102B06847600EB2049 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -315,6 +317,7 @@
 			children = (
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 				685D7B672AE52A2900783433 /* Data.swift */,
+				D31B4ABF2B0B819000DD9100 /* DataConverter.swift */,
 				D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */,
 			);
 			path = Resources;
@@ -752,6 +755,7 @@
 				682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */,
 				BECAE5BF2AE5892A0002EA31 /* ColorExtension.swift in Sources */,
 				BEA63A662B0AFDFF000A309D /* ActivityEnum.swift in Sources */,
+				D31B4AC02B0B819000DD9100 /* DataConverter.swift in Sources */,
 				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
 				BE40699F2AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,
