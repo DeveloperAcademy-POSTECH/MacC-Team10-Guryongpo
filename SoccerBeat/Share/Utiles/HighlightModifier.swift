@@ -9,9 +9,11 @@ import SwiftUI
 
 struct HighlightModifier: ViewModifier {
     let activity: ActivityEnum
+    let isDefault: Bool
     
-    init(activity: ActivityEnum) {
+    init(activity: ActivityEnum, isDefault: Bool = false) {
         self.activity = activity
+        self.isDefault = isDefault
     }
     
     var accentColor: Color {
@@ -33,15 +35,15 @@ struct HighlightModifier: ViewModifier {
                 Rectangle()
                     .frame(height: 30)
                     .opacity(0.3)
-                    .foregroundStyle(accentColor)
+                    .foregroundStyle(isDefault ? .init(hex: 0x6D6D6D) : accentColor)
                     .offset(x: 0 , y: 15)
             }
     }
 }
 
 extension View {
-    func highlighter(activity: ActivityEnum = .sprint) -> some View {
-        modifier(HighlightModifier(activity: activity))
+    func highlighter(activity: ActivityEnum = .sprint, isDefault: Bool = false) -> some View {
+        modifier(HighlightModifier(activity: activity, isDefault: isDefault))
     }
 }
 

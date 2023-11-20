@@ -5,7 +5,7 @@
 //  Created by daaan on 11/1/23.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 import CoreLocation
 import HealthKit
@@ -30,9 +30,9 @@ class HealthInteractor: ObservableObject {
     var allRoutes: [CLLocation] = []
     // Badges in ProfileView
     // Value changes when the user gets the badge
-    var allBadges: [[Bool]] = [[false, false, false, false],
-                               [false, false, false, false],
-                               [false, false, false, false]]
+    @Published var allBadges: [[Bool]] = [[false, false, false, false],
+                                          [false, false, false, false],
+                                          [false, false, false, false]]
     
     // Send when permission is granted by the user.
     var authSuccess = PassthroughSubject<(), Never>()
@@ -207,7 +207,7 @@ class HealthInteractor: ObservableObject {
             matchBadge[0] = -1
         } else if (1.5 <= distance && distance < 2.0) {
             matchBadge[0] = 0
-            allBadges[0][1] = true
+            allBadges[0][0] = true
         } else if (2.0 <= distance && distance < 2.5) {
             matchBadge[0] = 1
             allBadges[0][1] = true
