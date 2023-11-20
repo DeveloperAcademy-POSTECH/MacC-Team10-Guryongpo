@@ -15,6 +15,16 @@ class HealthInteractor: ObservableObject {
     var healthStore = HKHealthStore()
     // Entire user workouts in HealthKit data.
     var userWorkouts: [WorkoutData] = []
+    // Average of the user workout data.
+    var userAverage: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
+                                                             minHeartRate: 0,
+                                                             rangeHeartRate: 0,
+                                                             totalDistance: 0.0,
+                                                             maxAcceleration: 0,
+                                                             maxVelocity: 0.0,
+                                                             sprintCount: 0,
+                                                             totalMatchTime: 0)
+    
     var allWorkouts: [HKWorkout] = []
     var allMetadata: [[String : Any]] = []
     var allRoutes: [CLLocation] = []
@@ -100,6 +110,19 @@ class HealthInteractor: ObservableObject {
                                                 route: routes,
                                                 center: [latSum / Double(routes.count),
                                                          lonSum / Double(routes.count)]))
+                
+                // Calculating average value..
+                let maxHeartRate = userWorkouts.last?.heartRate["max"] ?? 0
+                let minHeartRate = userWorkouts.last?.heartRate["max"] ?? 0
+                userAverage.maxHeartRate += maxHeartRate
+                userAverage.minHeartRate += minHeartRate
+                userAverage.rangeHeartRate += maxHeartRate - minHeartRate
+                userAverage.totalDistance += userWorkouts.last?.distance ?? 0.0
+                userAverage.maxAcceleration += userWorkouts.last?.acceleration ?? 0.0
+                userAverage.maxVelocity += userWorkouts.last?.velocity ?? 0.0
+                userAverage.sprintCount += userWorkouts.last?.sprint ?? 0
+//                userAverage.totalMatchTime += userWorkouts.last?.time ?? 0.0
+                
                 dataID += 1
             }
             self.fetchSuccess.send()
