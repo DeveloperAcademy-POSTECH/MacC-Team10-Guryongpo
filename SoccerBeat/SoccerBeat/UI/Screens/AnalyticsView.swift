@@ -125,7 +125,7 @@ struct ActivityComponent: View {
             SpeedChartOverview(workouts: userWorkouts)
         case .heartrate:
             BPMChartOverview(workouts: userWorkouts)
-                .offset(y: 20)
+                .offset(y: 10)
         }
     }
     
