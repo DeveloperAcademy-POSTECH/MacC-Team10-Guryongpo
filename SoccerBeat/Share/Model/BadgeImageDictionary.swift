@@ -27,3 +27,15 @@ let BadgeImageDictionary: [[Int: String]] = [[
      3: "VelocityFourthUnlocked"
 ]
 ]
+
+let badgeUnlockedImages: [[String]] = [
+    ["DistanceFirstUnlocked", "DistanceSecondUnlocked", "DistanceThirdUnlocked", "DistanceFourthUnlocked"],
+    ["SprintFirstUnlocked", "SprintSecondUnlocked", "SprintThirdUnlocked", "SprintFourthUnlocked"],
+    ["VelocityFirstUnlocked", "VelocitySecondUnlocked", "VelocityThirdUnlocked", "VelocityFourthUnlocked"]
+]
+
+let badgeLockedImages: [[String]] = [
+    ["DistanceFirstLocked", "DistanceSecondLocked", "DistanceThirdLocked", "DistanceFourthLocked"],
+    ["SprintFirstLocked", "SprintSecondLocked", "SprintThirdLocked", "SprintFourthLocked"],
+    ["VelocityFirstLocked", "VelocitySecondLocked", "VelocityThirdLocked", "VelocityFourthLocked"]
+]
