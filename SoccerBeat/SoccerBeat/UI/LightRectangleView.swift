@@ -39,7 +39,7 @@ struct LightRectangleView: View {
                     LinearGradient(gradient: gradient, startPoint: .leading, endPoint: .trailing)
                         .mask(
                             RoundedRectangle(cornerRadius: radius)
-                                .strokeBorder(lineWidth: 1)
+                                .strokeBorder(lineWidth: 2)
                         )
                 }
                     .opacity(0.5)

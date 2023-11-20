@@ -20,7 +20,7 @@ struct ContentView: View {
             if userWorkouts == nil {
                 // No soccer data OR,
                 // User does not allow permisson.
-                MainView(userWorkouts: $userWorkouts)
+                NilDataView()
             } else {
                 MainView(userWorkouts: $userWorkouts)
             }
