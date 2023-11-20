@@ -38,9 +38,11 @@
 		BE010D3D2B0512680093A5FE /* Double+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D3B2B0512680093A5FE /* Double+extension.swift */; };
 		BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */; };
 		BE0639DA2AE66D93008D1D4E /* SessionPagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */; };
+		BE16B7C32B0B7D0300192C3B /* TrophyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE16B7C22B0B7D0300192C3B /* TrophyCollectionView.swift */; };
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
 		BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6322AE586AA009035C9 /* SprintStatusView.swift */; };
 		BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
+		BE323D3E2B0B7EE200F289D4 /* TrophyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE323D3D2B0B7EE200F289D4 /* TrophyView.swift */; };
 		BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
@@ -183,9 +185,11 @@
 		BE010D3B2B0512680093A5FE /* Double+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+extension.swift"; sourceTree = "<group>"; };
 		BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitControlsView.swift; sourceTree = "<group>"; };
 		BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPagingView.swift; sourceTree = "<group>"; };
+		BE16B7C22B0B7D0300192C3B /* TrophyCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrophyCollectionView.swift; sourceTree = "<group>"; };
 		BE22D6302AE586AA009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
 		BE22D6322AE586AA009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
 		BE22D6342AE586AA009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
+		BE323D3D2B0B7EE200F289D4 /* TrophyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrophyView.swift; sourceTree = "<group>"; };
 		BE4069972AF0E84800FA3030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE4069982AF0E8AC00FA3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
@@ -335,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				BEA63A682B0B384E000A309D /* Analytics */,
+				BE323D3C2B0B7ED000F289D4 /* Trophy */,
 				BE4A91522B010C26004AAFA3 /* Charts */,
 				685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */,
 				685D7B6D2AE5396200783433 /* LightRectangleView.swift */,
@@ -396,6 +401,15 @@
 				BE40699B2AF0EB7700FA3030 /* Phrase.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BE323D3C2B0B7ED000F289D4 /* Trophy */ = {
+			isa = PBXGroup;
+			children = (
+				BE16B7C22B0B7D0300192C3B /* TrophyCollectionView.swift */,
+				BE323D3D2B0B7EE200F289D4 /* TrophyView.swift */,
+			);
+			path = Trophy;
 			sourceTree = "<group>";
 		};
 		BE4069DC2AF212B500FA3030 /* Share */ = {
@@ -784,6 +798,7 @@
 				D3D174A02B00FE230022F631 /* RadarViewController.swift in Sources */,
 				BECCFAB62B066AC4009F4BE5 /* BPMChartOverview.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
+				BE16B7C32B0B7D0300192C3B /* TrophyCollectionView.swift in Sources */,
 				D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				BE4A91582B011C8B004AAFA3 /* SprintChart.swift in Sources */,
 				D3A1F1112B06847600EB2049 /* ProfileView.swift in Sources */,
@@ -798,6 +813,7 @@
 				BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */,
 				BECCFAB22B0665D2009F4BE5 /* SpeedChartOverview.swift in Sources */,
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
+				BE323D3E2B0B7EE200F289D4 /* TrophyView.swift in Sources */,
 				682D64892AFDBF8C00D7F07B /* PhotoSelectButtonView.swift in Sources */,
 				BEDE523E2B03BFF800BBFD94 /* Analyzable.swift in Sources */,
 				FBA3DA622B00E6EF0025AD7B /* ShareView.swift in Sources */,
