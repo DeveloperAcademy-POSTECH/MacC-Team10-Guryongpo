@@ -43,7 +43,7 @@ class HealthInteractor: ObservableObject {
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.mm.dd"
+        formatter.dateFormat = "yyyy.MM.dd"
         return formatter
     }()
     
