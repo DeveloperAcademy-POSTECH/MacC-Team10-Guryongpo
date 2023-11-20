@@ -92,6 +92,8 @@ extension ShapeStyle where Self == Color {
     static var matchDetailViewTitleColor: Self { .init(hex: 0xFF077E) }
     static var matchDetailViewSubTitleColor: Self { .init(hex: 0xB4B4B4) }
     static var matchDetailViewAverageStatColor: Self { .init(hex: 0x00FFE0) }
+    
+    static var raderMaximumColor: Self { .init(hex: 0x369EFF) }
 }
 
 extension ShapeStyle where Self == LinearGradient {

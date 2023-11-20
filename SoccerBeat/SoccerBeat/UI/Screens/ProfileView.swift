@@ -16,7 +16,7 @@ struct ProfileView: View {
         ScrollView {
             ZStack {
                 BackgroundImageView()
-                    
+                
                 VStack {
                     
                     Spacer()
@@ -48,9 +48,12 @@ struct ProfileView: View {
                                             UserDefaults.standard.set(userName, forKey: "userName")
                                         }
                                     
-                                    
-                                    Text("How we are")
-                                        .offset(y: -10)
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        Text("How you")
+                                        Text("like that")
+                                            .offset(y: -5)
+                                    }.offset(y: -10)
+                                        
                                 }
                             }
                             .font(.custom("SFProText-HeavyItalic", size: 36))
@@ -59,23 +62,36 @@ struct ProfileView: View {
                             
                             
                             HStack {
-                                Text("# 파랑색은 시즌 최고 능력치입니다.")
-                                    .floatingCapsuleStyle()
+                                HStack(spacing: 0) {
+                                    Text("#")
+                                    Text("파란색")
+                                        .bold()
+                                        .foregroundStyle(
+                                            .raderMaximumColor)
+                                    Text("은 시즌 최고 능력치입니다.")
+                                }.floatingCapsuleStyle()
+                                    .padding(.leading)
                                 Spacer()
-                            }                           .padding(.leading)
+                            }
                             
                             HStack {
-                                Text("# 민트색은 평균 능력치입니다.")
-                                    .floatingCapsuleStyle()
+                                HStack(spacing: 0) {
+                                    Text("#")
+                                    Text("민트색")
+                                        .bold()
+                                        .foregroundStyle(.matchDetailViewAverageStatColor)
+                                    Text("은 평균 능력치입니다.")
+                                }.floatingCapsuleStyle()                    .padding(.leading)
                                 Spacer()
-                            }                            .padding(.leading)
+                            }
                         }
                         
-                            VStack {
-                                MyCardView(isFlipped: $isFlipped, viewModel: viewModel)
-                                PhotoSelectButtonView(viewModel: viewModel)
-                                    .opacity(isFlipped ? 1 : 0)
-                            }.frame(maxWidth: 112)
+                        VStack {
+                            MyCardView(isFlipped: $isFlipped, viewModel: viewModel)
+                            PhotoSelectButtonView(viewModel: viewModel)
+                                .opacity(isFlipped ? 1 : 0)
+                        }
+                        .frame(maxWidth: 112)
                     }
                     
                     
@@ -86,7 +102,7 @@ struct ProfileView: View {
                     
                     ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
                         .fixedSize()
-                        .frame(width: 360, height: 360)
+                        .frame(width: 304, height: 348)
                     
                     HStack {
                         Text("# 경기를 통해 획득한 트로피를 만나보세요.")

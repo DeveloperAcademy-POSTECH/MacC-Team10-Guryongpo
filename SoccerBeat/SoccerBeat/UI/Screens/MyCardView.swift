@@ -46,6 +46,7 @@ struct MyCardView: View {
                     CardBack(width: width, height: height, degree: $backDegree)
                 }
                 .onTapGesture {
+                    print("Tapped")
                     flipCard()
                     if isFlipped {
                         soundManager.playFrontSoundEffect()

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AnalyticsComponent: View {
+
     let userWorkouts: [WorkoutData]
     
     var activityType: ActivityEnum

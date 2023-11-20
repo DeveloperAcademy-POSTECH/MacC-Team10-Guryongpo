@@ -101,7 +101,6 @@ class HealthInteractor: ObservableObject {
                     latSum += routeWorkout.coordinate.latitude
                     lonSum += routeWorkout.coordinate.longitude
                 }
-                
                 let custom = allMetadata[dataID]
                 
                 var distance = custom["Distance"] as! Double

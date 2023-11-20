@@ -299,7 +299,6 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         DispatchQueue.main.async {
             self.running = toState == .running
         }
-        
         /// Save Wokrout, Route
         if toState == .ended {
             
@@ -323,6 +322,8 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                         "Distance": (Double(Int(self!.distance/1000 * 100 ))) / 100,
                         "Acceleration": Double(Int(self!.acceleration * 100.rounded()))/100
                     ]
+                    
+                    print(metadata)
                     
                     self?.routeBuilder?.finishRoute(with: workout, metadata: metadata) { (newRoute, _) in
                         guard newRoute != nil else {
@@ -413,9 +414,10 @@ extension WorkoutManager: CLLocationManagerDelegate {
     }
     
     private func startLocationUpdates() {
-        if [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(locationManager.authorizationStatus) {
-            locationManager.requestWhenInUseAuthorization()
-        }
+//        if [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(locationManager.authorizationStatus) {
+//            locationManager.requestWhenInUseAuthorization()
+//        }
+        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
     
