@@ -58,7 +58,30 @@ struct MatchListItemView: View {
     
     var body: some View {
         ZStack {
-            LightRectangleView()
+            LightRectangleView(alpha: 0.2, color: .white, radius: 15)
+            
+            VStack {
+                HStack(spacing: 0) {
+                    ForEach(workoutData.matchBadge.indices, id: \.self) { index in
+                        if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                            if badgeName.isEmpty {
+                                EmptyView()
+                            } else {
+                                Image(badgeName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 32, height: 36)
+                            }
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                    .offset(CGSize(width: 15.0, height: -20.0))
+                    Spacer()
+                }
+                Spacer()
+            }
+            
             HStack {
                 Spacer ()
                 
@@ -112,6 +135,6 @@ struct MatchListItemView: View {
 }
 
 #Preview {
-    MatchListItemView(workoutData: fakeWorkoutData[1])
+    MatchListItemView(workoutData: fakeWorkoutData[0])
         .environmentObject(HealthInteractor.shared)
 }

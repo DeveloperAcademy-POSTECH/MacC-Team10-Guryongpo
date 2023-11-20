@@ -120,7 +120,7 @@ extension WorkoutData {
 }
 
 let fakeWorkoutData: [WorkoutData] = [
-    WorkoutData(dataID: 1, date: "2023.10.09", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0], matchBadge: [3,3,3]),
+    WorkoutData(dataID: 1, date: "2023.10.09", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0], matchBadge: [0,3,2]),
     WorkoutData(dataID: 2, date: "2023.10.10", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, acceleration: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0], matchBadge: [0,1,3]),
     WorkoutData(dataID: 3, date: "2023.10.11", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, acceleration: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0], matchBadge: [-1,2,0]),
     WorkoutData(dataID: 4, date: "2023.10.12", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, acceleration: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0], matchBadge: [-1,2,0]),
