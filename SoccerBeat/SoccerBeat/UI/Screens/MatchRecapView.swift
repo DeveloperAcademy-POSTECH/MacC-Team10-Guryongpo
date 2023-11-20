@@ -10,7 +10,7 @@ import SwiftUI
 struct MatchRecapView: View {
     
     @EnvironmentObject var healthInteractor: HealthInteractor
-    @Binding var userWorkouts: [WorkoutData]?
+    @Binding var userWorkouts: [WorkoutData]
     
     var body: some View {
         VStack(spacing: 10) {

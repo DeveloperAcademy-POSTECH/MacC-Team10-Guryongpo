@@ -104,11 +104,25 @@ struct PlayerAbilityView: View {
 
 struct FieldRecordView: View {
     let workoutData: WorkoutData
-    let badgeImages: [Int: String] = [
+    let badgeImages: [[Int: String]] = [[
         -1: "",
-         0: "TrophyTestUnlocked",
-         1: "TrophyTestLocked",
-         2: "TrophyTestUnlocked"
+         0: "DistanceFirstUnlocked",
+         1: "DistanceSecondUnlocked",
+         2: "DistanceThirdUnlocked",
+         3: "DistanceFourthUnlocked"
+    ], [
+        -1: "",
+         0: "SprintFirstUnlocked",
+         1: "SprintSecondUnlocked",
+         2: "SprintThirdUnlocked",
+         3: "SprintFourthUnlocked"
+    ], [
+        -1: "",
+         0: "VelocityFirstUnlocked",
+         1: "VelocitySecondUnlocked",
+         2: "VelocityThirdUnlocked",
+         3: "VelocityFourthUnlocked"
+    ]
     ]
     var body: some View {
         VStack {
@@ -128,23 +142,28 @@ struct FieldRecordView: View {
             }
             
             HStack {
-                ForEach(workoutData.matchBadge, id: \.self) { value in
-                    self.getView(for: value)
+                ForEach(workoutData.matchBadge.indices, id: \.self) { index in
+                    if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                        if badgeName.isEmpty {
+                            EmptyView()
+                        } else {
+                            Image(badgeName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 74, height: 82)
+                        }
+                    } else {
+                        EmptyView()
+                    }
                 }
             }
-            
             Spacer()
-            
             ZStack {
                 LightRectangleView()
-                
                 VStack {
-                    
                     Spacer()
-                    
                     HStack {
                         Spacer()
-                        
                         VStack(alignment: .leading) {
                             Image("HeartbeatSign")
                             Text("뛴 거리")
@@ -176,9 +195,7 @@ struct FieldRecordView: View {
                                     .font(.fieldRecordUnit)
                             }
                         }
-                        
                         Spacer()
-                        
                         VStack(alignment: .leading) {
                             Image("HeartbeatSign")
                             Text("최고 속도")
@@ -209,32 +226,12 @@ struct FieldRecordView: View {
                             Text(workoutData.maxHeartRate.formatted() + " bpm")
                                 .font(.fieldRecordMeasure)
                         }
-                        
                         Spacer()
-                        
                     }
-                    
                     Spacer()
-                    
                 }
             }
             .kerning(-0.41)
-        }
-    }
-    
-    @ViewBuilder
-    func getView(for value: Int) -> some View {
-        if let imageName = badgeImages[value] {
-            if imageName.isEmpty {
-                EmptyView()
-            } else {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 74, height: 82)
-            }
-        } else {
-            EmptyView()
         }
     }
 }

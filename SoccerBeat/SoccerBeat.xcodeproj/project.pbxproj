@@ -113,6 +113,8 @@
 		D3E874D42AEE3F2A005DB7C5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E874D32AEE3F2A005DB7C5 /* AppState.swift */; };
 		FB2EC9C02B0AF8BB0050B0E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FB2EC9BF2B0AF8BB0050B0E8 /* SF-Pro-Text-Regular.otf */; };
 		FB2EC9C12B0AF8BB0050B0E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FB2EC9BF2B0AF8BB0050B0E8 /* SF-Pro-Text-Regular.otf */; };
+		FB2EC9C32B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2EC9C22B0B50BB0050B0E8 /* BadgeImageDictionary.swift */; };
+		FB2EC9C42B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2EC9C22B0B50BB0050B0E8 /* BadgeImageDictionary.swift */; };
 		FBA3DA622B00E6EF0025AD7B /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA3DA612B00E6EF0025AD7B /* ShareView.swift */; };
 		FBA3DA812B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */; };
 		FBA3DA822B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */; };
@@ -234,6 +236,7 @@
 		D3D7D1262AF23CA000B89196 /* SoccerBeat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoccerBeat.entitlements; sourceTree = "<group>"; };
 		D3E874D32AEE3F2A005DB7C5 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		FB2EC9BF2B0AF8BB0050B0E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		FB2EC9C22B0B50BB0050B0E8 /* BadgeImageDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeImageDictionary.swift; sourceTree = "<group>"; };
 		FBA3DA612B00E6EF0025AD7B /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-HeavyItalic.otf"; sourceTree = "<group>"; };
 		FBA3DA862B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-RegularItalic.otf"; sourceTree = "<group>"; };
@@ -430,6 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				BEA63A652B0AFDFF000A309D /* ActivityEnum.swift */,
+				FB2EC9C22B0B50BB0050B0E8 /* BadgeImageDictionary.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -746,6 +750,7 @@
 			files = (
 				BEA63A612B0AF608000A309D /* HighlightModifier.swift in Sources */,
 				BECCFAB42B06698F009F4BE5 /* DistanceChartOverview.swift in Sources */,
+				FB2EC9C32B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */,
 				BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */,
 				BE4A91562B011A46004AAFA3 /* BPMChart.swift in Sources */,
 				D3D4F18B2AF256AF006C6B8A /* HealthInteractor.swift in Sources */,
@@ -800,6 +805,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE0639DA2AE66D93008D1D4E /* SessionPagingView.swift in Sources */,
+				FB2EC9C42B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BEA63A622B0AFD29000A309D /* HighlightModifier.swift in Sources */,
 				BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */,

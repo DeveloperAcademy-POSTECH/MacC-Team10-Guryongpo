@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
-    @Binding var userWorkouts: [WorkoutData]?
+    @Binding var userWorkouts: [WorkoutData]
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     
@@ -43,7 +43,7 @@ struct MainView: View {
                         }.padding()
                         
                         NavigationLink {
-                            MatchDetailView(workoutData: userWorkouts![0])
+                            MatchDetailView(workoutData: userWorkouts[0])
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -54,14 +54,43 @@ struct MainView: View {
                                             .scaleEffect(CGSize(width: 0.7, height: 0.7))
                                             .fixedSize()
                                             .frame(width: 210, height: 210)
+                                        
+                                        VStack {
+                                            Spacer()
+                                            HStack {
+                                                ForEach(userWorkouts[0].matchBadge.indices, id: \.self) { index in
+                                                    if let badgeName = BadgeImageDictionary[index][userWorkouts[0].matchBadge[index]] {
+                                                        if badgeName.isEmpty {
+                                                            EmptyView()
+                                                        } else {
+                                                            Image(badgeName)
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fit)
+                                                                .frame(width: 74, height: 82)
+                                                        }
+                                                    } else {
+                                                        EmptyView()
+                                                    }
+                                                }
+                                            }
+                                            HStack {
+                                                Text("2023.11.11")
+                                                Text(" - ")
+                                                Text("지곡동")
+                                            }
+                                            HStack {
+                                                Text("경기 시간")
+                                                Text("74 : 12")
+                                            }
+                                        }
                                     }
                                 }
                                 Spacer()
                             }
                             .padding()
-                            .overlay {
-                                LightRectangleView()
-                            }.padding(.horizontal)
+//                            .overlay {
+//                                LightRectangleView()
+//                            }.padding(.horizontal)
                         }
                         
                         NavigationLink {
@@ -78,9 +107,9 @@ struct MainView: View {
                                 Spacer()
                             }
                             .padding()
-                            .overlay {
-                                LightRectangleView()
-                            }.padding(.horizontal)
+//                            .overlay {
+//                                LightRectangleView()
+//                            }.padding(.horizontal)
                         }
                         
                         Spacer()
@@ -104,6 +133,6 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView(userWorkouts: .constant(fakeWorkoutData))
-}
+//#Preview {
+//    MainView(userWorkouts: .constant(fakeWorkoutData))
+//}
