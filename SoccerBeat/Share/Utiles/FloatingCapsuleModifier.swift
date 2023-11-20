@@ -15,7 +15,7 @@ struct FloatingCapsuleModifier: ViewModifier {
             .padding(.vertical, 4)
             .overlay {
                 Capsule()
-                    .strokeBorder(Color(hex: 0x757575, alpha: 0.4), lineWidth: 3.0)
+                    .strokeBorder(Color(hex: 0x757575, alpha: 0.4), lineWidth: 0.8)
             }
     }
 }

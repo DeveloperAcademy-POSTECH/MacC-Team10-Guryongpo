@@ -37,6 +37,7 @@ struct ContentView: View {
         .onReceive(healthInteractor.fetchSuccess, perform: {
             print("ContentView: fetching user data success..")
             self.userWorkouts = healthInteractor.userWorkouts
+            
         })
         .tint(.white)
         .onAppear {
