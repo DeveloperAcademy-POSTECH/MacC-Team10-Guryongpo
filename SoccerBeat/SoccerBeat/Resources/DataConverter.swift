@@ -94,15 +94,15 @@ func dataConverter(totalDistance: Double, maxHeartRate: Int, maxVelocity: Double
         levels["rangeHeartRate"] = 5.0
     }
     
-    if totalMatchTime <= 40 {
+    if totalMatchTime <= 40 * 60 {
         levels["totalMatchTime"] = 1.0
-    } else if totalMatchTime > 40 && totalMatchTime <= 50 {
+    } else if totalMatchTime > 40 * 60 && totalMatchTime <= 50 * 60 {
         levels["totalMatchTime"] = 2.0
-    } else if totalMatchTime > 50 && totalMatchTime <= 60 {
+    } else if totalMatchTime > 50 * 60 && totalMatchTime <= 60 * 60 {
         levels["totalMatchTime"] = 3.0
-    } else if totalMatchTime > 60 && totalMatchTime <= 70 {
+    } else if totalMatchTime > 60 * 60 && totalMatchTime <= 70 * 60 {
         levels["totalMatchTime"] = 4.0
-    } else if totalMatchTime > 70 {
+    } else if totalMatchTime > 70 * 60 {
         levels["totalMatchTime"] = 5.0
     }
     

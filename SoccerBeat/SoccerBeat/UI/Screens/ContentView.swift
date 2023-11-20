@@ -33,7 +33,7 @@ struct ContentView: View {
                 // User does not allow permisson.
                 NilDataView()
             } else {
-                MainView(userWorkouts: $userWorkouts)
+                MainView(userWorkouts: $userWorkouts, averageData: $averageData)
             }
         }
         .task {

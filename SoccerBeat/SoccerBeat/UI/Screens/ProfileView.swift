@@ -11,6 +11,7 @@ struct ProfileView: View {
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     @State var userName: String = ""
+    @Binding var averageData: WorkoutAverageData
     
     var body: some View {
         ScrollView {
@@ -53,7 +54,20 @@ struct ProfileView: View {
                         .opacity(isFlipped ? 1 : 0)
                         .padding()
                     
-                    let average = [3.0, 2.4, 3.4, 3.2, 2.8, 3.3]
+                    let levels = dataConverter(totalDistance: averageData.totalDistance,
+                                               maxHeartRate: averageData.maxHeartRate,
+                                               maxVelocity: averageData.maxVelocity,
+                                               maxAcceleration: averageData.maxAcceleration,
+                                               sprintCount: averageData.sprintCount,
+                                               minHeartRate: averageData.minHeartRate,
+                                               rangeHeartRate: averageData.rangeHeartRate,
+                                               totalMatchTime: averageData.totalMatchTime)
+                    let average = [(levels["totalDistance"] ?? 1.0) * 0.15 + (levels["maxHeartRate"] ?? 1.0) * 0.35,
+                                   (levels["maxVelocity"] ?? 1.0) * 0.3 + (levels["maxAcceleration"] ?? 1.0) * 0.2,
+                                   (levels["maxVelocity"] ?? 1.0) * 0.25 + (levels["sprintCount"] ?? 1.0) * 0.125 + (levels["maxHeartRate"] ?? 1.0) * 0.125,
+                                   (levels["maxAcceleration"] ?? 1.0) * 0.4 + (levels["minHeartRate"] ?? 1.0) * 0.1,
+                                   (levels["totalDistance"] ?? 1.0) * 0.15 + (levels["rangeHeartRate"] ?? 1.0) * 0.15 + (levels["totalMatchTime"] ?? 1.0) * 0.2,
+                                   (levels["totalDistance"] ?? 1.0) * 0.3 + (levels["sprintCount"] ?? 1.0) * 0.1 + (levels["maxHeartRate"] ?? 1.0) * 0.1]
                     let recent = [4.1, 3.0, 3.5, 3.8, 3.5, 2.8]
                     ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
                         .fixedSize()

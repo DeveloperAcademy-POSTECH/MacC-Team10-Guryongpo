@@ -28,7 +28,7 @@ struct NilDataView: View {
                     Spacer()
                     
                     NavigationLink {
-                        ProfileView()
+//                        ProfileView()
                     } label: {
                         Image(systemName: "person.circle")
                             .font(.title)
