@@ -10,6 +10,7 @@ import SwiftUI
 struct FloatingCapsuleModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
+            .font(.custom("NotoSans-Regular", size: 14))
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .overlay {
