@@ -323,8 +323,6 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                         "Acceleration": Double(Int(self!.acceleration * 100.rounded()))/100
                     ]
                     
-                    print(metadata)
-                    
                     self?.routeBuilder?.finishRoute(with: workout, metadata: metadata) { (newRoute, _) in
                         guard newRoute != nil else {
                             NSLog("새로운 루트가 없습니다.")
