@@ -28,10 +28,9 @@ struct SpeedChart: View {
                 let workout = workouts[index]
                 
                 BarMark(
-                    x: .value("Day", workout.formattedDate, unit: .day),
-                    yStart: .value("Velocity", 1),
-                    yEnd: .value("Velocity", workout.velocity),
-                    width: .ratio(0.5)
+                    x: .value("Order", index),
+                    yStart: .value("Velocity", 0.0),
+                    yEnd: .value("Velocity", workout.velocity)
                 )
                 .foregroundStyle(isMax(workout) ? .speedMax 
                                  : (isMin(workout) ? .speedMin : .chartDefault))
@@ -42,6 +41,10 @@ struct SpeedChart: View {
                         Text(workout.velocity.rounded())
                             .font(.maxHighlight)
                     }
+                }
+                .annotation(position: .bottom, alignment: .center) {
+                    Text(workout.monthDay)
+                        .font(.system(size: 12))
                 }
             }
         }

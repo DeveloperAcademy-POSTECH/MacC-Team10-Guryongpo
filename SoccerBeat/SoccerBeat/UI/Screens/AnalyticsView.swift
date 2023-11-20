@@ -16,11 +16,11 @@ enum ActivityEnum: CaseIterable {
 
 struct AnalyticsView: View {
     @EnvironmentObject var healthInteracter: HealthInteractor
+    @State private var recent9Games = [WorkoutData]()
+    @State private var recent4Games = [WorkoutData]()
     
     var body: some View {
-        let recent9Games = healthInteracter.readRecentMatches(for: 9)
-        let recent4Games = healthInteracter.readRecentMatches(for: 4)
-        return VStack(spacing: 20) {
+        VStack(spacing: 20) {
             HStack {
                 Text("최근 경기 분석")
                 Spacer()
@@ -48,106 +48,132 @@ struct AnalyticsView: View {
             }
         }
         .padding(.horizontal)
+        .onReceive(healthInteracter.fetchSuccess) {
+            Task {
+                recent9Games = healthInteracter.readRecentMatches(for: 9)
+                let fourGames = healthInteracter.readRecentMatches(for: 4)
+                recent4Games = makeBlankWorkouts(with: fourGames)
+            }
+        }
+    }
+    
+    private func makeBlankWorkouts(with workouts: [WorkoutData]) -> [WorkoutData] {
+        var blanks = [WorkoutData]()
+        if workouts.count < 4 {
+            let count = workouts.count
+            let blankCount = 4-count
+            for _ in 0..<blankCount {
+                blanks.append(WorkoutData.blankExample)
+            }
+        }
+        return blanks + workouts
     }
 }
 
 struct ActivityComponent: View {
-    let userWorkouts: [WorkoutData]?
+    let userWorkouts: [WorkoutData]
     
     var activityType: ActivityEnum
     
-    private var title: String {
+    private var navigationAssistantTitle: String {
+        let seeTotal = " 전체보기"
         switch activityType {
         case .distance:
-            return "활동량 (MF)"
+            return "뛴 거리" + seeTotal
         case .sprint:
-            return "스프린트 (FW)"
+            return "스프린트" + seeTotal
         case .speed:
-            return "최고 속도 (DF)"
+            return "최고 속도" + seeTotal
         case .heartrate:
-            return "심박수"
+            return "심박수" + seeTotal
         }
     }
     private var value: String {
         switch activityType {
         case .distance:
-            var buffer = "\(userWorkouts?.first?.distance)"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Km"
+            return "\(userWorkouts.last?.distance.rounded(at: 1) ?? "0.0")" + "Km"
         case .sprint:
-            var buffer = "\(userWorkouts?.first?.sprint)"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Times"
+            return "\(userWorkouts.last?.sprint ?? 0)" + "Times"
         case .speed:
-            var buffer = "\(userWorkouts?.first?.velocity)"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Km/h"
+            return "\(userWorkouts.last?.velocity.rounded(at: 1) ?? "0.0")" + "Km/h"
         case .heartrate:
-            var buffer = "\(userWorkouts?.first?.heartRate["max"])"
-            buffer = buffer.replacingOccurrences(of: "Optional", with: "")
-            buffer = buffer.replacingOccurrences(of: "(", with: "")
-            buffer = buffer.replacingOccurrences(of: ")", with: "")
-            return "\(buffer) Bpm"
+            return "\(userWorkouts.last?.maxHeartRate ?? 0)" + "Bpm"
         }
     }
     
-    private var graphImage: String {
+    private var valueColor: Color {
         switch activityType {
         case .distance:
-            return "ActivityGraph"
+            return .navigationSportyDistanceTitle
         case .sprint:
-            return "SprintGraph"
+            return .navigationSportySprintTitle
         case .speed:
-            return "MaxSpeedGraph"
+            return .navigationSportySpeedTitle
         case .heartrate:
-            return "HeartrateGraph"
+            return .navigationSportyBPMTitle
         }
     }
     
-    private var valueColor: LinearGradient {
+    @ViewBuilder
+    private var overview: some View {
         switch activityType {
         case .distance:
-            return .zone2Bpm
+            DistanceChartOverview(workouts: userWorkouts)
         case .sprint:
-            return .zone3Bpm
+            SprintChartOverview(workouts: userWorkouts)
         case .speed:
-            return .zone1Bpm
+            SpeedChartOverview(workouts: userWorkouts)
         case .heartrate:
-            return .zone4Bpm
+            BPMChartOverview(workouts: userWorkouts)
+                .offset(y: 10)
         }
     }
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image("Running")
+        ZStack {
+            LightRectangleView(alpha: 1.0, color: .black, radius: 15.0)
+                .frame(height: 90)
+            
+            HStack {
+                HStack(alignment: .bottom) {
+                    overview
+                        .frame(height: 64)
+                        .padding(.leading, 8)
+                    
+                    Image(systemName: "figure.run")
                         .resizable()
+                        .foregroundStyle(valueColor)
+                        .scaleEffect(x: -1, y: 1)
                         .frame(width: 22, height: 22)
-                    Text(title)
-                        .foregroundStyle(.white)
                 }
-                Text(value)
-                    .font(.custom("SFProText-HeavyItalic", size: 32))
+                .frame(width: 64)
+                
+                VStack(alignment: .leading) {
+                    Text(value)
+                        .font(Font.sfProDisplay(size: 28,
+                                                weight: .heavyItalic))
+                    Text(navigationAssistantTitle)
+                        .font(Font.notoSans(size: 14, weight: .regular))
+                }
+                .padding(.leading, 100)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .resizable()
                     .foregroundStyle(valueColor)
+                    .frame(width: 10, height: 18)
             }
-            Spacer()
-            Image(graphImage)
-        }
-        .padding()
-        .padding(.horizontal)
-        .overlay {
-            LightRectangleView()
+            .padding(.horizontal, 11)
         }
     }
 }
-//
-//#Preview {
-//    AnalyticsView()
-//}
+
+#Preview {
+    ForEach(ActivityEnum.allCases, id: \.self) { act in
+        ActivityComponent(userWorkouts: fakeWorkoutData,
+                          activityType: act)
+    }
+    .padding(.horizontal, 16)
+    
+}

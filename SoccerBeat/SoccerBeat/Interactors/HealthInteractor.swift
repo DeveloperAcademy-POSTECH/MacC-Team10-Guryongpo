@@ -15,6 +15,16 @@ class HealthInteractor: ObservableObject {
     var healthStore = HKHealthStore()
     // Entire user workouts in HealthKit data.
     var userWorkouts: [WorkoutData] = []
+    // Average of the user workout data.
+    var userAverage: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
+                                                             minHeartRate: 0,
+                                                             rangeHeartRate: 0,
+                                                             totalDistance: 0.0,
+                                                             maxAcceleration: 0,
+                                                             maxVelocity: 0.0,
+                                                             sprintCount: 0,
+                                                             totalMatchTime: 0)
+    
     var allWorkouts: [HKWorkout] = []
     var allMetadata: [[String : Any]] = []
     var allRoutes: [CLLocation] = []
@@ -97,170 +107,182 @@ class HealthInteractor: ObservableObject {
                 
                 var matchBadge: [Int] = calculateBadgeData(distance: distance, sprint: sprint, velocity: velocity)
             
-            
-            
-            var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
-            userWorkouts.append(WorkoutData(dataID: dataID,
-                                            date: dateFormatter.string(from: allWorkout.startDate),
-                                            time: time as! String,
-                                            distance: custom["Distance"] as! Double,
-                                            sprint: custom["SprintCount"] as! Int,
-                                            velocity: custom["MaxSpeed"] as! Double,
-                                            acceleration: custom["Acceleration"] as! Double,
-                                            heartRate: ["max": custom["MaxHeartRate"] as! Int,
-                                                        "min": custom["MinHeartRate"] as! Int],
-                                            route: routes,
-                                            center: [latSum / Double(routes.count),
-                                                     lonSum / Double(routes.count)],
-                                            matchBadge: matchBadge))
-            dataID += 1
+                var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
+                userWorkouts.append(WorkoutData(dataID: dataID,
+                                                date: dateFormatter.string(from: allWorkout.startDate),
+                                                time: time as! String,
+                                                distance: custom["Distance", default: 0.0] as! Double,
+                                                sprint: custom["SprintCount", default: 0] as! Int,
+                                                velocity: custom["MaxSpeed", default: 0.0] as! Double,
+                                                acceleration: custom["Acceleration", default: 0.0] as! Double,
+                                                heartRate: ["max": custom["MaxHeartRate", default: 0] as! Int,
+                                                            "min": custom["MinHeartRate", default: 0] as! Int],
+                                                route: routes,
+                                                center: [latSum / Double(routes.count),
+                                                         lonSum / Double(routes.count)],
+                                                matchBadge: matchBadge))
+                
+                // Calculating average value..
+                let maxHeartRate = userWorkouts.last?.heartRate["max"] ?? 0
+                let minHeartRate = userWorkouts.last?.heartRate["max"] ?? 0
+                userAverage.maxHeartRate += maxHeartRate
+                userAverage.minHeartRate += minHeartRate
+                userAverage.rangeHeartRate += maxHeartRate - minHeartRate
+                userAverage.totalDistance += userWorkouts.last?.distance ?? 0.0
+                userAverage.maxAcceleration += userWorkouts.last?.acceleration ?? 0.0
+                userAverage.maxVelocity += userWorkouts.last?.velocity ?? 0.0
+                userAverage.sprintCount += userWorkouts.last?.sprint ?? 0
+//                userAverage.totalMatchTime += userWorkouts.last?.time ?? 0.0
+                
+                dataID += 1
+            }
+            self.fetchSuccess.send()
         }
-        self.fetchSuccess.send()
     }
-}
 
-func getAllWorkout() async -> [HKWorkout]? {
-    let soccer = HKQuery.predicateForObjects(from: .default())
-    let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-        healthStore.execute(HKSampleQuery(sampleType: .workoutType(), predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
-            if let hasError = error {
-                continuation.resume(throwing: hasError)
-                return
-            }
-            continuation.resume(returning: samples!)
-        }))
+    func getAllWorkout() async -> [HKWorkout]? {
+        let soccer = HKQuery.predicateForObjects(from: .default())
+        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+            healthStore.execute(HKSampleQuery(sampleType: .workoutType(), predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
+                if let hasError = error {
+                    continuation.resume(throwing: hasError)
+                    return
+                }
+                continuation.resume(returning: samples!)
+            }))
+        }
+        guard let workouts = data as? [HKWorkout] else {
+            return nil
+        }
+        return workouts
     }
-    guard let workouts = data as? [HKWorkout] else {
-        return nil
-    }
-    return workouts
-}
 
-func getCustomData() async -> [HKQuantitySample]? {
-    
-    guard let speedType =
-            HKObjectType.quantityType(forIdentifier:
-                                        HKQuantityTypeIdentifier.runningSpeed) else {
-        fatalError("*** Unable to create a distance type ***")
-    }
-    
-    let soccer = HKQuery.predicateForObjects(from: .default())
-    let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-        self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
-            if let hasError = error {
-                continuation.resume(throwing: hasError)
-                return
-            }
-            continuation.resume(returning: samples!)
-        }))
-    }
-    guard let speedData = data as? [HKQuantitySample] else {
-        return nil
-    }
-    return speedData
-}
+    func getCustomData() async -> [HKQuantitySample]? {
 
-func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
-    // matchBadge: [distance, sprint, velocity]
-    // [nil, first trophy, second trophy, third trophy] == [-1, 0, 1, 2]
-    var matchBadge: [Int] = [0, 0, 0]
-    
-    if distance < 1.5 {
-        matchBadge[0] = -1
-    } else if (1.5 <= distance && distance < 2.0) {
-        matchBadge[0] = 0
-        allBadges[0][1] = true
-    } else if (2.0 <= distance && distance < 2.5) {
-        matchBadge[0] = 1
-        allBadges[0][1] = true
-    } else if (2.5 <= distance && distance < 3.0) {
-        matchBadge[0] = 2
-        allBadges[0][2] = true
-    } else {
-        matchBadge[0] = 3
-        allBadges[0][3] = true
-    }
-    
-    if sprint < 5 {
-        matchBadge[1] = -1
-    } else if (5 <= distance && distance < 7) {
-        matchBadge[1] = 0
-        allBadges[1][0] = true
-    } else if (7 <= distance && distance < 9) {
-        matchBadge[1] = 1
-        allBadges[1][1] = true
-    } else if (9 <= distance && distance < 11) {
-        matchBadge[1] = 2
-        allBadges[1][2] = true
-    } else {
-        matchBadge[1] = 3
-        allBadges[1][3] = true
-    }
-    
-    if velocity < 15 {
-        matchBadge[2] = -1
-    } else if (15 <= distance && distance < 20) {
-        matchBadge[2] = 0
-        allBadges[2][0] = true
-    } else if (20 <= distance && distance < 25) {
-        matchBadge[2] = 1
-        allBadges[2][1] = true
-    } else if (25 <= distance && distance < 30) {
-        matchBadge[2] = 2
-        allBadges[2][2] = true
-    } else {
-        matchBadge[2] = 3
-        allBadges[2][3] = true
-    }
-    
-    return matchBadge
-}
+        guard let speedType =
+                HKObjectType.quantityType(forIdentifier:
+                                            HKQuantityTypeIdentifier.runningSpeed) else {
+            fatalError("*** Unable to create a distance type ***")
+        }
 
-func getWorkoutRoute(workout: HKWorkout) async -> ([CLLocation]?) {
-    let byWorkout = HKQuery.predicateForObjects(from: workout)
-    
-    let samples = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-        healthStore.execute(HKAnchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: byWorkout, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: { (query, samples, deletedObjects, anchor, error) in
-            if let hasError = error {
-                continuation.resume(throwing: hasError); return
-            }
-            
-            guard let samples = samples else { return }
-            
-            continuation.resume(returning: samples)
-        }))
+        let soccer = HKQuery.predicateForObjects(from: .default())
+        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+            self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
+                if let hasError = error {
+                    continuation.resume(throwing: hasError)
+                    return
+                }
+                continuation.resume(returning: samples!)
+            }))
+        }
+        guard let speedData = data as? [HKQuantitySample] else {
+            return nil
+        }
+        return speedData
     }
-    
-    guard let route = (samples as? [HKWorkoutRoute])?.first else { return nil }
-    // save Meta data in workoutRoute
-    samples?.forEach { sample in
-        allMetadata.append(sample.metadata!)
+
+    func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
+        // matchBadge: [distance, sprint, velocity]
+        // [nil, first trophy, second trophy, third trophy] == [-1, 0, 1, 2]
+        var matchBadge: [Int] = [0, 0, 0]
+
+        if distance < 1.5 {
+            matchBadge[0] = -1
+        } else if (1.5 <= distance && distance < 2.0) {
+            matchBadge[0] = 0
+            allBadges[0][1] = true
+        } else if (2.0 <= distance && distance < 2.5) {
+            matchBadge[0] = 1
+            allBadges[0][1] = true
+        } else if (2.5 <= distance && distance < 3.0) {
+            matchBadge[0] = 2
+            allBadges[0][2] = true
+        } else {
+            matchBadge[0] = 3
+            allBadges[0][3] = true
+        }
+
+        if sprint < 5 {
+            matchBadge[1] = -1
+        } else if (5 <= distance && distance < 7) {
+            matchBadge[1] = 0
+            allBadges[1][0] = true
+        } else if (7 <= distance && distance < 9) {
+            matchBadge[1] = 1
+            allBadges[1][1] = true
+        } else if (9 <= distance && distance < 11) {
+            matchBadge[1] = 2
+            allBadges[1][2] = true
+        } else {
+            matchBadge[1] = 3
+            allBadges[1][3] = true
+        }
+
+        if velocity < 15 {
+            matchBadge[2] = -1
+        } else if (15 <= distance && distance < 20) {
+            matchBadge[2] = 0
+            allBadges[2][0] = true
+        } else if (20 <= distance && distance < 25) {
+            matchBadge[2] = 1
+            allBadges[2][1] = true
+        } else if (25 <= distance && distance < 30) {
+            matchBadge[2] = 2
+            allBadges[2][2] = true
+        } else {
+            matchBadge[2] = 3
+            allBadges[2][3] = true
+        }
+
+        return matchBadge
     }
-    
-    let locations = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
-        var allLocations = [CLLocation]() // built up over time as and when HK tells us
-        healthStore.execute(HKWorkoutRouteQuery(route: route) { (query, locationsOrNil, done, errorOrNil) in
-            // This block may be called multiple times.
-            if let error = errorOrNil {
-                continuation.resume(throwing: error); return
-            }
-            
-            guard let locations = locationsOrNil else {
-                fatalError("Invalid State: This can only fail if there was an error.")
-            }
-            allLocations += locations
-            
-            if done {
-                continuation.resume(returning: allLocations)
-            }
-        })
+
+    func getWorkoutRoute(workout: HKWorkout) async -> ([CLLocation]?) {
+        let byWorkout = HKQuery.predicateForObjects(from: workout)
+
+        let samples = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+            healthStore.execute(HKAnchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: byWorkout, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: { (query, samples, deletedObjects, anchor, error) in
+                if let hasError = error {
+                    continuation.resume(throwing: hasError); return
+                }
+
+                guard let samples = samples else { return }
+
+                continuation.resume(returning: samples)
+            }))
+        }
+
+        guard let route = (samples as? [HKWorkoutRoute])?.first else { return nil }
+        // save Meta data in workoutRoute
+        samples?.forEach { sample in
+            allMetadata.append(sample.metadata!)
+        }
+
+        let locations = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
+            var allLocations = [CLLocation]() // built up over time as and when HK tells us
+            healthStore.execute(HKWorkoutRouteQuery(route: route) { (query, locationsOrNil, done, errorOrNil) in
+                // This block may be called multiple times.
+                if let error = errorOrNil {
+                    continuation.resume(throwing: error); return
+                }
+
+                guard let locations = locationsOrNil else {
+                    fatalError("Invalid State: This can only fail if there was an error.")
+                }
+                allLocations += locations
+
+                if done {
+                    continuation.resume(returning: allLocations)
+                }
+            })
+        }
+        return locations
     }
-    return locations
-}
 }
 
 extension HealthInteractor {
     func readRecentMatches(for count: Int) -> [WorkoutData] {
+        guard !userWorkouts.isEmpty else { return [] }
         guard userWorkouts.count >= count  else { return userWorkouts }
         let startIndex = userWorkouts.count - count
         let lastIndex = userWorkouts.count-1

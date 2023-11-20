@@ -99,9 +99,13 @@ extension Font {
     public static let maxHighlight = Font.sfProText(size: 12, weight: .semiboldItalic)
     public static let dayUnit = Font.sfProText(size: 14, weight: .lightItalic)
     public static let averageValue = Font.sfProText(size: 18, weight: .heavyItalic)
+    
+    // MARK: - AlertView
+    public static let alertSpeed = Font.notoSans(size: 36, weight: .blackItalic)
+    public static let lastSprint = Font.notoSans(size: 15, weight: .blackItalic)
 }
 
-fileprivate extension Font {
+extension Font {
     static func sfCompactText(size fontSize: CGFloat, weight: SFCompactText = .regular) -> Font {
         Font.custom("\(SFCompactText.fontName)-\(weight.capitalized)",
                                size: fontSize)
@@ -123,7 +127,7 @@ fileprivate extension Font {
     }
 }
 
-private enum SFCompactText: String {
+enum SFCompactText: String {
     static let fontName = String(describing: Self.self)
     
     case medium
@@ -136,7 +140,7 @@ private enum SFCompactText: String {
     }
 }
 
-private enum SFProText: String {
+enum SFProText: String {
     static let fontName = String(describing: Self.self)
     
     case blackItalic
@@ -151,7 +155,7 @@ private enum SFProText: String {
     }
 }
 
-private enum SFProDisplay: String {
+enum SFProDisplay: String {
     static let fontName = String(describing: Self.self)
     
     case heavyItalic
@@ -163,7 +167,7 @@ private enum SFProDisplay: String {
     }
 }
 
-private enum NotoSans: String {
+enum NotoSans: String {
     static let fontName = String(describing: Self.self)
     
     case regular

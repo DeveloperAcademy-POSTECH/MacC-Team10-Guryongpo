@@ -13,6 +13,7 @@ struct GameProgressView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     private var isGamePaused: Bool { workoutManager.session?.state == .paused }
     private var whenTheGameStarted: Date { workoutManager.builder?.startDate ?? Date() }
+    @State var isSprintSheet: Bool = false
     
     // MARK: - Body
     var body: some View {
@@ -78,13 +79,14 @@ struct GameProgressView: View {
                 SprintView()
             }
             .padding(.horizontal)
-            .fullScreenCover(isPresented: $workoutManager.isInZone5For2Min) {
-                AlertView()
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                            workoutManager.isInZone5For2Min = false
-                        }
-                    }
+            .onChange(of: workoutManager.isSprint) { isSprint in
+                if isSprint == false {
+                    self.isSprintSheet.toggle()
+                }
+            }
+            .fullScreenCover(isPresented: $isSprintSheet) {
+                // 1 m/s = 3.6 km/h
+                SprintSheetView(speed: Double(Int(workoutManager.recentSprintSpeed * 3.6 * 100) / 100).formatted() + "km/h" )
             }
         }
     }

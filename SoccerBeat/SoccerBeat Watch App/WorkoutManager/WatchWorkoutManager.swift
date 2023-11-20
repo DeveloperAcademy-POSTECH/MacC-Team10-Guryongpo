@@ -37,10 +37,10 @@ class WorkoutManager: NSObject, ObservableObject {
     
     let sprintSpeed: Double = 5.5556 // modify it to test code
     
-    var isSprint: Bool = false
+    @Published var isSprint: Bool = false
     var maxSpeed: Double = 0.0
-    var recentSprintSpeed: Double = 0.0
-    var speed: Double = 0.0 {
+    @Published var recentSprintSpeed: Double = 0.0
+    @Published var speed: Double = 0.0 {
         didSet(oldValue) {
             
             // 가속도 측정
@@ -82,13 +82,13 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     
     func computeMaxHeartRate() {
-        do {
-            let birthYear = try healthStore.dateOfBirthComponents().year
-            let year = Calendar.current.component(.year, from: Date())
-            maxHeartRate = Double(220 - ( year - birthYear!))
-        } catch {
+//        do {
+//            let birthYear = try healthStore.dateOfBirthComponents().year
+//            let year = Calendar.current.component(.year, from: Date())
+//            maxHeartRate = Double(220 - ( year - birthYear!))
+//        } catch {
             maxHeartRate = 190
-        }
+//        }
     }
     
     // MARK: - 데이터 수집 및 경기 시작

@@ -69,10 +69,12 @@ struct MatchListItemView: View {
             HStack {
                 Spacer ()
                 
-                Image("Heatmap01")
-                    .resizable()
-                    .frame(width: 80, height: 120)
-                    .padding(.leading, 5)
+                let average = [3.0, 2.4, 3.4, 3.2, 2.8, 3.3]
+                let recent = [4.1, 3.0, 3.5, 3.8, 3.5, 2.8]
+                ViewControllerContainer(ThumbnailViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                    .scaleEffect(CGSize(width: 0.4, height: 0.4))
+                    .fixedSize()
+                    .frame(width: 88, height: 88)
                 
                 VStack(alignment: .leading) {
                     Text(workoutData.date.description + " - " + currentLocation)
@@ -111,7 +113,8 @@ struct MatchListItemView: View {
                 Spacer()
             }
             .padding(.vertical, 10)
-        }.frame(height: 150)
+        }
+        .frame(height: 114)
     }
 }
 

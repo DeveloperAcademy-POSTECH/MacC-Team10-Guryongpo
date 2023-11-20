@@ -261,6 +261,8 @@ struct FieldMovementView: View {
             Spacer()
             HeatmapView(coordinate: CLLocationCoordinate2D(latitude: workoutData.center[0], longitude: workoutData.center[1]), polylineCoordinates: workoutData.route)
                 .frame(height: 500)
+                .cornerRadius(15.0)
+                .padding(.horizontal)
         }
         Spacer()
             .frame(height: 120)

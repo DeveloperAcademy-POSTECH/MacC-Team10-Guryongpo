@@ -13,7 +13,12 @@ struct StartView: View {
     var body: some View {
         VStack {
             if !workoutManager.showingPrecount {
-                Button(action: { workoutManager.showingPrecount.toggle()}) { Image(.startButton)
+                ZStack {
+                    Image("backgroundGlow")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                    Button(action: { workoutManager.showingPrecount.toggle()}) { Image(.startButton)
+                    }
                 }
             } else {
                 PrecountView()
