@@ -85,6 +85,7 @@ class ProfileModel: ObservableObject {
                 case .failure(let error):
                     self.imageState = .failure(error)
                 }
+                
             }
         }
     }

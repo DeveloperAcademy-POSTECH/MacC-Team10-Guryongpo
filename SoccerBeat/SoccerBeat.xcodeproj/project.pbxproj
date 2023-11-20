@@ -15,7 +15,6 @@
 		682D64872AFD1D8500D7F07B /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64862AFD1D8500D7F07B /* Profile.swift */; };
 		682D64892AFDBF8C00D7F07B /* PhotoSelectButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64882AFDBF8C00D7F07B /* PhotoSelectButtonView.swift */; };
 		682D64A82AFE77D500D7F07B /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682D64A72AFE77D500D7F07B /* SoundManager.swift */; };
-		682D64AB2AFE80F200D7F07B /* FifaBackground.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */; };
 		682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */; };
 		682D64B32AFEA6F000D7F07B /* PhotoSelectEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 682D64B22AFEA6F000D7F07B /* PhotoSelectEffect.mp3 */; };
 		683825052B06249F00FE9CDF /* SprintSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683825042B06249F00FE9CDF /* SprintSheetView.swift */; };
@@ -27,6 +26,8 @@
 		685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B6D2AE5396200783433 /* LightRectangleView.swift */; };
 		685D7B752AE53DC400783433 /* SpeedChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B742AE53DC400783433 /* SpeedChart.swift */; };
 		685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */; };
+		6871CDAA2AF261D5006A4ACB /* AnalyticsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */; };
+		6876C0BF2B0B7F73005C6872 /* FifaBackground.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6876C0BE2B0B7F73005C6872 /* FifaBackground.mp3 */; };
 		6898F2852AEFD7FC0075A573 /* SprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6898F2842AEFD7FC0075A573 /* SprintView.swift */; };
 		68B0732E2AF11847004C723F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B0732C2AF11847004C723F /* AlertView.swift */; };
 		68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
@@ -161,7 +162,6 @@
 		682D64862AFD1D8500D7F07B /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		682D64882AFDBF8C00D7F07B /* PhotoSelectButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectButtonView.swift; sourceTree = "<group>"; };
 		682D64A72AFE77D500D7F07B /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
-		682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FifaBackground.mp3; sourceTree = "<group>"; };
 		682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CardFlipEffect.mp3; sourceTree = "<group>"; };
 		682D64B22AFEA6F000D7F07B /* PhotoSelectEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PhotoSelectEffect.mp3; sourceTree = "<group>"; };
 		683825042B06249F00FE9CDF /* SprintSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintSheetView.swift; sourceTree = "<group>"; };
@@ -173,6 +173,8 @@
 		685D7B6D2AE5396200783433 /* LightRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightRectangleView.swift; sourceTree = "<group>"; };
 		685D7B742AE53DC400783433 /* SpeedChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedChart.swift; sourceTree = "<group>"; };
 		685D7B782AE5432C00783433 /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
+		6871CDA92AF261D5006A4ACB /* AnalyticsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsDetailView.swift; sourceTree = "<group>"; };
+		6876C0BE2B0B7F73005C6872 /* FifaBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FifaBackground.mp3; sourceTree = "<group>"; };
 		6898F2842AEFD7FC0075A573 /* SprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintView.swift; sourceTree = "<group>"; };
 		68B0732C2AF11847004C723F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
@@ -301,7 +303,7 @@
 		682D64A92AFE80E100D7F07B /* MusicGroup */ = {
 			isa = PBXGroup;
 			children = (
-				682D64AA2AFE80F200D7F07B /* FifaBackground.mp3 */,
+				6876C0BE2B0B7F73005C6872 /* FifaBackground.mp3 */,
 				682D64B02AFE90A000D7F07B /* CardFlipEffect.mp3 */,
 				682D64B22AFEA6F000D7F07B /* PhotoSelectEffect.mp3 */,
 			);
@@ -666,6 +668,7 @@
 				FBE203942AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf in Resources */,
 				FB2EC9C62B0B527F0050B0E8 /* SF-Pro-Text-Bold.otf in Resources */,
 				685D7B592AE38D1A00783433 /* .swiftlint.yml in Resources */,
+				6876C0BF2B0B7F73005C6872 /* FifaBackground.mp3 in Resources */,
 				BED269762AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				BEDE52422B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				BE4069D72AF1F98B00FA3030 /* NotoSans-Regular.ttf in Resources */,
@@ -682,7 +685,6 @@
 				BE4069C92AF1F80D00FA3030 /* SF-Compact-Text-Regular.otf in Resources */,
 				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
 				FBA3DA812B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */,
-				682D64AB2AFE80F200D7F07B /* FifaBackground.mp3 in Resources */,
 				BE4069CB2AF1F80D00FA3030 /* SF-Compact-Text-Medium.otf in Resources */,
 				BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */,
 				BE4069DA2AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf in Resources */,
@@ -1013,7 +1015,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -1053,7 +1055,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -1095,7 +1097,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -1134,7 +1136,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.GuryongpoIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;

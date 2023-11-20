@@ -11,7 +11,7 @@ struct ProfileView: View {
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
     @State var userName: String = ""
-    var userImage: UIImage?
+    @State var userImage: UIImage?
     
     var body: some View {
         ScrollView {
@@ -24,10 +24,6 @@ struct ProfileView: View {
                     
                     HStack {
                         VStack {
-                            
-                            if userImage != nil {
-                                Image(uiImage: userImage!)
-                            }
                             
                             HStack {
                                 Text("# 나만의 선수 카드를 만들어 보세요.")
@@ -160,16 +156,7 @@ struct ProfileView: View {
             }
         }.onAppear {
             userName = UserDefaults.standard.string(forKey: "userName") ?? ""
-            
-            loadImage()
         }
-    }
-    
-    func loadImage() -> UIImage? {
-         guard let data = UserDefaults.standard.data(forKey: "KEY") else { return nil}
-         let decoded = try! PropertyListDecoder().decode(Data.self, from: data)
-         let image = UIImage(data: decoded)
-        return image
     }
 }
 
