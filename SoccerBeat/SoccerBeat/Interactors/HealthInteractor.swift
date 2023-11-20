@@ -207,7 +207,7 @@ class HealthInteractor: ObservableObject {
             matchBadge[0] = -1
         } else if (1.5 <= distance && distance < 2.0) {
             matchBadge[0] = 0
-            allBadges[0][1] = true
+            allBadges[0][0] = true
         } else if (2.0 <= distance && distance < 2.5) {
             matchBadge[0] = 1
             allBadges[0][1] = true
