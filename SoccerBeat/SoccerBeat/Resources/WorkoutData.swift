@@ -43,17 +43,6 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               route: [],
                               center: [37.58647414212885, 126.9748537678651])
     
-    static let blankExample = Self(dataID: 0,
-                                   date: "2023.10.15",
-                                   time: "34:43",
-                                   distance: 0.1,
-                                   sprint: 1,
-                                   velocity: 0.5,
-                                   acceleration: 1.0,
-                                   heartRate: ["max": 80, "min": 60],
-                                   route: [],
-                                   center: [37.58647414212885, 126.9748537678651])
-    
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "Ko-kr")
