@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct TrophyView: View {
-    let column: Int
-    let row: Int
-    let isHidden: Bool
+    let sort: Int
+    let level: Int
+    let isOpened: Bool
+    
+    private var imageName: String {
+        isOpened 
+        ? badgeUnlockedImages[sort][level]
+        : badgeLockedImages[sort][level]
+    }
     
     var body: some View {
-        Text("hello world")
+        Image(imageName)
+            .resizable()
+            .scaledToFit()
     }
 }
 
-
 #Preview {
-    TrophyView(column: 0, row: 1, isHidden: false)
+    TrophyView(sort: 0, level: 1, isOpened: false)
 }
