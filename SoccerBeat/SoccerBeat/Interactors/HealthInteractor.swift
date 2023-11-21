@@ -89,7 +89,7 @@ class HealthInteractor: ObservableObject {
         print("fetchAllData: attempting to fetch all data..")
         
         allWorkouts = await getAllWorkout() ?? []
-        if !allWorkouts.isEmpty {
+        if !allWorkouts.isEmpty && userWorkouts.isEmpty {
             var dataID = 0
             for allWorkout in allWorkouts {
                 var latSum = 0.0
