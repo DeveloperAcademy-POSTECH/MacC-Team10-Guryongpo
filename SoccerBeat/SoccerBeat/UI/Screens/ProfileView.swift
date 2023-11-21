@@ -14,6 +14,7 @@ struct ProfileView: View {
     @Binding var averageData: WorkoutAverageData
     @Binding var maximumData: WorkoutAverageData
     @State var userImage: UIImage?
+    @FocusState private var isFocused: Bool
     
     
     var body: some View {
@@ -155,12 +156,20 @@ struct ProfileView: View {
                         TrophyCollectionView()
                         
                     }
+                }.onTapGesture {
+                    hideKeyboard()
                 }
             }
             .onAppear {
                 userName = UserDefaults.standard.string(forKey: "userName") ?? ""
             }
         }
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 

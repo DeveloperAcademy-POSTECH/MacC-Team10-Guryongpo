@@ -52,7 +52,7 @@ struct MainView: View {
                         }.padding()
                         
                         NavigationLink {
-                            MatchDetailView(workoutData: userWorkouts[0])
+                            MatchDetailView(averageData: $averageData, maximumData: $maximumData, workoutData: userWorkouts[0])
                         } label: {
                             ZStack {
                                 LightRectangleView(alpha: 0.6, color: .black, radius: 15)
@@ -143,7 +143,7 @@ struct MainView: View {
                         
                         NavigationLink {
                             ScrollView {
-                                MatchRecapView(userWorkouts: $userWorkouts, averageData: $averageData)
+                                MatchRecapView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData)
                             }
                         } label: {
                             ZStack {

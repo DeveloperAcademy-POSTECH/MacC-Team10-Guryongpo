@@ -12,6 +12,7 @@ struct MatchRecapView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @Binding var userWorkouts: [WorkoutData]
     @Binding var averageData: WorkoutAverageData
+    @Binding var maximumData: WorkoutAverageData
     
     var body: some View {
         VStack(spacing: 10) {
@@ -41,7 +42,7 @@ struct MatchRecapView: View {
             VStack {
                 ForEach(userWorkouts ?? [], id: \.self) { workout in
                     NavigationLink {
-                        MatchDetailView(workoutData: workout)
+                        MatchDetailView(averageData: $averageData, maximumData: $maximumData, workoutData: workout)
                     } label: {
                         MatchListItemView(workoutData: workout, averageData: $averageData)
                     }

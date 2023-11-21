@@ -122,6 +122,8 @@ struct NilProfileView: View {
                         TrophyCollectionView()
                         
                     }
+                }.onTapGesture {
+                    hideKeyboard()
                 }
             }
             .onAppear {
