@@ -29,7 +29,7 @@ struct NilDataView: View {
                     Spacer()
                     
                     NavigationLink {
-                        ProfileView(averageData: $workoutAverageData)
+                        NilProfileView()
                     } label: {
                         Image(systemName: "person.circle")
                             .font(.title)
