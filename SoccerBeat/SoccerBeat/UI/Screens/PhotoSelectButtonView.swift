@@ -15,30 +15,30 @@ struct PhotoSelectButtonView: View {
                      matching: .images,
                      photoLibrary: .shared()) {
             HStack {
-                Text("사진 선택하기")
-                    .font(.selectPhotoButton)
+                Image(systemName: "camera")
+                    .font(.system(size: 12))
                     .foregroundStyle(.white)
                     .padding(.horizontal)
                     .overlay {
                         Capsule()
                             .stroke(style: .init(lineWidth: 0.8))
                             .foregroundColor(.brightmint)
-                            .frame(height: 34)
+                            .frame(width: 24, height: 24)
                     }
-                NavigationLink {
-                    ShareView(viewModel: viewModel)
-                } label: {
-                    Image(systemName: "square.and.arrow.up")
-                        .font(.selectPhotoButton)
-                        .foregroundStyle(.white)
-                        .padding()
-                        .overlay {
-                            Circle()
-                                .stroke(style: .init(lineWidth: 0.8))
-                                .foregroundColor(.brightmint)
-                                .frame(width: 34, height: 34)
-                        }
-                }
+//                NavigationLink {
+//                    ShareView(viewModel: viewModel)
+//                } label: {
+//                    Image(systemName: "square.and.arrow.up")
+//                        .font(.selectPhotoButton)
+//                        .foregroundStyle(.white)
+//                        .padding()
+//                        .overlay {
+//                            Circle()
+//                                .stroke(style: .init(lineWidth: 0.8))
+//                                .foregroundColor(.brightmint)
+//                                .frame(width: 34, height: 34)
+//                        }
+//                }
             }
         }
         .buttonStyle(.borderless)

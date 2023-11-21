@@ -15,8 +15,8 @@ struct MyCardView: View {
     @ObservedObject var viewModel: ProfileModel
     @EnvironmentObject var soundManager: SoundManager
     
-    let width : CGFloat = 103
-    let height : CGFloat = 138
+    let width : CGFloat = 100
+    let height : CGFloat = 140
     let durationAndDelay : CGFloat = 0.25
     
     func flipCard () {
