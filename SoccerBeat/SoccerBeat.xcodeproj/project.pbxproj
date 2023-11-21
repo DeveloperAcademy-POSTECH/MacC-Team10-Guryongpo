@@ -102,6 +102,8 @@
 		D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */; };
 		D31B4ABE2B0AF35B00DD9100 /* NilDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B4ABD2B0AF35B00DD9100 /* NilDataView.swift */; };
 		D31B4AC02B0B819000DD9100 /* DataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B4ABF2B0B819000DD9100 /* DataConverter.swift */; };
+		D37F6AB82B0CD71900A37E4F /* NilProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37F6AB72B0CD71900A37E4F /* NilProfileView.swift */; };
+		D37F6ABC2B0CDFAC00A37E4F /* HealthAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37F6ABB2B0CDFAC00A37E4F /* HealthAlertView.swift */; };
 		D3A1F10F2B067E8F00EB2049 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A1F10E2B067E8F00EB2049 /* MainView.swift */; };
 		D3A1F1112B06847600EB2049 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A1F1102B06847600EB2049 /* ProfileView.swift */; };
 		D3C500132AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C500122AE36F3F00EFAEFF /* SoccerBeatApp.swift */; };
@@ -231,6 +233,8 @@
 		D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
 		D31B4ABD2B0AF35B00DD9100 /* NilDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilDataView.swift; sourceTree = "<group>"; };
 		D31B4ABF2B0B819000DD9100 /* DataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConverter.swift; sourceTree = "<group>"; };
+		D37F6AB72B0CD71900A37E4F /* NilProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilProfileView.swift; sourceTree = "<group>"; };
+		D37F6ABB2B0CDFAC00A37E4F /* HealthAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthAlertView.swift; sourceTree = "<group>"; };
 		D3A1F10E2B067E8F00EB2049 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D3A1F1102B06847600EB2049 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoccerBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -361,6 +365,7 @@
 			children = (
 				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
 				D31B4ABD2B0AF35B00DD9100 /* NilDataView.swift */,
+				D37F6AB72B0CD71900A37E4F /* NilProfileView.swift */,
 				D3A1F10E2B067E8F00EB2049 /* MainView.swift */,
 				D3A1F1102B06847600EB2049 /* ProfileView.swift */,
 				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
@@ -369,6 +374,7 @@
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
 				FBA3DA612B00E6EF0025AD7B /* ShareView.swift */,
 				682D64882AFDBF8C00D7F07B /* PhotoSelectButtonView.swift */,
+				D37F6ABB2B0CDFAC00A37E4F /* HealthAlertView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -819,6 +825,7 @@
 				BECCFAB22B0665D2009F4BE5 /* SpeedChartOverview.swift in Sources */,
 				685D7B6E2AE5396200783433 /* LightRectangleView.swift in Sources */,
 				BE323D3E2B0B7EE200F289D4 /* TrophyView.swift in Sources */,
+				D37F6ABC2B0CDFAC00A37E4F /* HealthAlertView.swift in Sources */,
 				6851E6E32B0C8E7F007D1DD8 /* Text+Extension.swift in Sources */,
 				682D64892AFDBF8C00D7F07B /* PhotoSelectButtonView.swift in Sources */,
 				BEDE523E2B03BFF800BBFD94 /* Analyzable.swift in Sources */,
@@ -838,6 +845,7 @@
 				685D7B792AE5432C00783433 /* CheckboxToggleStyle.swift in Sources */,
 				BE010D3C2B0512680093A5FE /* Double+extension.swift in Sources */,
 				BEDE52402B04D26000BBFD94 /* BackgroundImageView.swift in Sources */,
+				D37F6AB82B0CD71900A37E4F /* NilProfileView.swift in Sources */,
 				BE4069E12AF2641800FA3030 /* MatchTotalView.swift in Sources */,
 				BE323D402B0C80C200F289D4 /* TooltipView.swift in Sources */,
 			);

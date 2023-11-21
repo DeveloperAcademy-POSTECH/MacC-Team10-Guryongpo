@@ -1,20 +1,17 @@
 //
-//  ProfileView.swift
+//  NilProfileView.swift
 //  SoccerBeat
 //
-//  Created by daaan on 11/17/23.
+//  Created by daaan on 11/21/23.
 //
 
 import SwiftUI
 
-struct ProfileView: View {
+struct NilProfileView: View {
     @State var isFlipped: Bool = false
+    @StateObject var viewModel = ProfileModel()
     @State var userName: String = ""
-    @Binding var averageData: WorkoutAverageData
-    @Binding var maximumData: WorkoutAverageData
     @State var userImage: UIImage?
-    @FocusState private var isFocused: Bool
-    @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
         NavigationStack {
@@ -28,7 +25,7 @@ struct ProfileView: View {
                             VStack {
                                 
                                 HStack {
-                                    Text(" 나만의 선수 카드를 만들어 보세요.")
+                                    Text("# 나만의 선수 카드를 만들어 보세요.")
                                         .floatingCapsuleStyle()
                                     Spacer()
                                 }
@@ -80,7 +77,7 @@ struct ProfileView: View {
                                 
                                 HStack {
                                     HStack(spacing: 0) {
-                                        Text("")
+                                        Text("#")
                                         Text("파란색")
                                             .bold()
                                             .foregroundStyle(
@@ -93,11 +90,11 @@ struct ProfileView: View {
                                 
                                 HStack {
                                     HStack(spacing: 0) {
-                                        Text("")
+                                        Text("#")
                                         Text("민트색")
                                             .bold()
                                             .foregroundStyle(.matchDetailViewAverageStatColor)
-                                        Text("은 경기 평균 능력치입니다.")
+                                        Text("은 평균 능력치입니다.")
                                     }.floatingCapsuleStyle()                    .padding(.leading)
                                     Spacer()
                                 }
@@ -116,38 +113,8 @@ struct ProfileView: View {
                         
                         Spacer()
                         
-                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
-                                                   maxHeartRate: averageData.maxHeartRate,
-                                                   maxVelocity: averageData.maxVelocity,
-                                                   maxAcceleration: averageData.maxAcceleration,
-                                                   sprintCount: averageData.sprintCount,
-                                                   minHeartRate: averageData.minHeartRate,
-                                                   rangeHeartRate: averageData.rangeHeartRate,
-                                                   totalMatchTime: averageData.totalMatchTime)
-                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                        
-                        let maximumLevel = dataConverter(totalDistance: maximumData.totalDistance,
-                                                        maxHeartRate: maximumData.maxHeartRate,
-                                                        maxVelocity: maximumData.maxVelocity,
-                                                        maxAcceleration: maximumData.maxAcceleration,
-                                                        sprintCount: maximumData.sprintCount,
-                                                        minHeartRate: maximumData.minHeartRate,
-                                                        rangeHeartRate: maximumData.rangeHeartRate,
-                                                         totalMatchTime: maximumData.totalMatchTime)
-                        let recent = [(maximumLevel["totalDistance"] ?? 1.0) * 0.15 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                       (maximumLevel["maxVelocity"] ?? 1.0) * 0.3 + (maximumLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                       (maximumLevel["maxVelocity"] ?? 1.0) * 0.25 + (maximumLevel["sprintCount"] ?? 1.0) * 0.125 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                       (maximumLevel["maxAcceleration"] ?? 1.0) * 0.4 + (maximumLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                       (maximumLevel["totalDistance"] ?? 1.0) * 0.15 + (maximumLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (maximumLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                       (maximumLevel["totalDistance"] ?? 1.0) * 0.3 + (maximumLevel["sprintCount"] ?? 1.0) * 0.1 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                        
-                        
-                        ViewControllerContainer(ProfileViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                        ViewControllerContainer(ProfileViewController(radarAverageValue: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                                                      radarAtypicalValue: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
                             .fixedSize()
                             .frame(width: 304, height: 348)
                             .zIndex(-1)
@@ -166,12 +133,6 @@ struct ProfileView: View {
     }
 }
 
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
+#Preview {
+    NilProfileView()
 }
-
-//#Preview {
-//    ProfileView()
-//}
