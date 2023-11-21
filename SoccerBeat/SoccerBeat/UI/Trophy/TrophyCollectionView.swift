@@ -33,11 +33,11 @@ struct TrophyCollectionView: View {
         var message = ""
         switch sort {
         case 0:
-            message = " 경기 중 뛴 거리에 따라 획득하는 트로피입니다."
+            message = " 경기 중 뛴 거리에 따라 획득하는 카드입니다."
         case 1:
-            message = " 경기 중 스프린트 횟수에 따라 획득하는 트로피입니다."
+            message = " 경기 중 스프린트 횟수에 따라 획득하는 카드입니다."
         default: // 2
-            message = " 경기 중 최고 속도에 따라 획득하는 트로피입니다."
+            message = " 경기 중 최고 속도에 따라 획득하는 카드입니다."
         }
         
         return Text(message)
