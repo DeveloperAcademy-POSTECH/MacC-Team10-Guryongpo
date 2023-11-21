@@ -13,6 +13,7 @@ struct MainView: View {
     
     @Binding var userWorkouts: [WorkoutData]
     @Binding var averageData: WorkoutAverageData
+    @Binding var maximumData: WorkoutAverageData
     
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
@@ -43,7 +44,7 @@ struct MainView: View {
                             Spacer()
                             
                             NavigationLink {
-                                ProfileView(averageData: $averageData)
+                                ProfileView(averageData: $averageData, maximumData: $maximumData)
                             } label: {
                                 Image(systemName: "person.circle")
                                     .font(.title)

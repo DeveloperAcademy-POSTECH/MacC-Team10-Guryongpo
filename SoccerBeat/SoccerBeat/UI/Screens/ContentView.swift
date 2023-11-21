@@ -22,6 +22,14 @@ struct ContentView: View {
                                                                     maxVelocity: 0.0,
                                                                     sprintCount: 0,
                                                                     totalMatchTime: 0)
+    @State var maximumData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
+                                                             minHeartRate: 0,
+                                                             rangeHeartRate: 0,
+                                                             totalDistance: 0.0,
+                                                             maxAcceleration: 0,
+                                                             maxVelocity: 0.0,
+                                                             sprintCount: 0,
+                                                             totalMatchTime: 0)
     
     @State var isFlipped: Bool = false
     @StateObject var viewModel = ProfileModel()
@@ -34,7 +42,7 @@ struct ContentView: View {
                     // User does not allow permisson.
                     NilDataView()
                 } else {
-                    MainView(userWorkouts: $userWorkouts, averageData: $averageData)
+                    MainView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData)
                 }
             }
             .task {
@@ -50,6 +58,7 @@ struct ContentView: View {
                 print("ContentView: fetching user data success..")
                 self.workoutData = healthInteractor.userWorkouts
                 self.averageData = healthInteractor.userAverage
+                self.maximumData = healthInteractor.userMaximum
                 self.userWorkouts = workoutData!
             })
             .onAppear {
