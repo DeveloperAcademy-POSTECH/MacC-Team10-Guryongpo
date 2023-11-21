@@ -26,7 +26,7 @@ struct ProfileView: View {
                             VStack {
                                 
                                 HStack {
-                                    Text("# 나만의 선수 카드를 만들어 보세요.")
+                                    Text(" 나만의 선수 카드를 만들어 보세요.")
                                         .floatingCapsuleStyle()
                                     Spacer()
                                 }
@@ -78,7 +78,7 @@ struct ProfileView: View {
                                 
                                 HStack {
                                     HStack(spacing: 0) {
-                                        Text("#")
+                                        Text("")
                                         Text("파란색")
                                             .bold()
                                             .foregroundStyle(
@@ -91,11 +91,11 @@ struct ProfileView: View {
                                 
                                 HStack {
                                     HStack(spacing: 0) {
-                                        Text("#")
+                                        Text("")
                                         Text("민트색")
                                             .bold()
                                             .foregroundStyle(.matchDetailViewAverageStatColor)
-                                        Text("은 평균 능력치입니다.")
+                                        Text("은 경기 평균 능력치입니다.")
                                     }.floatingCapsuleStyle()                    .padding(.leading)
                                     Spacer()
                                 }

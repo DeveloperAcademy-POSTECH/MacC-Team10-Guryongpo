@@ -78,6 +78,7 @@ struct TargetImageView: View {
     @State var degree: Double = 0
     @ObservedObject var viewModel: ProfileModel
     @EnvironmentObject var healthInteractor: HealthInteractor
+    @State var userName: String = ""
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -100,12 +101,11 @@ struct TargetImageView: View {
                             .foregroundStyle(.shareViewSubTitleTint)
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
-                                Text("I'm, ")
-                                Text("Son").foregroundStyle(.shareViewTitleTint)
+                                Text("Player")
+                              .foregroundStyle(.shareViewTitleTint)
                             }
                             HStack {
-                                Text("Good ")
-                                Text("player").foregroundStyle(.shareViewTitleTint)
+                                Text("\(userName)").foregroundStyle(.shareViewTitleTint)
                             }
                         }
                         .font(.shareViewTitle)
@@ -123,16 +123,19 @@ struct TargetImageView: View {
             }
             .padding()
         }
+        .onAppear {
+            userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+        }
     }
     private func floatingBadgeInfo(at sort: Int) -> some View {
         var message = ""
         switch sort {
         case 0:
-            message = "# 경기 중 뛴 거리에 따라 획득하는 트로피입니다."
+            message = " 경기 중 뛴 거리에 따라 획득하는 카드입니다."
         case 1:
-            message = "# 경기 중 스프린트 횟수에 따라 획득하는 트로피입니다."
+            message = " 경기 중 스프린트 횟수에 따라 획득하는 카드입니다."
         default: // 2
-            message = "# 경기 중 최고 속도에 따라 획득하는 트로피입니다."
+            message = " 경기 중 최고 속도에 따라 획득하는 카드입니다."
         }
         
         return Text(message)

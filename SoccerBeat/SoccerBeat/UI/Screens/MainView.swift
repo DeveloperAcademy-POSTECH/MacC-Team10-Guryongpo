@@ -27,17 +27,18 @@ struct MainView: View {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 0) {
-                                    Text("# 가장 최근에 기록한 ")
+                                    Text(" 가장 최근에 기록한 ")
                                     Text("경기")
                                         .bold()
                                     Text("를 만나보세요.")
                                 }
                                 .floatingCapsuleStyle()
                                 
-                                Text("최근 경기")
-                                    .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
-                                Text("2023/11/23")
+                                Text("\(userWorkouts[0].date)")
                                     .opacity(0.7)
+                                Text("최근 경기")
+                                    .font(.custom("NotoSansDisplay-BlackItalic", size: 36))
+                                
                             }
                             
                             Spacer()
@@ -129,7 +130,7 @@ struct MainView: View {
                             .frame(height: 80)
                         
                         HStack {
-                            Text("# 경기당 기록을 비교합니다.")
+                            Text(" 최근 경기의 추세를 알 수 있어요.")
                                 .floatingCapsuleStyle()
                                 .padding(.horizontal)
                             

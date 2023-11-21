@@ -77,16 +77,16 @@ struct BPMChartView: View {
             VStack(alignment: .leading) {
                 Spacer(minLength: 50)
                 
-                Text("# 나의 최고 심박수를 알아볼까요?")
+                Text(" 최근 경기에서 보인 심박수의 추세입니다")
                     .floatingCapsuleStyle()
                     .padding(.leading, -10)
                 
                 Group {
-                    Text("MY heart beat")
+                    Text("심박수")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
-                    Text("The quality of  a")
-                    Text("FW (Bpm)")
+                    Text("The trends of")
+                    Text("Heartbeat")
                         .foregroundStyle(.navigationSportyBPMTitle)
                 }
                 .font(.navigationSportyTitle)
@@ -168,11 +168,10 @@ extension BPMChartView {
             .overlay {
                 VStack(alignment: .center, spacing: 4) {
                     Group {
-                        Text("박지성 선수의 평균 심박은")
-                        Text("1분당 38회에서 40회 내외입니다.")
+                        Text("해리 케인의 평소 심박수는 40bpm 입니다.")
                     }
                     .opacity(0.7)
-                    Text("\(workouts.count) 경기 평균 최고 심박")
+                    Text("최근 경기 평균")
                     Group {
                         Text(average(of: workouts).rounded(at: 0))
                         + Text("Bpm")

@@ -77,16 +77,16 @@ struct DistanceChartView: View {
             VStack(alignment: .leading) {
                 Spacer(minLength: 50)
                 
-                Text("# 나의 최고 뛴 거리를 알아볼까요?")
+                Text(" 최근 경기에서 보인 뛴 거리의 추세입니다.")
                     .floatingCapsuleStyle()
                     .padding(.leading, -10)
                 
                 Group {
-                    Text("MY distance")
+                    Text("뛴 거리")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
-                    Text("The quality of  a")
-                    Text("MF (Km)")
+                    Text("The trends of")
+                    Text("Distance")
                         .foregroundStyle(.navigationSportyDistanceTitle)
                 }
                 .font(.navigationSportyTitle)
@@ -165,12 +165,12 @@ extension DistanceChartView {
             .padding(.horizontal, 16)
             .overlay {
                 VStack(spacing: 4) {
-                    Text("이강인의 평균 뛴 거리는 11Km입니다.")
+                    Text("음바페의 경기 평균 뛴 거리는 12km 입니다.")
                         .opacity(0.7)
-                    Text("\(workouts.count) 경기 평균")
+                    Text("최근 경기 평균")
                     Group {
                         Text(average(of: workouts).rounded())
-                        + Text("Km")
+                        + Text("km")
                     }
                     .font(.averageValue)
                     .foregroundStyle(.navigationSportyDistanceTitle)

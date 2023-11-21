@@ -17,7 +17,7 @@ struct NilDataView: View {
             VStack(spacing: 0.0) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("# 가장 최근에 기록한 경기를 만나보세요")
+                        Text(" 가장 최근에 기록한 경기를 만나보세요")
                             .floatingCapsuleStyle()
                             .padding(.bottom)
                         
@@ -59,7 +59,7 @@ struct NilDataView: View {
                 
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("# 경기 퍼포먼스의 변화 추세를 살펴보세요")
+                        Text(" 최근 경기의 추세를 알 수 있어요.")
                             .floatingCapsuleStyle()
                             .padding(.bottom)
                         
