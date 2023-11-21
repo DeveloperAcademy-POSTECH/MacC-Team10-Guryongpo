@@ -11,32 +11,38 @@ struct MatchRecapView: View {
     
     @EnvironmentObject var healthInteractor: HealthInteractor
     @Binding var userWorkouts: [WorkoutData]
+    @State var userName: String = ""
+    
     
     var body: some View {
         VStack(spacing: 10) {
+            
+            Spacer()
+                .frame(height: 60)
+            
+            Text(" 모든 경기와 그날의 스텟을 확인해보세요.")
+                .floatingCapsuleStyle()
+            
+            HStack {
+                Text("모든 경기 기록")
+                    .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
+                Spacer()
+            }
+            .padding(.top, 30)
+            .padding(.horizontal)
+            
             HStack {
                 VStack(alignment: .leading, spacing: 0.0) {
-                    Text("Hello, Isaac")
-                    Text("Your archive")
+                    Text("Player, \(userName)")
+                    Text("Your past games")
                 }
-                .foregroundStyle(
-                    .linearGradient(colors: [.hotpink, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .foregroundStyle(.white)
                 .font(.custom("SFProText-HeavyItalic", size: 36))
                 .kerning(-1.5)
                 .padding(.leading, 10)
                 Spacer()
             }
-            .padding(.top, 30)
             
-            Spacer()
-                .frame(height: 60)
-            
-            HStack {
-                Text("최근 경기 기록")
-                    .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
-                Spacer()
-            }
-            .padding(.horizontal)
             VStack {
                 ForEach(userWorkouts ?? [], id: \.self) { workout in
                     NavigationLink {
@@ -49,6 +55,9 @@ struct MatchRecapView: View {
             }
         }
         .padding(.horizontal)
+        .onAppear {
+            userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+        }
     }
 }
 

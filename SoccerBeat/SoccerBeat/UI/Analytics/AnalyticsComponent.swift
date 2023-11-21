@@ -14,16 +14,16 @@ struct AnalyticsComponent: View {
     var activityType: ActivityEnum
     
     private var navigationAssistantTitle: String {
-        let seeTotal = " 전체보기"
+        let seeTotal = " 보기"
         switch activityType {
         case .distance:
-            return "뛴 거리" + seeTotal
+            return "최근 뛴 거리" + seeTotal
         case .sprint:
-            return "스프린트" + seeTotal
+            return "최근 스프린트" + seeTotal
         case .speed:
-            return "최고 속도" + seeTotal
+            return "최근 최고 속도" + seeTotal
         case .heartrate:
-            return "심박수" + seeTotal
+            return "최근 심박수" + seeTotal
         }
     }
     private var value: String {
@@ -81,7 +81,6 @@ struct AnalyticsComponent: View {
                     Image(systemName: "figure.run")
                         .resizable()
                         .foregroundStyle(valueColor)
-                        .scaleEffect(x: -1, y: 1)
                         .frame(width: 22, height: 22)
                 }
                 .frame(maxWidth: 86)

@@ -42,7 +42,7 @@ struct MatchTimeView: View {
                     Text("# 경기에 대한 ")
                     Text("상세한 리포트")
                         .fontWeight(.bold)
-                    Text("를 만나보세요")
+                    Text("를 확인해볼까요?")
                 }
                 .floatingCapsuleStyle()
                 Spacer()
@@ -52,8 +52,7 @@ struct MatchTimeView: View {
                     .foregroundStyle(.matchDetailViewSubTitleColor)
                 
                 VStack(alignment: .leading, spacing: -8) {
-                    Text("경기 시간")
-                    Text(workoutData.time)
+                    Text("경기 시간: \(workoutData.time)")
                 }
                 .font(.matchDetailTitle)
                 .foregroundStyle(.matchDetailViewTitleColor)
@@ -68,31 +67,21 @@ struct PlayerAbilityView: View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Spacer()
-                    
-                    VStack(alignment: .leading, spacing: -8) {
-                        Text("My")
-                        Text("Player Ability")
-                    }
-                    .font(.matchDetailTitle)
-                    .foregroundStyle(.matchDetailTitle)
                     
                     Spacer()
                         .frame(minHeight: 30)
                     
                     HStack(spacing: 0) {
-                        Text("# ")
-                        Text("빨간색")
+                        Text(" 빨간색")
                             .foregroundStyle(.matchDetailViewTitleColor)
                         Text("은 이번 경기의 능력치입니다.")
                     }
                     .floatingCapsuleStyle()
                     
                     HStack(spacing: 0) {
-                        Text("# ")
-                        Text("민트색")
+                        Text(" 민트색")
                             .foregroundStyle(.matchDetailViewAverageStatColor)
-                        Text("은 이번 경기의 능력치입니다.")
+                        Text("은 경기 평균 능력치입니다.")
                     }
                     .floatingCapsuleStyle()
                     
@@ -114,7 +103,6 @@ struct FieldRecordView: View {
                 VStack(alignment: .leading) {
                     Spacer()
                     VStack(alignment: .leading, spacing: -8) {
-                        Text("My")
                         Text("Field Record")
                     }
                     .font(.matchDetailTitle)
@@ -228,12 +216,11 @@ struct FieldMovementView: View {
                 .frame(minHeight: 60)
             HStack {
                 VStack(alignment: .leading) {
-                    Text("# 터치하면 자세한 정보를 볼 수 있어요.")
+                    Text(" 터치하면 자세한 정보를 볼 수 있어요.")
                         .floatingCapsuleStyle()
                     Spacer()
                         .frame(minHeight: 30)
                     VStack(alignment: .leading, spacing: -8) {
-                        Text("My")
                         Text("Field Movement")
                     }
                     .font(.matchDetailTitle)

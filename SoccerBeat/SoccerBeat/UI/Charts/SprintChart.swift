@@ -77,16 +77,16 @@ struct SprintChartView: View {
             VStack(alignment: .leading) {
                 Spacer(minLength: 50)
                 
-                Text("# 경기당 스프린트 횟수를 확인해볼까요?")
+                Text(" 최근 경기에서 보인 스프린트의 추세입니다")
                     .floatingCapsuleStyle()
                     .padding(.leading, -10)
                 
                 Group {
-                    Text("MY Sprint")
+                    Text("스프린트")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
-                    Text("The quality of  a")
-                    Text("FW (Times)")
+                    Text("The trends of")
+                    Text("Sprint")
                         .foregroundStyle(.navigationSportySprintTitle)
                 }
                 .font(.navigationSportyTitle)
@@ -172,7 +172,7 @@ extension SprintChartView {
                         Text("21회입니다.")
                     }
                     .opacity(0.7)
-                    Text("\(workouts.count) 경기 평균 스프린트")
+                    Text("최근 경기 평균")
                     Group {
                         Text(average(of: workouts).rounded(at: 0))
                         + Text("회")
