@@ -15,7 +15,7 @@ struct MainView: View {
     @Binding var averageData: WorkoutAverageData
     
     @State var isFlipped: Bool = false
-    @StateObject var viewModel = ProfileModel()
+    @ObservedObject var viewModel: ProfileModel
     @State private var currentLocation = "--'--"
     
     var body: some View {
@@ -43,10 +43,9 @@ struct MainView: View {
                             Spacer()
                             
                             NavigationLink {
-                                ProfileView(averageData: $averageData)
+                                ProfileView(averageData: $averageData, viewModel: viewModel)
                             } label: {
-                                Image(systemName: "person.circle")
-                                    .font(.title)
+                                CardFront(width: 72, height: 110, degree: .constant(0), viewModel: viewModel)
                             }
                         }.padding()
                         

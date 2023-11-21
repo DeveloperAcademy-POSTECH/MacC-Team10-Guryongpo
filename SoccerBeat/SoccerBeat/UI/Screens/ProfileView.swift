@@ -9,11 +9,10 @@ import SwiftUI
 
 struct ProfileView: View {
     @State var isFlipped: Bool = false
-    @StateObject var viewModel = ProfileModel()
     @State var userName: String = ""
     @Binding var averageData: WorkoutAverageData
     @State var userImage: UIImage?
-    
+    @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
         NavigationStack {

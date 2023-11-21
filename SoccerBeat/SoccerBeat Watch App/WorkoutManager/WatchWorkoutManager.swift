@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import HealthKit
 import CoreLocation
 import OSLog
@@ -20,6 +21,9 @@ class WorkoutManager: NSObject, ObservableObject {
             }
         }
     }
+    
+    var authHealthKit = PassthroughSubject<(), Never>()
+    var authLocation = PassthroughSubject<(), Never>()
     
     @Published var showingPrecount: Bool = false
     let heartRateQuantity = HKUnit(from: "count/min")
@@ -82,13 +86,13 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     
     func computeMaxHeartRate() {
-//        do {
-//            let birthYear = try healthStore.dateOfBirthComponents().year
-//            let year = Calendar.current.component(.year, from: Date())
-//            maxHeartRate = Double(220 - ( year - birthYear!))
-//        } catch {
-            maxHeartRate = 190
-//        }
+        //        do {
+        //            let birthYear = try healthStore.dateOfBirthComponents().year
+        //            let year = Calendar.current.component(.year, from: Date())
+        //            maxHeartRate = Double(220 - ( year - birthYear!))
+        //        } catch {
+        maxHeartRate = 190
+        //        }
     }
     
     // MARK: - 데이터 수집 및 경기 시작
@@ -130,6 +134,7 @@ class WorkoutManager: NSObject, ObservableObject {
         computeMaxHeartRate()
     }
     
+    
     // MARK: - Request authorization to access HealthKit And LocationManager.
     func requestAuthorization() {
         
@@ -137,25 +142,41 @@ class WorkoutManager: NSObject, ObservableObject {
         let typesToShare: Set = [HKQuantityType.workoutType(),
                                  HKSeriesType.workoutRoute(),
                                  HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
-                                 HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-                                 HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+                                 HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
                                  
         ]
         
         // The quantity types to read from the health store.
         let typesToRead: Set = [
-            HKObjectType.characteristicType(forIdentifier: .dateOfBirth)!, // get MaxHeartRate
             HKQuantityType.quantityType(forIdentifier: .heartRate)!,
             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
             HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
-            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
             HKSeriesType.workoutType(),
             HKSeriesType.workoutRoute(),
             HKObjectType.activitySummaryType()
         ]
         healthStore.requestAuthorization(toShare: typesToShare,
-                                         read: typesToRead) { (_, _) in
+                                         read: typesToRead) { (success, error) in
+            if success {
+                // 위치 정보 권한 요청
+                if self.locationManager.authorizationStatus == .denied ||
+                    self.locationManager.authorizationStatus == .notDetermined ||
+                    self.locationManager.authorizationStatus == .restricted {
+                    self.locationManager.requestWhenInUseAuthorization()
+                }
+                
+                // 헬스킷 권한이 없다면
+                if (self.healthStore.authorizationStatus(for: HKSeriesType.workoutRoute()) != .sharingAuthorized) {
+                    self.authHealthKit.send()
+                }
+                
+            }
+        }
+        
+        // location 권한이 없다면
+        if [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(self.locationManager.authorizationStatus) {
+            self.authLocation.send()
         }
     }
     
@@ -412,9 +433,6 @@ extension WorkoutManager: CLLocationManagerDelegate {
     }
     
     private func startLocationUpdates() {
-        if [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(locationManager.authorizationStatus) {
-            locationManager.requestWhenInUseAuthorization()
-        }
         locationManager.startUpdatingLocation()
     }
     
