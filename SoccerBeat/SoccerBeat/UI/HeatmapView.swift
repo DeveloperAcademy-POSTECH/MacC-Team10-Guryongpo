@@ -54,7 +54,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         if let routePolyDot = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyDot)
             renderer.strokeColor = .red
-            renderer.alpha = CGFloat(0.1)
+            renderer.alpha = CGFloat(0.3)
             renderer.lineWidth = 30
             renderer.blendMode = .lighten
             return renderer

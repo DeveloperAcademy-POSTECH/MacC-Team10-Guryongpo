@@ -44,7 +44,7 @@ struct ContentView: View {
                     if workoutData == nil {
                         // No soccer data OR,
                         // User does not allow permisson.
-                        NilDataView(viewModel: viewModel)
+                        NilDataView(viewModel: viewModel, maximumData: $maximumData)
                     } else {
                         MainView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData, viewModel: viewModel)
                     }
@@ -68,7 +68,7 @@ struct ContentView: View {
             })
             .onAppear {
                 // 시끄러우면 각주 처리해주세요 -호제가-
-                soundManager.playBackground()
+//                soundManager.playBackground()
             }
         }
         .tint(.white)
