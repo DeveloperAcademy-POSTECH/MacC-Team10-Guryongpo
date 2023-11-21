@@ -109,6 +109,9 @@ extension Font {
     // MARK: - AlertView
     public static let alertSpeed = Font.notoSans(size: 36, weight: .blackItalic)
     public static let lastSprint = Font.notoSans(size: 15, weight: .blackItalic)
+    
+    // MARK: - ToolTip
+    public static let tooltipTextFont = Font.sfProText(size: 12, weight: .regular)
 }
 
 extension Font {

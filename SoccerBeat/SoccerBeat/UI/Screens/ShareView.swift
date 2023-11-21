@@ -161,3 +161,7 @@ extension TargetImageView {
         }
     }
 }
+
+#Preview {
+    ShareView(viewModel: ProfileModel())
+}
