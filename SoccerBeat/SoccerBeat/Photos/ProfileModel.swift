@@ -43,9 +43,8 @@ class ProfileModel: ObservableObject {
                 }
                 let image = Image(uiImage: uiImage)
                 // MARK: save User Defaults Image
-                let data = uiImage.jpegData(compressionQuality: 0.5)
-                let encoded = try! PropertyListEncoder().encode(data)
-                UserDefaults.standard.set(encoded, forKey: "userImage")
+                let data = uiImage.jpegData(compressionQuality: 0.1)
+                UserDefaults.standard.set(data, forKey: "userImage")
                 
                 return ProfileImage(image: image)
             #else

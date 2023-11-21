@@ -23,7 +23,7 @@ struct Profile: View {
                         Image("MaskLayer")
                             .resizable()
                             .scaledToFit()
-                            .padding(8)
+                            .padding(2)
                     }
             } else {
                 
@@ -34,14 +34,17 @@ struct Profile: View {
                     Image("MaskLayer")
                         .resizable()
                         .scaledToFit()
-                        .padding(8)
+                        .padding(2)
                 }
             }
         }.onAppear {
-            if let imageData = UserDefaults.standard.object(forKey: "userImage") as? Data,
-               let image = UIImage(data: imageData) {
+            if let imageData = UserDefaults.standard.object(forKey: "userImage") as? Data
+            {
+                let image = UIImage(data: imageData)
                 self.image = image
             }
+        }.onChange(of: viewModel.imageSelection) { _ in
+            image = nil
         }
     }
 }

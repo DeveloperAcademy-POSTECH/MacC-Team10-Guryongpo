@@ -183,3 +183,7 @@ struct TargetImageView: View {
         }
     }
 }
+
+#Preview {
+    ShareView(viewModel: ProfileModel())
+}
