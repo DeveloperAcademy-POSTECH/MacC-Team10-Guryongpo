@@ -83,7 +83,6 @@ struct NilDataView: View {
             }.padding(.top, 10.0)
         }
         .navigationTitle("")
-        
     }
 }
 

@@ -201,6 +201,9 @@ class HealthInteractor: ObservableObject {
     func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
         // matchBadge: [distance, sprint, velocity]
         // [nil, first trophy, second trophy, third trophy] == [-1, 0, 1, 2]
+        // Distance: 1.5, 2.0, 2.5, 3.0
+        // Sprint: 5, 7, 9, 11
+        // Velocity: 15, 20, 25, 30
         var matchBadge: [Int] = [0, 0, 0]
 
         if distance < 1.5 {
