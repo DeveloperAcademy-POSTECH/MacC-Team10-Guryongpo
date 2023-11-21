@@ -12,6 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
     
+    @AppStorage("healthAlert") var healthAlert: Bool = true
     @State var workoutData: [WorkoutData]?
     @State var userWorkouts: [WorkoutData] = []
     @State var averageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
@@ -37,12 +38,16 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                if workoutData == nil {
-                    // No soccer data OR,
-                    // User does not allow permisson.
-                    NilDataView()
+                if healthAlert {
+                    HealthAlertView(showingAlert: $healthAlert)
                 } else {
-                    MainView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData)
+                    if workoutData == nil {
+                        // No soccer data OR,
+                        // User does not allow permisson.
+                        NilDataView()
+                    } else {
+                        MainView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData)
+                    }
                 }
             }
             .task {
