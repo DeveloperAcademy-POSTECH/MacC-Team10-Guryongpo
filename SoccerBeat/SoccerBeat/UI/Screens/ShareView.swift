@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ShareView: View {
     
+    @EnvironmentObject var healthInteractor: HealthInteractor
     @State var geoSize: CGSize = .init(width: 0, height: 0)
     @State var highresImage: UIImage = UIImage()
     @State var renderImage: UIImage?
@@ -40,7 +41,7 @@ struct ShareView: View {
 }
 
 #Preview {
-    ShareView(viewModel: ProfileModel.init())
+    ShareView(viewModel: ProfileModel())
 }
 
 extension UIScreen {
@@ -72,13 +73,14 @@ struct TargetImageView: View {
     @State var cgSize: CGSize
     @State var degree: Double = 0
     @ObservedObject var viewModel: ProfileModel
-    
+    @EnvironmentObject var healthInteractor: HealthInteractor
+
     var body: some View {
         ZStack(alignment: .top) {
             Image("BackgroundPattern")
-                .frame(maxHeight: UIScreen.screenHeight - 100)
+                .frame(maxHeight: UIScreen.screenHeight)
             Image("FlameEffect")
-                .frame(maxHeight: UIScreen.screenHeight - 100)
+                .frame(maxHeight: UIScreen.screenHeight)
             VStack {
                 HStack(alignment: .bottom) {
                     CardFront(width: 100, height: 140, degree: $degree, viewModel: viewModel)
@@ -110,76 +112,48 @@ struct TargetImageView: View {
                 
                 Spacer(minLength: 30)
                 
-                VStack(alignment: .leading) {
-                    Text("#두 개의 심장 #체력")
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.shareViewCapsuleStroke, lineWidth: 1)
-                        }
-                    
-                    HStack(spacing: 25) {
-                        Spacer()
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Spacer()
-                    }
-                    .padding()
-                    
-                    
-                    Text("#필드 위 치타 #스프린트")
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.shareViewCapsuleStroke, lineWidth: 1)
-                        }
-                    
-                    HStack(spacing: 25) {
-                        Spacer()
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Spacer()
-                    }
-                    .padding()
-                    
-                    Text("#필드 위 야생마 #최고 속도")
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.shareViewCapsuleStroke, lineWidth: 1)
-                        }
-                    
-                    HStack(spacing: 25) {
-                        Spacer()
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Rectangle()
-                            .frame(width: 52, height: 70)
-                        Spacer()
-                    }
-                }
+                currentBadge
+                
                 Spacer()
             }
             .padding()
+        }
+    }
+    private func floatingBadgeInfo(at sort: Int) -> some View {
+        var message = ""
+        switch sort {
+        case 0:
+            message = "# 경기 중 뛴 거리에 따라 획득하는 트로피입니다."
+        case 1:
+            message = "# 경기 중 스프린트 횟수에 따라 획득하는 트로피입니다."
+        default: // 2
+            message = "# 경기 중 최고 속도에 따라 획득하는 트로피입니다."
+        }
+        
+        return Text(message)
+                .padding(.horizontal, 8)
+                .floatingCapsuleStyle()
+    }
+}
+
+extension TargetImageView {
+    @ViewBuilder
+    var currentBadge: some View {
+        VStack(spacing: 31) {
+            ForEach(0..<healthInteractor.allBadges.count, id: \.self) { sortIndex in
+                VStack(alignment: .leading, spacing: 10) {
+                    floatingBadgeInfo(at: sortIndex)
+                    HStack {
+                        ForEach(0..<healthInteractor.allBadges[sortIndex].count, id: \.self) { levelIndex in
+                            let isOpened = healthInteractor.allBadges[sortIndex][levelIndex]
+                            
+                            if isOpened {
+                                TrophyView(sort: sortIndex, level: levelIndex, isOpened: isOpened)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
