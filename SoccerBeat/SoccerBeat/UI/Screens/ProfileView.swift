@@ -52,12 +52,12 @@ struct ProfileView: View {
                                                         Capsule()
                                                             .stroke(style: .init(lineWidth: 0.8))
                                                             .frame(height: 40)
-                                                            .foregroundColor(userName.count >= 7 ? .red : .brightmint)
+                                                            .foregroundColor(userName.count >= 6 ? .red : .brightmint)
                                                     }
                                             }
                                                 
                                             TextField("Name", text: $userName)
-                                                .limitText($userName, to: 6)
+                                                .limitText($userName, to: 5)
                                                 .padding(.horizontal)
                                                 .onChange(of: userName) { _ in
                                                     UserDefaults.standard.set(userName, forKey: "userName")
