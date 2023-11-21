@@ -62,7 +62,7 @@ extension TrophyCollectionView {
     var trophyCollection: some View {
         VStack(spacing: 31) {
             ForEach(0..<healthInteractor.allBadges.count, id: \.self) { sortIndex in
-                VStack(alignment: .leading, spacing: 10){
+                VStack(alignment: .leading, spacing: 10) {
                     floatingBadgeInfo(at: sortIndex)
                     HStack {
                         ForEach(0..<healthInteractor.allBadges[sortIndex].count, id: \.self) { levelIndex in
