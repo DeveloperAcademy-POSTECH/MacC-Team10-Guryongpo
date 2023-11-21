@@ -44,9 +44,9 @@ struct ContentView: View {
                     if workoutData == nil {
                         // No soccer data OR,
                         // User does not allow permisson.
-                        NilDataView()
+                        NilDataView(viewModel: viewModel)
                     } else {
-                        MainView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData)
+                        MainView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData, viewModel: viewModel)
                     }
                 }
             }

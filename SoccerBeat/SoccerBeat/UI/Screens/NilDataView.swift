@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NilDataView: View {
     @State var workoutAverageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0, minHeartRate: 0, rangeHeartRate: 0, totalDistance: 0, maxAcceleration: 0, maxVelocity: 0, sprintCount: 0, totalMatchTime: 0)
+    @ObservedObject var viewModel: ProfileModel
     var body: some View {
         ZStack {
             BackgroundImageView()
@@ -16,7 +17,7 @@ struct NilDataView: View {
             VStack(spacing: 0.0) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("# 가장 최근에 기록한 경기를 만나보세요")
+                        Text(" 가장 최근에 기록한 경기를 만나보세요")
                             .floatingCapsuleStyle()
                             .padding(.bottom)
                         
@@ -29,10 +30,9 @@ struct NilDataView: View {
                     Spacer()
                     
                     NavigationLink {
-                        NilProfileView()
+                        ProfileView(averageData: $workoutAverageData, viewModel: viewModel)
                     } label: {
-                        Image(systemName: "person.circle")
-                            .font(.title)
+                        CardFront(width: 100, height: 140, degree: .constant(0), viewModel: viewModel)
                     }
                 }.padding(.horizontal)
                 
@@ -59,7 +59,7 @@ struct NilDataView: View {
                 
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("# 경기 퍼포먼스의 변화 추세를 살펴보세요")
+                        Text(" 최근 경기의 추세를 알 수 있어요.")
                             .floatingCapsuleStyle()
                             .padding(.bottom)
                         
@@ -87,5 +87,5 @@ struct NilDataView: View {
 }
 
 #Preview {
-    NilDataView()
+    NilDataView(viewModel: ProfileModel())
 }

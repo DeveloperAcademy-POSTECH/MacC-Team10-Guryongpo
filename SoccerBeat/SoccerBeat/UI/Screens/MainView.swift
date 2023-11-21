@@ -16,7 +16,7 @@ struct MainView: View {
     @Binding var maximumData: WorkoutAverageData
     
     @State var isFlipped: Bool = false
-    @StateObject var viewModel = ProfileModel()
+    @ObservedObject var viewModel: ProfileModel
     @State private var currentLocation = "--'--"
     
     var body: some View {
@@ -28,26 +28,26 @@ struct MainView: View {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 0) {
-                                    Text("# 가장 최근에 기록한 ")
+                                    Text(" 가장 최근에 기록한 ")
                                     Text("경기")
                                         .bold()
                                     Text("를 만나보세요.")
                                 }
                                 .floatingCapsuleStyle()
                                 
-                                Text("최근 경기")
-                                    .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
-                                Text("2023/11/23")
+                                Text("\(userWorkouts[0].date)")
                                     .opacity(0.7)
+                                Text("최근 경기")
+                                    .font(.custom("NotoSansDisplay-BlackItalic", size: 36))
+                                
                             }
                             
                             Spacer()
                             
                             NavigationLink {
-                                ProfileView(averageData: $averageData, maximumData: $maximumData)
+                                ProfileView(averageData: $averageData, maximumData: $maximumData, viewModel: viewModel)
                             } label: {
-                                Image(systemName: "person.circle")
-                                    .font(.title)
+                                CardFront(width: 72, height: 110, degree: .constant(0), viewModel: viewModel)
                             }
                         }.padding()
                         
@@ -164,7 +164,7 @@ struct MainView: View {
                             .frame(height: 80)
                         
                         HStack {
-                            Text("# 경기당 기록을 비교합니다.")
+                            Text(" 최근 경기의 추세를 알 수 있어요.")
                                 .floatingCapsuleStyle()
                                 .padding(.horizontal)
                             

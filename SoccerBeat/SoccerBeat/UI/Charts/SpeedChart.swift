@@ -77,16 +77,16 @@ struct SpeedChartView: View {
             VStack(alignment: .leading) {
                 Spacer(minLength: 50)
                 
-                Text("# 나의 최고 속도를 찾아볼까요?")
+                Text(" 최근 경기에서 보인 최고 속도의 추세입니다")
                     .floatingCapsuleStyle()
                     .padding(.leading, -10)
                 
                 Group {
-                    Text("MY speed")
+                    Text("최대 속도")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
-                    Text("The quality of  a")
-                    Text("FW (Km/h)")
+                    Text("The trends of ")
+                    Text("Maximum Speed")
                         .foregroundStyle(.navigationSportySpeedTitle)
                 }
                 .font(.navigationSportyTitle)
@@ -166,12 +166,12 @@ extension SpeedChartView {
             .padding(.horizontal, 16)
             .overlay {
                 VStack(spacing: 4) {
-                    Text("해리케인의 평균 속도는 21 Km/h입니다.")
+                    Text("음바페의 경기 최고 속도는 36km/h 입니다.")
                         .opacity(0.7)
-                    Text("\(workouts.count) 경기 평균")
+                    Text("최근 경기 평균")
                     Group {
                         Text(average(of: workouts), format: .number)
-                        + Text("Km/h")
+                        + Text("km/h")
                     }
                     .font(.averageValue)
                     .foregroundStyle(.navigationSportySpeedTitle)

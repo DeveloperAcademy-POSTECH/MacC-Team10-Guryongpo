@@ -13,11 +13,11 @@ struct AnalyticsView: View {
     var body: some View {
         VStack(spacing: 20) {
             HStack {
-                Text("최근 경기 분석")
+                Text("추세")
                 Spacer()
             }
             .padding(.leading)
-            .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
+            .font(.custom("NotoSansDisplay-BlackItalic", size: 36))
             
             VStack(spacing: 15) {
                 HStack {
