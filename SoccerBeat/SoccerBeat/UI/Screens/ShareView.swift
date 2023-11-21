@@ -41,7 +41,11 @@ struct ShareView: View {
 }
 
 #Preview {
-    ShareView(viewModel: ProfileModel())
+    @StateObject var viewModel = ProfileModel()
+    @StateObject var health = HealthInteractor.shared
+    
+    return ShareView(viewModel: viewModel)
+        .environmentObject(health)
 }
 
 extension UIScreen {
@@ -106,11 +110,12 @@ struct TargetImageView: View {
                         }
                         .font(.shareViewTitle)
                     }
-                    .padding()
+                    .padding(.leading)
                 }
                 .padding(.top)
                 
-                Spacer(minLength: 30)
+                Spacer()
+                    .frame(height: 30)
                 
                 currentBadge
                 
@@ -139,7 +144,7 @@ struct TargetImageView: View {
 extension TargetImageView {
     @ViewBuilder
     var currentBadge: some View {
-        VStack(spacing: 31) {
+        VStack(alignment: .leading, spacing: 31) {
             ForEach(0..<healthInteractor.allBadges.count, id: \.self) { sortIndex in
                 VStack(alignment: .leading, spacing: 10) {
                     floatingBadgeInfo(at: sortIndex)
@@ -147,9 +152,8 @@ extension TargetImageView {
                         ForEach(0..<healthInteractor.allBadges[sortIndex].count, id: \.self) { levelIndex in
                             let isOpened = healthInteractor.allBadges[sortIndex][levelIndex]
                             
-                            if isOpened {
-                                TrophyView(sort: sortIndex, level: levelIndex, isOpened: isOpened)
-                            }
+                            TrophyView(sort: sortIndex, level: levelIndex, isOpened: isOpened)
+                                .frame(width: 74, height: 82)
                         }
                     }
                 }
