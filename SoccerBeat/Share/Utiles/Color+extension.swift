@@ -95,6 +95,10 @@ extension ShapeStyle where Self == Color {
     static var matchDetailViewAverageStatColor: Self { .init(hex: 0x00FFE0) }
     
     static var raderMaximumColor: Self { .init(hex: 0x369EFF) }
+    
+    // MARK: - ToolTipView
+    static var tooltipTextColor: Self { .init(hex: 0xABFFE6) }
+    static var tooltipBackgroundColor: Self { .init(hex: 0x191919)}
 }
 
 extension ShapeStyle where Self == LinearGradient {

@@ -39,3 +39,9 @@ let badgeLockedImages: [[String]] = [
     ["SprintFirstLocked", "SprintSecondLocked", "SprintThirdLocked", "SprintFourthLocked"],
     ["VelocityFirstLocked", "VelocitySecondLocked", "VelocityThirdLocked", "VelocityFourthLocked"]
 ]
+
+let badgeInfo: [[String]] = [
+    ["뛴거리\n1.5 km 초과", "뛴거리\n2 km 초과", "뛴거리\n2.5 km 초과", "뛴거리\n3 km 초과"],
+    ["스프린트\n5 회 초과", "스프린트\n7 회 초과", "스프린트\n9 회 초과", "스프린트\n11 회 초과"],
+    ["최고속도\n15 km/h 초과", "최고속도\n20 km/h 초과", "최고속도\n25 km/h 초과", "최고속도\n30 km/h 초과"]
+]
