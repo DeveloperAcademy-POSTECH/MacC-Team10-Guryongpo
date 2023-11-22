@@ -23,7 +23,6 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     
     var authHealthKit = PassthroughSubject<(), Never>()
-    var authLocation = PassthroughSubject<(), Never>()
     
     @Published var showingPrecount: Bool = false
     let heartRateQuantity = HKUnit(from: "count/min")
@@ -172,11 +171,6 @@ class WorkoutManager: NSObject, ObservableObject {
                 }
                 
             }
-        }
-        
-        // location 권한이 없다면
-        if [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(self.locationManager.authorizationStatus) {
-            self.authLocation.send()
         }
     }
     
