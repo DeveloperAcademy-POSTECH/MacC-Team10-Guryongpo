@@ -75,7 +75,13 @@ extension ShapeStyle where Self == Color {
     
     // MARK: - In Chart Style
     
-    static var durationUnit: Self { .init(hex: 0xD4D4D4) }
+    static var durationStyle: Self { .init(hex: 0xD4D4D4) }
+    static var maxValueStyle: Self { .init(hex: 0xFFFFFF) }
+    static var defaultValueStyle: Self { .init(hex: 0xFFFFFF, alpha: 0.7) }
+    static var maxDayStyle: Self { .init(hex: 0xFFFFFF) }
+    static var defaultDayStyle: Self { .init(hex: 0xFFFFFF, alpha: 0.7) }
+    static var playerCompareStyle: Self { .init(hex: 0xFFFFFF, alpha: 0.7) }
+    static var averageTextStyle: Self { .init(hex: 0xFFFFFF) }
         
     // MARK: - ShareView
     

@@ -13,6 +13,7 @@ struct MainView: View {
     
     @Binding var userWorkouts: [WorkoutData]
     @Binding var averageData: WorkoutAverageData
+    @Binding var maximumData: WorkoutAverageData
     
     @State var isFlipped: Bool = false
     @ObservedObject var viewModel: ProfileModel
@@ -44,22 +45,55 @@ struct MainView: View {
                             Spacer()
                             
                             NavigationLink {
-                                ProfileView(averageData: $averageData, viewModel: viewModel)
+                                ProfileView(averageData: $averageData, maximumData: $maximumData, viewModel: viewModel)
                             } label: {
                                 CardFront(width: 72, height: 110, degree: .constant(0), viewModel: viewModel)
                             }
                         }.padding()
                         
                         NavigationLink {
-                            MatchDetailView(workoutData: userWorkouts[0])
+                            MatchDetailView(averageData: $averageData, maximumData: $maximumData, workoutData: userWorkouts[0])
                         } label: {
                             ZStack {
                                 LightRectangleView(alpha: 0.6, color: .black, radius: 15)
                                 HStack {
                                     VStack {
                                         HStack {
-                                            let average = [3.0, 2.4, 3.4, 3.2, 2.8, 3.3]
-                                            let recent = [4.1, 3.0, 3.5, 3.8, 3.5, 2.8]
+                                            let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
+                                                                       maxHeartRate: averageData.maxHeartRate,
+                                                                       maxVelocity: averageData.maxVelocity,
+                                                                       maxAcceleration: averageData.maxAcceleration,
+                                                                       sprintCount: averageData.sprintCount,
+                                                                       minHeartRate: averageData.minHeartRate,
+                                                                       rangeHeartRate: averageData.rangeHeartRate,
+                                                                       totalMatchTime: averageData.totalMatchTime)
+                                            let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                                           (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                                           (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                                           (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                                           (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                                           (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                                            
+                                            let rawTime = userWorkouts[0].time
+                                            let separatedTime = rawTime.components(separatedBy: ":")
+                                            let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                                            let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                                            let recentLevel = dataConverter(totalDistance: userWorkouts[0].distance,
+                                                                            maxHeartRate: userWorkouts[0].maxHeartRate,
+                                                                            maxVelocity: userWorkouts[0].velocity,
+                                                                            maxAcceleration: userWorkouts[0].acceleration,
+                                                                            sprintCount: userWorkouts[0].sprint,
+                                                                            minHeartRate: userWorkouts[0].minHeartRate,
+                                                                            rangeHeartRate: userWorkouts[0].maxHeartRate - userWorkouts[0].minHeartRate,
+                                                                            totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
+                                            let recent = [(recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                                           (recentLevel["maxVelocity"] ?? 1.0) * 0.3 + (recentLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                                           (recentLevel["maxVelocity"] ?? 1.0) * 0.25 + (recentLevel["sprintCount"] ?? 1.0) * 0.125 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                                           (recentLevel["maxAcceleration"] ?? 1.0) * 0.4 + (recentLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                                           (recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (recentLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                                           (recentLevel["totalDistance"] ?? 1.0) * 0.3 + (recentLevel["sprintCount"] ?? 1.0) * 0.1 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                                            
+                                            
                                             ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
                                                 .scaleEffect(CGSize(width: 0.7, height: 0.7))
                                                 .fixedSize()
@@ -109,7 +143,7 @@ struct MainView: View {
                         
                         NavigationLink {
                             ScrollView {
-                                MatchRecapView(userWorkouts: $userWorkouts)
+                                MatchRecapView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData)
                             }
                         } label: {
                             ZStack {

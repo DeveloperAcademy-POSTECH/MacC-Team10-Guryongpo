@@ -11,7 +11,9 @@ struct ProfileView: View {
     @State var isFlipped: Bool = false
     @State var userName: String = ""
     @Binding var averageData: WorkoutAverageData
+    @Binding var maximumData: WorkoutAverageData
     @State var userImage: UIImage?
+    @FocusState private var isFocused: Bool
     @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
@@ -114,7 +116,7 @@ struct ProfileView: View {
                         
                         Spacer()
                         
-                        let levels = dataConverter(totalDistance: averageData.totalDistance,
+                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
                                                    maxHeartRate: averageData.maxHeartRate,
                                                    maxVelocity: averageData.maxVelocity,
                                                    maxAcceleration: averageData.maxAcceleration,
@@ -122,28 +124,51 @@ struct ProfileView: View {
                                                    minHeartRate: averageData.minHeartRate,
                                                    rangeHeartRate: averageData.rangeHeartRate,
                                                    totalMatchTime: averageData.totalMatchTime)
-                        let average = [(levels["totalDistance"] ?? 1.0) * 0.15 + (levels["maxHeartRate"] ?? 1.0) * 0.35,
-                                       (levels["maxVelocity"] ?? 1.0) * 0.3 + (levels["maxAcceleration"] ?? 1.0) * 0.2,
-                                       (levels["maxVelocity"] ?? 1.0) * 0.25 + (levels["sprintCount"] ?? 1.0) * 0.125 + (levels["maxHeartRate"] ?? 1.0) * 0.125,
-                                       (levels["maxAcceleration"] ?? 1.0) * 0.4 + (levels["minHeartRate"] ?? 1.0) * 0.1,
-                                       (levels["totalDistance"] ?? 1.0) * 0.15 + (levels["rangeHeartRate"] ?? 1.0) * 0.15 + (levels["totalMatchTime"] ?? 1.0) * 0.2,
-                                       (levels["totalDistance"] ?? 1.0) * 0.3 + (levels["sprintCount"] ?? 1.0) * 0.1 + (levels["maxHeartRate"] ?? 1.0) * 0.1]
-                        let recent = [4.1, 3.0, 3.5, 3.8, 3.5, 2.8]
+                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                        
+                        let maximumLevel = dataConverter(totalDistance: maximumData.totalDistance,
+                                                        maxHeartRate: maximumData.maxHeartRate,
+                                                        maxVelocity: maximumData.maxVelocity,
+                                                        maxAcceleration: maximumData.maxAcceleration,
+                                                        sprintCount: maximumData.sprintCount,
+                                                        minHeartRate: maximumData.minHeartRate,
+                                                        rangeHeartRate: maximumData.rangeHeartRate,
+                                                         totalMatchTime: maximumData.totalMatchTime)
+                        let recent = [(maximumLevel["totalDistance"] ?? 1.0) * 0.15 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                       (maximumLevel["maxVelocity"] ?? 1.0) * 0.3 + (maximumLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                       (maximumLevel["maxVelocity"] ?? 1.0) * 0.25 + (maximumLevel["sprintCount"] ?? 1.0) * 0.125 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                       (maximumLevel["maxAcceleration"] ?? 1.0) * 0.4 + (maximumLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                       (maximumLevel["totalDistance"] ?? 1.0) * 0.15 + (maximumLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (maximumLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                       (maximumLevel["totalDistance"] ?? 1.0) * 0.3 + (maximumLevel["sprintCount"] ?? 1.0) * 0.1 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.1]
                         
                         
-//                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
-//                            .fixedSize()
-//                            .frame(width: 304, height: 348)
-//                        
+                        ViewControllerContainer(ProfileViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                            .fixedSize()
+                            .frame(width: 304, height: 348)
+                            .zIndex(-1)
+                        
                         TrophyCollectionView()
                         
                     }
+                }.onTapGesture {
+                    hideKeyboard()
                 }
             }
             .onAppear {
                 userName = UserDefaults.standard.string(forKey: "userName") ?? ""
             }
         }
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 

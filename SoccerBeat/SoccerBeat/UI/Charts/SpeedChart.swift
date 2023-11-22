@@ -35,24 +35,31 @@ struct SpeedChart: View {
                 .foregroundStyle(isMax(workout) ? .speedMax 
                                  : (isMin(workout) ? .speedMin : .chartDefault))
                 .cornerRadius(300, style: .continuous)
-                // MARK: - Min, Max 표시
-                .annotation(position: .top, alignment: .center) {
-                    if isMax(workout) {
+                // MARK: - Bar Chart Data, value 표시
+                .annotation(position: .bottom, alignment: .center) {
+                    let isMaxOrMin = isMin(workout) || isMax(workout)
+                    if  isMaxOrMin {
                         Text(workout.velocity.rounded())
-                            .font(.maxHighlight)
+                            .font(isMaxOrMin ? .maxValueUint : .defaultValueUnit)
+                            .foregroundStyle(isMaxOrMin ? .maxValueStyle : .defaultValueStyle)
+                            .offset(y: -7)
                     }
                 }
+                // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
                 .annotation(position: .bottom, alignment: .center) {
+                    let isMaxOrMin = isMin(workout) || isMax(workout)
                     Text(workout.monthDay)
-                        .font(.system(size: 12))
+                        .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
+                        .foregroundStyle(isMaxOrMin ? .maxDayStyle : .defaultDayStyle)
+                        .offset(y: 7)
                 }
             }
         }
-        // MARK: - 가장 밑에 일자 표시
+        // MARK: - 가장 밑에 일자 표시, 자리잡기용
         .chartXAxis {
             AxisMarks(values: .stride(by: .day)) { _ in
                 AxisValueLabel(format: .dateTime.day(), centered: true)
-                    .font(.dayUnit)
+                    .font(.defaultDayUnit)
             }
         }
         .chartYAxis(.hidden)
@@ -75,30 +82,35 @@ struct SpeedChartView: View {
             BackgroundImageView()
 
             VStack(alignment: .leading) {
-                Spacer(minLength: 50)
                 
-                Text(" 최근 경기에서 보인 최고 속도의 추세입니다")
+                Text("# 최근 경기에서 보인 최고 속도의 추세입니다")
                     .floatingCapsuleStyle()
-                    .padding(.leading, -10)
+                    .padding(.leading, 16)
                 
                 Group {
                     Text("최대 속도")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
-                    Text("The trends of ")
+
+                    Text("The trends of")
                     Text("Maximum Speed")
                         .foregroundStyle(.navigationSportySpeedTitle)
+                        .highlighter(activity: .speed, isDefault: false)
+                        .padding(.top, -30)
                 }
                 .font(.navigationSportyTitle)
+                .padding(.leading, 32)
                 
                 speedChartView(fastest: fastest, slowest: slowest)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 34)
                 
                 averageSpeedView
+                    .padding(.top, 30)
                 
-                Spacer(minLength: 300)
+                Spacer()
             }
         }
-        .padding(.horizontal, 28)
     }
 }
 
@@ -140,10 +152,10 @@ extension SpeedChartView {
                     Group {
                         Text("\(startDate)-\(endDate)")
                             .padding(.top, 14)
-                        Text("(KM)")
+                        Text("(km/h)")
                     }
                     .font(.durationStyle)
-                    .foregroundStyle(.durationUnit)
+                    .foregroundStyle(.durationStyle)
                     
                     Spacer()
                     SpeedChart(
@@ -163,15 +175,18 @@ extension SpeedChartView {
     private var averageSpeedView: some View {
         LightRectangleView()
             .frame(height: 100)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 61)
             .overlay {
                 VStack(spacing: 4) {
-                    Text("음바페의 경기 최고 속도는 36km/h 입니다.")
-                        .opacity(0.7)
-                    Text("최근 경기 평균")
+                    Text("음바페의 경기 최고 속도는 36Km/h입니다.")
+                        .font(.playerComapareSaying)
+                        .foregroundStyle(.playerCompareStyle)
+                    Text("최근 \(workouts.count) 경기 평균")
+                        .font(.averageText)
+                        .foregroundStyle(.averageTextStyle)
                     Group {
-                        Text(average(of: workouts), format: .number)
-                        + Text("km/h")
+                        Text(average(of: workouts).rounded(), format: .number)
+                        + Text("Km/h")
                     }
                     .font(.averageValue)
                     .foregroundStyle(.navigationSportySpeedTitle)

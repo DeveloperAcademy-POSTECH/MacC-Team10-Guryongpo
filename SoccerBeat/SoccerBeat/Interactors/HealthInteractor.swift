@@ -24,6 +24,15 @@ class HealthInteractor: ObservableObject {
                                                              maxVelocity: 0.0,
                                                              sprintCount: 0,
                                                              totalMatchTime: 0)
+    // Maximum of the user workout data.
+    var userMaximum: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
+                                                             minHeartRate: 0,
+                                                             rangeHeartRate: 0,
+                                                             totalDistance: 0.0,
+                                                             maxAcceleration: 0,
+                                                             maxVelocity: 0.0,
+                                                             sprintCount: 0,
+                                                             totalMatchTime: 0)
     
     var allWorkouts: [HKWorkout] = []
     var allMetadata: [[String : Any]] = []
@@ -89,7 +98,7 @@ class HealthInteractor: ObservableObject {
         print("fetchAllData: attempting to fetch all data..")
         
         allWorkouts = await getAllWorkout() ?? []
-        if !allWorkouts.isEmpty {
+        if !allWorkouts.isEmpty && userWorkouts.isEmpty {
             var dataID = 0
             for allWorkout in allWorkouts {
                 var latSum = 0.0
@@ -139,6 +148,15 @@ class HealthInteractor: ObservableObject {
                 let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
                 let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
                 userAverage.totalMatchTime += Int(separatedMinutes)! * 60 + Int(separatedSeconds)!
+                
+                userMaximum.maxHeartRate = max(userMaximum.maxHeartRate, maxHeartRate)
+                userMaximum.minHeartRate = min(userMaximum.minHeartRate, minHeartRate)
+                userMaximum.rangeHeartRate = max(userMaximum.rangeHeartRate, maxHeartRate - minHeartRate)
+                userMaximum.totalDistance = max(userMaximum.totalDistance, userWorkouts.first?.distance ?? 0.0)
+                userMaximum.maxAcceleration = max(userMaximum.maxAcceleration, userWorkouts.first?.acceleration ?? 0.0)
+                userMaximum.maxVelocity = max(userMaximum.maxVelocity, userWorkouts.first?.velocity ?? 0.0)
+                userMaximum.sprintCount = max(userMaximum.sprintCount, userWorkouts.first?.sprint ?? 0)
+                userMaximum.totalMatchTime = max(userMaximum.totalMatchTime, Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
                 
                 dataID += 1
             }

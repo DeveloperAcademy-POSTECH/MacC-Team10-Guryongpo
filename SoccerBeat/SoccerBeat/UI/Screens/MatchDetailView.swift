@@ -10,6 +10,9 @@ import Charts
 import CoreLocation
 
 struct MatchDetailView: View {
+    @Binding var averageData: WorkoutAverageData
+    @Binding var maximumData: WorkoutAverageData
+    
     let workoutData: WorkoutData
     var body: some View {
         ScrollView {
@@ -22,7 +25,7 @@ struct MatchDetailView: View {
                 
                 VStack {
                     MatchTimeView(workoutData: workoutData)
-                    PlayerAbilityView(workoutData: workoutData)
+                    PlayerAbilityView(averageData: $averageData, maximumData: $maximumData, workoutData: workoutData)
                     FieldRecordView(workoutData: workoutData)
                     FieldMovementView(workoutData: workoutData)
                 }
@@ -62,6 +65,9 @@ struct MatchTimeView: View {
     }
 }
 struct PlayerAbilityView: View {
+    @Binding var averageData: WorkoutAverageData
+    @Binding var maximumData: WorkoutAverageData
+    
     let workoutData: WorkoutData
     var body: some View {
         VStack {
@@ -81,12 +87,57 @@ struct PlayerAbilityView: View {
                     HStack(spacing: 0) {
                         Text(" 민트색")
                             .foregroundStyle(.matchDetailViewAverageStatColor)
-                        Text("은 경기 평균 능력치입니다.")
+                        Text("은 경기의 평균 능력치입니다.")
                     }
                     .floatingCapsuleStyle()
                     
                     // MARK: - @Daaan
                     
+                    HStack {
+                        Spacer()
+                        
+                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
+                                                         maxHeartRate: averageData.maxHeartRate,
+                                                         maxVelocity: averageData.maxVelocity,
+                                                         maxAcceleration: averageData.maxAcceleration,
+                                                         sprintCount: averageData.sprintCount,
+                                                         minHeartRate: averageData.minHeartRate,
+                                                         rangeHeartRate: averageData.rangeHeartRate,
+                                                         totalMatchTime: averageData.totalMatchTime)
+                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                        
+                        let rawTime = workoutData.time
+                        let separatedTime = rawTime.components(separatedBy: ":")
+                        let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                        let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                        let matchLevel = dataConverter(totalDistance: workoutData.distance,
+                                                         maxHeartRate: workoutData.maxHeartRate,
+                                                         maxVelocity: workoutData.velocity,
+                                                         maxAcceleration: workoutData.acceleration,
+                                                         sprintCount: workoutData.sprint,
+                                                         minHeartRate: workoutData.minHeartRate,
+                                                         rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
+                                                         totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
+                        let recent = [(matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.3 + (matchLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.25 + (matchLevel["sprintCount"] ?? 1.0) * 0.125 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                      (matchLevel["maxAcceleration"] ?? 1.0) * 0.4 + (matchLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                      (matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (matchLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                      (matchLevel["totalDistance"] ?? 1.0) * 0.3 + (matchLevel["sprintCount"] ?? 1.0) * 0.1 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                        
+                        
+                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                            .fixedSize()
+                            .frame(width: 304, height: 348)
+                            .zIndex(-1)
+                        
+                        Spacer()
+                    }
                     // MARK: - Locate spider chart here.
                 }
                 Spacer()
@@ -240,6 +291,6 @@ struct FieldMovementView: View {
     }
 }
 
-#Preview {
-    MatchDetailView(workoutData: fakeWorkoutData[0])
-}
+//#Preview {
+//    MatchDetailView(workoutData: fakeWorkoutData[0])
+//}
