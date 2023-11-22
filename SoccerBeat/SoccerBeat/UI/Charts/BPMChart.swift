@@ -35,24 +35,32 @@ struct BPMChart: View {
                 .foregroundStyle(isMax(workout) ? .bpmMax
                                  : (isMin(workout) ? .bpmMin : .chartDefault))
                 .cornerRadius(300, style: .continuous)
-                // MARK: - Min, Max 표시
-                .annotation(position: .top, alignment: .center) {
-                    if isMax(workout) {
+                // MARK: - Bar Chart Data, value 표시
+                .annotation(position: .bottom, alignment: .center) {
+                    let isMaxOrMin = isMin(workout) || isMax(workout)
+
+                    if  isMaxOrMin {
                         Text(workout.maxHeartRate, format: .number)
-                            .font(.maxHighlight)
+                            .font(isMaxOrMin ? .maxValueUint : .defaultValueUnit)
+                            .foregroundStyle(isMaxOrMin ? .maxValueStyle : .defaultValueStyle)
+                            .offset(y: -7)
                     }
                 }
+                // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
                 .annotation(position: .bottom, alignment: .center) {
+                    let isMaxOrMin = isMin(workout) || isMax(workout)
                     Text(workout.monthDay)
-                        .font(.system(size: 12))
+                        .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
+                        .foregroundStyle(isMaxOrMin ? .maxDayStyle : .defaultDayStyle)
+                        .offset(y: 7)
                 }
             }
         }
-        // MARK: - 가장 밑에 일자 표시
+        // MARK: - 가장 밑에 일자 표시, 자리잡기용
         .chartXAxis {
             AxisMarks(values: .stride(by: .day)) { _ in
                 AxisValueLabel(format: .dateTime.day(), centered: true)
-                    .font(.dayUnit)
+                    .font(.defaultDayUnit)
             }
         }
         .chartYAxis(.hidden)
@@ -75,11 +83,10 @@ struct BPMChartView: View {
             BackgroundImageView()
 
             VStack(alignment: .leading) {
-                Spacer(minLength: 50)
                 
-                Text(" 최근 경기에서 보인 심박수의 추세입니다")
+                Text("# 최근 경기에서 보인 심박수의 추세입니다")
                     .floatingCapsuleStyle()
-                    .padding(.leading, -10)
+                    .padding(.leading, 16)
                 
                 Group {
                     Text("심박수")
@@ -88,20 +95,26 @@ struct BPMChartView: View {
                     Text("The trends of")
                     Text("Heartbeat")
                         .foregroundStyle(.navigationSportyBPMTitle)
+                        .highlighter(activity: .heartrate, isDefault: false)
+                        .padding(.top, -30)
                 }
                 .font(.navigationSportyTitle)
+                .padding(.leading, 32)
                 
                 BPMChartView(fastest: fastest, slowest: slowest)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 34)
                 
                 averageMaximumBpmView
-                
-                Spacer(minLength: 300)
+                    .padding(.top, 30)
+
+                Spacer()
             }
         }
-        .padding(.horizontal, 28)
     }
 }
 
+// MARK: - Data Analyze Protocol
 extension BPMChartView: Analyzable {
     func maximum(of workouts: [WorkoutData]) -> WorkoutData {
         guard var maximumBPMWorkout = workouts.first else { return WorkoutData.example }
@@ -144,7 +157,7 @@ extension BPMChartView {
                         Text("(BPM)")
                     }
                     .font(.durationStyle)
-                    .foregroundStyle(.durationUnit)
+                    .foregroundStyle(.durationStyle)
                     
                     Spacer()
                     BPMChart(
@@ -164,14 +177,18 @@ extension BPMChartView {
     private var averageMaximumBpmView: some View {
         LightRectangleView()
             .frame(height: 100)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 61)
             .overlay {
                 VStack(alignment: .center, spacing: 4) {
                     Group {
                         Text("해리 케인의 평소 심박수는 40bpm 입니다.")
                     }
-                    .opacity(0.7)
-                    Text("최근 경기 평균")
+                    .font(.playerComapareSaying)
+                    .foregroundStyle(.playerCompareStyle)
+                    
+                    Text("최근 \(workouts.count) 경기 평균 최고 심박")
+                        .font(.averageText)
+                        .foregroundStyle(.averageTextStyle)
                     Group {
                         Text(average(of: workouts).rounded(at: 0))
                         + Text("Bpm")

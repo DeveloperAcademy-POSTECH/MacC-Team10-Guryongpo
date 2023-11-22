@@ -35,24 +35,31 @@ struct SprintChart: View {
                 .foregroundStyle(isMax(workout) ? .sprintMax
                                  : (isMin(workout) ? .sprintMin : .chartDefault))
                 .cornerRadius(300, style: .continuous)
-                // MARK: - Min, Max 표시
-                .annotation(position: .top, alignment: .center) {
-                    if isMax(workout) {
+                // MARK: - Bar Chart Data, value 표시
+                .annotation(position: .bottom, alignment: .center) {
+                    let isMaxOrMin = isMin(workout) || isMax(workout)
+                    if  isMaxOrMin {
                         Text(workout.sprint, format: .number)
-                            .font(.maxHighlight)
+                            .font(isMaxOrMin ? .maxValueUint : .defaultValueUnit)
+                            .foregroundStyle(isMaxOrMin ? .maxValueStyle : .defaultValueStyle)
+                            .offset(y: -7)
                     }
                 }
+                // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
                 .annotation(position: .bottom, alignment: .center) {
+                    let isMaxOrMin = isMin(workout) || isMax(workout)
                     Text(workout.monthDay)
-                        .font(.system(size: 12))
+                        .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
+                        .foregroundStyle(isMaxOrMin ? .maxDayStyle : .defaultDayStyle)
+                        .offset(y: 7)
                 }
             }
         }
-        // MARK: - 가장 밑에 일자 표시
+        // MARK: - 가장 밑에 일자 표시, 자리잡기용
         .chartXAxis {
             AxisMarks(values: .stride(by: .day)) { _ in
                 AxisValueLabel(format: .dateTime.day(), centered: true)
-                    .font(.dayUnit)
+                    .font(.defaultDayUnit)
             }
         }
         .chartYAxis(.hidden)
@@ -75,30 +82,35 @@ struct SprintChartView: View {
             BackgroundImageView()
 
             VStack(alignment: .leading) {
-                Spacer(minLength: 50)
                 
-                Text(" 최근 경기에서 보인 스프린트의 추세입니다")
+                Text("# 최근 경기에서 보인 스프린트 횟수의 추세입니다")
                     .floatingCapsuleStyle()
-                    .padding(.leading, -10)
+                    .padding(.leading, 16)
                 
                 Group {
+
                     Text("스프린트")
                         .font(.navigationSportySubTitle)
                         .foregroundStyle(.navigationSportyHead)
                     Text("The trends of")
                     Text("Sprint")
                         .foregroundStyle(.navigationSportySprintTitle)
+                        .highlighter(activity: .sprint, isDefault: false)
+                        .padding(.top, -30)
                 }
                 .font(.navigationSportyTitle)
+                .padding(.leading, 32)
                 
                 sprintChartView(fastest: fastest, slowest: slowest)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 34)
                 
                 averageSprintView
+                    .padding(.top, 30)
                 
-                Spacer(minLength: 300)
+                Spacer()
             }
         }
-        .padding(.horizontal, 28)
     }
 }
 
@@ -144,7 +156,7 @@ extension SprintChartView {
                         Text("(회)")
                     }
                     .font(.durationStyle)
-                    .foregroundStyle(.durationUnit)
+                    .foregroundStyle(.durationStyle)
                     
                     Spacer()
                     SprintChart(
@@ -168,13 +180,15 @@ extension SprintChartView {
             .overlay {
                 VStack(alignment: .center, spacing: 4) {
                     Group {
-                        Text("음바페의 평균 스프린트 횟수는")
-                        Text("21회입니다.")
+                        Text("음바페의 평균 스프린트 횟수는 21회 입니다.")
                     }
-                    .opacity(0.7)
-                    Text("최근 경기 평균")
+                    .font(.playerComapareSaying)
+                    .foregroundStyle(.playerCompareStyle)
+                    Text("최근 \(workouts.count) 경기 평균 스프린트")
+                        .font(.averageText)
+                        .foregroundStyle(.averageTextStyle)
                     Group {
-                        Text(average(of: workouts).rounded(at: 0))
+                        Text(average(of: workouts).rounded())
                         + Text("회")
                     }
                     .font(.averageValue)
