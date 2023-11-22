@@ -20,6 +20,9 @@
 		<string>SF-Pro-Text-LightItalic.otf</string>
 		<string>SF-Pro-Text-RegularItalic.otf</string>
 		<string>SF-Pro-Text-SemiboldItalic.otf</string>
+		<string>SF-Pro-Text-Light.otf</string>
+		<string>SF-Pro-Text-Medium.otf</string>
+		<string>SF-Pro-Text-MediumItalic.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

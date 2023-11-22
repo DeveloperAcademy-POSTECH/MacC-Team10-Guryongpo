@@ -101,9 +101,13 @@ extension Font {
     
     // MARK: - In Chart Style
     
-    public static let durationStyle = Font.sfProText(size: 14, weight: .regularItalic)
-    public static let maxHighlight = Font.sfProText(size: 12, weight: .semiboldItalic)
-    public static let dayUnit = Font.sfProText(size: 14, weight: .lightItalic)
+    public static let durationStyle = Font.sfProText(size: 12, weight: .mediumItalic)
+    public static let maxValueUint = Font.sfProText(size: 14, weight: .heavyItalic)
+    public static let defaultValueUnit = Font.sfProText(size: 14, weight: .lightItalic)
+    public static let maxDayUnit = Font.sfProText(size: 12, weight: .bold)
+    public static let defaultDayUnit = Font.sfProText(size: 12, weight: .light)
+    public static let playerComapareSaying = Font.sfProText(size: 12, weight: .light)
+    public static let averageText = Font.sfProText(size: 12, weight: .light)
     public static let averageValue = Font.sfProText(size: 18, weight: .heavyItalic)
     
     // MARK: - AlertView
@@ -157,7 +161,10 @@ enum SFProText: String {
     case lightItalic
     case regularItalic
     case semiboldItalic
+    case mediumItalic
     case regular
+    case medium
+    case light
     case bold
     
     var capitalized: String {
