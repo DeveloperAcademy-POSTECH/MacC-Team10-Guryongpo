@@ -91,11 +91,9 @@ struct NilDataView: View {
                             .font(.mainTitleText)
                         Spacer()
                     }
-                    .padding(.horizontal)
-                    .padding(.bottom)
-                    
+                    .padding()
                 }
-                
+
                 LightRectangleView(alpha: 0.15, color: .black, radius: 15.0)
                     .frame(height: 90)
                     .frame(maxWidth: .infinity)
