@@ -38,8 +38,7 @@ class WorkoutManager: NSObject, ObservableObject {
     
     var energy: Double = 0
     
-//    let sprintSpeed: Double = 5.5556 // modify it to test code
-    let sprintSpeed: Double = 4.02 // modify it to test code
+    let sprintSpeed: Double = 5.5556 // modify it to test code
     
     @Published var isSprint: Bool = false
     var maxSpeed: Double = 0.0
