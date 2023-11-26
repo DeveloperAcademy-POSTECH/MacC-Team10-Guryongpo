@@ -1051,8 +1051,8 @@
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = Good;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = Good;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.Guryongpo;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
@@ -1091,8 +1091,8 @@
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = Good;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = Good;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SoccerBeat.Guryongpo;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
