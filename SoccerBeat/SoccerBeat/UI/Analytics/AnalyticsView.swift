@@ -11,13 +11,21 @@ struct AnalyticsView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     
     var body: some View {
-        VStack(spacing: 20) {
-            HStack {
-                Text("추세")
-                Spacer()
+        VStack(spacing: 0) {
+            VStack(alignment: .leading) {
+                Image(systemName: "info.circle")
+                    .font(.mainInfoText)
+                    .overlay {
+                        Capsule()
+                            .stroke()
+                        .frame(height: 24)}
+                HStack {
+                    Text("추세")
+                        .font(.mainTitleText)
+                    Spacer()
+                }
+                .padding()
             }
-            .padding(.leading)
-            .font(.custom("NotoSansDisplay-BlackItalic", size: 36))
             
             VStack(spacing: 15) {
                 HStack {
@@ -38,6 +46,5 @@ struct AnalyticsView: View {
                 }
             }
         }
-        .padding(.horizontal)
     }
 }

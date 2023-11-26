@@ -67,15 +67,11 @@ extension Font {
     public static let summaryDoneButton = Font.sfCompactText(size: 13.5, weight: .semiboldItalic)
     
     // MARK: - MainView
-    
-    public static let mainDateLocation = Font.sfProText(size: 12, weight: .regular)
-    public static let mainTime = Font.sfProText(size: 14, weight: .bold)
-    
-    // MARK: - FixedMainView
     public static let mainInfoText = Font.notoSans(size: 14, weight: .regular)
     public static let mainSubTitleText = Font.sfProDisplay(size: 24, weight: .semiboldItalic)
-    public static let mainTitleText = Font.sfProDisplay(size: 36, weight: .semiboldItalic)
-    
+    public static let mainTitleText = Font.sfProDisplay(size: 36, weight: .heavyItalic)
+    public static let mainDateLocation = Font.sfProText(size: 12, weight: .regular)
+    public static let mainTime = Font.sfProText(size: 14, weight: .bold)
     
     // MARK: - MatchTotalView
     

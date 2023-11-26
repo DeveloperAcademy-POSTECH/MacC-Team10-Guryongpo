@@ -26,6 +26,7 @@ struct NilDataView: View {
                             Image(systemName: soundManager.isPlaying ? "speaker" : "speaker.slash")
                             Text(soundManager.isPlaying ? "On" : "Off")
                         }
+                        .padding(.horizontal)
                         .font(.mainInfoText)
                         .overlay {
                             Capsule()
@@ -33,9 +34,10 @@ struct NilDataView: View {
                                 .frame(width: 77, height: 24)
                         }
                     })
+                    .foregroundStyle(.white)
                     Spacer()
                 }
-                .padding()
+                .padding(.horizontal)
                 
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading) {

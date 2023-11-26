@@ -53,6 +53,7 @@ extension ShapeStyle where Self == Color {
     // MARK: - MainView
     
     static var mainDateTime: Self { .init(hex: 0xD4D4D4)}
+    static var mainMatchTime: Self { .init(hex: 0xE3E3E3)}
     static var seeAllMatch: Self { .init(hex: 0x565656)}
     
     // MARK: - SummaryView
