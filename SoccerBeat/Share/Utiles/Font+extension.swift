@@ -89,7 +89,7 @@ extension Font {
     // MARK: - MatchDetailView
     public static let matchDetailTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
     public static let matchDetailSubTitle = Font.sfProDisplay(size: 24, weight: .semiboldItalic)
-    public static let fieldRecordTitle = Font.sfProText(size: 20, weight: .regular)
+    public static let fieldRecordTitle = Font.sfProText(size: 16, weight: .regular)
     public static let fieldRecordMeasure = Font.sfProText(size: 32, weight: .heavyItalic)
     public static let fieldRecordUnit = Font.sfProText(size: 20, weight: .heavyItalic)
     public static let fieldRecordSquare = Font.sfProText(size: 15, weight: .heavyItalic)

@@ -10,23 +10,26 @@ import Charts
 import CoreLocation
 
 struct MatchDetailView: View {
+    let workoutData: WorkoutData
+    
     @Binding var averageData: WorkoutAverageData
     @Binding var maximumData: WorkoutAverageData
     
-    let workoutData: WorkoutData
     var body: some View {
         ScrollView {
             ZStack {
-                Image("BackgroundPattern")
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 0)
                 
                 VStack {
                     MatchTimeView(workoutData: workoutData)
+                    
+                    Spacer()
+                        .frame(height: 48)
                     PlayerAbilityView(averageData: $averageData, maximumData: $maximumData, workoutData: workoutData)
+                    Spacer()
+                        .frame(height: 100)
                     FieldRecordView(workoutData: workoutData)
+                    Spacer()
+                        .frame(height: 100)
                     FieldMovementView(workoutData: workoutData)
                 }
                 .padding()
@@ -41,24 +44,24 @@ struct MatchTimeView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
+                
+                Spacer()
+                    .frame(minHeight: 50)
+                
                 HStack(spacing: 0) {
-                    Text("# 경기에 대한 ")
+                    Image(systemName: "info.circle")
+                    Text(" 경기에 대한 ")
                     Text("상세한 리포트")
                         .fontWeight(.bold)
                     Text("를 확인해볼까요?")
                 }
                 .floatingCapsuleStyle()
-                Spacer()
-                    .frame(minHeight: 30)
-                Text("세부 리포트")
-                    .font(.matchDetailSubTitle)
-                    .foregroundStyle(.matchDetailViewSubTitleColor)
                 
                 VStack(alignment: .leading, spacing: -8) {
-                    Text("경기 시간: \(workoutData.time)")
+                    Text("경기 시간 \(workoutData.time)")
                 }
                 .font(.matchDetailTitle)
-                .foregroundStyle(.matchDetailViewTitleColor)
+                
             }
             Spacer()
         }
@@ -77,62 +80,67 @@ struct PlayerAbilityView: View {
                     Spacer()
                         .frame(minHeight: 30)
                     
-                    HStack(spacing: 0) {
-                        Text(" 빨간색")
-                            .foregroundStyle(.matchDetailViewTitleColor)
-                        Text("은 이번 경기의 능력치입니다.")
+                    VStack(spacing: 6) {
+                        HStack(spacing: 0) {
+                            Text(" 빨간색")
+                                .bold()
+                                .foregroundStyle(.matchDetailViewTitleColor)
+                            Text("은 이번 경기의 능력치입니다.")
+                        }
+                        .floatingCapsuleStyle()
+                        
+                        HStack(spacing: 0) {
+                            Text(" 민트색")
+                                .bold()
+                                .foregroundStyle(.matchDetailViewAverageStatColor)
+                            Text("은 경기의 평균 능력치입니다.")
+                        }
+                        .floatingCapsuleStyle()
                     }
-                    .floatingCapsuleStyle()
-                    
-                    HStack(spacing: 0) {
-                        Text(" 민트색")
-                            .foregroundStyle(.matchDetailViewAverageStatColor)
-                        Text("은 경기의 평균 능력치입니다.")
-                    }
-                    .floatingCapsuleStyle()
                     
                     // MARK: - @Daaan
                     
                     HStack {
                         Spacer()
                         
-                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
-                                                         maxHeartRate: averageData.maxHeartRate,
-                                                         maxVelocity: averageData.maxVelocity,
-                                                         maxAcceleration: averageData.maxAcceleration,
-                                                         sprintCount: averageData.sprintCount,
-                                                         minHeartRate: averageData.minHeartRate,
-                                                         rangeHeartRate: averageData.rangeHeartRate,
-                                                         totalMatchTime: averageData.totalMatchTime)
-                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                        
-                        let rawTime = workoutData.time
-                        let separatedTime = rawTime.components(separatedBy: ":")
-                        let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                        let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                        let matchLevel = dataConverter(totalDistance: workoutData.distance,
-                                                         maxHeartRate: workoutData.maxHeartRate,
-                                                         maxVelocity: workoutData.velocity,
-                                                         maxAcceleration: workoutData.acceleration,
-                                                         sprintCount: workoutData.sprint,
-                                                         minHeartRate: workoutData.minHeartRate,
-                                                         rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
-                                                         totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
-                        let recent = [(matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.3 + (matchLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.25 + (matchLevel["sprintCount"] ?? 1.0) * 0.125 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                      (matchLevel["maxAcceleration"] ?? 1.0) * 0.4 + (matchLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                      (matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (matchLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                      (matchLevel["totalDistance"] ?? 1.0) * 0.3 + (matchLevel["sprintCount"] ?? 1.0) * 0.1 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                        
-                        
-                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
-                            .fixedSize()
+                        //                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
+                        //                                                         maxHeartRate: averageData.maxHeartRate,
+                        //                                                         maxVelocity: averageData.maxVelocity,
+                        //                                                         maxAcceleration: averageData.maxAcceleration,
+                        //                                                         sprintCount: averageData.sprintCount,
+                        //                                                         minHeartRate: averageData.minHeartRate,
+                        //                                                         rangeHeartRate: averageData.rangeHeartRate,
+                        //                                                         totalMatchTime: averageData.totalMatchTime)
+                        //                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                        //                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                        //                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                        //                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
+                        //                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                        //                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                        //
+                        //                        let rawTime = workoutData.time
+                        //                        let separatedTime = rawTime.components(separatedBy: ":")
+                        //                        let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                        //                        let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                        //                        let matchLevel = dataConverter(totalDistance: workoutData.distance,
+                        //                                                       maxHeartRate: workoutData.maxHeartRate,
+                        //                                                       maxVelocity: workoutData.velocity,
+                        //                                                       maxAcceleration: workoutData.acceleration,
+                        //                                                       sprintCount: workoutData.sprint,
+                        //                                                       minHeartRate: workoutData.minHeartRate,
+                        //                                                       rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
+                        //                                                       totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
+                        //                        let recent = [(matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                        //                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.3 + (matchLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                        //                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.25 + (matchLevel["sprintCount"] ?? 1.0) * 0.125 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                        //                                      (matchLevel["maxAcceleration"] ?? 1.0) * 0.4 + (matchLevel["minHeartRate"] ?? 1.0) * 0.1,
+                        //                                      (matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (matchLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                        //                                      (matchLevel["totalDistance"] ?? 1.0) * 0.3 + (matchLevel["sprintCount"] ?? 1.0) * 0.1 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                        //
+                        //
+                        //                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                        //                            .fixedSize()
+                        Rectangle()
                             .frame(width: 304, height: 348)
                             .zIndex(-1)
                         
@@ -151,13 +159,20 @@ struct FieldRecordView: View {
     var body: some View {
         VStack {
             HStack {
+                HStack(spacing: 0) {
+                    Image(systemName: "info.circle")
+                    Text(" 경기의 기록에 따라 뱃지를 획득합니다.")
+                }
+                .floatingCapsuleStyle()
+                Spacer()
+            }
+            HStack {
                 VStack(alignment: .leading) {
                     Spacer()
                     VStack(alignment: .leading, spacing: -8) {
                         Text("Field Record")
                     }
                     .font(.matchDetailTitle)
-                    .foregroundStyle(.matchDetailTitle)
                 }
                 Spacer()
             }
@@ -179,82 +194,8 @@ struct FieldRecordView: View {
                     }
                 }
             }
-            Spacer()
-                .frame(minHeight: 30)
-            ZStack {
-                LightRectangleView(alpha: 0.4, color: .black, radius: 15)
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        VStack(alignment: .leading) {
-                            Image("HeartbeatSign")
-                            Text("뛴 거리")
-                                .font(.fieldRecordTitle)
-                            HStack(alignment: .bottom,spacing: 0) {
-                                Text(workoutData.distance.formatted())
-                                    .font(.fieldRecordMeasure)
-                                Text(" km")
-                                    .font(.fieldRecordUnit)
-                            }
-                            Spacer()
-                            Image("HeartbeatSign")
-                            Text("스프린트")
-                                .font(.fieldRecordTitle)
-                            HStack(alignment: .bottom,spacing: 0) {
-                                Text(workoutData.sprint.formatted())
-                                    .font(.fieldRecordMeasure)
-                                Text(" Times")
-                                    .font(.fieldRecordUnit)
-                            }
-                            Spacer()
-                            Image("HeartbeatSign")
-                            Text("최대 심박수")
-                                .font(.fieldRecordTitle)
-                            HStack(alignment: .bottom,spacing: 0) {
-                                Text(workoutData.maxHeartRate.formatted())
-                                    .font(.fieldRecordMeasure)
-                                Text(" bpm")
-                                    .font(.fieldRecordUnit)
-                            }
-                        }
-                        Spacer()
-                        VStack(alignment: .leading) {
-                            Image("HeartbeatSign")
-                            Text("최고 속도")
-                                .font(.fieldRecordTitle)
-                            HStack(alignment: .bottom,spacing: 0) {
-                                Text(workoutData.velocity.formatted())
-                                    .font(.fieldRecordMeasure)
-                                Text(" Km/h")
-                                    .font(.fieldRecordUnit)
-                            }
-                            Spacer()
-                            Image("HeartbeatSign")
-                            Text("가속도")
-                                .font(.fieldRecordTitle)
-                            HStack(alignment: .bottom,spacing: 0) {
-                                Text(workoutData.acceleration.formatted())
-                                    .font(.fieldRecordMeasure)
-                                Text(" M/s")
-                                    .font(.fieldRecordUnit)
-                                Text("2")
-                                    .font(.fieldRecordSquare)
-                                    .baselineOffset(10.0)
-                            }
-                            Spacer()
-                            Image("HeartbeatSign")
-                            Text("최소 심박수")
-                                .font(.fieldRecordTitle)
-                            Text(workoutData.maxHeartRate.formatted() + " bpm")
-                                .font(.fieldRecordMeasure)
-                        }
-                        Spacer()
-                    }
-                    Spacer()
-                }
-            }
-            .kerning(-0.41)
+            
+            FieldRecordDataView(workoutData: workoutData)
         }
     }
 }
@@ -263,34 +204,126 @@ struct FieldMovementView: View {
     let workoutData: WorkoutData
     var body: some View {
         VStack {
-            Spacer()
-                .frame(minHeight: 60)
             HStack {
                 VStack(alignment: .leading) {
-                    Text(" 터치하면 자세한 정보를 볼 수 있어요.")
+                    HStack {
+                        HStack {
+                            Image(systemName: "info.circle")
+                            Text(" 플레이 중 위치가 표시됩니다.")
+                        }
                         .floatingCapsuleStyle()
-                    Spacer()
-                        .frame(minHeight: 30)
-                    VStack(alignment: .leading, spacing: -8) {
-                        Text("Field Movement")
+                        Spacer()
                     }
-                    .font(.matchDetailTitle)
-                    .foregroundStyle(.matchDetailTitle)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Field Movement")
+                            .font(.matchDetailTitle)
+                    }
                 }
-                Spacer()
             }
-            Spacer()
-                .frame(minHeight: 30)
+            
             HeatmapView(coordinate: CLLocationCoordinate2D(latitude: workoutData.center[0], longitude: workoutData.center[1]), polylineCoordinates: workoutData.route)
                 .frame(height: 500)
                 .cornerRadius(15.0)
-                .padding(.horizontal)
         }
+        
         Spacer()
-            .frame(height: 120)
+            .frame(height: 60)
     }
 }
 
-//#Preview {
-//    MatchDetailView(workoutData: fakeWorkoutData[0])
-//}
+#Preview {
+    @StateObject var healthInteractor = HealthInteractor.shared
+    return MatchDetailView(workoutData: fakeWorkoutData[0],
+                           averageData: .constant(fakeAverageData),
+                           maximumData: .constant(fakeAverageData))
+    .environmentObject(healthInteractor)
+}
+
+struct FieldRecordDataView: View {
+    let workoutData: WorkoutData
+    var body: some View {
+        ZStack {
+            LightRectangleView(alpha: 0.4, color: .black, radius: 15)
+            
+            HStack(spacing: 70) {
+                
+                VStack(alignment: .leading, spacing: 24) {
+                    VStack(alignment: .leading) {
+                        Text("뛴 거리")
+                            .font(.fieldRecordTitle)
+                        HStack(alignment: .bottom, spacing: 0) {
+                            Text(workoutData.distance.formatted())
+                                .font(.fieldRecordMeasure)
+                            Text(" km")
+                                .font(.fieldRecordUnit)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("스프린트")
+                            .font(.fieldRecordTitle)
+                        HStack(alignment: .bottom, spacing: 0) {
+                            Text(workoutData.sprint.formatted())
+                                .font(.fieldRecordMeasure)
+                            Text(" Times")
+                                .font(.fieldRecordUnit)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("최대 심박수")
+                            .font(.fieldRecordTitle)
+                        HStack(alignment: .bottom, spacing: 0) {
+                            Text(workoutData.maxHeartRate.formatted())
+                                .font(.fieldRecordMeasure)
+                            Text(" Bpm")
+                                .font(.fieldRecordUnit)
+                        }
+                    }
+                }
+                
+                VStack(alignment: .leading, spacing: 24) {
+                    VStack(alignment: .leading) {
+                        Text("최고 속도")
+                            .font(.fieldRecordTitle)
+                        HStack(alignment: .bottom,spacing: 0) {
+                            Text(Int(workoutData.velocity).formatted())
+                                .font(.fieldRecordMeasure)
+                            Text(" km/h")
+                                .font(.fieldRecordUnit)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("가속도")
+                            .font(.fieldRecordTitle)
+                        HStack(alignment: .bottom,spacing: 0) {
+                            Text(workoutData.acceleration.formatted())
+                                .font(.fieldRecordMeasure)
+                            Text(" m/s")
+                                .font(.fieldRecordUnit)
+                            Text("2")
+                                .font(.fieldRecordSquare)
+                                .baselineOffset(10.0)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("최소 심박수")
+                            .font(.fieldRecordTitle)
+                        HStack(alignment: .bottom, spacing: 0) {
+                            Text(workoutData.maxHeartRate.formatted())
+                                .font(.fieldRecordMeasure)
+                            Text(" Bpm")
+                                .font(.fieldRecordUnit)
+                        }
+                    }
+                }
+            }
+            .padding(.vertical, 56)
+            .padding(.horizontal, 40)
+        }
+        .kerning(-0.41)
+    }
+}

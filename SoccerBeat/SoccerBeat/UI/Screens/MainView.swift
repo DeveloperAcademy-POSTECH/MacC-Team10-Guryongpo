@@ -62,7 +62,7 @@ struct MainView: View {
                     .padding()
                     
                     NavigationLink {
-                        MatchDetailView(averageData: $averageData, maximumData: $maximumData, workoutData: userWorkouts[0])
+                        MatchDetailView(workoutData: userWorkouts[0], averageData: $averageData, maximumData: $maximumData)
                     } label: {
                         ZStack {
                             LightRectangleView(alpha: 0.6, color: .black, radius: 15)
@@ -182,7 +182,6 @@ struct MainView: View {
                         .frame(height: 80)
                     
                     AnalyticsView()
-                        .environmentObject(healthInteractor)
                 }
             }
         }

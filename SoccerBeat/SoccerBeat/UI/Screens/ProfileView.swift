@@ -86,7 +86,7 @@ struct ProfileView: View {
                     Spacer()
                         .frame(height: 110)
                     
-                    VStack(spacing: 0) {
+                    VStack(spacing: 6) {
                         HStack {
                             HStack(spacing: 0) {
                                 Text("")
