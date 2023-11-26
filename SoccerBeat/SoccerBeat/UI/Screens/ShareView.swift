@@ -78,7 +78,9 @@ struct TargetImageView: View {
     @State var degree: Double = 0
     @ObservedObject var viewModel: ProfileModel
     @EnvironmentObject var healthInteractor: HealthInteractor
-    @State var userName: String = ""
+    private var userName: String {
+        return UserDefaults.standard.string(forKey: "userName") ?? "Anonymous"
+    }
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -101,11 +103,8 @@ struct TargetImageView: View {
                             .foregroundStyle(.shareViewSubTitleTint)
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
-                                Text("Player")
+                                Text(userName)
                               .foregroundStyle(.shareViewTitleTint)
-                            }
-                            HStack {
-                                Text("\(userName)").foregroundStyle(.shareViewTitleTint)
                             }
                         }
                         .font(.shareViewTitle)
@@ -122,9 +121,6 @@ struct TargetImageView: View {
                 Spacer()
             }
             .padding()
-        }
-        .onAppear {
-            userName = UserDefaults.standard.string(forKey: "userName") ?? ""
         }
     }
     private func floatingBadgeInfo(at sort: Int) -> some View {
