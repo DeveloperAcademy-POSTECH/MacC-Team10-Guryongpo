@@ -21,6 +21,7 @@ struct MatchRecapView: View {
             Spacer()
                 .frame(height: 55)
             HStack {
+                Image(systemName: "info.circle")
                 Text(" 모든 경기와 그날의 스텟을 확인해보세요.")
                     .floatingCapsuleStyle()
                 Spacer()

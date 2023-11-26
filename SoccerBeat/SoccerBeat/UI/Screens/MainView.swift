@@ -21,8 +21,6 @@ struct MainView: View {
     
     var body: some View {
         ScrollView {
-            ZStack {
-                BackgroundImageView()
                 VStack(spacing: 0) {
                     HStack {
                         Button(action: { soundManager.isPlaying.toggle() },
@@ -184,7 +182,6 @@ struct MainView: View {
                     AnalyticsView()
                 }
             }
-        }
         .padding(.horizontal)
         .navigationTitle("")
     }

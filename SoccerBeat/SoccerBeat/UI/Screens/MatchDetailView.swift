@@ -53,7 +53,7 @@ struct MatchTimeView: View {
                     Text(" 경기에 대한 ")
                     Text("상세한 리포트")
                         .fontWeight(.bold)
-                    Text("를 확인해볼까요?")
+                    Text("를 확인해 볼까요?")
                 }
                 .floatingCapsuleStyle()
                 
@@ -103,44 +103,43 @@ struct PlayerAbilityView: View {
                     HStack {
                         Spacer()
                         
-                        //                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
-                        //                                                         maxHeartRate: averageData.maxHeartRate,
-                        //                                                         maxVelocity: averageData.maxVelocity,
-                        //                                                         maxAcceleration: averageData.maxAcceleration,
-                        //                                                         sprintCount: averageData.sprintCount,
-                        //                                                         minHeartRate: averageData.minHeartRate,
-                        //                                                         rangeHeartRate: averageData.rangeHeartRate,
-                        //                                                         totalMatchTime: averageData.totalMatchTime)
-                        //                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                        //                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                        //                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                        //                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
-                        //                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                        //                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                        //
-                        //                        let rawTime = workoutData.time
-                        //                        let separatedTime = rawTime.components(separatedBy: ":")
-                        //                        let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                        //                        let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                        //                        let matchLevel = dataConverter(totalDistance: workoutData.distance,
-                        //                                                       maxHeartRate: workoutData.maxHeartRate,
-                        //                                                       maxVelocity: workoutData.velocity,
-                        //                                                       maxAcceleration: workoutData.acceleration,
-                        //                                                       sprintCount: workoutData.sprint,
-                        //                                                       minHeartRate: workoutData.minHeartRate,
-                        //                                                       rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
-                        //                                                       totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
-                        //                        let recent = [(matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                        //                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.3 + (matchLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                        //                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.25 + (matchLevel["sprintCount"] ?? 1.0) * 0.125 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                        //                                      (matchLevel["maxAcceleration"] ?? 1.0) * 0.4 + (matchLevel["minHeartRate"] ?? 1.0) * 0.1,
-                        //                                      (matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (matchLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                        //                                      (matchLevel["totalDistance"] ?? 1.0) * 0.3 + (matchLevel["sprintCount"] ?? 1.0) * 0.1 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                        //
-                        //
-                        //                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
-                        //                            .fixedSize()
-                        Rectangle()
+                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
+                                                         maxHeartRate: averageData.maxHeartRate,
+                                                         maxVelocity: averageData.maxVelocity,
+                                                         maxAcceleration: averageData.maxAcceleration,
+                                                         sprintCount: averageData.sprintCount,
+                                                         minHeartRate: averageData.minHeartRate,
+                                                         rangeHeartRate: averageData.rangeHeartRate,
+                                                         totalMatchTime: averageData.totalMatchTime)
+                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                        
+                        let rawTime = workoutData.time
+                        let separatedTime = rawTime.components(separatedBy: ":")
+                        let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                        let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                        let matchLevel = dataConverter(totalDistance: workoutData.distance,
+                                                       maxHeartRate: workoutData.maxHeartRate,
+                                                       maxVelocity: workoutData.velocity,
+                                                       maxAcceleration: workoutData.acceleration,
+                                                       sprintCount: workoutData.sprint,
+                                                       minHeartRate: workoutData.minHeartRate,
+                                                       rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
+                                                       totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
+                        let recent = [(matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.35,
+                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.3 + (matchLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.25 + (matchLevel["sprintCount"] ?? 1.0) * 0.125 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                                      (matchLevel["maxAcceleration"] ?? 1.0) * 0.4 + (matchLevel["minHeartRate"] ?? 1.0) * 0.1,
+                                      (matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (matchLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                                      (matchLevel["totalDistance"] ?? 1.0) * 0.3 + (matchLevel["sprintCount"] ?? 1.0) * 0.1 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                        
+                        
+                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                            .fixedSize()
                             .frame(width: 304, height: 348)
                             .zIndex(-1)
                         
@@ -246,7 +245,7 @@ struct FieldRecordDataView: View {
         ZStack {
             LightRectangleView(alpha: 0.4, color: .black, radius: 15)
             
-            HStack(spacing: 70) {
+            HStack(alignment: .center, spacing: 50) {
                 
                 VStack(alignment: .leading, spacing: 24) {
                     VStack(alignment: .leading) {
@@ -299,7 +298,7 @@ struct FieldRecordDataView: View {
                         Text("가속도")
                             .font(.fieldRecordTitle)
                         HStack(alignment: .bottom,spacing: 0) {
-                            Text(workoutData.acceleration.formatted())
+                            Text(workoutData.acceleration.rounded(at: 1))
                                 .font(.fieldRecordMeasure)
                             Text(" m/s")
                                 .font(.fieldRecordUnit)
@@ -322,7 +321,7 @@ struct FieldRecordDataView: View {
                 }
             }
             .padding(.vertical, 56)
-            .padding(.horizontal, 40)
+            .padding(.horizontal, 20)
         }
         .kerning(-0.41)
     }

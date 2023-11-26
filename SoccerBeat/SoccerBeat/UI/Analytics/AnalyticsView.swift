@@ -13,12 +13,13 @@ struct AnalyticsView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
-                Image(systemName: "info.circle")
-                    .font(.mainInfoText)
-                    .overlay {
-                        Capsule()
-                            .stroke()
-                        .frame(height: 24)}
+                HStack(spacing: 0) {
+                    Image(systemName: "info.circle")
+                        .font(.mainInfoText)
+                    Text(" 최근 경기에서 데이터의 변화를 볼 수 있습니다.")
+                }
+                .floatingCapsuleStyle()
+                
                 HStack {
                     Text("추세")
                         .font(.mainTitleText)

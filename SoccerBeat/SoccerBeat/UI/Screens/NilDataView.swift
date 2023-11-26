@@ -14,9 +14,6 @@ struct NilDataView: View {
     @Binding var maximumData: WorkoutAverageData
     
     var body: some View {
-        ZStack {
-            BackgroundImageView()
-            
             VStack(spacing: 0.0) {
                 
                 HStack {
@@ -107,7 +104,6 @@ struct NilDataView: View {
                 
                 Spacer()
             }
-        }
         .padding(.horizontal)
         .navigationTitle("")
     }
