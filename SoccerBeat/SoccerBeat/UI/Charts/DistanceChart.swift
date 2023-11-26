@@ -169,7 +169,7 @@ extension DistanceChartView {
             .frame(height: 100)
             .overlay {
                 VStack(spacing: 4) {
-                    Text("음바페의 경기 평균 뛴 거리는 12km 입니다.")
+                    Text("움바페의 경기 평균 뛴 거리는 12km 입니다.")
                         .font(.playerComapareSaying)
                         .foregroundStyle(.playerCompareStyle)
                     Spacer()
