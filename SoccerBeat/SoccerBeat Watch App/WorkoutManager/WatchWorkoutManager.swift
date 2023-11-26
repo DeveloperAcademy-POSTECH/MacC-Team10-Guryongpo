@@ -52,8 +52,6 @@ class WorkoutManager: NSObject, ObservableObject {
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
-    
-    
     var saveMinHeartRate: Int = 200
     var saveMaxHeartRate: Int = 0
     var maxHeartRate: Double?
