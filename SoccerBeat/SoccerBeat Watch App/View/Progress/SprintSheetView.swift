@@ -8,22 +8,17 @@
 import SwiftUI
 
 struct SprintSheetView: View {
-    @State private var beatAnimation: Bool = false
+    @State private var beatAnimation: Bool = true
     var speed: String
     @Environment(\.dismiss) var dismiss
     var body: some View {
-        ZStack {
+        ZStack(alignment: .center) {
+                Image("alertButton")
+                    .resizable()
+                    .scaledToFit()
+                    .animation(.smooth.repeatForever(autoreverses: true).speed(2.0), value: beatAnimation)
+                    .scaleEffect(beatAnimation ? 1.0 : 1.01, anchor: .topLeading)
             
-            Image("alertButton")
-                .resizable()
-                .scaledToFit()
-                .scaleEffect(beatAnimation ? 1.0 : 0.8)
-                .animation(.smooth.repeatForever(autoreverses: true).speed(2.0), value: beatAnimation)
-                .onAppear(perform: {
-                    withAnimation {
-                        beatAnimation.toggle()
-                    }
-                })
             VStack {
                 Text("last SPRINT!")
                     .font(.lastSprint)
@@ -32,9 +27,10 @@ struct SprintSheetView: View {
                 Text(speed)
                     .font(.alertSpeed)
                     .foregroundStyle(.zone1Bpm)
-                
             }
-        }.toolbar {
+        }
+
+        .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
                     dismiss()
@@ -43,10 +39,15 @@ struct SprintSheetView: View {
                         .font(.system(size: 20))
                         .tint(.white)
                 }
-                    
+                
             }
         }
-
+        .onAppear(perform: {
+            withAnimation {
+                beatAnimation.toggle()
+            }
+        })
+        
     }
 }
 

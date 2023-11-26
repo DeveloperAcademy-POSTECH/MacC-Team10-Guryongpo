@@ -18,7 +18,7 @@ struct SummaryView: View {
             PhraseView()
                 .navigationBarHidden(true)
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.7 ) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3 ) {
                         withAnimation {
                             isShowingSummary.toggle()
                         }
@@ -27,13 +27,11 @@ struct SummaryView: View {
         } else {
             ScrollView {
                 SummaryComponent(title: "뛴 거리",
-                                 content: String(Measurement(value: workoutManager.distance,
-                                   unit: UnitLength.meters)
-                    .formatted(.measurement(width: .abbreviated, usage: .road))), playTime: "")
-                SummaryComponent(title: "최고 속도", content: Measurement(value: workoutManager.maxSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)), playTime: "")
-                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted() + " Times", playTime: "")
+                                 content: (workoutManager.distance / 1000).rounded(at: 2) + " km")
+                SummaryComponent(title: "최고 속도", content: (workoutManager.maxSpeed * 3.6).rounded(at: 1) + " km/h")
+                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted() + "  Times")
                 
-                SummaryComponent(title: "가속도", content:  Double(Int(workoutManager.acceleration * 100) / 100).formatted() + "m/s", playTime: "")
+                SummaryComponent(title: "가속도", content:  workoutManager.acceleration.rounded(at: 1) + " m/s")
                 
                 Button(action: { dismiss() }, label: {
                     Text("완료")

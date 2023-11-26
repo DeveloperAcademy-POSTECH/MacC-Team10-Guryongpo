@@ -38,7 +38,8 @@ class WorkoutManager: NSObject, ObservableObject {
     
     var energy: Double = 0
     
-    let sprintSpeed: Double = 5.5556 // modify it to test code
+//    let sprintSpeed: Double = 5.5556 // modify it to test code
+    let sprintSpeed: Double = 4.02 // modify it to test code
     
     @Published var isSprint: Bool = false
     var maxSpeed: Double = 0.0
@@ -278,16 +279,18 @@ class WorkoutManager: NSObject, ObservableObject {
         builder = nil
         workout = nil
         session = nil
+        
         heartRate = 0
-        heartZone = 0
+        heartZone = 1
+        zone5Count = 0
+        saveMaxHeartRate = 0
+        saveMinHeartRate = 0
+        
         distance = 0
         maxSpeed = 0
         speed = 0
         sprint = 0
-        saveMaxHeartRate = 0
-        saveMinHeartRate = 0
-        zone5Count = 0
-        heartZone = 1
+        recentSprintSpeed = 0
     }
     
     // MARK: - Heart Rate Setup

@@ -25,11 +25,6 @@ struct SessionPagingView: View {
             
                 GameProgressView()
                     .tag(TabSort.progress)
-                
-//            Paging for HeartRate
-//            TabView {}
-//            .tabViewStyle(.carousel)
-            
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(selection == .progress)

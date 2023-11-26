@@ -117,6 +117,15 @@ extension ShapeStyle where Self == LinearGradient {
         return .linearGradient(colors: [.precountTint, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     
+    // MARK: - GameProgressView
+    
+    static var gameTimeGradient: Self {
+        return .linearGradient(colors: [.zone2Tint, .SprintOnRightColor],
+                               startPoint: .topLeading,
+                               endPoint: .bottomTrailing
+        )
+    }
+    
     // MARK: - SprintView
     
     static var sprintOffGradient: Self {

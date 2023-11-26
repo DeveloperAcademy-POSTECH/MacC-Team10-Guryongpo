@@ -40,15 +40,15 @@ struct PrecountView: View {
             }.onAppear {
                 showingSession = false
                 count = 3
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     count -= 1
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
                     count -= 1
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
                     showingSession = true
                 }
             }

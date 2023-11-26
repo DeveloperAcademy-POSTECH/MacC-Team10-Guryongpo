@@ -18,29 +18,29 @@ struct GameProgressView: View {
     // MARK: - Body
     var body: some View {
         TimelineView(ProgressTimelineSchedule(from: whenTheGameStarted, isPaused: isGamePaused)) { context in
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) {
+                Spacer()
                 // MARK: - 경기 시간
                 VStack {
-                    HStack {
-                        Spacer()
-                        Text("경기 시간")
-                            .foregroundStyle(.ongoingText)
-                            .font(.playTimeText)
-                    }
-                    
                     ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
                 }
+                
+                Spacer()
                 
                 HStack {
                     // MARK: - 뛴 거리
                     VStack {
-                        Text("뛴 거리")
-                            .font(.distanceTimeText)
-                            .foregroundStyle(.ongoingText)
+                        HStack {
+                            Spacer()
+                            Text("뛴 거리")
+                                .font(.distanceTimeText)
+                                .foregroundStyle(.ongoingText)
+                        }
                         
                         if workoutManager.isDistanceActive {
                             HStack(alignment: .bottom) {
-                                Text(String((Double(Int(workoutManager.distance/1000 * 100 ))) / 100))
+                                Spacer()
+                                Text((workoutManager.distance / 1000).rounded(at: 2))
                                     .font(.distanceTimeNumber)
                                     .foregroundStyle(.ongoingNumber)
                                 Text("KM")
@@ -48,20 +48,25 @@ struct GameProgressView: View {
                                     .foregroundStyle(.ongoingNumber)
                             }
                         } else {
-                            Text("--'--")
-                                .font(.distanceTimeNumber)
-                                .foregroundStyle(.ongoingNumber)
+                            HStack {
+                                Spacer()
+                                Text("--'--")
+                                    .font(.distanceTimeNumber)
+                                    .foregroundStyle(.ongoingNumber)
+                            }
                         }
                     }
-                    .frame(minWidth: 60, alignment: .trailing)
                     
                     Spacer()
                     
                     // MARK: - 스프린트
                     VStack(alignment: .trailing) {
-                        Text("스프린트")
-                            .font(.distanceTimeText)
-                            .foregroundStyle(.ongoingText)
+                        HStack {
+                            Spacer()
+                            Text("스프린트")
+                                .font(.distanceTimeText)
+                                .foregroundStyle(.ongoingText)
+                        }
                         
                         HStack(alignment: .bottom) {
                             Spacer()
@@ -75,8 +80,10 @@ struct GameProgressView: View {
                         
                     }
                 }
+                Spacer()
                 // Sprint Gauge bar
                 SprintView()
+                Spacer()
             }
             .padding(.horizontal)
             .onChange(of: workoutManager.isSprint) { isSprint in
@@ -86,7 +93,7 @@ struct GameProgressView: View {
             }
             .fullScreenCover(isPresented: $isSprintSheet) {
                 // 1 m/s = 3.6 km/h
-                SprintSheetView(speed: Double(Int(workoutManager.recentSprintSpeed * 3.6 * 100) / 100).formatted() + "km/h" )
+                SprintSheetView(speed: (workoutManager.recentSprintSpeed * 3.6).rounded(at: 1) + "km/h" )
             }
         }
     }

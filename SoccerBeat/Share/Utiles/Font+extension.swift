@@ -52,7 +52,7 @@ extension Font {
     public static let sprintText = Font.sfProText(size: 14, weight: .semiboldItalic)
     public static let speedStop = Font.sfCompactText(size: 12, weight: .lightItalic)
     public static let playTimeText = Font.sfProText(size: 12, weight: .regularItalic)
-    public static let playTimeNumber = Font.sfProText(size: 44, weight: .blackItalic)
+    public static let playTimeNumber = Font.sfProText(size: 38, weight: .blackItalic)
 
     // MARK: - Game Stop
     
