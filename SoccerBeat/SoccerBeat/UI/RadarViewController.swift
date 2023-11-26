@@ -55,17 +55,17 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
     func titleOfRowForRadarChart(_ radarChart: TKRadarChart, row: Int) -> String {
         switch row {
         case 0:
-            return "민첩성\n7"
+            return "민첩성"
         case 1:
-            return "적극성\n7.5"
+            return "적극성"
         case 2:
-            return "잠재력\n7.2"
+            return "잠재력"
         case 3:
-            return "정신력\n4.5"
+            return "정신력"
         case 4:
-            return "지구력\n5.4"
+            return "지구력"
         default:
-            return "폭발력\n7"
+            return "폭발력"
         }
     }
     
@@ -150,17 +150,17 @@ class ProfileViewController: UIViewController, TKRadarChartDataSource, TKRadarCh
     func titleOfRowForRadarChart(_ radarChart: TKRadarChart, row: Int) -> String {
         switch row {
         case 0:
-            return "민첩성\n7"
+            return "민첩성"
         case 1:
-            return "적극성\n7.5"
+            return "적극성"
         case 2:
-            return "잠재력\n7.2"
+            return "잠재력"
         case 3:
-            return "정신력\n4.5"
+            return "정신력"
         case 4:
-            return "지구력\n5.4"
+            return "지구력"
         default:
-            return "폭발력\n7"
+            return "폭발력"
         }
     }
     

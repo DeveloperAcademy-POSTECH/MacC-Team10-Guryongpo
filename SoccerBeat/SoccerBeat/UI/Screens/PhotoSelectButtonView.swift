@@ -16,29 +16,15 @@ struct PhotoSelectButtonView: View {
                      photoLibrary: .shared()) {
             HStack {
                 Image(systemName: "camera")
-                    .font(.system(size: 12))
+                    .font(.system(size: 15))
                     .foregroundStyle(.white)
                     .padding(.horizontal)
                     .overlay {
                         Capsule()
-                            .stroke(style: .init(lineWidth: 0.8))
+                            .stroke(style: .init(lineWidth: 1.0))
                             .foregroundColor(.brightmint)
-                            .frame(width: 24, height: 24)
+                            .frame(width: 32, height: 32)
                     }
-//                NavigationLink {
-//                    ShareView(viewModel: viewModel)
-//                } label: {
-//                    Image(systemName: "square.and.arrow.up")
-//                        .font(.selectPhotoButton)
-//                        .foregroundStyle(.white)
-//                        .padding()
-//                        .overlay {
-//                            Circle()
-//                                .stroke(style: .init(lineWidth: 0.8))
-//                                .foregroundColor(.brightmint)
-//                                .frame(width: 34, height: 34)
-//                        }
-//                }
             }
         }
         .buttonStyle(.borderless)
