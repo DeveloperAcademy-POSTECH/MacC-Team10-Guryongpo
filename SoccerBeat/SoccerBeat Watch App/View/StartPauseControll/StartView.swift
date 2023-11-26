@@ -32,12 +32,9 @@ struct StartView: View {
                     }
                 }
                 .alert(isPresented: $isShowingAlert) {
-                    Alert(
-                                title: Text("위치 권한이 허용되지 않았습니다."),
-                                message: Text("원활한 앱 사용을 위해\n\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한을 허용한 후 재실행 해주세요."),
-                                dismissButton: .default(Text("요청하기"),
-                                                        action: requestAuthorizationIfNeeded)
-                            )
+                    Alert(title: Text("위치 권한이 허용되지 않았습니다."),
+                          message: Text("원활한 앱 사용을 위해\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한을 허용한 후 재실행 해주세요."),
+                          dismissButton: .default(Text("요청하기"), action: requestAuthorizationIfNeeded))
                 }
             } else {
                 PrecountView()
