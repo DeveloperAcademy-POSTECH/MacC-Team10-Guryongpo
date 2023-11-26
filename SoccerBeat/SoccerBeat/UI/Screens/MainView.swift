@@ -191,14 +191,14 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    return MainView(userWorkouts: .constant(fakeWorkoutData),
-                    averageData:
-            .constant(fakeAverageData),
-                    maximumData: .constant(fakeAverageData),
-                    viewModel: ProfileModel()
-    )
-    .environmentObject(SoundManager())
-    .environmentObject(healthInteractor)
-}
+//#Preview {
+//    @StateObject var healthInteractor = HealthInteractor.shared
+//    return MainView(userWorkouts: .constant(fakeWorkoutData),
+//                    averageData:
+//            .constant(fakeAverageData),
+//                    maximumData: .constant(fakeAverageData),
+//                    viewModel: ProfileModel()
+//    )
+//    .environmentObject(SoundManager())
+//    .environmentObject(healthInteractor)
+//}

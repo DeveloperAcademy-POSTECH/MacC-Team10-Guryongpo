@@ -74,10 +74,8 @@ extension Font {
     public static let mainTime = Font.sfProText(size: 14, weight: .bold)
     
     // MARK: - MatchTotalView
-    
-    public static let matchTotalTitle = Font.sfProText(size: 36, weight: .heavyItalic)
-    public static let matchTotalSectionHeader = Font.sfProText(size: 14, weight: .lightItalic)
-    
+    public static let matchDateLocationText = Font.sfProText(size: 12, weight: .regular)
+
     // MARK: - ShareView
     
     public static let shareViewTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)

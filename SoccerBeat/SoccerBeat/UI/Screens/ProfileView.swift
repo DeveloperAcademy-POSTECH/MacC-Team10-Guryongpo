@@ -183,10 +183,10 @@ extension View {
     }
 }
 
-#Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    return ProfileView(averageData: .constant(fakeAverageData),
-                       maximumData: .constant(fakeAverageData),
-                       viewModel: ProfileModel())
-    .environmentObject(healthInteractor)
-}
+//#Preview {
+//    @StateObject var healthInteractor = HealthInteractor.shared
+//    return ProfileView(averageData: .constant(fakeAverageData),
+//                       maximumData: .constant(fakeAverageData),
+//                       viewModel: ProfileModel())
+//    .environmentObject(healthInteractor)
+//}
