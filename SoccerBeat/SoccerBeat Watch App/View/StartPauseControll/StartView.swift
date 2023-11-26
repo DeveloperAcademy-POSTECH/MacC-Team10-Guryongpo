@@ -20,42 +20,36 @@ struct StartView: View {
                     Image("backgroundGlow")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                    if !isHealthKitNotValid {
-                        Button(action: {
-                            if workoutManager.locationManager.authorizationStatus == .denied ||
-                                workoutManager.locationManager.authorizationStatus == .notDetermined
-                            {
-                                isShowingAlert.toggle()
-                            } else {
-                                workoutManager.showingPrecount.toggle()
-                            }
-                        }) {
-                            Image(.startButton)
+                    
+                    Button {
+                        if workoutManager.hasNotLocationAuthorization {
+                            isShowingAlert.toggle()
+                        } else {
+                            workoutManager.showingPrecount.toggle()
                         }
-                    } else if isHealthKitNotValid{
-                            Text("원활한 앱 사용을 위해\n\n아이폰의 건강 앱에서 SoccerBeat의 헬스킷 권한을 허용한 후 재실행 해주세요.\n\n공유 - 앱 및 서비스 - SoccerBeat - 모두 켜기")
-                                .bold()
-                                .padding()
+                    } label: {
+                        Image(.startButton)
                     }
                 }
                 .alert(isPresented: $isShowingAlert) {
                     Alert(
                                 title: Text("위치 권한이 허용되지 않았습니다."),
                                 message: Text("원활한 앱 사용을 위해\n\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한을 허용한 후 재실행 해주세요."),
-                                dismissButton: .destructive(Text("확인"))
+                                dismissButton: .default(Text("요청하기"),
+                                                        action: requestAuthorizationIfNeeded)
                             )
                 }
             } else {
                 PrecountView()
             }
         }
-        .task {
+        .buttonStyle(.borderless)
+    }
+    
+    private func requestAuthorizationIfNeeded() {
+        if workoutManager.hasNotLocationAuthorization || workoutManager.hasNotHealthAuthorization {
             workoutManager.requestAuthorization()
         }
-        .onReceive(workoutManager.authHealthKit, perform: {
-            isHealthKitNotValid = true
-        })
-        .buttonStyle(.borderless)
     }
 }
 
