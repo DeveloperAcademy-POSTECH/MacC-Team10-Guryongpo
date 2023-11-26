@@ -41,6 +41,8 @@ struct MatchDetailView: View {
 
 struct MatchTimeView: View {
     let workoutData: WorkoutData
+    @State var isInfoOpen: Bool = false
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -48,14 +50,33 @@ struct MatchTimeView: View {
                 Spacer()
                     .frame(minHeight: 50)
                 
-                HStack(spacing: 0) {
-                    Image(systemName: "info.circle")
-                    Text(" 경기에 대한 ")
-                    Text("상세한 리포트")
-                        .fontWeight(.bold)
-                    Text("를 확인해 볼까요?")
+                Button {
+                    isInfoOpen.toggle()
+                } label: {
+                    if !isInfoOpen {
+                        HStack(spacing: 0) {
+                            Text(" ")
+                            Image("InfoIcon")
+                                .resizable()
+                                .frame(width: 11, height: 15)
+                            Text(" ")
+                        }
+                        .floatingCapsuleStyle(color: .white.opacity(0.8))
+                    } else {
+                        HStack(spacing: 0) {
+                            Text(" ")
+                            Image("InfoIcon")
+                                .resizable()
+                                .frame(width: 11, height: 15)
+                            Text(" ")
+                            Text(" 경기에 대한 ")
+                            Text("상세한 리포트")
+                                .fontWeight(.bold)
+                            Text("를 확인해 볼까요?")
+                        }
+                        .floatingCapsuleStyle()
+                    }
                 }
-                .floatingCapsuleStyle()
                 
                 VStack(alignment: .leading, spacing: -8) {
                     Text("경기 시간 \(workoutData.time)")

@@ -9,16 +9,34 @@ import SwiftUI
 
 struct AnalyticsView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
-    
+    @State var isInfoOpen: Bool = false
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
-                HStack(spacing: 0) {
-                    Image(systemName: "info.circle")
-                        .font(.mainInfoText)
-                    Text(" 최근 경기에서 데이터의 변화를 볼 수 있습니다.")
+                Button {
+                    isInfoOpen.toggle()
+                } label: {
+                    if !isInfoOpen {
+                        HStack(spacing: 0) {
+                            Text(" ")
+                            Image("InfoIcon")
+                                .resizable()
+                                .frame(width: 11, height: 15)
+                            Text(" ")
+                        }
+                        .floatingCapsuleStyle(color: .white.opacity(0.8))
+                    } else {
+                        HStack(spacing: 0) {
+                            Text(" ")
+                            Image("InfoIcon")
+                                .resizable()
+                                .frame(width: 11, height: 15)
+                            Text(" ")
+                                Text(" 최근 경기에서 데이터의 변화를 볼 수 있습니다.")
+                        }
+                        .floatingCapsuleStyle()
+                    }
                 }
-                .floatingCapsuleStyle()
                 
                 HStack {
                     Text("추세")
