@@ -104,6 +104,7 @@ struct TargetImageView: View {
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
                                 Text(userName)
+                                    .highlighter(activity: .heartrate, isDefault: false)
                               .foregroundStyle(.shareViewTitleTint)
                             }
                         }
