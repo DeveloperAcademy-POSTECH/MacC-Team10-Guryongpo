@@ -67,15 +67,15 @@ extension Font {
     public static let summaryDoneButton = Font.sfCompactText(size: 13.5, weight: .semiboldItalic)
     
     // MARK: - MainView
-    
+    public static let mainInfoText = Font.notoSans(size: 14, weight: .regular)
+    public static let mainSubTitleText = Font.sfProDisplay(size: 24, weight: .semiboldItalic)
+    public static let mainTitleText = Font.sfProDisplay(size: 36, weight: .heavyItalic)
     public static let mainDateLocation = Font.sfProText(size: 12, weight: .regular)
     public static let mainTime = Font.sfProText(size: 14, weight: .bold)
     
     // MARK: - MatchTotalView
-    
-    public static let matchTotalTitle = Font.sfProText(size: 36, weight: .heavyItalic)
-    public static let matchTotalSectionHeader = Font.sfProText(size: 14, weight: .lightItalic)
-    
+    public static let matchDateLocationText = Font.sfProText(size: 12, weight: .regular)
+
     // MARK: - ShareView
     
     public static let shareViewTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
@@ -89,7 +89,7 @@ extension Font {
     // MARK: - MatchDetailView
     public static let matchDetailTitle = Font.sfProDisplay(size: 36, weight: .heavyItalic)
     public static let matchDetailSubTitle = Font.sfProDisplay(size: 24, weight: .semiboldItalic)
-    public static let fieldRecordTitle = Font.sfProText(size: 20, weight: .regular)
+    public static let fieldRecordTitle = Font.sfProText(size: 16, weight: .regular)
     public static let fieldRecordMeasure = Font.sfProText(size: 32, weight: .heavyItalic)
     public static let fieldRecordUnit = Font.sfProText(size: 20, weight: .heavyItalic)
     public static let fieldRecordSquare = Font.sfProText(size: 15, weight: .heavyItalic)
@@ -97,12 +97,12 @@ extension Font {
     // MARK: - Navigation Title Style
     
     public static let navigationSportyTitle = Font.sfProText(size: 36, weight: .heavyItalic)
-    public static let navigationSportySubTitle = Font.sfProText(size: 24, weight: .semiboldItalic)
+    public static let navigationSportySubTitle = Font.sfProText(size: 24, weight: .regular)
     
     // MARK: - In Chart Style
     
     public static let durationStyle = Font.sfProText(size: 12, weight: .mediumItalic)
-    public static let maxValueUint = Font.sfProText(size: 14, weight: .heavyItalic)
+    public static let maxValueUint = Font.sfProText(size: 12, weight: .heavyItalic)
     public static let defaultValueUnit = Font.sfProText(size: 14, weight: .lightItalic)
     public static let maxDayUnit = Font.sfProText(size: 12, weight: .bold)
     public static let defaultDayUnit = Font.sfProText(size: 12, weight: .light)

@@ -19,43 +19,42 @@ struct MatchRecapView: View {
         VStack(spacing: 10) {
             
             Spacer()
-                .frame(height: 60)
-            
-            Text(" 모든 경기와 그날의 스텟을 확인해보세요.")
-                .floatingCapsuleStyle()
-            
+                .frame(height: 55)
+            HStack {
+                Image(systemName: "info.circle")
+                Text(" 모든 경기와 그날의 스텟을 확인해보세요.")
+                    .floatingCapsuleStyle()
+                Spacer()
+            }
             HStack {
                 Text("모든 경기 기록")
-                    .font(.custom("NotoSansDisplay-BlackItalic", size: 24))
+                    .font(.mainSubTitleText)
                 Spacer()
             }
             .padding(.top, 30)
-            .padding(.horizontal)
             
             HStack {
                 VStack(alignment: .leading, spacing: 0.0) {
-                    Text("Player, \(userName)")
+                    Text("Player \(userName)")
                     Text("Your past games")
                 }
+                .font(.mainTitleText)
                 .foregroundStyle(.white)
-                .font(.custom("SFProText-HeavyItalic", size: 36))
                 .kerning(-1.5)
-                .padding(.leading, 10)
                 Spacer()
             }
             
-            VStack {
+            VStack(spacing: 15) {
                 ForEach(userWorkouts ?? [], id: \.self) { workout in
                     NavigationLink {
-                        MatchDetailView(averageData: $averageData, maximumData: $maximumData, workoutData: workout)
+                        MatchDetailView(workoutData: workout, averageData: $averageData, maximumData: $maximumData)
                     } label: {
                         MatchListItemView(workoutData: workout, averageData: $averageData)
                     }
-                    .padding(.vertical, 10)
                 }
             }
         }
-        .padding(.horizontal)
+        .padding()
         .onAppear {
             userName = UserDefaults.standard.string(forKey: "userName") ?? ""
         }
@@ -87,7 +86,7 @@ struct MatchListItemView: View {
                             EmptyView()
                         }
                     }
-                    .offset(CGSize(width: 15.0, height: -20.0))
+                    .offset(CGSize(width: 15.0, height: -10.0))
                     Spacer()
                 }
                 Spacer()
@@ -97,13 +96,13 @@ struct MatchListItemView: View {
                 Spacer ()
                 
                 let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
-                                           maxHeartRate: averageData.maxHeartRate,
-                                           maxVelocity: averageData.maxVelocity,
-                                           maxAcceleration: averageData.maxAcceleration,
-                                           sprintCount: averageData.sprintCount,
-                                           minHeartRate: averageData.minHeartRate,
-                                           rangeHeartRate: averageData.rangeHeartRate,
-                                           totalMatchTime: averageData.totalMatchTime)
+                                                 maxHeartRate: averageData.maxHeartRate,
+                                                 maxVelocity: averageData.maxVelocity,
+                                                 maxAcceleration: averageData.maxAcceleration,
+                                                 sprintCount: averageData.sprintCount,
+                                                 minHeartRate: averageData.minHeartRate,
+                                                 rangeHeartRate: averageData.rangeHeartRate,
+                                                 totalMatchTime: averageData.totalMatchTime)
                 let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
                                (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
                                (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
@@ -124,11 +123,11 @@ struct MatchListItemView: View {
                                                 rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
                                                 totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
                 let recent = [(recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                               (recentLevel["maxVelocity"] ?? 1.0) * 0.3 + (recentLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                               (recentLevel["maxVelocity"] ?? 1.0) * 0.25 + (recentLevel["sprintCount"] ?? 1.0) * 0.125 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                               (recentLevel["maxAcceleration"] ?? 1.0) * 0.4 + (recentLevel["minHeartRate"] ?? 1.0) * 0.1,
-                               (recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (recentLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                               (recentLevel["totalDistance"] ?? 1.0) * 0.3 + (recentLevel["sprintCount"] ?? 1.0) * 0.1 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.1]
+                              (recentLevel["maxVelocity"] ?? 1.0) * 0.3 + (recentLevel["maxAcceleration"] ?? 1.0) * 0.2,
+                              (recentLevel["maxVelocity"] ?? 1.0) * 0.25 + (recentLevel["sprintCount"] ?? 1.0) * 0.125 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.125,
+                              (recentLevel["maxAcceleration"] ?? 1.0) * 0.4 + (recentLevel["minHeartRate"] ?? 1.0) * 0.1,
+                              (recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (recentLevel["totalMatchTime"] ?? 1.0) * 0.2,
+                              (recentLevel["totalDistance"] ?? 1.0) * 0.3 + (recentLevel["sprintCount"] ?? 1.0) * 0.1 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.1]
                 
                 ViewControllerContainer(ThumbnailViewController(radarAverageValue: average, radarAtypicalValue: recent))
                     .scaleEffect(CGSize(width: 0.4, height: 0.4))
@@ -136,48 +135,55 @@ struct MatchListItemView: View {
                     .frame(width: 88, height: 88)
                 
                 VStack(alignment: .leading) {
-                    Text(workoutData.date.description + " - " + currentLocation)
-                        .foregroundStyle(Color.white.opacity(0.5))
-                        .task {
-                            currentLocation = await workoutData.location
-                        }
-                    Text("경기 시간 " + workoutData.time)
-                        .foregroundStyle(Color.white)
-                        .padding(.bottom)
+                    Group {
+                        Text(workoutData.date.description + " - " + currentLocation)
+                            .task {
+                                currentLocation = await workoutData.location
+                            }
+                        Text("경기 시간 " + workoutData.time)
+                        
+                    }
+                    .opacity(0.6)
+                    .font(.matchDateLocationText)
                     
-                    HStack {
+                    Spacer()
+                    
+                    HStack(spacing: 16) {
                         VStack(alignment: .leading) {
-                            Text("활동량")
+                            Text("뛴 거리")
                             Text(String(format: "%.1f", workoutData.distance) + "km")
-                        }.foregroundStyle(
-                            .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .font(.custom("SFProText-HeavyItalic", size: 16))
+                                .bold()
+                        }
                         
                         VStack(alignment: .leading) {
                             Text("최고 속도")
-                            Text("\(workoutData.velocity.formatted()) km/h")
-                        }.foregroundStyle(
-                            .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .font(.custom("SFProText-HeavyItalic", size: 16))
+                            Text("\(Int(workoutData.velocity).formatted()) km/h")
+                                .bold()
+                        }
                         
                         VStack(alignment: .leading) {
                             Text("스프린트 횟수")
-                            Text("\(workoutData.sprint)회")
+                            Text("\(workoutData.sprint) 회")
+                                .bold()
                         }
-                        .foregroundStyle(
-                            .linearGradient(colors: [.white, .white.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .font(.custom("SFProText-HeavyItalic", size: 16))
                     }
+                    .font(.system(size: 14))
+                    
                 }
+                .foregroundStyle(.white)
+                .padding()
+                
                 Spacer()
             }
-            .padding(.vertical, 10)
         }
         .frame(height: 114)
     }
 }
 
 //#Preview {
-//    MatchListItemView(workoutData: fakeWorkoutData[0])
-//        .environmentObject(HealthInteractor.shared)
+//    @StateObject var healthInteractor = HealthInteractor.shared
+//    return MatchRecapView(userWorkouts: .constant(fakeWorkoutData),
+//                          averageData: .constant(fakeAverageData),
+//                          maximumData: .constant(fakeAverageData))
+//    .environmentObject(healthInteractor)
 //}

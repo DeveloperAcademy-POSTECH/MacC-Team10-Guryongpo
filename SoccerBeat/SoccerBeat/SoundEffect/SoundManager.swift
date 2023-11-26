@@ -14,6 +14,16 @@ class SoundManager: ObservableObject {
     var cardBackPlayer: AVAudioPlayer?
     var photoSelectPlayer: AVAudioPlayer?
     
+    @Published var isPlaying: Bool = true {
+        willSet {
+            if isPlaying {
+                stopBackground()
+            } else {
+                playBackground()
+            }
+        }
+    }
+    
     init() {
         setupPlayer()
     }
@@ -39,6 +49,10 @@ class SoundManager: ObservableObject {
     func playBackground() {
         backgroundPlayer?.numberOfLoops = -1
         backgroundPlayer?.play()
+    }
+    
+    func stopBackground() {
+        backgroundPlayer?.stop()
     }
     
     func playFrontSoundEffect() {

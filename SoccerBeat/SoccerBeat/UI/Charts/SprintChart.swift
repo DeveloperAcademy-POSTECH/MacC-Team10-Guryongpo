@@ -8,6 +8,52 @@
 import SwiftUI
 import Charts
 
+struct SprintChartView: View {
+    let workouts: [WorkoutData]
+    private var startDate: String {
+        workouts.first?.date ?? "2023.10.10"
+    }
+    private var endDate: String {
+        workouts.last?.date ?? "2023.10.10"
+    }
+    var body: some View {
+        let fastest = maximum(of: workouts)
+        let slowest = minimum(of: workouts)
+        
+        return VStack(alignment: .leading) {
+            HStack {
+                Image(systemName: "info.circle")
+                Text(" 최근 경기에서 보인 스프린트의 추세입니다")
+            }
+            .floatingCapsuleStyle()
+            .padding(.top, 54)
+            
+            VStack(alignment: .leading) {
+                Text("스프린트")
+                    .font(.navigationSportySubTitle)
+                    .foregroundStyle(.navigationSportyHead)
+                Text("The trends of")
+                Text("Sprint")
+                    .foregroundStyle(.navigationSportySprintTitle)
+                    .highlighter(activity: .sprint, isDefault: false)
+            }
+            .font(.navigationSportyTitle)
+            .padding(.top, 32)
+            
+            sprintChartView(fastest: fastest, slowest: slowest)
+            
+            Spacer()
+                .frame(height: 30)
+            
+            averageSprintView
+                .padding(.horizontal, 48)
+            
+            Spacer()
+        }
+        .padding()
+    }
+}
+
 struct SprintChart: View {
     let workouts: [WorkoutData]
     let fastestWorkout: WorkoutData
@@ -36,22 +82,20 @@ struct SprintChart: View {
                                  : (isMin(workout) ? .sprintMin : .chartDefault))
                 .cornerRadius(300, style: .continuous)
                 // MARK: - Bar Chart Data, value 표시
-                .annotation(position: .bottom, alignment: .center) {
-                    let isMaxOrMin = isMin(workout) || isMax(workout)
-                    if  isMaxOrMin {
-                        Text(workout.sprint, format: .number)
-                            .font(isMaxOrMin ? .maxValueUint : .defaultValueUnit)
-                            .foregroundStyle(isMaxOrMin ? .maxValueStyle : .defaultValueStyle)
-                            .offset(y: -7)
-                    }
-                }
                 // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
                 .annotation(position: .bottom, alignment: .center) {
                     let isMaxOrMin = isMin(workout) || isMax(workout)
-                    Text(workout.monthDay)
-                        .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
-                        .foregroundStyle(isMaxOrMin ? .maxDayStyle : .defaultDayStyle)
-                        .offset(y: 7)
+                    VStack(spacing: 6) {
+                        Text(isMaxOrMin ? workout.sprint.formatted() + "회" : "0회" )
+                            .font(.maxValueUint)
+                            .foregroundStyle(.maxValueStyle)
+                            .opacity(isMaxOrMin ? 1.0 : 0.0)
+                            .padding(.top, 8)
+                        
+                        Text("\(workout.day)일")
+                            .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
+                            .foregroundStyle(.defaultDayStyle)
+                    }
                 }
             }
         }
@@ -63,54 +107,6 @@ struct SprintChart: View {
             }
         }
         .chartYAxis(.hidden)
-    }
-}
-
-struct SprintChartView: View {
-    let workouts: [WorkoutData]
-    private var startDate: String {
-        workouts.first?.date ?? "2023.10.10"
-    }
-    private var endDate: String {
-        workouts.last?.date ?? "2023.10.10"
-    }
-    var body: some View {
-        let fastest = maximum(of: workouts)
-        let slowest = minimum(of: workouts)
-        
-        return ZStack {
-            BackgroundImageView()
-
-            VStack(alignment: .leading) {
-                
-                Text("# 최근 경기에서 보인 스프린트 횟수의 추세입니다")
-                    .floatingCapsuleStyle()
-                    .padding(.leading, 16)
-                
-                Group {
-
-                    Text("스프린트")
-                        .font(.navigationSportySubTitle)
-                        .foregroundStyle(.navigationSportyHead)
-                    Text("The trends of")
-                    Text("Sprint")
-                        .foregroundStyle(.navigationSportySprintTitle)
-                        .highlighter(activity: .sprint, isDefault: false)
-                        .padding(.top, -30)
-                }
-                .font(.navigationSportyTitle)
-                .padding(.leading, 32)
-                
-                sprintChartView(fastest: fastest, slowest: slowest)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 34)
-                
-                averageSprintView
-                    .padding(.top, 30)
-                
-                Spacer()
-            }
-        }
     }
 }
 
@@ -146,17 +142,14 @@ extension SprintChartView: Analyzable {
 extension SprintChartView {
     
     private func sprintChartView(fastest: WorkoutData, slowest: WorkoutData) -> some View {
-        LightRectangleView()
+        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
             .frame(height: 200)
             .overlay {
                 VStack {
-                    Group {
-                        Text("\(startDate)-\(endDate)")
-                            .padding(.top, 14)
-                        Text("(회)")
-                    }
-                    .font(.durationStyle)
-                    .foregroundStyle(.durationStyle)
+                    
+                    Text("\(startDate) - \(endDate)")
+                        .font(.durationStyle)
+                        .foregroundStyle(.durationStyle)
                     
                     Spacer()
                     SprintChart(
@@ -166,34 +159,33 @@ extension SprintChartView {
                         averageSprint: average(of: workouts)
                     )
                     .frame(height: 120)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
                 }
+                .padding(.horizontal, 30)
+                .padding(.vertical, 24)
             }
     }
     
     @ViewBuilder
     private var averageSprintView: some View {
-        LightRectangleView()
+        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
             .frame(height: 100)
-            .padding(.horizontal, 16)
             .overlay {
                 VStack(alignment: .center, spacing: 4) {
-                    Group {
-                        Text("음바페의 평균 스프린트 횟수는 21회 입니다.")
-                    }
-                    .font(.playerComapareSaying)
-                    .foregroundStyle(.playerCompareStyle)
-                    Text("최근 \(workouts.count) 경기 평균 스프린트")
+                    Text("움바페의 평균 스프린트 횟수는 21회 입니다.")
+                        .font(.playerComapareSaying)
+                        .foregroundStyle(.playerCompareStyle)
+                    Spacer()
+                    Text("최근 경기 평균")
                         .font(.averageText)
                         .foregroundStyle(.averageTextStyle)
                     Group {
                         Text(average(of: workouts).rounded())
-                        + Text("회")
+                        + Text(" 회")
                     }
                     .font(.averageValue)
                     .foregroundStyle(.navigationSportySprintTitle)
                 }
+                .padding()
             }
     }
 }

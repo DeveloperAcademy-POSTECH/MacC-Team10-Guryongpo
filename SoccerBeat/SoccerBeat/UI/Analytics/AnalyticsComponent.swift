@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AnalyticsComponent: View {
-
+    
     let userWorkouts: [WorkoutData]
     
     var activityType: ActivityEnum
@@ -29,13 +29,13 @@ struct AnalyticsComponent: View {
     private var value: String {
         switch activityType {
         case .distance:
-            return "\(userWorkouts.last?.distance.rounded(at: 1) ?? "0.0")" + "Km"
+            return "\(userWorkouts.last?.distance.rounded(at: 1) ?? "0.0")" + " km"
         case .sprint:
-            return "\(userWorkouts.last?.sprint ?? 0)" + "Times"
+            return "\(userWorkouts.last?.sprint ?? 0)" + " Times"
         case .speed:
-            return "\(userWorkouts.last?.velocity.rounded(at: 1) ?? "0.0")" + "Km/h"
+            return "\(userWorkouts.last?.velocity.rounded(at: 0) ?? "0")" + " km/h"
         case .heartrate:
-            return "\(userWorkouts.last?.maxHeartRate ?? 0)" + "Bpm"
+            return "\(userWorkouts.last?.maxHeartRate ?? 0)" + " Bpm"
         }
     }
     
@@ -75,11 +75,11 @@ struct AnalyticsComponent: View {
             HStack {
                 HStack(alignment: .bottom) {
                     overview
-                        .frame(height: 64)
-                        .padding(.leading, 8)
-                    
+                        .frame(height: 52)
+                        .padding(.leading)
                     Image(systemName: "figure.run")
                         .resizable()
+                        .scaledToFit()
                         .foregroundStyle(valueColor)
                         .frame(width: 22, height: 22)
                 }
@@ -87,12 +87,14 @@ struct AnalyticsComponent: View {
                 
                 VStack(alignment: .leading) {
                     Text(value)
-                        .font(Font.sfProDisplay(size: 28,
+                        .font(Font.sfProDisplay(size: 32,
                                                 weight: .heavyItalic))
                     Text(navigationAssistantTitle)
                         .font(Font.notoSans(size: 14, weight: .regular))
                 }
-                .padding(.leading, 100)
+                .foregroundStyle(.linearGradient(colors: [.white, .white.opacity(0.6)], startPoint: .leading, endPoint: .trailing))
+                .padding(.leading, 60)
+                
                 
                 Spacer()
                 
@@ -101,7 +103,7 @@ struct AnalyticsComponent: View {
                     .foregroundStyle(valueColor)
                     .frame(width: 10, height: 18)
             }
-            .padding(.horizontal, 11)
+            .padding(.horizontal)
         }
     }
 }
@@ -109,7 +111,7 @@ struct AnalyticsComponent: View {
 #Preview {
     ForEach(ActivityEnum.allCases, id: \.self) { act in
         AnalyticsComponent(userWorkouts: fakeWorkoutData,
-                          activityType: act)
+                           activityType: act)
     }
     .padding(.horizontal, 16)
     

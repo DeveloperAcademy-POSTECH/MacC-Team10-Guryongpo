@@ -11,13 +11,22 @@ struct AnalyticsView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     
     var body: some View {
-        VStack(spacing: 20) {
-            HStack {
-                Text("추세")
-                Spacer()
+        VStack(spacing: 0) {
+            VStack(alignment: .leading) {
+                HStack(spacing: 0) {
+                    Image(systemName: "info.circle")
+                        .font(.mainInfoText)
+                    Text(" 최근 경기에서 데이터의 변화를 볼 수 있습니다.")
+                }
+                .floatingCapsuleStyle()
+                
+                HStack {
+                    Text("추세")
+                        .font(.mainTitleText)
+                    Spacer()
+                }
+                .padding()
             }
-            .padding(.leading)
-            .font(.custom("NotoSansDisplay-BlackItalic", size: 36))
             
             VStack(spacing: 15) {
                 HStack {
@@ -38,6 +47,5 @@ struct AnalyticsView: View {
                 }
             }
         }
-        .padding(.horizontal)
     }
 }

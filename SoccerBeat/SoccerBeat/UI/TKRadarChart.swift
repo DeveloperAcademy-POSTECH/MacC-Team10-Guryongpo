@@ -195,7 +195,7 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
         let numOfSetp = max(dataSource.numberOfStepForRadarChart(self), 1)
         let numOfSection = dataSource.numberOfSectionForRadarChart(self)
         let perAngle = CGFloat.pi * 2 / CGFloat(numOfRow) * CGFloat(configuration.clockwise ? 1 : -1)
-        let padding = CGFloat(2)
+        let padding = CGFloat(5)
         let height = textFont.lineHeight
         let radius = configuration.radius
         let minValue = configuration.minValue
@@ -339,7 +339,9 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                 fillColor.setFill()
                 borderColor.setStroke()
                 
-                path.lineWidth = 12
+                path.lineWidth = 6
+                path.lineCapStyle = .round
+                path.lineJoinStyle = .round
                 if configuration.fillArea {
                     path.fill()
                 }

@@ -33,6 +33,9 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var monthDay: String {
         Array(date.split(separator: "."))[1...2].joined(separator: ".")
     }
+    var day: Int {
+        Int(date.split(separator: ".")[2]) ?? 0
+    }
     
     static let example = Self(dataID: 0,
                               date: "2023.10.15",
@@ -130,3 +133,12 @@ let fakeWorkoutData: [WorkoutData] = [
     WorkoutData(dataID: 8, date: "2023.10.16", time: "60:10", distance: 2.9, sprint: 17, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 169, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
     WorkoutData(dataID: 9, date: "2023.10.17", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, acceleration: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0])
 ]
+
+let fakeAverageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 180,
+                                                             minHeartRate: 50,
+                                                             rangeHeartRate: 5,
+                                                             totalDistance: 2.0,
+                                                             maxAcceleration: 5.8,
+                                                             maxVelocity: 22.4,
+                                                             sprintCount: 3,
+                                                             totalMatchTime: 80)
