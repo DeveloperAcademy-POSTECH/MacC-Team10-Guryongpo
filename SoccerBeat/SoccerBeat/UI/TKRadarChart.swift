@@ -339,7 +339,7 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                 fillColor.setFill()
                 borderColor.setStroke()
                 
-                path.lineWidth = 8
+                path.lineWidth = 6
                 path.lineCapStyle = .round
                 path.lineJoinStyle = .round
                 if configuration.fillArea {
