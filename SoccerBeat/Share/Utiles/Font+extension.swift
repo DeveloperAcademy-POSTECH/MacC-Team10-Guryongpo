@@ -97,12 +97,12 @@ extension Font {
     // MARK: - Navigation Title Style
     
     public static let navigationSportyTitle = Font.sfProText(size: 36, weight: .heavyItalic)
-    public static let navigationSportySubTitle = Font.sfProText(size: 24, weight: .semiboldItalic)
+    public static let navigationSportySubTitle = Font.sfProText(size: 24, weight: .regular)
     
     // MARK: - In Chart Style
     
     public static let durationStyle = Font.sfProText(size: 12, weight: .mediumItalic)
-    public static let maxValueUint = Font.sfProText(size: 14, weight: .heavyItalic)
+    public static let maxValueUint = Font.sfProText(size: 12, weight: .heavyItalic)
     public static let defaultValueUnit = Font.sfProText(size: 14, weight: .lightItalic)
     public static let maxDayUnit = Font.sfProText(size: 12, weight: .bold)
     public static let defaultDayUnit = Font.sfProText(size: 12, weight: .light)

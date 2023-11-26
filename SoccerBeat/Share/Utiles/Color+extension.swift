@@ -83,6 +83,7 @@ extension ShapeStyle where Self == Color {
     static var defaultDayStyle: Self { .init(hex: 0xFFFFFF, alpha: 0.7) }
     static var playerCompareStyle: Self { .init(hex: 0xFFFFFF, alpha: 0.7) }
     static var averageTextStyle: Self { .init(hex: 0xFFFFFF) }
+    static var chartBoxBackground: Self { .init(hex: 0x4A4A4A) }
         
     // MARK: - ShareView
     

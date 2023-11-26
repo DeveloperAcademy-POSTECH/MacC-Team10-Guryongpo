@@ -8,6 +8,53 @@
 import SwiftUI
 import Charts
 
+struct SpeedChartView: View {
+    let workouts: [WorkoutData]
+    private var startDate: String {
+        workouts.first?.date ?? "2023.10.10"
+    }
+    private var endDate: String {
+        workouts.last?.date ?? "2023.10.10"
+    }
+    var body: some View {
+        let fastest = maximum(of: workouts)
+        let slowest = minimum(of: workouts)
+        
+        return VStack(alignment: .leading) {
+            
+            HStack {
+                Image(systemName: "info.circle")
+                Text(" 최근 경기에서 보인 최고 속도의 추세입니다")
+            }
+            .floatingCapsuleStyle()
+            .padding(.top, 54)
+            
+            VStack(alignment: .leading) {
+                Text("최대 속도")
+                    .font(.navigationSportySubTitle)
+                    .foregroundStyle(.navigationSportyHead)
+                Text("The trends of")
+                Text("Maximum Speed")
+                    .foregroundStyle(.navigationSportySpeedTitle)
+                    .highlighter(activity: .speed, isDefault: false)
+            }
+            .font(.navigationSportyTitle)
+            .padding(.top, 32)
+            
+            speedChartView(fastest: fastest, slowest: slowest)
+            
+            Spacer()
+                .frame(height: 30)
+            
+            averageSpeedView
+                .padding(.horizontal, 48)
+            
+            Spacer()
+        }
+        .padding()
+    }
+}
+
 struct SpeedChart: View {
     let workouts: [WorkoutData]
     let fastestWorkout: WorkoutData
@@ -32,26 +79,24 @@ struct SpeedChart: View {
                     yStart: .value("Velocity", 0.0),
                     yEnd: .value("Velocity", workout.velocity)
                 )
-                .foregroundStyle(isMax(workout) ? .speedMax 
+                .foregroundStyle(isMax(workout) ? .speedMax
                                  : (isMin(workout) ? .speedMin : .chartDefault))
                 .cornerRadius(300, style: .continuous)
                 // MARK: - Bar Chart Data, value 표시
-                .annotation(position: .bottom, alignment: .center) {
-                    let isMaxOrMin = isMin(workout) || isMax(workout)
-                    if  isMaxOrMin {
-                        Text(workout.velocity.rounded())
-                            .font(isMaxOrMin ? .maxValueUint : .defaultValueUnit)
-                            .foregroundStyle(isMaxOrMin ? .maxValueStyle : .defaultValueStyle)
-                            .offset(y: -7)
-                    }
-                }
                 // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
                 .annotation(position: .bottom, alignment: .center) {
                     let isMaxOrMin = isMin(workout) || isMax(workout)
-                    Text(workout.monthDay)
-                        .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
-                        .foregroundStyle(isMaxOrMin ? .maxDayStyle : .defaultDayStyle)
-                        .offset(y: 7)
+                    VStack(spacing: 6) {
+                        Text(isMaxOrMin ? workout.velocity.rounded() + "km/h" : "00km/h" )
+                            .font(.maxValueUint)
+                            .foregroundStyle(.maxValueStyle)
+                            .opacity(isMaxOrMin ? 1.0 : 0.0)
+                            .padding(.top, 8)
+                        
+                        Text("\(workout.day)일")
+                            .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
+                            .foregroundStyle(.defaultDayStyle)
+                    }
                 }
             }
         }
@@ -63,54 +108,6 @@ struct SpeedChart: View {
             }
         }
         .chartYAxis(.hidden)
-    }
-}
-
-struct SpeedChartView: View {
-    let workouts: [WorkoutData]
-    private var startDate: String {
-        workouts.first?.date ?? "2023.10.10"
-    }
-    private var endDate: String {
-        workouts.last?.date ?? "2023.10.10"
-    }
-    var body: some View {
-        let fastest = maximum(of: workouts)
-        let slowest = minimum(of: workouts)
-        
-        return ZStack {
-            BackgroundImageView()
-
-            VStack(alignment: .leading) {
-                
-                Text("# 최근 경기에서 보인 최고 속도의 추세입니다")
-                    .floatingCapsuleStyle()
-                    .padding(.leading, 16)
-                
-                Group {
-                    Text("최대 속도")
-                        .font(.navigationSportySubTitle)
-                        .foregroundStyle(.navigationSportyHead)
-
-                    Text("The trends of")
-                    Text("Maximum Speed")
-                        .foregroundStyle(.navigationSportySpeedTitle)
-                        .highlighter(activity: .speed, isDefault: false)
-                        .padding(.top, -30)
-                }
-                .font(.navigationSportyTitle)
-                .padding(.leading, 32)
-                
-                speedChartView(fastest: fastest, slowest: slowest)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 34)
-                
-                averageSpeedView
-                    .padding(.top, 30)
-                
-                Spacer()
-            }
-        }
     }
 }
 
@@ -145,17 +142,14 @@ extension SpeedChartView: Analyzable {
 extension SpeedChartView {
     
     private func speedChartView(fastest: WorkoutData, slowest: WorkoutData) -> some View {
-        LightRectangleView()
+        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
             .frame(height: 200)
             .overlay {
                 VStack {
-                    Group {
-                        Text("\(startDate)-\(endDate)")
-                            .padding(.top, 14)
-                        Text("(km/h)")
-                    }
-                    .font(.durationStyle)
-                    .foregroundStyle(.durationStyle)
+                    
+                    Text("\(startDate) - \(endDate)")
+                        .font(.durationStyle)
+                        .foregroundStyle(.durationStyle)
                     
                     Spacer()
                     SpeedChart(
@@ -165,32 +159,33 @@ extension SpeedChartView {
                         averageSpeed: average(of: workouts)
                     )
                     .frame(height: 120)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
                 }
+                .padding(.horizontal, 30)
+                .padding(.vertical, 24)
             }
     }
     
     @ViewBuilder
     private var averageSpeedView: some View {
-        LightRectangleView()
+        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
             .frame(height: 100)
-            .padding(.horizontal, 61)
             .overlay {
                 VStack(spacing: 4) {
-                    Text("음바페의 경기 최고 속도는 36Km/h입니다.")
+                    Text("음바페의 경기 최고 속도는 36km/h 입니다.")
                         .font(.playerComapareSaying)
                         .foregroundStyle(.playerCompareStyle)
-                    Text("최근 \(workouts.count) 경기 평균")
+                    Spacer()
+                    Text("최근 경기 평균")
                         .font(.averageText)
                         .foregroundStyle(.averageTextStyle)
                     Group {
                         Text(average(of: workouts).rounded(), format: .number)
-                        + Text("Km/h")
+                        + Text(" km/h")
                     }
                     .font(.averageValue)
                     .foregroundStyle(.navigationSportySpeedTitle)
                 }
+                .padding()
             }
     }
 }

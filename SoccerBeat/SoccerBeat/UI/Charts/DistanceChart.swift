@@ -8,6 +8,52 @@
 import SwiftUI
 import Charts
 
+struct DistanceChartView: View {
+    let workouts: [WorkoutData]
+    private var startDate: String {
+        workouts.first?.date ?? "2023.10.10"
+    }
+    private var endDate: String {
+        workouts.last?.date ?? "2023.10.10"
+    }
+    var body: some View {
+        let fastest = maximum(of: workouts)
+        let slowest = minimum(of: workouts)
+        
+        return VStack(alignment: .leading) {
+            HStack {
+                Image(systemName: "info.circle")
+                Text(" 최근 경기에서 보인 뛴 거리의 추세입니다")
+            }
+            .floatingCapsuleStyle()
+            .padding(.top, 54)
+            
+            VStack(alignment: .leading) {
+                Text("뛴 거리")
+                    .font(.navigationSportySubTitle)
+                    .foregroundStyle(.navigationSportyHead)
+                Text("The trends of")
+                Text("Distance")
+                    .foregroundStyle(.navigationSportyDistanceTitle)
+                    .highlighter(activity: .distance, isDefault: false)
+            }
+            .font(.navigationSportyTitle)
+            .padding(.top, 32)
+            
+            distanceChartView(fastest: fastest, slowest: slowest)
+            
+            Spacer()
+                .frame(height: 30)
+            
+            averageDistanceView
+                .padding(.horizontal, 48)
+            
+            Spacer()
+        }
+        .padding()
+    }
+}
+
 struct DistanceChart: View {
     let workouts: [WorkoutData]
     let fastestWorkout: WorkoutData
@@ -32,26 +78,24 @@ struct DistanceChart: View {
                     yStart: .value("Distance", 0.0),
                     yEnd: .value("Distance", workout.distance)
                 )
-                .foregroundStyle(isMax(workout) ? .distanceMax 
+                .foregroundStyle(isMax(workout) ? .distanceMax
                                  : (isMin(workout) ? .distanceMin : .chartDefault))
                 .cornerRadius(300, style: .continuous)
                 // MARK: - Bar Chart Data, value 표시
-                .annotation(position: .bottom, alignment: .center) {
-                    let isMaxOrMin = isMin(workout) || isMax(workout)
-                    if isMaxOrMin {
-                        Text(workout.distance.rounded())
-                            .font(isMaxOrMin ? .maxValueUint : .defaultValueUnit)
-                            .foregroundStyle(isMaxOrMin ? .maxValueStyle : .defaultValueStyle)
-                            .offset(y: -7)
-                    }
-                }
                 // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
                 .annotation(position: .bottom, alignment: .center) {
                     let isMaxOrMin = isMin(workout) || isMax(workout)
-                    Text(workout.monthDay)
-                        .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
-                        .foregroundStyle(isMaxOrMin ? .maxDayStyle : .defaultDayStyle)
-                        .offset(y: 7)
+                    VStack(spacing: 6) {
+                        Text(isMaxOrMin ? workout.distance.rounded() + "km" : "00km" )
+                            .font(.maxValueUint)
+                            .foregroundStyle(.maxValueStyle)
+                            .opacity(isMaxOrMin ? 1.0 : 0.0)
+                            .padding(.top, 8)
+                        
+                        Text("\(workout.day)일")
+                            .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
+                            .foregroundStyle(.defaultDayStyle)
+                    }
                 }
             }
         }
@@ -63,54 +107,6 @@ struct DistanceChart: View {
             }
         }
         .chartYAxis(.hidden)
-    }
-}
-
-struct DistanceChartView: View {
-    let workouts: [WorkoutData]
-    private var startDate: String {
-        workouts.first?.date ?? "2023.10.10"
-    }
-    private var endDate: String {
-        workouts.last?.date ?? "2023.10.10"
-    }
-    var body: some View {
-        let fastest = maximum(of: workouts)
-        let slowest = minimum(of: workouts)
-        
-        return ZStack {
-            BackgroundImageView()
-
-            VStack(alignment: .leading) {
-                
-                Text("# 최근 경기에서 보인 뛴 거리의 추세입니다")
-                    .floatingCapsuleStyle()
-                    .padding(.leading, 16)
-                
-                Group {
-
-                    Text("활동량")
-                        .font(.navigationSportySubTitle)
-                        .foregroundStyle(.navigationSportyHead)
-                    Text("The trends of")
-                    Text("Distance")
-                        .foregroundStyle(.navigationSportyDistanceTitle)
-                        .highlighter(activity: .distance, isDefault: false)
-                        .padding(.top, -30)
-                }
-                .font(.navigationSportyTitle)
-                .padding(.leading, 32)
-                
-                distanceChartView(fastest: fastest, slowest: slowest)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 34)
-                
-                averageDistanceView
-                    .padding(.top, 30)
-
-                Spacer()
-            }
-        }
     }
 }
 
@@ -144,17 +140,14 @@ extension DistanceChartView: Analyzable {
 extension DistanceChartView {
     
     private func distanceChartView(fastest: WorkoutData, slowest: WorkoutData) -> some View {
-        LightRectangleView()
+        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
             .frame(height: 200)
             .overlay {
                 VStack {
-                    Group {
-                        Text("\(startDate)-\(endDate)")
-                            .padding(.top, 14)
-                        Text("(KM)")
-                    }
-                    .font(.durationStyle)
-                    .foregroundStyle(.durationStyle)
+                    
+                    Text("\(startDate) - \(endDate)")
+                        .font(.durationStyle)
+                        .foregroundStyle(.durationStyle)
                     
                     Spacer()
                     DistanceChart(
@@ -164,32 +157,33 @@ extension DistanceChartView {
                         averageDistance: average(of: workouts)
                     )
                     .frame(height: 120)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
                 }
+                .padding(.horizontal, 30)
+                .padding(.vertical, 24)
             }
     }
     
     @ViewBuilder
     private var averageDistanceView: some View {
-        LightRectangleView()
+        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
             .frame(height: 100)
-            .padding(.horizontal, 61)
             .overlay {
                 VStack(spacing: 4) {
-                    Text("음바페의 경기 평균 활동량은 12km 입니다.")
+                    Text("음바페의 경기 평균 뛴 거리는 12km 입니다.")
                         .font(.playerComapareSaying)
                         .foregroundStyle(.playerCompareStyle)
-                    Text("최근 \(workouts.count) 경기 평균")
+                    Spacer()
+                    Text("최근 경기 평균")
                         .font(.averageText)
                         .foregroundStyle(.averageTextStyle)
                     Group {
                         Text(average(of: workouts).rounded())
-                        + Text("km")
+                        + Text(" km")
                     }
                     .font(.averageValue)
                     .foregroundStyle(.navigationSportyDistanceTitle)
                 }
+                .padding()
             }
     }
 }

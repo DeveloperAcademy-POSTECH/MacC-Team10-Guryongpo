@@ -33,6 +33,9 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var monthDay: String {
         Array(date.split(separator: "."))[1...2].joined(separator: ".")
     }
+    var day: Int {
+        Int(date.split(separator: ".")[2]) ?? 0
+    }
     
     static let example = Self(dataID: 0,
                               date: "2023.10.15",

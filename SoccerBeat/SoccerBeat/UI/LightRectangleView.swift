@@ -19,7 +19,7 @@ struct LightRectangleView: View {
         Color.white
     ])
     
-    init(alpha: Double = 1.0, color: Color = .black, radius: Double = 15.0) {
+    init(alpha: Double = 1.0, color: Color = .black, radius: Double = 25.0) {
         self.backgroundAlpha = alpha
         self.backgroundColor = color
         self.radius = radius
@@ -40,7 +40,7 @@ struct LightRectangleView: View {
                     LinearGradient(gradient: gradient, startPoint: .leading, endPoint: .trailing)
                         .mask(
                             RoundedRectangle(cornerRadius: radius)
-                                .strokeBorder(lineWidth: 2)
+                                .strokeBorder(lineWidth: 1)
                         )
                 }
                     .opacity(0.5)
