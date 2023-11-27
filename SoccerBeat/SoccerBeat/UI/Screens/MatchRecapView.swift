@@ -14,29 +14,15 @@ struct MatchRecapView: View {
     @Binding var averageData: WorkoutAverageData
     @Binding var maximumData: WorkoutAverageData
     @State var userName: String = ""
-    @State var isInfoOpen: Bool = false
+
     var body: some View {
         VStack(spacing: 0) {
             
             Spacer()
                 .frame(height: 56)
             HStack {
-                Button {
-                    isInfoOpen.toggle()
-                } label: {
-                    HStack(spacing: 0) {
-                        Text(" ")
-                        Image("InfoIcon")
-                            .resizable()
-                            .frame(width: 11, height: 15)
-                        Text(" ")
-                        if isInfoOpen {
-                            Text(" 모든 경기와 그날의 스탯을 확인해 보세요.")
-                        }
-                    }
-                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                }
-                .padding(.leading, 16)
+                InfomationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
+                    .padding(.leading, 16)
                 
                 Spacer()
             }

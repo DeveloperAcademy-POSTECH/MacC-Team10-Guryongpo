@@ -15,7 +15,6 @@ struct ProfileView: View {
     @State var userImage: UIImage?
     @FocusState private var isFocused: Bool
     @ObservedObject var viewModel: ProfileModel
-    @State var isInfoOpen: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -24,21 +23,7 @@ struct ProfileView: View {
                     HStack {
                         VStack {
                             HStack {
-                                Button {
-                                    isInfoOpen.toggle()
-                                } label: {
-                                    HStack(spacing: 0) {
-                                        Text(" ")
-                                        Image("InfoIcon")
-                                            .resizable()
-                                            .frame(width: 11, height: 15)
-                                        Text(" ")
-                                        if isInfoOpen {
-                                            Text(" 최고 기록을 경신해 보세요!")
-                                        }
-                                    }
-                                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                                }
+                                InfomationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
                                 Spacer()
                             }
                             .padding(.top, 48)

@@ -10,7 +10,6 @@ import Charts
 
 struct SprintChartView: View {
     let workouts: [WorkoutData]
-    @State var isInfoOpen: Bool = false
     private var startDate: String {
         workouts.first?.date ?? "2023.10.10"
     }
@@ -23,21 +22,7 @@ struct SprintChartView: View {
         
         return VStack(alignment: .leading) {
             HStack {
-                Button {
-                    isInfoOpen.toggle()
-                } label: {
-                    HStack(spacing: 0) {
-                        Text(" ")
-                        Image("InfoIcon")
-                            .resizable()
-                            .frame(width: 11, height: 15)
-                        Text(" ")
-                        if isInfoOpen {
-                            Text(" 최근 경기에서 보인 스프린트의 추세입니다")
-                        }
-                    }
-                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                }
+                InfomationButton(message: "최댓값과 최솟값이 표시된 최근 스프린트 횟수의 변화입니다.")
                 Spacer()
             }
             .padding(.top, 54)
