@@ -192,10 +192,10 @@ struct MatchListItemView: View {
     }
 }
 
-#Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    return MatchRecapView(userWorkouts: .constant(fakeWorkoutData),
-                          averageData: .constant(fakeAverageData),
-                          maximumData: .constant(fakeAverageData))
-    .environmentObject(healthInteractor)
-}
+//#Preview {
+//    @StateObject var healthInteractor = HealthInteractor.shared
+//    return MatchRecapView(userWorkouts: .constant(fakeWorkoutData),
+//                          averageData: .constant(fakeAverageData),
+//                          maximumData: .constant(fakeAverageData))
+//    .environmentObject(healthInteractor)
+//}
