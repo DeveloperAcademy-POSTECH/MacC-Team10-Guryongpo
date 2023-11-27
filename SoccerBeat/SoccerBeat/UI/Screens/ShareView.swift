@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ShareView: View {
     
-    @EnvironmentObject var healthInteractor: HealthInteractor
+    @StateObject var healthInteractor = HealthInteractor.shared
     @State var geoSize: CGSize = .init(width: 0, height: 0)
     @State var highresImage: UIImage = UIImage()
     @State var renderImage: UIImage?
@@ -19,6 +19,7 @@ struct ShareView: View {
         VStack {
             GeometryReader { geo in
                 TargetImageView(cgSize: geo.size, degree: 0, viewModel: viewModel)
+                    .environmentObject(healthInteractor)
                     .onAppear {
                         self.geoSize = CGSize(width: geo.size.width, height: geo.size.height)
                     }
@@ -26,7 +27,10 @@ struct ShareView: View {
         }
         .toolbar {
             Button {
-                renderImage = TargetImageView(cgSize: self.geoSize, viewModel: viewModel).asImage(size: self.geoSize)
+                renderImage = TargetImageView(cgSize: self.geoSize,
+                                              viewModel: viewModel)
+                .environmentObject(healthInteractor)
+                                    .asImage(size: self.geoSize)
                 share()
             } label: {
                 Text("공유하기")
