@@ -9,35 +9,56 @@ import Foundation
 
 let BadgeImageDictionary: [[Int: String]] = [[
     -1: "",
-     0: "DistanceFirstUnlocked",
-     1: "DistanceSecondUnlocked",
-     2: "DistanceThirdUnlocked",
-     3: "DistanceFourthUnlocked"
+     0: "Distance_Unlocked_1",
+     1: "Distance_Unlocked_2",
+     2: "Distance_Unlocked_3",
+     3: "Distance_Unlocked_4"
 ], [
     -1: "",
-     0: "SprintFirstUnlocked",
-     1: "SprintSecondUnlocked",
-     2: "SprintThirdUnlocked",
-     3: "SprintFourthUnlocked"
+     0: "Sprint_Unlocked_1",
+     1: "Sprint_Unlocked_2",
+     2: "Sprint_Unlocked_3",
+     3: "Sprint_Unlocked_4"
 ], [
     -1: "",
-     0: "VelocityFirstUnlocked",
-     1: "VelocitySecondUnlocked",
-     2: "VelocityThirdUnlocked",
-     3: "VelocityFourthUnlocked"
+     0: "Velocity_Unlocked_1",
+     1: "Velocity_Unlocked_2",
+     2: "Velocity_Unlocked_3",
+     3: "Velocity_Unlocked_4"
+]
+]
+
+let ShortenedBadgeImageDictionary: [[Int: String]] = [[
+    -1: "",
+     0: "Distance_Shortened_1",
+     1: "Distance_Shortened_2",
+     2: "Distance_Shortened_3",
+     3: "Distance_Shortened_4"
+], [
+    -1: "",
+     0: "Sprint_Shortened_1",
+     1: "Sprint_Shortened_2",
+     2: "Sprint_Shortened_3",
+     3: "Sprint_Shortened_4"
+], [
+    -1: "",
+     0: "Velocity_Shortened_1",
+     1: "Velocity_Shortened_2",
+     2: "Velocity_Shortened_3",
+     3: "Velocity_Shortened_4"
 ]
 ]
 
 let badgeUnlockedImages: [[String]] = [
-    ["DistanceFirstUnlocked", "DistanceSecondUnlocked", "DistanceThirdUnlocked", "DistanceFourthUnlocked"],
-    ["SprintFirstUnlocked", "SprintSecondUnlocked", "SprintThirdUnlocked", "SprintFourthUnlocked"],
-    ["VelocityFirstUnlocked", "VelocitySecondUnlocked", "VelocityThirdUnlocked", "VelocityFourthUnlocked"]
+    ["Distance_Unlocked_1", "Distance_Unlocked_2", "Distance_Unlocked_3", "Distance_Unlocked_4"],
+    ["Sprint_Unlocked_1", "Sprint_Unlocked_2", "Sprint_Unlocked_3", "Sprint_Unlocked_4"],
+    ["Velocity_Unlocked_1", "Velocity_Unlocked_2", "Velocity_Unlocked_3", "Velocity_Unlocked_4"]
 ]
 
 let badgeLockedImages: [[String]] = [
-    ["DistanceFirstLocked", "DistanceSecondLocked", "DistanceThirdLocked", "DistanceFourthLocked"],
-    ["SprintFirstLocked", "SprintSecondLocked", "SprintThirdLocked", "SprintFourthLocked"],
-    ["VelocityFirstLocked", "VelocitySecondLocked", "VelocityThirdLocked", "VelocityFourthLocked"]
+    ["Distance_Locked_1", "Distance_Locked_2", "Distance_Locked_3", "Distance_Locked_4"],
+    ["Sprint_Locked_1", "Sprint_Locked_2", "Sprint_Locked_3", "Sprint_Locked_4"],
+    ["Velocity_Locked_1", "Velocity_Locked_2", "Velocity_Locked_3", "Velocity_Locked_4"]
 ]
 
 let badgeInfo: [[String]] = [

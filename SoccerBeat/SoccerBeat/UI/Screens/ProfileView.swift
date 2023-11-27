@@ -15,18 +15,30 @@ struct ProfileView: View {
     @State var userImage: UIImage?
     @FocusState private var isFocused: Bool
     @ObservedObject var viewModel: ProfileModel
+    @State var isInfoOpen: Bool = false
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    
                     HStack {
                         VStack {
-                            
                             HStack {
-                                Text(" 최고의 순간을 만나보세요!")
-                                    .floatingCapsuleStyle()
+                                Button {
+                                    isInfoOpen.toggle()
+                                } label: {
+                                    HStack(spacing: 0) {
+                                        Text(" ")
+                                        Image("InfoIcon")
+                                            .resizable()
+                                            .frame(width: 11, height: 15)
+                                        Text(" ")
+                                        if isInfoOpen {
+                                            Text(" 최고 기록을 경신해 보세요!")
+                                        }
+                                    }
+                                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
+                                }
                                 Spacer()
                             }
                             .padding(.top, 48)

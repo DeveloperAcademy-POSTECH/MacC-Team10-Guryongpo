@@ -18,13 +18,12 @@ struct MatchDetailView: View {
     var body: some View {
         ScrollView {
             ZStack {
-                
                 VStack {
                     MatchTimeView(workoutData: workoutData)
-                    
                     Spacer()
                         .frame(height: 48)
                     PlayerAbilityView(averageData: $averageData, maximumData: $maximumData, workoutData: workoutData)
+                        .zIndex(-1)
                     Spacer()
                         .frame(height: 100)
                     FieldRecordView(workoutData: workoutData)
@@ -34,39 +33,53 @@ struct MatchDetailView: View {
                 }
                 .padding()
             }
+            .scrollIndicators(.hidden)
         }
-        .scrollIndicators(.hidden)
     }
 }
 
 struct MatchTimeView: View {
     let workoutData: WorkoutData
+    @State var isInfoOpen: Bool = false
+    
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                
-                Spacer()
-                    .frame(minHeight: 50)
-                
-                HStack(spacing: 0) {
-                    Image(systemName: "info.circle")
-                    Text(" 경기에 대한 ")
-                    Text("상세한 리포트")
-                        .fontWeight(.bold)
-                    Text("를 확인해 볼까요?")
-                }
-                .floatingCapsuleStyle()
-                
-                VStack(alignment: .leading, spacing: -8) {
-                    Text("경기 시간 \(workoutData.time)")
-                }
-                .font(.matchDetailTitle)
-                
-            }
+        VStack(alignment: .leading) {
+            
             Spacer()
+                .frame(minHeight: 50)
+            
+            HStack {
+                Button {
+                    isInfoOpen.toggle()
+                } label: {
+                    HStack(spacing: 0) {
+                        Text(" ")
+                        Image("InfoIcon")
+                            .resizable()
+                            .frame(width: 11, height: 15)
+                        Text(" ")
+                        if isInfoOpen {
+                            Text(" 경기에 대한 ")
+                            Text("상세한 리포트")
+                                .fontWeight(.bold)
+                            Text("를 확인해 볼까요?")
+                        }
+                    }
+                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
+                }
+                Spacer()
+            }
+            .zIndex(1)
+            
+            VStack(alignment: .leading, spacing: -8) {
+                Text("경기 시간 \(workoutData.time)")
+            }
+            .font(.matchDetailTitle)
         }
+        Spacer()
     }
 }
+
 struct PlayerAbilityView: View {
     @Binding var averageData: WorkoutAverageData
     @Binding var maximumData: WorkoutAverageData
@@ -97,9 +110,6 @@ struct PlayerAbilityView: View {
                         }
                         .floatingCapsuleStyle()
                     }
-                    
-                    // MARK: - @Daaan
-                    
                     HStack {
                         Spacer()
                         
@@ -145,7 +155,6 @@ struct PlayerAbilityView: View {
                         
                         Spacer()
                     }
-                    // MARK: - Locate spider chart here.
                 }
                 Spacer()
             }
@@ -155,14 +164,25 @@ struct PlayerAbilityView: View {
 
 struct FieldRecordView: View {
     let workoutData: WorkoutData
+    @State var isInfoOpen: Bool = false
     var body: some View {
         VStack {
             HStack {
-                HStack(spacing: 0) {
-                    Image(systemName: "info.circle")
-                    Text(" 경기의 기록에 따라 뱃지를 획득합니다.")
+                Button {
+                    isInfoOpen.toggle()
+                } label: {
+                    HStack(spacing: 0) {
+                        Text(" ")
+                        Image("InfoIcon")
+                            .resizable()
+                            .frame(width: 11, height: 15)
+                        Text(" ")
+                        if isInfoOpen {
+                            Text(" 좋은 경기를 플레이하면 뱃지를 드려요~")
+                        }
+                    }
+                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
                 }
-                .floatingCapsuleStyle()
                 Spacer()
             }
             HStack {
@@ -193,7 +213,6 @@ struct FieldRecordView: View {
                     }
                 }
             }
-            
             FieldRecordDataView(workoutData: workoutData)
         }
     }
@@ -201,16 +220,27 @@ struct FieldRecordView: View {
 
 struct FieldMovementView: View {
     let workoutData: WorkoutData
+    @State var isInfoOpen: Bool = false
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        HStack {
-                            Image(systemName: "info.circle")
-                            Text(" 플레이 중 위치가 표시됩니다.")
+                        Button {
+                            isInfoOpen.toggle()
+                        } label: {
+                            HStack(spacing: 0) {
+                                Text(" ")
+                                Image("InfoIcon")
+                                    .resizable()
+                                    .frame(width: 11, height: 15)
+                                Text(" ")
+                                if isInfoOpen {
+                                    Text(" 내가 어디서 많이 뛰었나 볼까요?")
+                                }
+                            }
+                            .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
                         }
-                        .floatingCapsuleStyle()
                         Spacer()
                     }
                     

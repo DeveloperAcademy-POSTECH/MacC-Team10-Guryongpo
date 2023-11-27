@@ -18,6 +18,9 @@ extension ShapeStyle where Self == Color {
             self.init(red: red, green: green, blue: blue, opacity: alpha)
     }
     
+    // MARK: - Capsule
+    static var floatingCapsuleGray: Self { Self(hex: 0x757575, alpha: 0.4) }
+    
     // MARK: - Sprint Progress
     
     static var gaugeBackground: Self { Self(hex: 0xD9D9D9, alpha: 0.3) }

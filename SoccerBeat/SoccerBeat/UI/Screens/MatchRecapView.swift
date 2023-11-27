@@ -14,16 +14,28 @@ struct MatchRecapView: View {
     @Binding var averageData: WorkoutAverageData
     @Binding var maximumData: WorkoutAverageData
     @State var userName: String = ""
-    
+    @State var isInfoOpen: Bool = false
     var body: some View {
         VStack(spacing: 10) {
             
             Spacer()
                 .frame(height: 55)
             HStack {
-                Image(systemName: "info.circle")
-                Text(" 모든 경기와 그날의 스텟을 확인해보세요.")
-                    .floatingCapsuleStyle()
+                Button {
+                    isInfoOpen.toggle()
+                } label: {
+                    HStack(spacing: 0) {
+                        Text(" ")
+                        Image("InfoIcon")
+                            .resizable()
+                            .frame(width: 11, height: 15)
+                        Text(" ")
+                        if isInfoOpen {
+                            Text(" 모든 경기와 그날의 스탯을 확인해 보세요.")
+                        }
+                    }
+                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
+                }
                 Spacer()
             }
             HStack {
@@ -73,7 +85,7 @@ struct MatchListItemView: View {
             VStack {
                 HStack(spacing: 0) {
                     ForEach(workoutData.matchBadge.indices, id: \.self) { index in
-                        if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                        if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
                             if badgeName.isEmpty {
                                 EmptyView()
                             } else {

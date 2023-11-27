@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct FloatingCapsuleModifier: ViewModifier {
+    var color: Color
+    
+    init(color: Color = Color(hex: 0x757575, alpha: 0.4)) {
+        self.color = color
+    }
+    
     func body(content: Content) -> some View {
         content
             .font(.custom("NotoSans-Regular", size: 14))
-            .padding(.horizontal, 8)
+            .padding(.horizontal, 14)
             .padding(.vertical, 4)
             .overlay {
                 Capsule()
-                    .strokeBorder(Color(hex: 0x757575, alpha: 0.4), lineWidth: 0.8)
+                    .strokeBorder(color, lineWidth: 0.8)
             }
     }
 }
@@ -23,6 +29,10 @@ struct FloatingCapsuleModifier: ViewModifier {
 extension View {
     func floatingCapsuleStyle() -> some View {
         modifier(FloatingCapsuleModifier())
+    }
+    
+    func floatingCapsuleStyle(color: Color) -> some View {
+        modifier(FloatingCapsuleModifier(color: color))
     }
 }
 
