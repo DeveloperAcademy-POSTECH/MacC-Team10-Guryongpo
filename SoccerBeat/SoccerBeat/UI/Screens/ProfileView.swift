@@ -21,10 +21,8 @@ struct ProfileView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    
                     HStack {
                         VStack {
-                            
                             HStack {
                                 Button {
                                     isInfoOpen.toggle()

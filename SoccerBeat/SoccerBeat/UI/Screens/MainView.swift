@@ -133,7 +133,7 @@ struct MainView: View {
                                             // 뱃지
                                             HStack {
                                                 ForEach(userWorkouts[0].matchBadge.indices, id: \.self) { index in
-                                                    if let badgeName = BadgeImageDictionary[index][userWorkouts[0].matchBadge[index]] {
+                                                    if let badgeName = ShortenedBadgeImageDictionary[index][userWorkouts[0].matchBadge[index]] {
                                                         if badgeName.isEmpty {
                                                             EmptyView()
                                                         } else {

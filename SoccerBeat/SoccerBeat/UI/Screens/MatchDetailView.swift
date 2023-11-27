@@ -17,11 +17,13 @@ struct MatchDetailView: View {
     
     var body: some View {
         ScrollView {
+            ZStack {
                 VStack {
                     MatchTimeView(workoutData: workoutData)
                     Spacer()
                         .frame(height: 48)
                     PlayerAbilityView(averageData: $averageData, maximumData: $maximumData, workoutData: workoutData)
+                        .zIndex(-1)
                     Spacer()
                         .frame(height: 100)
                     FieldRecordView(workoutData: workoutData)
@@ -30,8 +32,9 @@ struct MatchDetailView: View {
                     FieldMovementView(workoutData: workoutData)
                 }
                 .padding()
+            }
+            .scrollIndicators(.hidden)
         }
-        .scrollIndicators(.hidden)
     }
 }
 
@@ -66,6 +69,8 @@ struct MatchTimeView: View {
                 }
                 Spacer()
             }
+            .zIndex(1)
+            
             VStack(alignment: .leading, spacing: -8) {
                 Text("경기 시간 \(workoutData.time)")
             }
@@ -194,7 +199,7 @@ struct FieldRecordView: View {
                 .frame(minHeight: 30)
             HStack {
                 ForEach(workoutData.matchBadge.indices, id: \.self) { index in
-                    if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                    if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
                         if badgeName.isEmpty {
                             EmptyView()
                         } else {
@@ -208,7 +213,6 @@ struct FieldRecordView: View {
                     }
                 }
             }
-            
             FieldRecordDataView(workoutData: workoutData)
         }
     }
