@@ -10,6 +10,7 @@ import Charts
 
 struct BPMChartView: View {
     let workouts: [WorkoutData]
+    @State var isInfoOpen: Bool = false
     private var startDate: String {
         workouts.first?.date ?? "2023.10.10"
     }
@@ -21,12 +22,24 @@ struct BPMChartView: View {
         let slowest = minimum(of: workouts)
         
         return VStack(alignment: .leading) {
-            
             HStack {
-                Image(systemName: "info.circle")
-                Text(" 최근 경기에서 보인 심박수의 추세입니다")
+                Button {
+                    isInfoOpen.toggle()
+                } label: {
+                    HStack(spacing: 0) {
+                        Text(" ")
+                        Image("InfoIcon")
+                            .resizable()
+                            .frame(width: 11, height: 15)
+                        Text(" ")
+                        if isInfoOpen {
+                            Text(" 최근 경기에서 보인 심박수의 추세입니다")
+                        }
+                    }
+                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
+                }
+                Spacer()
             }
-            .floatingCapsuleStyle()
             .padding(.top, 54)
             
             VStack(alignment: .leading) {

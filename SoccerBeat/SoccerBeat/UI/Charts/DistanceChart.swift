@@ -16,16 +16,30 @@ struct DistanceChartView: View {
     private var endDate: String {
         workouts.last?.date ?? "2023.10.10"
     }
+    @State var isInfoOpen: Bool = false
     var body: some View {
         let fastest = maximum(of: workouts)
         let slowest = minimum(of: workouts)
         
         return VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "info.circle")
-                Text(" 최근 경기에서 보인 뛴 거리의 추세입니다")
+                Button {
+                    isInfoOpen.toggle()
+                } label: {
+                    HStack(spacing: 0) {
+                        Text(" ")
+                        Image("InfoIcon")
+                            .resizable()
+                            .frame(width: 11, height: 15)
+                        Text(" ")
+                        if isInfoOpen {
+                            Text(" 최근 경기에서 보인 뛴 거리의 추세입니다")
+                        }
+                    }
+                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
+                }
+                Spacer()
             }
-            .floatingCapsuleStyle()
             .padding(.top, 54)
             
             VStack(alignment: .leading) {
