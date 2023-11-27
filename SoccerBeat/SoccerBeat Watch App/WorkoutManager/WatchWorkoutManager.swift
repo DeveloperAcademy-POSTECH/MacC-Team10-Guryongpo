@@ -28,10 +28,30 @@ class WorkoutManager: NSObject, ObservableObject {
     let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
     let locationManager = CLLocationManager()
+    var hasNotLocationAuthorization: Bool {
+        [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(locationManager.authorizationStatus)
+    }
+    var hasNotHealthAuthorization: Bool {
+        var right = false
+        for type in typesToShare {
+            if [HKAuthorizationStatus.notDetermined, .sharingDenied].contains(healthStore.authorizationStatus(for: type)) {
+                right = true
+                break
+            }
+        }
+        return right
+    }
+    
+    private let typesToShare: Set = [HKQuantityType.workoutType(),
+                             HKSeriesType.workoutRoute(),
+                             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+                             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+                             
+    ]
+    
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
-    
     var saveMinHeartRate: Int = 200
     var saveMaxHeartRate: Int = 0
     var maxHeartRate: Double?
@@ -137,14 +157,6 @@ class WorkoutManager: NSObject, ObservableObject {
     // MARK: - Request authorization to access HealthKit And LocationManager.
     func requestAuthorization() {
         
-        // write
-        let typesToShare: Set = [HKQuantityType.workoutType(),
-                                 HKSeriesType.workoutRoute(),
-                                 HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
-                                 HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-                                 
-        ]
-        
         // The quantity types to read from the health store.
         let typesToRead: Set = [
             HKQuantityType.quantityType(forIdentifier: .heartRate)!,
@@ -157,19 +169,14 @@ class WorkoutManager: NSObject, ObservableObject {
         ]
         healthStore.requestAuthorization(toShare: typesToShare,
                                          read: typesToRead) { (success, error) in
-            if success {
-                // 위치 정보 권한 요청
-                if self.locationManager.authorizationStatus == .denied ||
-                    self.locationManager.authorizationStatus == .notDetermined ||
-                    self.locationManager.authorizationStatus == .restricted {
-                    self.locationManager.requestWhenInUseAuthorization()
-                }
-                
-                // 헬스킷 권한이 없다면
-                if (self.healthStore.authorizationStatus(for: HKSeriesType.workoutRoute()) != .sharingAuthorized) {
-                    self.authHealthKit.send()
-                }
-                
+            // 위치 정보 권한 요청
+            if self.hasNotLocationAuthorization {
+                self.locationManager.requestWhenInUseAuthorization()
+            }
+            
+            // 헬스킷 권한이 없다면
+            if self.hasNotHealthAuthorization {
+                self.authHealthKit.send()
             }
         }
     }
