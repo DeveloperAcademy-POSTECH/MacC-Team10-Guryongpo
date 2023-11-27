@@ -10,7 +10,6 @@ import SwiftUI
 struct SummaryComponent: View {
     let title: String  // "활동량"
     let content: String  // "Text"
-    let playTime: String  // "전반 25분"
     var body: some View {
         ZStack(alignment: .topLeading) {
             ZStack {
@@ -42,14 +41,7 @@ struct SummaryComponent: View {
                 }
             }
             
-            VStack(alignment: .leading) {
-                Spacer()
-                Text(playTime)
-                    .font(.summaryLeadingBottom)
-                    .kerning(0.09)
-                    .foregroundStyle(.columnFoot)
-                
-            }
+            Spacer()
         }
         .clipShape(RoundedRectangle(cornerRadius: 7.2))
         .padding(.vertical)
@@ -57,5 +49,5 @@ struct SummaryComponent: View {
 }
 
 #Preview {
-    SummaryComponent(title: "활동량", content: "2.1KM", playTime: "전반 25분")
+    SummaryComponent(title: "활동량", content: "2.1KM")
 }

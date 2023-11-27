@@ -33,7 +33,7 @@ struct SprintView: View {
                                         .font(.sprintText)
                                         .padding(.horizontal)
                                 } else {
-                                    Text("LAST " + Measurement(value: workoutManager.recentSprintSpeed, unit: UnitSpeed.kilometersPerHour).formatted(.measurement(width: .narrow, usage: .general)))
+                                    Text((workoutManager.speed * 3.6).rounded(at: 1) + " km/h")
                                         .font(.sprintText)
                                         .padding(.horizontal)
                                 }

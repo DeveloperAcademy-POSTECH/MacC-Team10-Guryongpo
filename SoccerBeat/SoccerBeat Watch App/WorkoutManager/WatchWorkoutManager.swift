@@ -285,16 +285,18 @@ class WorkoutManager: NSObject, ObservableObject {
         builder = nil
         workout = nil
         session = nil
+        
         heartRate = 0
-        heartZone = 0
+        heartZone = 1
+        zone5Count = 0
+        saveMaxHeartRate = 0
+        saveMinHeartRate = 0
+        
         distance = 0
         maxSpeed = 0
         speed = 0
         sprint = 0
-        saveMaxHeartRate = 0
-        saveMinHeartRate = 0
-        zone5Count = 0
-        heartZone = 1
+        recentSprintSpeed = 0
     }
     
     // MARK: - Heart Rate Setup
