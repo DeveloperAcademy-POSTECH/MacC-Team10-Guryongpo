@@ -199,7 +199,7 @@ struct FieldRecordView: View {
                 .frame(minHeight: 30)
             HStack {
                 ForEach(workoutData.matchBadge.indices, id: \.self) { index in
-                    if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                    if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
                         if badgeName.isEmpty {
                             EmptyView()
                         } else {

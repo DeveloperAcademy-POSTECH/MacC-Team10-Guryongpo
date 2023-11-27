@@ -85,7 +85,7 @@ struct MatchListItemView: View {
             VStack {
                 HStack(spacing: 0) {
                     ForEach(workoutData.matchBadge.indices, id: \.self) { index in
-                        if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                        if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
                             if badgeName.isEmpty {
                                 EmptyView()
                             } else {
@@ -192,10 +192,10 @@ struct MatchListItemView: View {
     }
 }
 
-//#Preview {
-//    @StateObject var healthInteractor = HealthInteractor.shared
-//    return MatchRecapView(userWorkouts: .constant(fakeWorkoutData),
-//                          averageData: .constant(fakeAverageData),
-//                          maximumData: .constant(fakeAverageData))
-//    .environmentObject(healthInteractor)
-//}
+#Preview {
+    @StateObject var healthInteractor = HealthInteractor.shared
+    return MatchRecapView(userWorkouts: .constant(fakeWorkoutData),
+                          averageData: .constant(fakeAverageData),
+                          maximumData: .constant(fakeAverageData))
+    .environmentObject(healthInteractor)
+}
