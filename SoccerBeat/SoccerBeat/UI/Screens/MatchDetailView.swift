@@ -16,7 +16,7 @@ struct MatchDetailView: View {
     @Binding var maximumData: WorkoutAverageData
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             ZStack {
                 VStack {
                     MatchTimeView(workoutData: workoutData)
@@ -40,7 +40,6 @@ struct MatchDetailView: View {
 
 struct MatchTimeView: View {
     let workoutData: WorkoutData
-    @State var isInfoOpen: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -49,24 +48,7 @@ struct MatchTimeView: View {
                 .frame(minHeight: 50)
             
             HStack {
-                Button {
-                    isInfoOpen.toggle()
-                } label: {
-                    HStack(spacing: 0) {
-                        Text(" ")
-                        Image("InfoIcon")
-                            .resizable()
-                            .frame(width: 11, height: 15)
-                        Text(" ")
-                        if isInfoOpen {
-                            Text(" 경기에 대한 ")
-                            Text("상세한 리포트")
-                                .fontWeight(.bold)
-                            Text("를 확인해 볼까요?")
-                        }
-                    }
-                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                }
+                InfomationButton(message: "경기의 상세 리포트를 만나보세요.")
                 Spacer()
             }
             .zIndex(1)
@@ -168,21 +150,7 @@ struct FieldRecordView: View {
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    isInfoOpen.toggle()
-                } label: {
-                    HStack(spacing: 0) {
-                        Text(" ")
-                        Image("InfoIcon")
-                            .resizable()
-                            .frame(width: 11, height: 15)
-                        Text(" ")
-                        if isInfoOpen {
-                            Text(" 좋은 경기를 플레이하면 뱃지를 드려요~")
-                        }
-                    }
-                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                }
+                InfomationButton(message: "경기의 상세 데이터에 따라 카드가 수여됩니다.")
                 Spacer()
             }
             HStack {
@@ -226,21 +194,7 @@ struct FieldMovementView: View {
             HStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        Button {
-                            isInfoOpen.toggle()
-                        } label: {
-                            HStack(spacing: 0) {
-                                Text(" ")
-                                Image("InfoIcon")
-                                    .resizable()
-                                    .frame(width: 11, height: 15)
-                                Text(" ")
-                                if isInfoOpen {
-                                    Text(" 내가 어디서 많이 뛰었나 볼까요?")
-                                }
-                            }
-                            .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                        }
+                        InfomationButton(message: "경기 중 나의 위치를 확인해 보세요.")
                         Spacer()
                     }
                     

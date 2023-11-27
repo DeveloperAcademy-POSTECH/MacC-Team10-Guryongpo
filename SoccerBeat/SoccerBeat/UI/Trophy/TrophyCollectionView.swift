@@ -13,8 +13,7 @@ struct TrophyCollectionView: View {
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: nil) {
-                Text(" 경기를 통해 획득한 카드를 만나보세요.")
-                    .floatingCapsuleStyle()
+                InfomationButton(message: "경기 기록에 따라 수집된 카드입니다.")
                   
                 Group {
                     Text("Card Collection")

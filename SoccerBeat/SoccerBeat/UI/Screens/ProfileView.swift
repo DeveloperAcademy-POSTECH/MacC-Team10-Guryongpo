@@ -15,84 +15,68 @@ struct ProfileView: View {
     @State var userImage: UIImage?
     @FocusState private var isFocused: Bool
     @ObservedObject var viewModel: ProfileModel
-    @State var isInfoOpen: Bool = false
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack {
                     HStack {
                         VStack {
                             HStack {
-                                Button {
-                                    isInfoOpen.toggle()
-                                } label: {
-                                    HStack(spacing: 0) {
-                                        Text(" ")
-                                        Image("InfoIcon")
-                                            .resizable()
-                                            .frame(width: 11, height: 15)
-                                        Text(" ")
-                                        if isInfoOpen {
-                                            Text(" 최고 기록을 경신해 보세요!")
-                                        }
-                                    }
-                                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                                }
+                                InfomationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
                                 Spacer()
                             }
                             .padding(.top, 48)
                             .padding(.bottom, 30)
-                            
-                            VStack(alignment: .leading, spacing: 0.0) {
-                                HStack {
-                                    Text("선수 프로필")
-                                        .font(.matchDetailSubTitle)
-                                        .foregroundStyle(.shareViewSubTitleTint)
-                                    Spacer()
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 0) {
-                                    ZStack(alignment: .leading) {
-                                        if !userName.isEmpty {
-                                            Text(userName)
+                            HStack {
+                                VStack(alignment: .leading, spacing: 0.0) {
+                                    HStack {
+                                        Text("선수 프로필")
+                                            .font(.matchDetailSubTitle)
+                                            .foregroundStyle(.shareViewSubTitleTint)
+                                        Spacer()
+                                    }
+                                    
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        ZStack(alignment: .leading) {
+                                            if !userName.isEmpty {
+                                                Text(userName)
+                                                    .padding(.horizontal)
+                                                    .overlay {
+                                                        Capsule()
+                                                            .stroke(style: .init(lineWidth: 0.8))
+                                                            .frame(height: 40)
+                                                            .foregroundColor(userName.count >= 6 ? .red : .brightmint)
+                                                    }
+                                            }
+                                            
+                                            TextField("Name", text: $userName)
                                                 .padding(.horizontal)
-                                                .overlay {
-                                                    Capsule()
-                                                        .stroke(style: .init(lineWidth: 0.8))
-                                                        .frame(height: 40)
-                                                        .foregroundColor(userName.count >= 6 ? .red : .brightmint)
+                                                .limitText($userName, to: 5)
+                                                .onChange(of: userName) { _ in
+                                                    UserDefaults.standard.set(userName, forKey: "userName")
                                                 }
                                         }
                                         
-                                        TextField("Name", text: $userName)
-                                            .padding(.horizontal)
-                                            .limitText($userName, to: 5)
-                                            .onChange(of: userName) { _ in
-                                                UserDefaults.standard.set(userName, forKey: "userName")
-                                            }
+                                        VStack(alignment: .leading, spacing: 0) {
+                                            Text("How you")
+                                            Text("like that")
+                                        }.kerning(-0.4)
                                     }
-                                    
-                                    
-                                    VStack(alignment: .leading, spacing: 0) {
-                                        Text("How you")
-                                        Text("like that")
-                                    }.kerning(-0.4)
-                                    
                                 }
+                                .font(.custom("SFProDisplay-HeavyItalic", size: 36))
+                                
+                                VStack {
+                                    MyCardView(isFlipped: $isFlipped, viewModel: viewModel)
+                                        .frame(width: 105)
+                                    PhotoSelectButtonView(viewModel: viewModel)
+                                        .opacity(isFlipped ? 1 : 0)
+                                        .padding(.top, 10)
+                                }
+                                .offset(y: 27)
                             }
-                            .font(.custom("SFProDisplay-HeavyItalic", size: 36))
                             
                         }
-                        
-                        VStack {
-                            MyCardView(isFlipped: $isFlipped, viewModel: viewModel)
-                                .frame(width: 105)
-                            PhotoSelectButtonView(viewModel: viewModel)
-                                .opacity(isFlipped ? 1 : 0)
-                                .padding(.top, 10)
-                        }
-                        
                     }
                     
                     Spacer()

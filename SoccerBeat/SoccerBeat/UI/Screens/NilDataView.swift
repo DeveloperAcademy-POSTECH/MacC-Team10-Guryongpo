@@ -32,6 +32,7 @@ struct NilDataView: View {
                         }
                     })
                     .foregroundStyle(.white)
+                    .padding(.top, 5)
                     Spacer()
                 }
                 .padding(.horizontal)
@@ -85,13 +86,8 @@ struct NilDataView: View {
                     .frame(height: 60)
                 
                 VStack(alignment: .leading) {
-                    Image(systemName: "info.circle")
-                        .font(.mainInfoText)
-                        .overlay {
-                            Capsule()
-                                .stroke()
-                                .frame(height: 24)
-                        }
+                    InfomationButton(message: "최근 경기 데이터의 변화를 확인해 보세요.")
+                    
                     HStack {
                         Text("추세")
                             .font(.mainTitleText)

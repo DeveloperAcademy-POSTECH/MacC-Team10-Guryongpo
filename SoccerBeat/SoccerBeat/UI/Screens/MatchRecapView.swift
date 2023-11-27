@@ -14,40 +14,31 @@ struct MatchRecapView: View {
     @Binding var averageData: WorkoutAverageData
     @Binding var maximumData: WorkoutAverageData
     @State var userName: String = ""
-    @State var isInfoOpen: Bool = false
+
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
             
             Spacer()
-                .frame(height: 55)
+                .frame(height: 56)
             HStack {
-                Button {
-                    isInfoOpen.toggle()
-                } label: {
-                    HStack(spacing: 0) {
-                        Text(" ")
-                        Image("InfoIcon")
-                            .resizable()
-                            .frame(width: 11, height: 15)
-                        Text(" ")
-                        if isInfoOpen {
-                            Text(" 모든 경기와 그날의 스탯을 확인해 보세요.")
-                        }
-                    }
-                    .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
-                }
+                InfomationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
+                    .padding(.leading, 16)
+                
                 Spacer()
             }
             HStack {
-                Text("모든 경기 기록")
+                Text("경기 기록")
                     .font(.mainSubTitleText)
+                    .foregroundStyle(.mainSubTitleColor)
+                
                 Spacer()
             }
-            .padding(.top, 30)
+            .padding(.top, 14)
+            .padding(.leading, 32)
             
             HStack {
                 VStack(alignment: .leading, spacing: 0.0) {
-                    Text("Player \(userName)")
+                    Text("Player, \(userName)")
                     Text("Your past games")
                 }
                 .font(.mainTitleText)
@@ -55,18 +46,23 @@ struct MatchRecapView: View {
                 .kerning(-1.5)
                 Spacer()
             }
+            .padding(.leading, 32)
             
             VStack(spacing: 15) {
                 ForEach(userWorkouts ?? [], id: \.self) { workout in
                     NavigationLink {
-                        MatchDetailView(workoutData: workout, averageData: $averageData, maximumData: $maximumData)
+                        MatchDetailView(workoutData: workout,
+                                        averageData: $averageData,
+                                        maximumData: $maximumData)
+                        .toolbarRole(.editor)
                     } label: {
                         MatchListItemView(workoutData: workout, averageData: $averageData)
                     }
                 }
             }
+            .padding(.top, 61)
+            .padding(.horizontal, 16)
         }
-        .padding()
         .onAppear {
             userName = UserDefaults.standard.string(forKey: "userName") ?? ""
         }
@@ -106,7 +102,7 @@ struct MatchListItemView: View {
             
             HStack {
                 Spacer ()
-                
+
                 let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
                                                  maxHeartRate: averageData.maxHeartRate,
                                                  maxVelocity: averageData.maxVelocity,
@@ -145,7 +141,7 @@ struct MatchListItemView: View {
                     .scaleEffect(CGSize(width: 0.4, height: 0.4))
                     .fixedSize()
                     .frame(width: 88, height: 88)
-                
+ 
                 VStack(alignment: .leading) {
                     Group {
                         Text(workoutData.date.description + " - " + currentLocation)
