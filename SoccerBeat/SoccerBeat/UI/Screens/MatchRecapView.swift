@@ -21,7 +21,7 @@ struct MatchRecapView: View {
             Spacer()
                 .frame(height: 56)
             HStack {
-                InfomationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
+                InformationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
                     .padding(.leading, 16)
                 
                 Spacer()

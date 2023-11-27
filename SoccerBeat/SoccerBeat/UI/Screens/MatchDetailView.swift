@@ -48,7 +48,7 @@ struct MatchTimeView: View {
                 .frame(minHeight: 50)
             
             HStack {
-                InfomationButton(message: "경기의 상세 리포트를 만나보세요.")
+                InformationButton(message: "경기의 상세 리포트를 만나보세요.")
                 Spacer()
             }
             .zIndex(1)
@@ -150,7 +150,7 @@ struct FieldRecordView: View {
     var body: some View {
         VStack {
             HStack {
-                InfomationButton(message: "경기의 상세 데이터에 따라 카드가 수여됩니다.")
+                InformationButton(message: "경기의 상세 데이터에 따라 카드가 수여됩니다.")
                 Spacer()
             }
             HStack {
@@ -194,7 +194,7 @@ struct FieldMovementView: View {
             HStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        InfomationButton(message: "경기 중 나의 위치를 확인해 보세요.")
+                        InformationButton(message: "경기 중 나의 위치를 확인해 보세요.")
                         Spacer()
                     }
                     

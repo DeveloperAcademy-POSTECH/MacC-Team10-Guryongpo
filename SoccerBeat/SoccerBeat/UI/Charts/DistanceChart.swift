@@ -22,7 +22,7 @@ struct DistanceChartView: View {
         
         return VStack(alignment: .leading) {
             HStack {
-                InfomationButton(message: "최댓값과 최솟값이 표시된 최근 뛴 거리의 변화입니다.")
+                InformationButton(message: "최댓값과 최솟값이 표시된 최근 뛴 거리의 변화입니다.")
                 
                 Spacer()
             }

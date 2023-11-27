@@ -23,7 +23,7 @@ struct ProfileView: View {
                     HStack {
                         VStack {
                             HStack {
-                                InfomationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
+                                InformationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
                                 Spacer()
                             }
                             .padding(.top, 48)

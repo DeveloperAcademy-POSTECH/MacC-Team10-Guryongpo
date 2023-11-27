@@ -22,7 +22,7 @@ struct BPMChartView: View {
         
         return VStack(alignment: .leading) {
             HStack {
-                InfomationButton(message: "최댓값과 최솟값이 표시된 최근 최고 심박수의 변화입니다.")
+                InformationButton(message: "최댓값과 최솟값이 표시된 최근 심박수의 변화입니다.")
                 Spacer()
             }
             .padding(.top, 54)

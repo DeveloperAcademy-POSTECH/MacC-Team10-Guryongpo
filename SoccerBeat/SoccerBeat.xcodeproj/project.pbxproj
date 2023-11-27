@@ -129,6 +129,7 @@
 		FB2EC9C42B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2EC9C22B0B50BB0050B0E8 /* BadgeImageDictionary.swift */; };
 		FB2EC9C62B0B527F0050B0E8 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FB2EC9C52B0B527F0050B0E8 /* SF-Pro-Text-Bold.otf */; };
 		FB2EC9C72B0B527F0050B0E8 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FB2EC9C52B0B527F0050B0E8 /* SF-Pro-Text-Bold.otf */; };
+		FB5859972B14F0A2002617E0 /* InformationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5859962B14F0A2002617E0 /* InformationButton.swift */; };
 		FBA3DA622B00E6EF0025AD7B /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA3DA612B00E6EF0025AD7B /* ShareView.swift */; };
 		FBA3DA812B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */; };
 		FBA3DA822B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */; };
@@ -260,6 +261,7 @@
 		FB2EC9BF2B0AF8BB0050B0E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		FB2EC9C22B0B50BB0050B0E8 /* BadgeImageDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeImageDictionary.swift; sourceTree = "<group>"; };
 		FB2EC9C52B0B527F0050B0E8 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		FB5859962B14F0A2002617E0 /* InformationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationButton.swift; sourceTree = "<group>"; };
 		FBA3DA612B00E6EF0025AD7B /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		FBA3DA802B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-HeavyItalic.otf"; sourceTree = "<group>"; };
 		FBA3DA862B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-RegularItalic.otf"; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				D3D1749F2B00FE230022F631 /* RadarViewController.swift */,
 				D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */,
 				BEDE523F2B04D26000BBFD94 /* BackgroundImageView.swift */,
+				FB5859962B14F0A2002617E0 /* InformationButton.swift */,
 				685D7B712AE53D8400783433 /* Screens */,
 			);
 			path = UI;
@@ -828,6 +831,7 @@
 				FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */,
 				BE010D392B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */,
 				BECCFAB82B066B38009F4BE5 /* SprintChartOverview.swift in Sources */,
+				FB5859972B14F0A2002617E0 /* InformationButton.swift in Sources */,
 				BE4A91542B01101E004AAFA3 /* DistanceChart.swift in Sources */,
 				685D7B682AE52A2900783433 /* Data.swift in Sources */,
 				D3D1749E2B00F92C0022F631 /* TKRadarChart.swift in Sources */,
@@ -1060,7 +1064,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1100,7 +1104,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1145,7 +1149,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1189,7 +1193,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -14,7 +14,7 @@ struct AnalyticsView: View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
                 
-                InfomationButton(message: "최근 경기 데이터의 변화를 확인해 보세요.")
+                InformationButton(message: "최근 경기 데이터의 변화를 확인해 보세요.")
                 
                 HStack {
                     Text("추세")
