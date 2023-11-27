@@ -19,7 +19,7 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack {
                     HStack {
                         VStack {

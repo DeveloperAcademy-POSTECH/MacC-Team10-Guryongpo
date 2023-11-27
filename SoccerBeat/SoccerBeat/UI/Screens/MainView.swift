@@ -20,7 +20,7 @@ struct MainView: View {
     @State private var currentLocation = "---"
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     HStack {
                         Button(action: { soundManager.isPlaying.toggle() },
@@ -157,7 +157,7 @@ struct MainView: View {
                     }
                     
                     NavigationLink {
-                        ScrollView {
+                        ScrollView(showsIndicators: false) {
                             MatchRecapView(userWorkouts: $userWorkouts, averageData: $averageData, maximumData: $maximumData)
                         }
                     } label: {

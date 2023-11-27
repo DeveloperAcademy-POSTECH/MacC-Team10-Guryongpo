@@ -16,7 +16,7 @@ struct MatchDetailView: View {
     @Binding var maximumData: WorkoutAverageData
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             ZStack {
                 VStack {
                     MatchTimeView(workoutData: workoutData)

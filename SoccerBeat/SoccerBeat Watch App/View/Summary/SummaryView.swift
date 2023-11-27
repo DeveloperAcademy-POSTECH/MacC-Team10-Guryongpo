@@ -25,7 +25,7 @@ struct SummaryView: View {
                     }
                 }
         } else {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 SummaryComponent(title: "뛴 거리",
                                  content: (workoutManager.distance / 1000).rounded(at: 2) + " km")
                 SummaryComponent(title: "최고 속도", content: (workoutManager.maxSpeed * 3.6).rounded(at: 1) + " km/h")
