@@ -32,6 +32,7 @@ struct NilDataView: View {
                         }
                     })
                     .foregroundStyle(.white)
+                    .padding(.top, 5)
                     Spacer()
                 }
                 .padding(.horizontal)
