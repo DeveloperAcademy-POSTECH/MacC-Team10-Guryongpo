@@ -59,7 +59,10 @@ struct MatchRecapView: View {
             VStack(spacing: 15) {
                 ForEach(userWorkouts ?? [], id: \.self) { workout in
                     NavigationLink {
-                        MatchDetailView(workoutData: workout, averageData: $averageData, maximumData: $maximumData)
+                        MatchDetailView(workoutData: workout,
+                                        averageData: $averageData,
+                                        maximumData: $maximumData)
+                        .toolbarRole(.editor)
                     } label: {
                         MatchListItemView(workoutData: workout, averageData: $averageData)
                     }
