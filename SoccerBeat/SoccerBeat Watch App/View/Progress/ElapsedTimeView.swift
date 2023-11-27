@@ -27,11 +27,8 @@ struct ElapsedTimeView: View {
                         .viewBorder(color: .white, radius: radius, outline: true)
                         .offset(x: 2, y: 2.5)
                 }
-                .frame(width: spendingTimeDevidedColone[0].count == 3 ? 84 : 56)
             
-            if spendingTimeDevidedColone[0].count != 3 {
-                Spacer()
-            }
+            Spacer()
             
             Text(":")
                 .overlay {
@@ -41,9 +38,7 @@ struct ElapsedTimeView: View {
                 }
                 .frame(width: 13)
             
-            if spendingTimeDevidedColone[0].count != 3 {
-                Spacer()
-            }
+            Spacer()
             
             Text(spendingTimeDevidedColone[1])
                 .kerning(-0.9)
@@ -54,7 +49,6 @@ struct ElapsedTimeView: View {
                         .viewBorder(color: .white, radius: radius, outline: true)
                         .offset(x: 2, y: 2.5)
                 }
-                .frame(width: 56)
         }
         .font(.playTimeNumber)
         .foregroundStyle(.gameTimeGradient)
