@@ -64,13 +64,20 @@ struct NilDataView: View {
                                 .foregroundStyle(.linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
                                 .padding()
                             
-                            Group {
-                                Text("앱 사용을 위해 헬스 정보 접근 권한이 필요합니다.")
-                                Text("승인하지 않으셨다면 설정 앱에서 권한을 승인해주세요.")
-                            }
-                            .font(.mainInfoText)
-                            .opacity(0.7)
-                            
+                            Text("앱 사용을 위해 헬스 정보 접근 권한이 필요합니다.")
+                                .font(.custom("NotoSans-Regular", size: 14))
+                            HStack {
+                                Button("위치 권한 설정하기") {
+                                    openSettings(urlString: UIApplication.openSettingsURLString)
+                                }
+                                .buttonStyle(BorderedButtonStyle())
+                                
+                                Button("건강 권한 설정하기") {
+                                    let healthSettingURLString =  "x-apple-health://"
+                                    openSettings(urlString: healthSettingURLString)
+                                }
+                                .buttonStyle(BorderedButtonStyle())
+                            }                            
                         }
                     }
                 
@@ -106,5 +113,15 @@ struct NilDataView: View {
             }
         .padding(.horizontal)
         .navigationTitle("")
+    }
+    
+    private func openSettings(urlString: String) {
+        guard let url = URL(string: urlString) else {
+            NSLog("잘못된 URL입니다.: \(#function), URL: \(urlString)")
+            return
+        }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
     }
 }

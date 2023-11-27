@@ -18,7 +18,7 @@ struct SummaryView: View {
             PhraseView()
                 .navigationBarHidden(true)
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.7 ) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0 ) {
                         withAnimation {
                             isShowingSummary.toggle()
                         }
