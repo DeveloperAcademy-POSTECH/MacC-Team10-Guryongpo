@@ -30,15 +30,20 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     }
   
     var matchBadge: [Int]
-    var monthDay: String {
-        Array(date.split(separator: "."))[1...2].joined(separator: ".")
-    }
+
     var day: Int {
-        Int(date.split(separator: ".")[2]) ?? 0
+        let beforeT = String(date.split(separator: "T")[0])
+        let splited = beforeT.split(separator: "-")[2]
+        return Int(splited) ?? 0
+    }
+    var yearMonthDay: String {
+        let beforeT = String(date.split(separator: "T")[0])
+        let rawValueOfYearMonthDay = beforeT.split(separator: "-").joined(separator: ".")
+        return String(rawValueOfYearMonthDay)
     }
     
     static let example = Self(dataID: 0,
-                              date: "2023.10.15",
+                              date: "2023-10-09T01:20:32Z",
                               time: "34:43",
                               distance: 4.5,
                               sprint: 6,
@@ -50,7 +55,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               matchBadge: [-1, 2, 0])
     
     static let blankExample = Self(dataID: 0,
-                                   date: "2023.10.15",
+                                   date: "2023-10-09T01:20:32Z",
                                    time: "34:43",
                                    distance: 0.1,
                                    sprint: 1,
@@ -60,11 +65,8 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                                    route: [],
                                    center: [37.58647414212885, 126.9748537678651], matchBadge: [0, 0, 0])
     
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "Ko-kr")
-        formatter.dateFormat = "yyyy.MM.dd"
-        return formatter
+    private let dateFormatter: ISO8601DateFormatter = {
+        return ISO8601DateFormatter()
     }()
 }
 
@@ -123,15 +125,15 @@ extension WorkoutData {
 }
 
 let fakeWorkoutData: [WorkoutData] = [
-    WorkoutData(dataID: 1, date: "2023.10.09", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0], matchBadge: [0,3,2]),
-    WorkoutData(dataID: 2, date: "2023.10.10", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, acceleration: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0], matchBadge: [0,1,3]),
-    WorkoutData(dataID: 3, date: "2023.10.11", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, acceleration: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 4, date: "2023.10.12", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, acceleration: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 5, date: "2023.10.13", time: "60:10", distance: 4.5, sprint: 11, velocity: 17.2, acceleration: 3.0, heartRate: ["max": 175, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 6, date: "2023.10.14", time: "60:10", distance: 3.6, sprint: 5, velocity: 24.4, acceleration: 3.0, heartRate: ["max": 190, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 7, date: "2023.10.15", time: "60:10", distance: 3.8, sprint: 13, velocity: 15.9, acceleration: 3.0, heartRate: ["max": 183, "min": 91], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 8, date: "2023.10.16", time: "60:10", distance: 2.9, sprint: 17, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 169, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 9, date: "2023.10.17", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, acceleration: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0])
+    WorkoutData(dataID: 1, date: "2023-10-09T01:20:32Z", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0], matchBadge: [0,3,2]),
+    WorkoutData(dataID: 2, date: "2023-10-09T01:20:35Z", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, acceleration: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0], matchBadge: [0,1,3]),
+    WorkoutData(dataID: 3, date: "2023-10-09T01:20:38Z", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, acceleration: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0], matchBadge: [-1,2,0]),
+    WorkoutData(dataID: 4, date: "2023-10-19T01:20:32Z", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, acceleration: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0], matchBadge: [-1,2,0]),
+    WorkoutData(dataID: 5, date: "2023-10-20T01:20:32Z", time: "60:10", distance: 4.5, sprint: 11, velocity: 17.2, acceleration: 3.0, heartRate: ["max": 175, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0]),
+    WorkoutData(dataID: 6, date: "2023-10-21T01:20:32Z", time: "60:10", distance: 3.6, sprint: 5, velocity: 24.4, acceleration: 3.0, heartRate: ["max": 190, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
+    WorkoutData(dataID: 7, date: "2023-10-23T01:20:32Z", time: "60:10", distance: 3.8, sprint: 13, velocity: 15.9, acceleration: 3.0, heartRate: ["max": 183, "min": 91], route: [], center: [0, 0], matchBadge: [-1,2,0]),
+    WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.9, sprint: 17, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 169, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
+    WorkoutData(dataID: 9, date: "2023-10-27T01:20:32Z", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, acceleration: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0])
 ]
 
 let fakeAverageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 180,
