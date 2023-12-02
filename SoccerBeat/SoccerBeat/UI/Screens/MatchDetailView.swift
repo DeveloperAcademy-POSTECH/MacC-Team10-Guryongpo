@@ -296,7 +296,7 @@ struct FieldRecordDataView: View {
                         Text("최소 심박수")
                             .font(.fieldRecordTitle)
                         HStack(alignment: .bottom, spacing: 0) {
-                            Text(workoutData.maxHeartRate.formatted())
+                            Text(workoutData.minHeartRate.formatted())
                                 .font(.fieldRecordMeasure)
                             Text(" Bpm")
                                 .font(.fieldRecordUnit)
