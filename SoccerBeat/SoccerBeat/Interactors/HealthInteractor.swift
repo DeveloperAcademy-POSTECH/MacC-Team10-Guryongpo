@@ -124,8 +124,8 @@ class HealthInteractor: ObservableObject {
                                                 time: time as! String,
                                                 distance: custom["Distance", default: 0.0] as! Double,
                                                 sprint: custom["SprintCount", default: 0] as! Int,
-                                                velocity: custom["MaxSpeed", default: 0.0] as! Double,
-                                                acceleration: custom["Acceleration", default: 0.0] as! Double,
+                                                velocity: custom["MaxSpeed", default: 0.0] as! Double, // km/h
+                                                acceleration: custom["Acceleration", default: 0.0] as! Double, // m/s^2
                                                 heartRate: ["max": custom["MaxHeartRate", default: 0] as! Int,
                                                             "min": custom["MinHeartRate", default: 0] as! Int],
                                                 route: routes,

@@ -58,7 +58,8 @@ class WorkoutManager: NSObject, ObservableObject {
     
     var energy: Double = 0
     
-    let sprintSpeed: Double = 5.5556 // modify it to test code
+//    let sprintSpeed: Double = 5.5556 // modify it to test code
+    let sprintSpeed: Double = 4.16 // 4.16ms == 15km/h
     
     @Published var isSprint: Bool = false
     var maxSpeed: Double = 0.0
@@ -339,12 +340,12 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                     
                     // custom data 를 routedata의 metadata에 저장
                     let metadata: [String: Any] = [
-                        "MaxSpeed": Double(Int(self!.maxSpeed * 100.rounded()))/100,
+                        "MaxSpeed": (self!.maxSpeed * 3.6).rounded(at: 2) , // km/h
                         "SprintCount": self!.sprint,
                         "MinHeartRate": self!.saveMinHeartRate,
                         "MaxHeartRate": self!.saveMaxHeartRate,
-                        "Distance": (Double(Int(self!.distance/1000 * 100 ))) / 100,
-                        "Acceleration": Double(Int(self!.acceleration * 100.rounded()))/100
+                        "Distance": (self!.distance / 1000).rounded(at: 1), // km
+                        "Acceleration": self!.acceleration.rounded(at: 2) // m/s^2
                     ]
                     
                     self?.routeBuilder?.finishRoute(with: workout, metadata: metadata) { (newRoute, _) in
