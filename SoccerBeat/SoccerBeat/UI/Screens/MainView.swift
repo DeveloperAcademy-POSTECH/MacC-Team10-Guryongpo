@@ -23,7 +23,17 @@ struct MainView: View {
         ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     HStack {
-                        Button(action: { soundManager.isPlaying.toggle() },
+                        Button(action: {
+                            soundManager.isPlaying.toggle()
+                            
+                            // musicOff == true, music turned off
+                            // musicOff == false, music turend on
+                            var musicOff = soundManager.isPlaying
+                            
+                            // musicOff, isPlaying have opposite value.
+                            musicOff.toggle()
+                            UserDefaults.standard.set(musicOff, forKey: "musicOff")
+                        },
                                label : {
                             HStack {
                                 Image(systemName: soundManager.isPlaying ? "speaker" : "speaker.slash")
@@ -181,6 +191,21 @@ struct MainView: View {
                         .frame(height: 80)
                     
                     AnalyticsView()
+                }
+                .onAppear {
+                    // UserDefaults return false if no saved value.
+                    // musicOff == true, music turned off
+                    // musicOff == false, music turend on
+                    var musicOff = UserDefaults.standard.bool(forKey: "musicOff")
+                    
+                    // musicOff, isPlaying have opposite value.
+                    musicOff.toggle()
+                    soundManager.isPlaying = musicOff
+                    if soundManager.isPlaying {
+                        soundManager.playBackground()
+                    } else {
+                        soundManager.stopBackground()
+                    }
                 }
             }
         .padding(.horizontal)
