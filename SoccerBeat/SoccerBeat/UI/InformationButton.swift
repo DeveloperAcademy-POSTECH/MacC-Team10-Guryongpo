@@ -15,6 +15,7 @@ struct InformationButton: View {
             isInfoOpen.toggle()
         } label: {
             HStack(spacing: 0) {
+                Text(" ")
                 Image(.infoIcon)
                     .resizable()
                     .frame(width: 11, height: 15)
@@ -22,6 +23,7 @@ struct InformationButton: View {
                     Text(" \(message)")
                         .foregroundStyle(.white)
                 }
+                Text(" ")
             }
             .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
         }
