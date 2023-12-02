@@ -144,7 +144,7 @@ struct MatchListItemView: View {
  
                 VStack(alignment: .leading) {
                     Group {
-                        Text(workoutData.date.description + " - " + currentLocation)
+                        Text(workoutData.yearMonthDay.description + " - " + currentLocation)
                             .task {
                                 currentLocation = await workoutData.location
                             }
