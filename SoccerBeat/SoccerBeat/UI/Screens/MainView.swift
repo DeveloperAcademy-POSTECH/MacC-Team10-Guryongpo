@@ -45,7 +45,7 @@ struct MainView: View {
                     
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading) {
-                            Text(userWorkouts[0].date)
+                            Text(userWorkouts[0].yearMonthDay)
                                 .font(.mainSubTitleText)
                                 .opacity(0.7)
                             Text("최근 경기")

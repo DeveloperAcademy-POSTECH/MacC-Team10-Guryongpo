@@ -11,10 +11,10 @@ import Charts
 struct DistanceChartView: View {
     let workouts: [WorkoutData]
     private var startDate: String {
-        workouts.first?.date ?? "2023.10.10"
+        workouts.first?.yearMonthDay ?? "2023.10.10"
     }
     private var endDate: String {
-        workouts.last?.date ?? "2023.10.10"
+        workouts.last?.yearMonthDay ?? "2023.10.10"
     }
     var body: some View {
         let fastest = maximum(of: workouts)

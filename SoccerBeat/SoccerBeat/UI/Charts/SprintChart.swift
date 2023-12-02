@@ -11,10 +11,10 @@ import Charts
 struct SprintChartView: View {
     let workouts: [WorkoutData]
     private var startDate: String {
-        workouts.first?.date ?? "2023.10.10"
+        workouts.first?.yearMonthDay ?? "2023.10.10"
     }
     private var endDate: String {
-        workouts.last?.date ?? "2023.10.10"
+        workouts.last?.yearMonthDay ?? "2023.10.10"
     }
     var body: some View {
         let fastest = maximum(of: workouts)
@@ -178,7 +178,7 @@ extension SprintChartView {
                         .font(.averageText)
                         .foregroundStyle(.averageTextStyle)
                     Group {
-                        Text(average(of: workouts).rounded())
+                        Text(average(of: workouts).rounded(at: 0))
                         + Text(" 회")
                     }
                     .font(.averageValue)

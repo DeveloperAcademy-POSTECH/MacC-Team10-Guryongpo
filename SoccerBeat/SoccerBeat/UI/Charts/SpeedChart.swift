@@ -11,10 +11,10 @@ import Charts
 struct SpeedChartView: View {
     let workouts: [WorkoutData]
     private var startDate: String {
-        workouts.first?.date ?? "2023.10.10"
+        workouts.first?.yearMonthDay ?? "2023.10.10"
     }
     private var endDate: String {
-        workouts.last?.date ?? "2023.10.10"
+        workouts.last?.yearMonthDay ?? "2023.10.10"
     }
     var body: some View {
         let fastest = maximum(of: workouts)
@@ -178,7 +178,7 @@ extension SpeedChartView {
                         .font(.averageText)
                         .foregroundStyle(.averageTextStyle)
                     Group {
-                        Text(average(of: workouts).rounded(), format: .number)
+                        Text(average(of: workouts).rounded(at: 1))
                         + Text(" km/h")
                     }
                     .font(.averageValue)
