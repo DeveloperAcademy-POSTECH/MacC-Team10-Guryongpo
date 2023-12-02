@@ -219,20 +219,20 @@ class HealthInteractor: ObservableObject {
     func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
         // matchBadge: [distance, sprint, velocity]
         // [nil, first trophy, second trophy, third trophy] == [-1, 0, 1, 2]
-        // Distance: 1.5, 2.0, 2.5, 3.0
-        // Sprint: 5, 7, 9, 11
-        // Velocity: 15, 20, 25, 30
+        // Distance: 1, 2, 3, 4
+        // Sprint: 1, 3, 5, 7
+        // Velocity: 10, 15, 20, 25
         var matchBadge: [Int] = [0, 0, 0]
 
-        if distance < 1.5 {
+        if distance < 1.0 {
             matchBadge[0] = -1
-        } else if (1.5 <= distance && distance < 2.0) {
+        } else if (1.0 <= distance && distance < 2.0) {
             matchBadge[0] = 0
             allBadges[0][0] = true
-        } else if (2.0 <= distance && distance < 2.5) {
+        } else if (2.0 <= distance && distance < 3.0) {
             matchBadge[0] = 1
             allBadges[0][1] = true
-        } else if (2.5 <= distance && distance < 3.0) {
+        } else if (3.0 <= distance && distance < 4.0) {
             matchBadge[0] = 2
             allBadges[0][2] = true
         } else {
@@ -240,15 +240,15 @@ class HealthInteractor: ObservableObject {
             allBadges[0][3] = true
         }
 
-        if sprint < 5 {
+        if sprint < 1 {
             matchBadge[1] = -1
-        } else if (5 <= distance && distance < 7) {
+        } else if (1 <= sprint && sprint < 3) {
             matchBadge[1] = 0
             allBadges[1][0] = true
-        } else if (7 <= distance && distance < 9) {
+        } else if (3 <= sprint && sprint < 5) {
             matchBadge[1] = 1
             allBadges[1][1] = true
-        } else if (9 <= distance && distance < 11) {
+        } else if (5 <= sprint && sprint < 7) {
             matchBadge[1] = 2
             allBadges[1][2] = true
         } else {
@@ -256,15 +256,15 @@ class HealthInteractor: ObservableObject {
             allBadges[1][3] = true
         }
 
-        if velocity < 15 {
+        if velocity < 10 {
             matchBadge[2] = -1
-        } else if (15 <= distance && distance < 20) {
+        } else if (10 <= velocity && velocity < 15) {
             matchBadge[2] = 0
             allBadges[2][0] = true
-        } else if (20 <= distance && distance < 25) {
+        } else if (15 <= velocity && velocity < 20) {
             matchBadge[2] = 1
             allBadges[2][1] = true
-        } else if (25 <= distance && distance < 30) {
+        } else if (20 <= velocity && velocity < 25) {
             matchBadge[2] = 2
             allBadges[2][2] = true
         } else {

@@ -150,7 +150,7 @@ struct FieldRecordView: View {
     var body: some View {
         VStack {
             HStack {
-                InformationButton(message: "경기의 상세 데이터에 따라 카드가 수여됩니다.")
+                InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
                 Spacer()
             }
             HStack {
