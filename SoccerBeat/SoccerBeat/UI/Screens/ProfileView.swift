@@ -139,8 +139,11 @@ struct ProfileView: View {
                                   (maximumLevel["totalDistance"] ?? 1.0) * 0.15 + (maximumLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (maximumLevel["totalMatchTime"] ?? 1.0) * 0.2,
                                   (maximumLevel["totalDistance"] ?? 1.0) * 0.3 + (maximumLevel["sprintCount"] ?? 1.0) * 0.1 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.1]
                     
+                    // 방구석 리뷰룸 시연을 위해 작성한 코드
+                    let tripleAverage = average.map { min($0 * 3, 5.0) }
+                    let tripleRecent = recent.map { min($0 * 3, 5.0) }
                     
-                    ViewControllerContainer(ProfileViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                    ViewControllerContainer(ProfileViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
                         .fixedSize()
                         .frame(width: 304, height: 348)
                         .zIndex(-1)

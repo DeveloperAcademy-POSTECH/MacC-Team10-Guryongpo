@@ -23,7 +23,17 @@ struct MainView: View {
         ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     HStack {
-                        Button(action: { soundManager.isPlaying.toggle() },
+                        Button(action: {
+                            soundManager.isPlaying.toggle()
+                            
+                            // musicOff == true, music turned off
+                            // musicOff == false, music turend on
+                            var musicOff = soundManager.isPlaying
+                            
+                            // musicOff, isPlaying have opposite value.
+                            musicOff.toggle()
+                            UserDefaults.standard.set(musicOff, forKey: "musicOff")
+                        },
                                label : {
                             HStack {
                                 Image(systemName: soundManager.isPlaying ? "speaker" : "speaker.slash")
@@ -103,8 +113,11 @@ struct MainView: View {
                                                       (recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (recentLevel["totalMatchTime"] ?? 1.0) * 0.2,
                                                       (recentLevel["totalDistance"] ?? 1.0) * 0.3 + (recentLevel["sprintCount"] ?? 1.0) * 0.1 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.1]
                                         
+                                        // 방구석 리뷰룸 시연을 위해 작성한 코드
+                                        let tripleAverage = average.map { min($0 * 3, 5.0) }
+                                        let tripleRecent = recent.map { min($0 * 3, 5.0) }
                                         
-                                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                                        ViewControllerContainer(RadarViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
                                             .scaleEffect(CGSize(width: 0.7, height: 0.7))
                                             .fixedSize()
                                             .frame(width: 210, height: 210)
@@ -181,6 +194,21 @@ struct MainView: View {
                         .frame(height: 80)
                     
                     AnalyticsView()
+                }
+                .onAppear {
+                    // UserDefaults return false if no saved value.
+                    // musicOff == true, music turned off
+                    // musicOff == false, music turend on
+                    var musicOff = UserDefaults.standard.bool(forKey: "musicOff")
+                    
+                    // musicOff, isPlaying have opposite value.
+                    musicOff.toggle()
+                    soundManager.isPlaying = musicOff
+                    if soundManager.isPlaying {
+                        soundManager.playBackground()
+                    } else {
+                        soundManager.stopBackground()
+                    }
                 }
             }
         .padding(.horizontal)
