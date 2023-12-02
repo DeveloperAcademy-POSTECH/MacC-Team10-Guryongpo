@@ -52,7 +52,7 @@ class WorkoutManager: NSObject, ObservableObject {
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
     var routeBuilder: HKWorkoutRouteBuilder?
-    var saveMinHeartRate: Int = 200
+    var saveMinHeartRate: Int = 300
     var saveMaxHeartRate: Int = 0
     var maxHeartRate: Double?
     
@@ -291,7 +291,7 @@ class WorkoutManager: NSObject, ObservableObject {
         heartZone = 1
         zone5Count = 0
         saveMaxHeartRate = 0
-        saveMinHeartRate = 0
+        saveMinHeartRate = 300 // initialize
         
         distance = 0
         maxSpeed = 0
@@ -340,9 +340,9 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                     
                     // custom data 를 routedata의 metadata에 저장
                     let metadata: [String: Any] = [
-                        "MaxSpeed": (self!.maxSpeed * 3.6).rounded(at: 2) , // km/h
+                        "MaxSpeed": self!.maxSpeed.rounded(at: 2), // m/s
                         "SprintCount": self!.sprint,
-                        "MinHeartRate": self!.saveMinHeartRate,
+                        "MinHeartRate": self!.saveMinHeartRate != 300 ? self!.saveMinHeartRate : 0,
                         "MaxHeartRate": self!.saveMaxHeartRate,
                         "Distance": (self!.distance / 1000).rounded(at: 1), // km
                         "Acceleration": self!.acceleration.rounded(at: 2) // m/s^2

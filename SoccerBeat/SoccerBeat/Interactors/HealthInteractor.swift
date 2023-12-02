@@ -114,17 +114,18 @@ class HealthInteractor: ObservableObject {
                 
                 var distance = custom["Distance"] as! Double
                 var sprint = custom["SprintCount"] as! Int
-                var velocity = custom["MaxSpeed"] as! Double
+                var velocity: Double = custom["MaxSpeed", default: 0.0] as! Double
                 
                 var matchBadge: [Int] = calculateBadgeData(distance: distance, sprint: sprint, velocity: velocity)
             
                 var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
+                
                 userWorkouts.append(WorkoutData(dataID: dataID,
                                                 date: dateFormatter.string(from: allWorkout.startDate),
                                                 time: time as! String,
                                                 distance: custom["Distance", default: 0.0] as! Double,
                                                 sprint: custom["SprintCount", default: 0] as! Int,
-                                                velocity: custom["MaxSpeed", default: 0.0] as! Double, // km/h
+                                                velocity: Double((velocity * 3.6).rounded(at: 2)) ?? 0, // km/h
                                                 acceleration: custom["Acceleration", default: 0.0] as! Double, // m/s^2
                                                 heartRate: ["max": custom["MaxHeartRate", default: 0] as! Int,
                                                             "min": custom["MinHeartRate", default: 0] as! Int],
@@ -135,7 +136,7 @@ class HealthInteractor: ObservableObject {
                 
                 // Calculating average value..
                 let maxHeartRate = userWorkouts.first?.heartRate["max"] ?? 0
-                let minHeartRate = userWorkouts.first?.heartRate["max"] ?? 0
+                let minHeartRate = userWorkouts.first?.heartRate["min"] ?? 0
                 userAverage.maxHeartRate += maxHeartRate
                 userAverage.minHeartRate += minHeartRate
                 userAverage.rangeHeartRate += maxHeartRate - minHeartRate
