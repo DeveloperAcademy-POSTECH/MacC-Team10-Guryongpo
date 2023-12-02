@@ -113,8 +113,11 @@ struct MainView: View {
                                                       (recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (recentLevel["totalMatchTime"] ?? 1.0) * 0.2,
                                                       (recentLevel["totalDistance"] ?? 1.0) * 0.3 + (recentLevel["sprintCount"] ?? 1.0) * 0.1 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.1]
                                         
+                                        // 방구석 리뷰룸 시연을 위해 작성한 코드
+                                        let tripleAverage = average.map { min($0 * 3, 5.0) }
+                                        let tripleRecent = recent.map { min($0 * 3, 5.0) }
                                         
-                                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                                        ViewControllerContainer(RadarViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
                                             .scaleEffect(CGSize(width: 0.7, height: 0.7))
                                             .fixedSize()
                                             .frame(width: 210, height: 210)

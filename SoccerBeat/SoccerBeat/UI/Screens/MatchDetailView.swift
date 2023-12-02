@@ -130,7 +130,11 @@ struct PlayerAbilityView: View {
                                       (matchLevel["totalDistance"] ?? 1.0) * 0.3 + (matchLevel["sprintCount"] ?? 1.0) * 0.1 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.1]
                         
                         
-                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                        // 방구석 리뷰룸 시연을 위해 작성한 코드
+                        let tripleAverage = average.map { min($0 * 3, 5.0) }
+                        let tripleRecent = recent.map { min($0 * 3, 5.0) }
+                        
+                        ViewControllerContainer(RadarViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
                             .fixedSize()
                             .frame(width: 304, height: 348)
                             .zIndex(-1)

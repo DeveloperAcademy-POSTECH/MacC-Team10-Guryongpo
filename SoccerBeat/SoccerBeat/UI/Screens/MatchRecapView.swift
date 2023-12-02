@@ -137,7 +137,11 @@ struct MatchListItemView: View {
                               (recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (recentLevel["totalMatchTime"] ?? 1.0) * 0.2,
                               (recentLevel["totalDistance"] ?? 1.0) * 0.3 + (recentLevel["sprintCount"] ?? 1.0) * 0.1 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.1]
                 
-                ViewControllerContainer(ThumbnailViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                // 방구석 리뷰룸 시연을 위해 작성한 코드
+                let tripleAverage = average.map { min($0 * 3, 5.0) }
+                let tripleRecent = recent.map { min($0 * 3, 5.0) }
+                
+                ViewControllerContainer(ThumbnailViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
                     .scaleEffect(CGSize(width: 0.4, height: 0.4))
                     .fixedSize()
                     .frame(width: 88, height: 88)
