@@ -18,6 +18,7 @@ struct Profile: View {
             if self.image != nil {
                 Image(uiImage: self.image!)
                     .resizable()
+                    .scaledToFill()
                     .frame(width: width, height: height)
                     .mask {
                         Image("MaskLayer")
