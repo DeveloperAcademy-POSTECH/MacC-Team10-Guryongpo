@@ -13,10 +13,10 @@ struct TrophyCollectionView: View {
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: nil) {
-                InformationButton(message: "경기 기록에 따라 수집된 카드입니다.")
+                InformationButton(message: "경기 기록에 따라 수집된 뱃지입니다.")
                   
                 Group {
-                    Text("Card Collection")
+                    Text("Badge Collection")
                         .highlighter(activity: .sprint, isDefault: true)
                 }
                 .font(.navigationSportyTitle)
@@ -32,11 +32,11 @@ struct TrophyCollectionView: View {
         var message = ""
         switch sort {
         case 0:
-            message = " 경기 중 뛴 거리에 따라 획득하는 카드입니다."
+            message = "뛴 거리에 따라 획득하는 뱃지입니다."
         case 1:
-            message = " 경기 중 스프린트 횟수에 따라 획득하는 카드입니다."
+            message = "스프린트 횟수에 따라 획득하는 뱃지입니다."
         default: // 2
-            message = " 경기 중 최고 속도에 따라 획득하는 카드입니다."
+            message = "최고 속도에 따라 획득하는 뱃지입니다."
         }
         
         return Text(message)
