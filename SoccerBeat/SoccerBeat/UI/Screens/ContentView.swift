@@ -67,9 +67,20 @@ struct ContentView: View {
                 self.userWorkouts = workoutData!
             })
             .onAppear {
-                // 시끄러우면 각주 처리해주세요 -호제가-
-                soundManager.playBackground()
-            }
+                                // UserDefaults return false if no saved value.
+                                // musicOff == true, music turned off
+                                // musicOff == false, music turend on
+                                var musicOff = UserDefaults.standard.bool(forKey: "musicOff")
+
+                                // musicOff, isPlaying have opposite value.
+                                musicOff.toggle()
+                                soundManager.isPlaying = musicOff
+                                if soundManager.isPlaying {
+                                    soundManager.playBackground()
+                                } else {
+                                    soundManager.stopBackground()
+                                }
+                            }
         }
         .tint(.white)
     }
