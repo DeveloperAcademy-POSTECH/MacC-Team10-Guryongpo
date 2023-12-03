@@ -22,7 +22,7 @@ struct SpeedChartView: View {
         
         return VStack(alignment: .leading) {
             HStack {
-                InformationButton(message: "최댓값과 최솟값이 표시된 최근 최고 속도의 변화입니다.")
+                InformationButton(message: "최근 최고 속도의 변화입니다.")
                 
                 Spacer()
             }
