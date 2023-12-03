@@ -340,12 +340,12 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                     
                     // custom data 를 routedata의 metadata에 저장
                     let metadata: [String: Any] = [
-                        "MaxSpeed": self!.maxSpeed.rounded(at: 2), // m/s
+                        "MaxSpeed": Double(self!.maxSpeed.rounded(at: 2)), // m/s
                         "SprintCount": self!.sprint,
                         "MinHeartRate": self!.saveMinHeartRate != 300 ? self!.saveMinHeartRate : 0,
                         "MaxHeartRate": self!.saveMaxHeartRate,
-                        "Distance": (self!.distance / 1000).rounded(at: 1), // km
-                        "Acceleration": self!.acceleration.rounded(at: 2) // m/s^2
+                        "Distance": Double((self!.distance / 1000).rounded(at: 1)), // km
+                        "Acceleration": Double(self!.acceleration.rounded(at: 2)) // m/s^2
                     ]
                     
                     self?.routeBuilder?.finishRoute(with: workout, metadata: metadata) { (newRoute, _) in
