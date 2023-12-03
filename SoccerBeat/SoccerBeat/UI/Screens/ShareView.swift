@@ -27,8 +27,7 @@ struct ShareView: View {
         }
         .toolbar {
             Button {
-                renderImage = TargetImageView(cgSize: self.geoSize,
-                                              viewModel: viewModel)
+                renderImage = TargetImageView(cgSize: self.geoSize, viewModel: viewModel)
                 .environmentObject(healthInteractor)
                                     .asImage(size: self.geoSize)
                 share()
@@ -54,7 +53,7 @@ struct ShareView: View {
 
 extension UIScreen {
     static let screenWidth = UIScreen.main.bounds.size.width
-    static let screenHeight = UIScreen.main.bounds.size.height
+    static let screenHeight = UIScreen.main.bounds.size.width
     static let screenSize = UIScreen.main.bounds.size
 }
 
@@ -83,7 +82,7 @@ struct TargetImageView: View {
     @ObservedObject var viewModel: ProfileModel
     @EnvironmentObject var healthInteractor: HealthInteractor
     private var userName: String {
-        return UserDefaults.standard.string(forKey: "userName") ?? "Anonymous"
+        return UserDefaults.standard.string(forKey: "userName") ?? "닉네임"
     }
 
     var body: some View {
@@ -93,6 +92,7 @@ struct TargetImageView: View {
             Image("FlameEffect")
                 .frame(maxHeight: UIScreen.screenHeight)
             VStack {
+                Spacer()
                 HStack(alignment: .bottom) {
                     CardFront(width: 100, height: 140, degree: $degree, viewModel: viewModel)
                     VStack(alignment: .leading, spacing: 0) {
@@ -116,6 +116,7 @@ struct TargetImageView: View {
                     }
                     .padding(.leading)
                 }
+                .padding(.horizontal)
                 .padding(.top)
                 
                 Spacer()

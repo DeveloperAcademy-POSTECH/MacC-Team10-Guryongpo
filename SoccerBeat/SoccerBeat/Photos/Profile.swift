@@ -12,7 +12,11 @@ struct Profile: View {
     @ObservedObject var viewModel: ProfileModel
     let width : CGFloat
     let height : CGFloat
-    @State var image: UIImage?
+    @AppStorage("userImage") var userImage: Data = .init()
+    var image: UIImage? {
+        let image = UIImage(data: userImage)
+        return image
+    }
     var body: some View {
         VStack {
             if self.image != nil {
@@ -37,14 +41,6 @@ struct Profile: View {
                         .padding(2)
                 }
             }
-        }.onAppear {
-            if let imageData = UserDefaults.standard.object(forKey: "userImage") as? Data
-            {
-                let image = UIImage(data: imageData)
-                self.image = image
-            }
-        }.onChange(of: viewModel.imageSelection) { _ in
-            image = nil
         }
     }
 }
