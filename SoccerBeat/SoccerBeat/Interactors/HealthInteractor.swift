@@ -114,9 +114,10 @@ class HealthInteractor: ObservableObject {
                 
                 var distance = custom["Distance"] as! Double
                 var sprint = custom["SprintCount"] as! Int
-                var velocity: Double = custom["MaxSpeed", default: 0.0] as! Double
+                var velocityMPS: Double = custom["MaxSpeed", default: 0.0] as! Double
+                let velocityKMPH: Double = Double((velocityMPS * 3.6).rounded(at: 2)) ?? 0
                 
-                var matchBadge: [Int] = calculateBadgeData(distance: distance, sprint: sprint, velocity: velocity)
+                var matchBadge: [Int] = calculateBadgeData(distance: distance, sprint: sprint, velocity: velocityKMPH)
             
                 var time: String = String(Int(allWorkout.duration)/60) + " : " + String(Int(allWorkout.duration) % 60)
                 
@@ -125,7 +126,7 @@ class HealthInteractor: ObservableObject {
                                                 time: time as! String,
                                                 distance: custom["Distance", default: 0.0] as! Double,
                                                 sprint: custom["SprintCount", default: 0] as! Int,
-                                                velocity: Double((velocity * 3.6).rounded(at: 2)) ?? 0, // km/h
+                                                velocity: velocityKMPH, // km/h
                                                 acceleration: custom["Acceleration", default: 0.0] as! Double, // m/s^2
                                                 heartRate: ["max": custom["MaxHeartRate", default: 0] as! Int,
                                                             "min": custom["MinHeartRate", default: 0] as! Int],
