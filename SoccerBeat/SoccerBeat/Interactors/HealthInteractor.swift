@@ -221,20 +221,22 @@ class HealthInteractor: ObservableObject {
     func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
         // matchBadge: [distance, sprint, velocity]
         // [nil, first trophy, second trophy, third trophy] == [-1, 0, 1, 2]
-        // Distance: 1, 2, 3, 4
-        // Sprint: 1, 3, 5, 7
+        
+        // 쇼케이스 시연을 위해 기준 하향 조정
+        // Distance: 1, 2, 3, 4 -> 0.2, 0.4, 0.6, 0.8
+        // Sprint: 1, 3, 5, 7 -> 1, 2, 3, 4
         // Velocity: 10, 15, 20, 25
         var matchBadge: [Int] = [0, 0, 0]
 
-        if distance < 1.0 {
+        if distance < 0.2 {
             matchBadge[0] = -1
-        } else if (1.0 <= distance && distance < 2.0) {
+        } else if (0.2 <= distance && distance < 0.4) {
             matchBadge[0] = 0
             allBadges[0][0] = true
-        } else if (2.0 <= distance && distance < 3.0) {
+        } else if (0.4 <= distance && distance < 0.6) {
             matchBadge[0] = 1
             allBadges[0][1] = true
-        } else if (3.0 <= distance && distance < 4.0) {
+        } else if (0.6 <= distance && distance < 0.8) {
             matchBadge[0] = 2
             allBadges[0][2] = true
         } else {
@@ -244,13 +246,13 @@ class HealthInteractor: ObservableObject {
 
         if sprint < 1 {
             matchBadge[1] = -1
-        } else if (1 <= sprint && sprint < 3) {
+        } else if (1 <= sprint && sprint < 2) {
             matchBadge[1] = 0
             allBadges[1][0] = true
-        } else if (3 <= sprint && sprint < 5) {
+        } else if (2 <= sprint && sprint < 3) {
             matchBadge[1] = 1
             allBadges[1][1] = true
-        } else if (5 <= sprint && sprint < 7) {
+        } else if (3 <= sprint && sprint < 4) {
             matchBadge[1] = 2
             allBadges[1][2] = true
         } else {
