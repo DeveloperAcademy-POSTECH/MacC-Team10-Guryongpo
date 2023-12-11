@@ -53,11 +53,10 @@
 
 <table>
  <tr>
-    <td align="center"> 파트너 연결 전 </td>
-    <td align="center"> 상대의 요망 </td>
-    <td align="center"> 요망 꾸미기 </td>
-    <td align="center"> 나의 요망 보내기</td>
-    <td align="center"> 위젯 설정 </td>
+    <td align="center"> 애플 워치 경기 기록 </td>
+    <td align="center"> 애플 워치 스프린트 모드  </td>
+    <td align="center"> 아이폰 경기 데이터 </td>
+    <td align="center"> 아이폰 선수 프로필 </td>
     </tr> 
 <td>
 <img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/e63aea77-964e-4201-b45f-d2db5bb753e0"></td>
