@@ -79,9 +79,9 @@
 <td align="center">
 <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/31782424-5391-4f74-abd8-8245345fbe1a" width="50%"></td>
 <td align="center">
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/ccbb8fa3-25ff-4e73-8dbc-7a851d64d739" width="80%"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/ccbb8fa3-25ff-4e73-8dbc-7a851d64d739" width="70%"></td>
 <td align="center">
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/e5115cef-c893-4b42-b2f3-299fc56de0ab" width="80%"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/e5115cef-c893-4b42-b2f3-299fc56de0ab" width="70%"></td>
 <td align="center">
 <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/cb4ff231-ab41-42db-8e7f-cde35e973ef5" width="50%"></td>
 </table>
