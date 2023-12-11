@@ -69,6 +69,25 @@
 <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/0a27797a-049f-4ffc-9907-ce921125c27f" width="50%"></td>
 </table>
 
+<table>
+ <tr>
+    <td align="center"> 아이폰 경기 홈 </td>
+    <td align="center"> 아이폰 경기 상세 데이터  </td>
+    <td align="center"> 아이폰 경기 데이터 추세 </td>
+    <td align="center"> 아이폰 선수 프로필 </td>
+</tr> 
+<td align="center">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/31782424-5391-4f74-abd8-8245345fbe1a" width="50%"></td>
+<td align="center">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/ccbb8fa3-25ff-4e73-8dbc-7a851d64d739" width="50%"></td>
+<td align="center">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/81fa56bd-63f6-4d74-abf0-aed9916aa4d7" width="50%"></td>
+<td align="center">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/cb4ff231-ab41-42db-8e7f-cde35e973ef5" width="50%"></td>
+</table>
+
+
+
 </br>
 
 ## 🛠️ Development
