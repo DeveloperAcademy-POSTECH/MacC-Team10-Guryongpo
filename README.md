@@ -58,16 +58,15 @@
     <td align="center"> 애플 워치 경기 기록  </td>
     <td align="center"> 애플 워치 스프린트 모드 </td>
     <td align="center"> 애플 워치 스프린트 알림 </td>
-    </tr> 
+</tr> 
 <td>
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/00a271b9-215f-4c95-8603-1c1234c12090"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/00a271b9-215f-4c95-8603-1c1234c12090" width="20%"></td>
 <td>
-<img src="(https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/7209f5ea-32f2-4251-9e67-b88d717ca9a9"></td>
+<img src="(https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/7209f5ea-32f2-4251-9e67-b88d717ca9a9" width="20%"></td>
 <td>
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/9e1f5aea-97e1-4428-9970-a05544d3e1ed"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/9e1f5aea-97e1-4428-9970-a05544d3e1ed" width="20%"></td>
 <td>
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/0a27797a-049f-4ffc-9907-ce921125c27f"></td>
-<td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/0a27797a-049f-4ffc-9907-ce921125c27f" width="20%"></td>
 </table>
 
 </br>
