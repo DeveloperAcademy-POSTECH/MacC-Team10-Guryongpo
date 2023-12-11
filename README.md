@@ -81,7 +81,7 @@
 <td align="center">
 <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/ccbb8fa3-25ff-4e73-8dbc-7a851d64d739" width="80%"></td>
 <td align="center">
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/f05837c0-58c0-4074-b255-65bce9b6862d" width="80%"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/e5115cef-c893-4b42-b2f3-299fc56de0ab" width="80%"></td>
 <td align="center">
 <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/cb4ff231-ab41-42db-8e7f-cde35e973ef5" width="50%"></td>
 </table>
