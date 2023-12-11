@@ -114,5 +114,5 @@ import CoreLocation
 
 ## 🔏 License
 
-![Generic badge](https://img.shields.io/badge/Apache_License_2.0-yellow.svg)
+![Generic badge](https://img.shields.io/badge/MIT_License_2.0-yellow.svg)
 
