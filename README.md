@@ -1,10 +1,7 @@
 # MacC-Team10-Guryongpo
 🐲🐉🐲🐉🐲
 
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/72f3d767-23fe-4c73-9e01-39e10b9c7f5b" width="20%">
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/581860ee-f64f-4f9a-8dae-b6113a5d9b9f" width="20%">
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/d239ec45-f8ef-4070-9d6e-743274a0c57d" width="20%">
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/ecf5e336-13c4-4765-b09e-409910fb61ab" width="20%">
+![앱스토어 6](https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/89e62357-a1cb-4607-ad91-10e5f984b474)
 
 </br>
 </br>
