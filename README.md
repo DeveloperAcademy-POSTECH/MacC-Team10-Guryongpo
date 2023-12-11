@@ -54,21 +54,20 @@
 
 <table>
  <tr>
-    <td align="center"> 애플 워치 경기 기록 </td>
-    <td align="center"> 애플 워치 스프린트 모드  </td>
-    <td align="center"> 아이폰 경기 데이터 </td>
-    <td align="center"> 아이폰 선수 프로필 </td>
+    <td align="center"> 애플 워치 경기 시작 </td>
+    <td align="center"> 애플 워치 경기 기록  </td>
+    <td align="center"> 애플 워치 스프린트 모드 </td>
+    <td align="center"> 애플 워치 스프린트 알림 </td>
     </tr> 
 <td>
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/e63aea77-964e-4201-b45f-d2db5bb753e0"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/00a271b9-215f-4c95-8603-1c1234c12090"></td>
 <td>
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/3ba3cca3-324a-4cff-9043-a5c72672612b"></td>
+<img src="(https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/7209f5ea-32f2-4251-9e67-b88d717ca9a9"></td>
 <td>
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/4a65e766-7f09-419e-8a91-5374036fd625"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/9e1f5aea-97e1-4428-9970-a05544d3e1ed"></td>
 <td>
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/6682c4e0-3835-4674-bd1b-0c0c5857dcdc"></td>
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/0a27797a-049f-4ffc-9907-ce921125c27f"></td>
 <td>
-<img src="https://github.com/GYURI-PARK/Algorithm/assets/93391058/870a6293-9e33-4aeb-bcd2-33af71edf8b9"></td>
 </table>
 
 </br>
