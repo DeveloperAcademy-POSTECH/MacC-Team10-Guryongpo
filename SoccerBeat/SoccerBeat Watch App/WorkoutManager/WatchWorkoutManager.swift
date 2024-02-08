@@ -5,32 +5,34 @@
 //  Created by jose Yun on 10/21/23.
 //
 
-import SwiftUI
 import Combine
-import HealthKit
 import CoreLocation
+import HealthKit
 import OSLog
+import SwiftUI
 
 class WorkoutManager: NSObject, ObservableObject {
+    // shared: 전역으로 사용되는 헬스킷 정보 보유 워크아웃매니저.
     static let shared: WorkoutManager = WorkoutManager()
-    
-    @Published var showingSummaryView: Bool = false {
-        didSet {
-            if showingSummaryView == false {
-                resetWorkout()
-            }
-        }
-    }
-    
-    var authHealthKit = PassthroughSubject<(), Never>()
-    
-    @Published var showingPrecount: Bool = false
-    let heartRateQuantity = HKUnit(from: "count/min")
     let healthStore = HKHealthStore()
     let locationManager = CLLocationManager()
+    
+    // 헬스킷 세션 기록용 빌더 선언
+    var session: HKWorkoutSession?
+    var builder: HKLiveWorkoutBuilder?
+    var routeBuilder: HKWorkoutRouteBuilder?
+    
+    // MARK: - 헬스킷과 위치데이터 권한 받기
+    var authHealthKit = PassthroughSubject<(), Never>()
     var hasNotLocationAuthorization: Bool {
         [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(locationManager.authorizationStatus)
     }
+    private let typesToShare: Set = [HKQuantityType.workoutType(),
+                             HKSeriesType.workoutRoute(),
+                             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+                             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+                             
+    ]
     var hasNotHealthAuthorization: Bool {
         var right = false
         for type in typesToShare {
@@ -41,55 +43,67 @@ class WorkoutManager: NSObject, ObservableObject {
         }
         return right
     }
-    
-    private let typesToShare: Set = [HKQuantityType.workoutType(),
-                             HKSeriesType.workoutRoute(),
-                             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
-                             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-                             
-    ]
-    
-    var session: HKWorkoutSession?
-    var builder: HKLiveWorkoutBuilder?
-    var routeBuilder: HKWorkoutRouteBuilder?
-    var saveMinHeartRate: Int = 300
-    var saveMaxHeartRate: Int = 0
-    var maxHeartRate: Double?
-    
-    var energy: Double = 0
-    
-//    let sprintSpeed: Double = 5.5556 // modify it to test code
-    let sprintSpeed: Double = 2.78 // 2.78ms == 10km/h
-    
-    @Published var isSprint: Bool = false
-    var maxSpeed: Double = 0.0
-    @Published var recentSprintSpeed: Double = 0.0
-    @Published var speed: Double = 0.0 {
-        didSet(oldValue) {
-            
-            // 가속도 측정
-            acceleration = max(speed - oldValue, acceleration)
-            
-            // 최고 속도
-            maxSpeed = max(maxSpeed, speed)
-            
-            // 스프린트 카운트
-            if !isSprint && speed >= sprintSpeed {
-                isSprint = true
-                sprint += 1
-                recentSprintSpeed = 0.0
-            } else if isSprint && speed < sprintSpeed {
-                isSprint = false
+    func requestAuthorization() {
+        
+        let typesToRead: Set = [
+            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+            HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+            HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
+            HKSeriesType.workoutType(),
+            HKSeriesType.workoutRoute(),
+            HKObjectType.activitySummaryType()
+        ]
+        healthStore.requestAuthorization(toShare: typesToShare,
+                                         read: typesToRead) { (success, error) in
+            // 위치 정보 권한 요청
+            if self.hasNotLocationAuthorization {
+                self.locationManager.requestWhenInUseAuthorization()
             }
             
-            // 직전 스프린트 최대 속도
-            if isSprint {
-                recentSprintSpeed = max(recentSprintSpeed, speed)
+            // 헬스킷 권한이 없다면
+            if self.hasNotHealthAuthorization {
+                self.authHealthKit.send()
             }
         }
     }
-    var acceleration: Double = 0.0
     
+    // 세션 시작과 종료 시에 뷰 관리 변수
+    @Published var showingPrecount: Bool = false
+    @Published var showingSummaryView: Bool = false {
+        didSet {
+            if showingSummaryView == false {
+                resetWorkout()
+            }
+        }
+    }
+    
+    // MARK: - 데이터 선언 및 초기화
+    
+    // 데이터 기록을 위한 초기 설정
+    let heartRateQuantity = HKUnit(from: "count/min")
+    let meterUnit = HKUnit.meter()
+    func computeProperMaxHeartRate() {
+                do {
+                    let birthYear = try healthStore.dateOfBirthComponents().year
+                    let year = Calendar.current.component(.year, from: Date())
+                    properMaxHeartRate = Double(220 - ( year - birthYear!))
+                } catch {
+                    properMaxHeartRate = 190
+                }
+    }
+    
+    // 데이터 상수 선언
+    var properMaxHeartRate: Double? // 신체 나이에 맞는 적절한 최대심박수.
+    let sprintSpeed: Double = 2.78 // 2.78ms == 10km/h 비교에 사용되는 스프린트 변수 상수 값.
+
+    // 데이터 기록 변수
+    var saveMinHeartRate: Int = 300 // 심박최고수 저장
+    var saveMaxHeartRate: Int = 0
+
+    // 데이터 표기 변수
+    var energy: Double = 0 // 칼로리
+    var acceleration: Double = 0.0
     // MARK: - Workout Metrics
     @Published var heartRate: Double = 0 {
         didSet {
@@ -105,14 +119,50 @@ class WorkoutManager: NSObject, ObservableObject {
         }
     }
     
-    func computeMaxHeartRate() {
-        //        do {
-        //            let birthYear = try healthStore.dateOfBirthComponents().year
-        //            let year = Calendar.current.component(.year, from: Date())
-        //            maxHeartRate = Double(220 - ( year - birthYear!))
-        //        } catch {
-        maxHeartRate = 190
-        //        }
+    // 스프린트 관련 변수. 스프린트 모드와 관련해 여러 변수 사용
+    var maxSpeed: Double = 0.0
+    @Published var isSprint: Bool = false
+    @Published var recentSprintSpeed: Double = 0.0
+    @Published var speed: Double = 0.0 {
+        didSet(oldValue) {
+            
+            // 가속도 측정
+            acceleration = max(speed - oldValue, acceleration)
+            // 최고 속도
+            maxSpeed = max(maxSpeed, speed)
+            // 스프린트 카운트
+            if !isSprint && speed >= sprintSpeed {
+                isSprint = true
+                sprint += 1
+                recentSprintSpeed = 0.0
+            } else if isSprint && speed < sprintSpeed {
+                isSprint = false
+            }
+            
+            // 직전 스프린트 최대 속도
+            if isSprint {
+                recentSprintSpeed = max(recentSprintSpeed, speed)
+            }
+        }
+    }
+    
+    // 데이터 리셋. 세션 종료 후 사용.
+    func resetWorkout() {
+        builder = nil
+        workout = nil
+        session = nil
+        
+        heartRate = 0
+        heartZone = 1
+        zone5Count = 0
+        saveMaxHeartRate = 0
+        saveMinHeartRate = 300
+        
+        distance = 0
+        maxSpeed = 0
+        speed = 0
+        sprint = 0
+        recentSprintSpeed = 0
     }
     
     // MARK: - 데이터 수집 및 경기 시작
@@ -151,38 +201,12 @@ class WorkoutManager: NSObject, ObservableObject {
         
         // 위치 정보 수집
         startLocationUpdates()
-        computeMaxHeartRate()
+        // 헬스킷에서 나이 정보를 통해 적절한 최대심박수 찾기
+        computeProperMaxHeartRate()
     }
     
     
-    // MARK: - Request authorization to access HealthKit And LocationManager.
-    func requestAuthorization() {
-        
-        // The quantity types to read from the health store.
-        let typesToRead: Set = [
-            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-            HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
-            HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
-            HKSeriesType.workoutType(),
-            HKSeriesType.workoutRoute(),
-            HKObjectType.activitySummaryType()
-        ]
-        healthStore.requestAuthorization(toShare: typesToShare,
-                                         read: typesToRead) { (success, error) in
-            // 위치 정보 권한 요청
-            if self.hasNotLocationAuthorization {
-                self.locationManager.requestWhenInUseAuthorization()
-            }
-            
-            // 헬스킷 권한이 없다면
-            if self.hasNotHealthAuthorization {
-                self.authHealthKit.send()
-            }
-        }
-    }
-    
-    // MARK: - Session State Control
+    // MARK: - 세션 관리
     @Published var running = false
     
     func togglePause() {
@@ -206,7 +230,7 @@ class WorkoutManager: NSObject, ObservableObject {
         showingSummaryView = true
     }
     
-    // MARK: - BPM
+    // MARK: - 심박수 표기
     
     private var bpmString: String {
         String(heartRate.formatted(.number.precision(.fractionLength(0))))
@@ -229,7 +253,7 @@ class WorkoutManager: NSObject, ObservableObject {
     @Published var sprint: Int = 0 // default setup
     @Published var workout: HKWorkout?
     
-    // MARK: - Detact Zone 5
+    // MARK: - 심박수 위험 지대 감지
     private var timer: Timer?
     private var zone5Count = 0
     @Published var isInZone5For2Min = false
@@ -258,12 +282,10 @@ class WorkoutManager: NSObject, ObservableObject {
         self.zone5Count = 0
     }
     
-    let meterUnit = HKUnit.meter()
+    
     
     func updateForStatistics(_ statistics: HKStatistics?) {
         guard let statistics = statistics else { return }
-        //        print(statistics)
-        //
         DispatchQueue.main.async {
             switch statistics.quantityType {
             case HKQuantityType.quantityType(forIdentifier: .heartRate):
@@ -282,33 +304,15 @@ class WorkoutManager: NSObject, ObservableObject {
         }
     }
     
-    func resetWorkout() {
-        builder = nil
-        workout = nil
-        session = nil
-        
-        heartRate = 0
-        heartZone = 1
-        zone5Count = 0
-        saveMaxHeartRate = 0
-        saveMinHeartRate = 300 // initialize
-        
-        distance = 0
-        maxSpeed = 0
-        speed = 0
-        sprint = 0
-        recentSprintSpeed = 0
-    }
-    
     // MARK: - Heart Rate Setup
     func computeHeartZone(_ heartRate: Double) -> Int {
-        if heartRate < Double(maxHeartRate!) * 0.6 {
+        if heartRate < Double(properMaxHeartRate!) * 0.6 {
             return 1
-        } else if heartRate < Double(maxHeartRate!) * 0.7 {
+        } else if heartRate < Double(properMaxHeartRate!) * 0.7 {
             return 2
-        } else if heartRate < Double(maxHeartRate!) * 0.8 {
+        } else if heartRate < Double(properMaxHeartRate!) * 0.8 {
             return 3
-        } else if heartRate < Double(maxHeartRate!) * 0.9 {
+        } else if heartRate < Double(properMaxHeartRate!) * 0.9 {
             return 4
         } else {
             return 5
