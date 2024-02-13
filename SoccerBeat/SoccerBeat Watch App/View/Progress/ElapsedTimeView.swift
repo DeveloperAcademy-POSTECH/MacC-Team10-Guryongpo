@@ -16,6 +16,7 @@ struct ElapsedTimeView: View {
                                             .spendingTimeDevidedColone(elapsedSec)
     }
     
+    // TODO: - 여기 나오는 매직 넘버가 왜 그런 값을 가지게 되었는지 이유가 필요
     var body: some View {
         let radius = CGFloat(0.15)
         HStack(alignment: .center, spacing: 0) {

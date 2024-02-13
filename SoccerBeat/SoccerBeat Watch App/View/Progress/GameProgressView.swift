@@ -16,7 +16,6 @@ struct GameProgressView: View {
         workoutManager.isDistanceActive
         ? (workoutManager.distanceMeter / 1000).rounded(at: 2)
         : "--'--"
-        
     }
     
     private var distanceUnit: String { workoutManager.isDistanceActive ? "KM" : "" }
@@ -25,14 +24,13 @@ struct GameProgressView: View {
     var body: some View {
         let timelineSchedule = ProgressTimelineSchedule(from: whenTheGameStarted,
                                                         isPaused: isGamePaused)
-        
         return TimelineView(timelineSchedule) { context in
             VStack(alignment: .center) {
                 Spacer()
                 // MARK: - 경기 시간
                 VStack {
                     let elapsedTime = workoutManager.builder?.elapsedTime(at: context.date) ?? 0
-                    ElapsedTimeView(elapsedTime: elapsedTime)
+                    ElapsedTimeView(elapsedSec: elapsedTime)
                 }
                 
                 Spacer()
@@ -95,9 +93,9 @@ struct GameProgressView: View {
             }
             .fullScreenCover(isPresented: $isSprintSheet) {
                 // 1 m/s = 3.6 km/h
-                let sprintSpeedKPS = (workoutManager.recentSprintSpeedMPS * 3.6).rounded(at: 1)
+                let sprintSpeedKPH = (workoutManager.recentSprintSpeedMPS * 3.6).rounded(at: 1)
                 let unit = "km/h"
-                SprintSheetView(speed: sprintSpeedKPS + unit)
+                SprintSheetView(speedKPH: sprintSpeedKPH + unit)
             }
         }
     }

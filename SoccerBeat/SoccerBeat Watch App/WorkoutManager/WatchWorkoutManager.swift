@@ -11,8 +11,14 @@ import HealthKit
 import OSLog
 import SwiftUI
 
-class WorkoutManager: NSObject, ObservableObject {
-    // shared: 전역으로 사용되는 헬스킷 정보 보유 워크아웃매니저.
+// TODO: - 변수와 변수가 사용되는 함수의 라인을 근접하게 하기
+// TODO: - 역할 나누기
+/// WorkoutManager는 여러가지 일을 수행하고 있습니다.
+/// 1. 경기 세션의 상태 변화 관리
+/// 2. 위치 정보 수집
+/// 3. HealthKit에 read, write 작업
+/// 4. HealthKit에 관련한 권한이 있는지 확인
+final class WorkoutManager: NSObject, ObservableObject {
     static let shared: WorkoutManager = WorkoutManager()
     let healthStore = HKHealthStore()
     let locationManager = CLLocationManager()
@@ -80,8 +86,7 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     
     // MARK: - 데이터 선언 및 초기화
-    
-    // 데이터 기록을 위한 초기 설정
+    /// 데이터 기록을 위한 초기 설정
     let heartRateQuantity = HKUnit(from: "count/min")
     let meterUnit = HKUnit.meter()
     func computeProperMaxHeartRate() {
@@ -121,50 +126,32 @@ class WorkoutManager: NSObject, ObservableObject {
     }
     
     // 스프린트 관련 변수. 스프린트 모드와 관련해 여러 변수 사용
-    var maxSpeed: Double = 0.0
+    var maxSpeedMPS: Double = 0.0
     @Published var isSprint: Bool = false
-    @Published var recentSprintSpeed: Double = 0.0
+    @Published var recentSprintSpeedMPS = 0.0
     @Published var speed: Double = 0.0 {
         didSet(oldValue) {
             
             // 가속도 측정
             acceleration = max(speed - oldValue, acceleration)
             // 최고 속도
-            maxSpeed = max(maxSpeed, speed)
+            maxSpeedMPS = max(maxSpeedMPS, speed)
             // 스프린트 카운트
             if !isSprint && speed >= sprintSpeed {
                 isSprint = true
                 sprint += 1
-                recentSprintSpeed = 0.0
+                recentSprintSpeedMPS = 0.0
             } else if isSprint && speed < sprintSpeed {
                 isSprint = false
             }
             
             // 직전 스프린트 최대 속도
             if isSprint {
-                recentSprintSpeed = max(recentSprintSpeed, speed)
+                recentSprintSpeedMPS = max(recentSprintSpeedMPS, speed)
             }
         }
     }
     
-    // 데이터 리셋. 세션 종료 후 사용.
-    func resetWorkout() {
-        builder = nil
-        workout = nil
-        session = nil
-        
-        heartRate = 0
-        heartZone = 1
-        zone5Count = 0
-        saveMaxHeartRate = 0
-        saveMinHeartRate = 300
-        
-        distanceMeter = 0
-        maxSpeed = 0
-        speed = 0
-        sprint = 0
-        recentSprintSpeed = 0
-    }
     
     // MARK: - 데이터 수집 및 경기 시작
     func startWorkout() {
@@ -211,11 +198,7 @@ class WorkoutManager: NSObject, ObservableObject {
     @Published var running = false
     
     func togglePause() {
-        if running == true {
-            pause()
-        } else {
-            resume()
-        }
+        running ? pause() : resume()
     }
     
     private func pause() {
@@ -305,6 +288,24 @@ class WorkoutManager: NSObject, ObservableObject {
         }
     }
     
+    func resetWorkout() {
+        builder = nil
+        workout = nil
+        session = nil
+        
+        heartRate = 0
+        heartZone = 1
+        zone5Count = 0
+        saveMaxHeartRate = 0
+        saveMinHeartRate = 300 // initialize
+        
+        distanceMeter = 0
+        maxSpeedMPS = 0
+        speed = 0
+        sprint = 0
+        recentSprintSpeedMPS = 0
+    }
+    
     // MARK: - Heart Rate Setup
     func computeHeartZone(_ heartRate: Double) -> Int {
         if heartRate < Double(properMaxHeartRate!) * 0.6 {
@@ -345,7 +346,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                     
                     // custom data 를 routedata의 metadata에 저장
                     let metadata: [String: Any] = [
-                        "MaxSpeed": Double(self!.maxSpeed.rounded(at: 2)), // m/s
+                        "MaxSpeed": Double(self!.maxSpeedMPS.rounded(at: 2)), // m/s
                         "SprintCount": self!.sprint,
                         "MinHeartRate": self!.saveMinHeartRate != 300 ? self!.saveMinHeartRate : 0,
                         "MaxHeartRate": self!.saveMaxHeartRate,
@@ -446,7 +447,6 @@ extension WorkoutManager: CLLocationManagerDelegate {
     }
     
     private func stopLocationUpdates() {
-        print("Stopping location updates")
         locationManager.stopUpdatingHeading()
     }
 }

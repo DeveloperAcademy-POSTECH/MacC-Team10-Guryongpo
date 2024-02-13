@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct PhraseView: View {
-    @State private var text: String = "..Like son\nGood\nPlayer"
-    @State private var beatAnimation: Bool = true
-    
+    @State private var beatAnimation = true
+    private var phrase: String {
+        if let decoded: PhraseResponse = Bundle.main.decode(by: "Phrase.json"),
+           let phrase = decoded.phrase.randomElement() {
+            return phrase.saying
+        }
+        return "..Like son\nGood\nPlayer"
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            Text(text)
+            Text(phrase)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.wiseSaying)
                 .multilineTextAlignment(.center)
@@ -26,17 +32,12 @@ struct PhraseView: View {
                 .scaledToFit()
                 .scaleEffect(beatAnimation ? 1.1 : 1)
                 .frame(width: 42, height: 34)
-                .animation(.spring.repeatForever(autoreverses: true).speed(3), value: beatAnimation)
+                .animation(.spring.repeatForever(autoreverses: true).speed(3),
+                           value: beatAnimation)
         }
-        .onAppear(perform: {
+        .onAppear {
             withAnimation {
                 beatAnimation.toggle()
-            }
-        })
-        .onAppear {
-            if let decoded: PhraseResponse = Bundle.main.decode(by: "Phrase.json"),
-               let phrase = decoded.phrase.randomElement() {
-                self.text = phrase.saying
             }
         }
     }
