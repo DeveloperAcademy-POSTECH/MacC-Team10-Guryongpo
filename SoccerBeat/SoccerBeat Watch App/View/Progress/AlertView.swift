@@ -8,24 +8,25 @@
 import SwiftUI
 
 struct AlertView: View {
-    @State private var beatAnimation: Bool = true
-    var text: String = "Zone 5!\nTake a\nBreath"
     @Environment(\.dismiss) var dismiss
+    @State private var beatAnimation = true
+    private let alertMessage = "Zone 5!\nTake a\nBreath"
+    
     var body: some View {
         ZStack {
-            Image("alertButton")
+            Image(.alertButton)
                 .resizable()
                 .scaledToFill()
                 .padding()
                 .scaleEffect(beatAnimation ? 1.1 : 1)
                 .animation(.smooth.repeatForever(autoreverses: true).speed(0.7), value: beatAnimation)
-                .onAppear(perform: {
+                .onAppear{
                     withAnimation {
                         beatAnimation.toggle()
                     }
-                }).padding()
+                }.padding()
             
-            Text(text)
+            Text(alertMessage)
                 .font(.system(size: 30, weight: .black))
                 .italic()
                 .kerning(-1)
@@ -41,7 +42,6 @@ struct AlertView: View {
                         .resizable()
                         .tint(.white)
                 }
-                    
             }
         }
 

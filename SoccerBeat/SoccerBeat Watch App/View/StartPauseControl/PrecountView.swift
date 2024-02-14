@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PrecountView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
-    @State var count: Int = 3
-    @State var showingSession = false
+    @State private var count = 3
+    @State private var showingSession = false
     
     var body: some View {
         NavigationStack {

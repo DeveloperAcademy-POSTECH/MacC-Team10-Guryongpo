@@ -43,6 +43,7 @@ class WorkoutManager: NSObject, ObservableObject {
         }
         return right
     }
+
     func requestAuthorization() {
         
         let typesToRead: Set = [
@@ -158,7 +159,7 @@ class WorkoutManager: NSObject, ObservableObject {
         saveMaxHeartRate = 0
         saveMinHeartRate = 300
         
-        distance = 0
+        distanceMeter = 0
         maxSpeed = 0
         speed = 0
         sprint = 0
@@ -246,9 +247,9 @@ class WorkoutManager: NSObject, ObservableObject {
     
     // MARK: - Distance
     
-    @Published var distance: Double = 0
+    @Published var distanceMeter: Double = 0
     public var isDistanceActive: Bool {
-        distance != 0
+        distanceMeter != 0
     }
     @Published var sprint: Int = 0 // default setup
     @Published var workout: HKWorkout?
@@ -293,7 +294,7 @@ class WorkoutManager: NSObject, ObservableObject {
                 self.heartRate  = statistics.mostRecentQuantity()?.doubleValue(for: heartRateUnit) ?? 0.0
             case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
                 let meterUnit = HKUnit.meter()
-                self.distance = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
+                self.distanceMeter = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
             case HKQuantityType.quantityType(forIdentifier: .runningSpeed), HKQuantityType.quantityType(forIdentifier: .walkingSpeed):
                 self.speed = statistics.mostRecentQuantity()?.doubleValue(for:  HKUnit.init(from: "m/s")) ?? 0
             case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
@@ -348,7 +349,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                         "SprintCount": self!.sprint,
                         "MinHeartRate": self!.saveMinHeartRate != 300 ? self!.saveMinHeartRate : 0,
                         "MaxHeartRate": self!.saveMaxHeartRate,
-                        "Distance": Double((self!.distance / 1000).rounded(at: 1)), // km
+                        "Distance": Double((self!.distanceMeter / 1000).rounded(at: 1)), // km
                         "Acceleration": Double(self!.acceleration.rounded(at: 2)) // m/s^2
                     ]
                     

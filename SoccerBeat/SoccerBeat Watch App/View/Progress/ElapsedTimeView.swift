@@ -7,12 +7,13 @@
 
 import SwiftUI
 
+// TODO: -
 struct ElapsedTimeView: View {
     private let spendingTimeDevidedColone: [String]
     
-    init(elapsedTime: TimeInterval) {
+    init(elapsedSec: TimeInterval) {
         self.spendingTimeDevidedColone = ElapsedTimeFormatter()
-            .spendingTimeDevidedColone(elapsedTime)
+                                            .spendingTimeDevidedColone(elapsedSec)
     }
     
     var body: some View {
@@ -56,5 +57,5 @@ struct ElapsedTimeView: View {
 }
 
 #Preview {
-    ElapsedTimeView(elapsedTime: .init(floatLiteral: 2684))
+    ElapsedTimeView(elapsedSec: .init(floatLiteral: 2684))
 }
