@@ -5,10 +5,10 @@
 //  Created by jose Yun on 11/10/23.
 //
 
-import SwiftUI
 import AVKit
+import SwiftUI
 
-class SoundManager: ObservableObject {
+final class SoundManager: ObservableObject {
     private var backgroundPlayer: AVAudioPlayer?
     private var cardFrontPlayer: AVAudioPlayer?
     private var cardBackPlayer: AVAudioPlayer?

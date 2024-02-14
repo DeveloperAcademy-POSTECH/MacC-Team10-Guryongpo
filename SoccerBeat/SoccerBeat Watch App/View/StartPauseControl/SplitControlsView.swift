@@ -13,7 +13,7 @@ struct SplitControlsView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var isClicked = false
     @State private var isMoving = false
-    @State private var offset: CGFloat = 12 // TODO: - 어떤 오프셋인지 설명 필요 1
+    @State private var offset = 12.0 // TODO: - 어떤 오프셋인지 설명 필요 1
     @State private var textYOffset = -40.0  // TODO: - 어떤 오프셋인지 설명 필요 2
     
     var body: some View {
