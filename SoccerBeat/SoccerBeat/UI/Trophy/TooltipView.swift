@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TooltipView<Content: View>: View {
-    let alignment: Edge
     @Binding var isVisible: Bool
+    let alignment: Edge
     let content: () -> Content
     let arrowOffset = CGFloat(8)
 
@@ -88,7 +88,7 @@ struct TooltipView<Content: View>: View {
     
     return Text("Hello Wolrd")
         .overlay {
-            TooltipView(alignment: .top, isVisible: $showTooltip) {
+            TooltipView(isVisible: $showTooltip, alignment: .top) {
                 Text("Hint 내용입니다.")
                     .padding()
             }

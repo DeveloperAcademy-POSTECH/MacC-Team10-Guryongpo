@@ -35,7 +35,7 @@ struct TrophyCollectionView: View {
             message = "뛴 거리에 따라 획득하는 뱃지입니다."
         case 1:
             message = "스프린트 횟수에 따라 획득하는 뱃지입니다."
-        default: // 2
+        default:
             message = "최고 속도에 따라 획득하는 뱃지입니다."
         }
         

@@ -20,7 +20,7 @@ struct ProfileImage: View {
             ProgressView()
         case .empty:
             Image(systemName: "person.fill")
-                .font(.system(size: 40))
+                .font(.system(size: 40)) // Image에 폰트 적용되나요? 전 resizable + frame으로 했던 것 같아서.
                 .foregroundColor(.white)
         case .failure:
             Image(systemName: "exclamationmark.triangle.fill")

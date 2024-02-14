@@ -18,7 +18,7 @@ struct SplitControlsView: View {
     
     var body: some View {
         ZStack {
-                Image("backgroundGlow")
+            Image(.backgroundGlow)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             HStack {

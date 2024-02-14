@@ -28,7 +28,7 @@ struct TrophyView: View {
             .resizable()
             .scaledToFit()
             .overlay {
-                TooltipView(alignment: .top, isVisible: $showTooltip) {
+                TooltipView(isVisible: $showTooltip, alignment: .top) {
                     Text(infoMessagss)
                         .foregroundStyle(.tooltipTextColor)
                         .font(.tooltipTextFont)
