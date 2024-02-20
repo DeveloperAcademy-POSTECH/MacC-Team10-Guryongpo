@@ -8,23 +8,24 @@
 import SwiftUI
 import WatchKit
 
+//  MARK: - 세션의 페이징을 하는 뷰, 좌우의 페이징을 담당
 struct SessionPagingView: View {
-    @EnvironmentObject var workoutManager: WorkoutManager
-    @Environment(\.isLuminanceReduced) var isLuminanceReduced
     @Environment(\.dismiss) var dismiss
+    @Environment(\.isLuminanceReduced) var isLuminanceReduced
+    @EnvironmentObject var workoutManager: WorkoutManager
     @State private var selection: TabSort = .progress
-
-    enum TabSort {
+    
+    private enum TabSort {
         case controls, progress
     }
-
+    
     var body: some View {
         TabView(selection: $selection) {
             SplitControlsView()
                 .tag(TabSort.controls)
             
-                GameProgressView()
-                    .tag(TabSort.progress)
+            GameProgressView()
+                .tag(TabSort.progress)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(selection == .progress)
@@ -35,11 +36,9 @@ struct SessionPagingView: View {
         .onChange(of: workoutManager.running) { _ in
             // MARK: When session is not started, the view will be automatically switched to Metrics
             displayMetricsView()
-
         }
-
     }
-
+    
     private func displayMetricsView() {
         withAnimation {
             selection = .progress

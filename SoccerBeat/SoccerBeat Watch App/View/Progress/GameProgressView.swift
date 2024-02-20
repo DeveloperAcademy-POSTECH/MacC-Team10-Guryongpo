@@ -8,21 +8,29 @@
 import SwiftUI
 
 struct GameProgressView: View {
-    
-    // MARK: - Data
     @EnvironmentObject var workoutManager: WorkoutManager
+    @State private var isSprintSheet = false
     private var isGamePaused: Bool { workoutManager.session?.state == .paused }
     private var whenTheGameStarted: Date { workoutManager.builder?.startDate ?? Date() }
-    @State var isSprintSheet: Bool = false
+    private var distanceKM: String {
+        workoutManager.isDistanceActive
+        ? (workoutManager.distanceMeter / 1000).rounded(at: 2)
+        : "--'--"
+    }
+    
+    private var distanceUnit: String { workoutManager.isDistanceActive ? "KM" : "" }
     
     // MARK: - Body
     var body: some View {
-        TimelineView(ProgressTimelineSchedule(from: whenTheGameStarted, isPaused: isGamePaused)) { context in
+        let timelineSchedule = ProgressTimelineSchedule(from: whenTheGameStarted,
+                                                        isPaused: isGamePaused)
+        return TimelineView(timelineSchedule) { context in
             VStack(alignment: .center) {
                 Spacer()
                 // MARK: - 경기 시간
                 VStack {
-                    ElapsedTimeView(elapsedTime: workoutManager.builder?.elapsedTime(at: context.date) ?? 0)
+                    let elapsedTime = workoutManager.builder?.elapsedTime(at: context.date) ?? 0
+                    ElapsedTimeView(elapsedSec: elapsedTime)
                 }
                 
                 Spacer()
@@ -37,23 +45,15 @@ struct GameProgressView: View {
                                 .foregroundStyle(.ongoingText)
                         }
                         
-                        if workoutManager.isDistanceActive {
-                            HStack(alignment: .bottom) {
-                                Spacer()
-                                Text((workoutManager.distance / 1000).rounded(at: 2))
-                                    .font(.distanceTimeNumber)
-                                    .foregroundStyle(.ongoingNumber)
-                                Text("KM")
-                                    .font(.scaleText)
-                                    .foregroundStyle(.ongoingNumber)
-                            }
-                        } else {
-                            HStack {
-                                Spacer()
-                                Text("--'--")
-                                    .font(.distanceTimeNumber)
-                                    .foregroundStyle(.ongoingNumber)
-                            }
+                        HStack(alignment: .bottom) {
+                            Spacer()
+                            
+                            Text(distanceKM)
+                                .font(.distanceTimeNumber)
+                                .foregroundStyle(.ongoingNumber)
+                            Text(distanceUnit)
+                                .font(.scaleText)
+                                .foregroundStyle(.ongoingNumber)
                         }
                     }
                     
@@ -93,7 +93,9 @@ struct GameProgressView: View {
             }
             .fullScreenCover(isPresented: $isSprintSheet) {
                 // 1 m/s = 3.6 km/h
-                SprintSheetView(speed: (workoutManager.recentSprintSpeed * 3.6).rounded(at: 1) + "km/h" )
+                let sprintSpeedKPH = (workoutManager.recentSprintSpeedMPS * 3.6).rounded(at: 1)
+                let unit = "km/h"
+                SprintSheetView(speedKPH: sprintSpeedKPH + unit)
             }
         }
     }

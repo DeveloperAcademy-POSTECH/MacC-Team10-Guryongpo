@@ -9,8 +9,7 @@ import SwiftUI
 
 @main
 struct SoccerBeat_Watch_AppApp: App {
-    @StateObject private 
-    var workoutManager = WorkoutManager.shared
+    @StateObject private var workoutManager = WorkoutManager.shared
 
     var body: some Scene {
         WindowGroup {

@@ -1,5 +1,5 @@
 //
-//  NilDataView.swift
+//  EmptyDataView.swift
 //  SoccerBeat
 //
 //  Created by daaan on 11/20/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NilDataView: View {
+struct EmptyDataView: View {
     @State var workoutAverageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0, minHeartRate: 0, rangeHeartRate: 0, totalDistance: 0, maxAcceleration: 0, maxVelocity: 0, sprintCount: 0, totalMatchTime: 0)
     @EnvironmentObject var soundManager: SoundManager
     @ObservedObject var viewModel: ProfileModel
@@ -17,31 +17,21 @@ struct NilDataView: View {
             VStack(spacing: 0.0) {
                 
                 HStack {
-                    Button(
-                        action: {
-                            soundManager.isPlaying.toggle()
-                            
-                            // musicOff == true, music turned off
-                            // musicOff == false, music turend on
-                            var musicOff = soundManager.isPlaying
-                            
-                            // musicOff, isPlaying have opposite value.
-                            musicOff.toggle()
-                            UserDefaults.standard.set(musicOff, forKey: "musicOff")
-                        },
-                           label : {
+                    Button {
+                        soundManager.toggleMusic()
+                    } label: {
                         HStack {
-                            Image(systemName: soundManager.isPlaying ? "speaker" : "speaker.slash")
-                            Text(soundManager.isPlaying ? "On" : "Off")
+                            Image(systemName: soundManager.isMusicPlaying ? "speaker" : "speaker.slash")
+                            Text(soundManager.isMusicPlaying ? "On" : "Off")
+                                .font(.mainInfoText)
                         }
                         .padding(.horizontal)
-                        .font(.mainInfoText)
                         .overlay {
                             Capsule()
                                 .stroke()
                                 .frame(width: 77, height: 24)
                         }
-                    })
+                    }
                     .foregroundStyle(.white)
                     .padding(.top, 5)
                     Spacer()
@@ -119,18 +109,8 @@ struct NilDataView: View {
                 Spacer()
             }
             .onAppear {
-                // UserDefaults return false if no saved value.
-                // musicOff == true, music turned off
-                // musicOff == false, music turend on
-                var musicOff = UserDefaults.standard.bool(forKey: "musicOff")
-                
-                // musicOff, isPlaying have opposite value.
-                musicOff.toggle()
-                soundManager.isPlaying = musicOff
-                if soundManager.isPlaying {
-                    soundManager.playBackground()
-                } else {
-                    soundManager.stopBackground()
+                if !soundManager.isMusicPlaying {
+                    soundManager.toggleMusic()
                 }
             }
         .padding(.horizontal)

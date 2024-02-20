@@ -204,8 +204,8 @@ class ProfileViewController: UIViewController, TKRadarChartDataSource, TKRadarCh
     }
 }
 
-// Thumbnail Radar Chart Implementation.
-class ThumbnailViewController: UIViewController, TKRadarChartDataSource, TKRadarChartDelegate, UITableViewDelegate {
+// Thumbnail Radar Chart Implementation.                                                        TableViewDelegate를 여기서 지움
+final class ThumbnailViewController: UIViewController, TKRadarChartDataSource, TKRadarChartDelegate {
     var radarAverageValue: [Double]
     var radarAtypicalValue: [Double]
     
@@ -299,6 +299,5 @@ struct ViewControllerContainer: UIViewControllerRepresentable {
         return content
     }
     
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-    }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
 }

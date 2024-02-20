@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct ShareView: View {
-    
     @StateObject var healthInteractor = HealthInteractor.shared
-    @State var geoSize: CGSize = .init(width: 0, height: 0)
+    @ObservedObject var viewModel: ProfileModel
+    @State var geoSize = CGSize(width: 0, height: 0)
     @State var highresImage: UIImage = UIImage()
     @State var renderImage: UIImage?
-    @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
         VStack {
@@ -45,10 +44,8 @@ struct ShareView: View {
 
 #Preview {
     @StateObject var viewModel = ProfileModel()
-    @StateObject var health = HealthInteractor.shared
     
     return ShareView(viewModel: viewModel)
-        .environmentObject(health)
 }
 
 extension UIScreen {
@@ -94,7 +91,7 @@ struct TargetImageView: View {
             VStack {
                 Spacer()
                 HStack(alignment: .bottom) {
-                    CardFront(width: 100, height: 140, degree: $degree, viewModel: viewModel)
+                    CardFront(viewModel: viewModel, degree: $degree, width: 100, height: 140)
                     VStack(alignment: .leading, spacing: 0) {
                         Text("# Soccer Beat")
                             .floatingCapsuleStyle()
@@ -130,14 +127,15 @@ struct TargetImageView: View {
         }
     }
     private func floatingBadgeInfo(at sort: Int) -> some View {
-        var message = ""
-        switch sort {
-        case 0:
-            message = "뛴 거리에 따라 획득하는 뱃지입니다."
-        case 1:
-            message = "스프린트 횟수에 따라 획득하는 뱃지입니다."
-        default: // 2
-            message = "최고 속도에 따라 획득하는 뱃지입니다."
+        var message: String {
+            switch sort {
+            case 0:
+                return "뛴 거리에 따라 획득하는 뱃지입니다."
+            case 1:
+                return "스프린트 횟수에 따라 획득하는 뱃지입니다."
+            default: // 2
+                return "최고 속도에 따라 획득하는 뱃지입니다."
+            }
         }
         
         return Text(message)
@@ -148,7 +146,7 @@ struct TargetImageView: View {
 
 extension TargetImageView {
     @ViewBuilder
-    var currentBadge: some View {
+    private var currentBadge: some View {
         VStack(alignment: .leading, spacing: 31) {
             ForEach(0..<healthInteractor.allBadges.count, id: \.self) { sortIndex in
                 VStack(alignment: .leading, spacing: 10) {

@@ -10,23 +10,23 @@ import SwiftUI
 struct AnalyticsComponent: View {
     
     let userWorkouts: [WorkoutData]
-    
-    var activityType: ActivityEnum
+    let activityType: ActivityEnum
     
     private var navigationAssistantTitle: String {
-        let seeTotal = " 보기"
+        var content = ""
         switch activityType {
         case .distance:
-            return "최근 뛴 거리" + seeTotal
+            content = "최근 뛴 거리"
         case .sprint:
-            return "최근 스프린트" + seeTotal
+            content = "최근 스프린트"
         case .speed:
-            return "최근 최고 속도" + seeTotal
+            content = "최근 최고 속도"
         case .heartrate:
-            return "최근 심박수" + seeTotal
+            content = "최근 심박수"
         }
+        return content + " 보기"
     }
-    private var value: String {
+    private var lastGameValue: String {
         switch activityType {
         case .distance:
             return "\(userWorkouts.last?.distance.rounded(at: 1) ?? "0.0")" + " km"
@@ -86,7 +86,7 @@ struct AnalyticsComponent: View {
                 .frame(maxWidth: 86)
                 
                 VStack(alignment: .leading) {
-                    Text(value)
+                    Text(lastGameValue)
                         .font(Font.sfProDisplay(size: 32,
                                                 weight: .heavyItalic))
                     Text(navigationAssistantTitle)

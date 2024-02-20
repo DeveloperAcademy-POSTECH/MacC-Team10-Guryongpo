@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @State var isFlipped: Bool = false
-    @State var userName: String = ""
+    @ObservedObject var viewModel: ProfileModel
+    @State private var isFlipped = false
+    @State private var userName = ""
+    @State private var userImage: UIImage?
+    @FocusState private var isFocused: Bool
     @Binding var averageData: WorkoutAverageData
     @Binding var maximumData: WorkoutAverageData
-    @State var userImage: UIImage?
-    @FocusState private var isFocused: Bool
-    @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
         NavigationStack {
@@ -67,7 +67,7 @@ struct ProfileView: View {
                                 .font(.custom("SFProDisplay-HeavyItalic", size: 36))
                                 
                                 VStack {
-                                    MyCardView(isFlipped: $isFlipped, viewModel: viewModel)
+                                    MyCardView(viewModel: viewModel, isFlipped: $isFlipped)
                                         .frame(width: 105)
                                     PhotoSelectButtonView(viewModel: viewModel)
                                         .opacity(isFlipped ? 1 : 0)
@@ -109,7 +109,8 @@ struct ProfileView: View {
                         }
                     }
                     
-                    let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
+                    // TODO: - DataConverter의 코드가 중복됨 1
+                    let averageLevel = DataConverter.dataConverter(totalDistance: averageData.totalDistance,
                                                      maxHeartRate: averageData.maxHeartRate,
                                                      maxVelocity: averageData.maxVelocity,
                                                      maxAcceleration: averageData.maxAcceleration,
@@ -124,7 +125,7 @@ struct ProfileView: View {
                                    (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
                                    (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
                     
-                    let maximumLevel = dataConverter(totalDistance: maximumData.totalDistance,
+                    let maximumLevel = DataConverter.dataConverter(totalDistance: maximumData.totalDistance,
                                                      maxHeartRate: maximumData.maxHeartRate,
                                                      maxVelocity: maximumData.maxVelocity,
                                                      maxAcceleration: maximumData.maxAcceleration,
@@ -181,11 +182,3 @@ extension View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
-
-//#Preview {
-//    @StateObject var healthInteractor = HealthInteractor.shared
-//    return ProfileView(averageData: .constant(fakeAverageData),
-//                       maximumData: .constant(fakeAverageData),
-//                       viewModel: ProfileModel())
-//    .environmentObject(healthInteractor)
-//}

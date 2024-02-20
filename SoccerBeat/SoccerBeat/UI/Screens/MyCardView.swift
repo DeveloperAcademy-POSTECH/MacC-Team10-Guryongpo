@@ -5,22 +5,43 @@
 //  Created by Hyungmin Kim on 2023/10/21.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct MyCardView: View {
-    @State var backDegree = 0.0
-    @State var frontDegree = -90.0
-    @Binding var isFlipped: Bool
-    @ObservedObject var viewModel: ProfileModel
     @EnvironmentObject var soundManager: SoundManager
+    @ObservedObject var viewModel: ProfileModel
+    @State private var backDegree = 0.0
+    @State private var frontDegree = -90.0
+    @Binding var isFlipped: Bool
     
-    let width : CGFloat = 100
-    let height : CGFloat = 140
-    let durationAndDelay : CGFloat = 0.25
+    private let width = 100.0
+    private let height = 140.0
+    private let durationAndDelay = 0.25
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                ZStack {
+                    CardFront(viewModel: viewModel, degree: $frontDegree, width: width, height: height)
+                    CardBack(degree: $backDegree, width: width, height: height)
+                }
+                .onTapGesture {
+                    flipCard()
+                    
+                    // sound control
+                    isFlipped ? soundManager.playFrontSoundEffect() : soundManager.playBackSoundEffect()
+                }
+                .onChange(of: viewModel.imageSelection) { _ in
+                    soundManager.playPhotoSelectEffect()
+                }
+            }
+        }
+    }
     
     func flipCard () {
-        isFlipped = !isFlipped
+        isFlipped.toggle()
+        
         if isFlipped {
             withAnimation(.linear(duration: durationAndDelay)) {
                 backDegree = 90
@@ -37,37 +58,14 @@ struct MyCardView: View {
             }
         }
     }
-    
-    var body: some View {
-        ZStack {
-            VStack {
-                ZStack {
-                    CardFront(width: width, height: height, degree: $frontDegree, viewModel: viewModel)
-                    CardBack(width: width, height: height, degree: $backDegree)
-                }
-                .onTapGesture {
-                    print("Tapped")
-                    flipCard()
-                    if isFlipped {
-                        soundManager.playFrontSoundEffect()
-                    } else {
-                        soundManager.playBackSoundEffect()
-                    }
-                }
-                .onChange(of: viewModel.imageSelection) { _ in
-                    soundManager.playPhotoSelectEffect()
-                }
-            }
-        }
-    }
 }
 
 struct CardFront : View {
+    @ObservedObject var viewModel: ProfileModel
+    @State private var selectedItem: PhotosPickerItem?
+    @Binding var degree : Double
     let width : CGFloat
     let height : CGFloat
-    @Binding var degree : Double
-    @State private var selectedItem: PhotosPickerItem?
-    @ObservedObject var viewModel: ProfileModel
     
     var body: some View {
         ZStack {
@@ -75,7 +73,7 @@ struct CardFront : View {
                     width: width,
                     height: height)
                 
-            Image("ProfileLayer")
+            Image(.profileLayer)
                 .resizable()
                 .scaledToFit()
                 .frame(width: width, height: height)
@@ -85,13 +83,13 @@ struct CardFront : View {
 }
 
 struct CardBack : View {
+    @Binding var degree : Double
     let width : CGFloat
     let height : CGFloat
-    @Binding var degree : Double
     
     var body: some View {
         ZStack {
-            Image("MyCardBack")
+            Image(.myCardBack)
                 .resizable()
                 .frame(width: width, height: height)
         }.rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
@@ -99,20 +97,5 @@ struct CardBack : View {
 }
 
 #Preview {
-    MyCardView(isFlipped: .constant(true), viewModel: ProfileModel())
-}
-
-private struct PhotoPicker: View {
-    
-    @Binding var selectedItem: PhotosPickerItem?
-    @ViewBuilder var label: any View
-    
-    var body: some View {
-        PhotosPicker(
-            selection: $selectedItem,
-            matching: .images,
-            photoLibrary: .shared()) {
-                AnyView(label)
-            }
-    }
+    MyCardView(viewModel: ProfileModel(), isFlipped: .constant(true))
 }

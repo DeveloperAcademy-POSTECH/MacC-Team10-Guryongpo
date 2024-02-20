@@ -10,6 +10,7 @@ import HealthKit
 
 struct SprintView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
+    
     var body: some View {
         
         HStack {

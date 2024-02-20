@@ -7,14 +7,16 @@
 
 import SwiftUI
 
+// TODO: -
 struct ElapsedTimeView: View {
     private let spendingTimeDevidedColone: [String]
     
-    init(elapsedTime: TimeInterval) {
+    init(elapsedSec: TimeInterval) {
         self.spendingTimeDevidedColone = ElapsedTimeFormatter()
-            .spendingTimeDevidedColone(elapsedTime)
+                                            .spendingTimeDevidedColone(elapsedSec)
     }
     
+    // TODO: - 여기 나오는 매직 넘버가 왜 그런 값을 가지게 되었는지 이유가 필요
     var body: some View {
         let radius = CGFloat(0.15)
         HStack(alignment: .center, spacing: 0) {
@@ -56,5 +58,5 @@ struct ElapsedTimeView: View {
 }
 
 #Preview {
-    ElapsedTimeView(elapsedTime: .init(floatLiteral: 2684))
+    ElapsedTimeView(elapsedSec: .init(floatLiteral: 2684))
 }

@@ -5,8 +5,8 @@
 //  Created by jose Yun on 10/22/23.
 //
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 struct SpeedChartView: View {
     let workouts: [WorkoutData]
@@ -16,6 +16,7 @@ struct SpeedChartView: View {
     private var endDate: String {
         workouts.last?.yearMonthDay ?? "2023.10.10"
     }
+    
     var body: some View {
         let fastest = maximum(of: workouts)
         let slowest = minimum(of: workouts)
@@ -188,6 +189,20 @@ extension SpeedChartView {
             }
     }
 }
+
+let fakeWorkoutData: [WorkoutData] = [
+    WorkoutData(dataID: 1,
+                date: "2024-1-23",
+                time: "130",
+                distance: 7,
+                sprint: 3,
+                velocity: 15,
+                acceleration: 0,
+                heartRate: [:],
+                route: [],
+                center: [],
+                matchBadge: [])
+]
 
 #Preview {
     NavigationStack {

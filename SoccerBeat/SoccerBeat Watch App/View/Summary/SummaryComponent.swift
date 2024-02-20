@@ -8,27 +8,28 @@
 import SwiftUI
 
 struct SummaryComponent: View {
-    let title: String  // "활동량"
-    let content: String  // "Text"
+    let title: String
+    let content: String
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             ZStack {
                 Rectangle()
                     .foregroundStyle(Color.columnContent)
-                Text("\(content)")
+                Text(content)
                     .foregroundStyle(.summaryGradient)
                     .font(.summaryContent)
                     .padding()
                     .scaledToFit()
-                
-            }.padding(.init(top: 22, leading: 0, bottom: 0, trailing: 0))
+            }
+            .padding(.top, 22)
             
             ZStack {
                 Rectangle()
                     .fill(Color.columnTitle)
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 26, alignment: .top)
                 HStack {
-                    Image("BlueHeart")
+                    Image(.blueHeart)
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: 25, maxHeight: 25)

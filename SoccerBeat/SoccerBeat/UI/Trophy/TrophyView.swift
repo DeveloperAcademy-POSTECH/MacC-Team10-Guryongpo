@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct TrophyView: View {
+    @State private var showTooltip = false
     let sort: Int
     let level: Int
     let isOpened: Bool
-    @State private var showTooltip = false
     
     private var imageName: String {
         isOpened 
@@ -28,7 +28,7 @@ struct TrophyView: View {
             .resizable()
             .scaledToFit()
             .overlay {
-                TooltipView(alignment: .top, isVisible: $showTooltip) {
+                TooltipView(isVisible: $showTooltip, alignment: .top) {
                     Text(infoMessagss)
                         .foregroundStyle(.tooltipTextColor)
                         .font(.tooltipTextFont)

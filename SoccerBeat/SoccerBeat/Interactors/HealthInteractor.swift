@@ -5,12 +5,12 @@
 //  Created by daaan on 11/1/23.
 //
 
-import SwiftUI
 import Combine
 import CoreLocation
 import HealthKit
+import SwiftUI
 
-class HealthInteractor: ObservableObject {
+final class HealthInteractor: ObservableObject {
     // Object to request permission to read HealthKit data.
     var healthStore = HKHealthStore()
     // Entire user workouts in HealthKit data.

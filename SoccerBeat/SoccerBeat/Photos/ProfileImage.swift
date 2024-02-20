@@ -5,10 +5,10 @@
 //  Created by jose Yun on 11/9/23.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
-// Render Image
+//  렌더링 과정을 거친 이후의 이미지
 struct ProfileImage: View {
     let imageState: ProfileModel.ImageState
     
@@ -20,7 +20,7 @@ struct ProfileImage: View {
             ProgressView()
         case .empty:
             Image(systemName: "person.fill")
-                .font(.system(size: 40))
+                .font(.system(size: 40)) // Image에 폰트 적용되나요? 전 resizable + frame으로 했던 것 같아서.
                 .foregroundColor(.white)
         case .failure:
             Image(systemName: "exclamationmark.triangle.fill")

@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct SprintSheetView: View {
-    @State private var beatAnimation: Bool = true
-    var speed: String
+    @State private var beatAnimation = true
     @Environment(\.dismiss) var dismiss
+    let speedKPH: String
+    
     var body: some View {
         ZStack(alignment: .center) {
                 Image("alertButton")
@@ -24,7 +25,7 @@ struct SprintSheetView: View {
                     .font(.lastSprint)
                     .foregroundStyle(.white)
                 
-                Text(speed)
+                Text(speedKPH)
                     .font(.alertSpeed)
                     .foregroundStyle(.zone1Bpm)
             }
@@ -52,5 +53,5 @@ struct SprintSheetView: View {
 }
 
 #Preview {
-    SprintSheetView(speed: "10km/h")
+    SprintSheetView(speedKPH: "10km/h")
 }

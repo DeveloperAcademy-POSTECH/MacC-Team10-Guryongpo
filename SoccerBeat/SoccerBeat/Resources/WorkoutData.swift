@@ -70,6 +70,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     }()
 }
 
+// TODO: - 변수를 그대로 똑같이 읊는 주석은 제거 대상
 // Average of the user workout data.
 struct WorkoutAverageData: Hashable, Equatable, Identifiable {
     var id: UUID = UUID()
@@ -123,24 +124,3 @@ extension WorkoutData {
         return currentAddress
     }
 }
-
-let fakeWorkoutData: [WorkoutData] = [
-    WorkoutData(dataID: 1, date: "2023-10-09T01:20:32Z", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0], matchBadge: [0,3,2]),
-    WorkoutData(dataID: 2, date: "2023-10-09T01:20:35Z", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, acceleration: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0], matchBadge: [0,1,3]),
-    WorkoutData(dataID: 3, date: "2023-10-09T01:20:38Z", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, acceleration: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 4, date: "2023-10-19T01:20:32Z", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, acceleration: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 5, date: "2023-10-20T01:20:32Z", time: "60:10", distance: 4.5, sprint: 11, velocity: 17.2, acceleration: 3.0, heartRate: ["max": 175, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 6, date: "2023-10-21T01:20:32Z", time: "60:10", distance: 3.6, sprint: 5, velocity: 24.4, acceleration: 3.0, heartRate: ["max": 190, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 7, date: "2023-10-23T01:20:32Z", time: "60:10", distance: 3.8, sprint: 13, velocity: 15.9, acceleration: 3.0, heartRate: ["max": 183, "min": 91], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.9, sprint: 17, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 169, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-    WorkoutData(dataID: 9, date: "2023-10-27T01:20:32Z", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, acceleration: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0])
-]
-
-let fakeAverageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 180,
-                                                             minHeartRate: 50,
-                                                             rangeHeartRate: 5,
-                                                             totalDistance: 2.0,
-                                                             maxAcceleration: 5.8,
-                                                             maxVelocity: 22.4,
-                                                             sprintCount: 3,
-                                                             totalMatchTime: 80)

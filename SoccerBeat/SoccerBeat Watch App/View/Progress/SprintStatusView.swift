@@ -39,7 +39,7 @@ struct BarProgressStyle: ProgressViewStyle {
     let maxAvailable: Int
     let restSprint: Int
     private let cornerRadius = CGFloat(7.0)
-    private let height: Double = 15.0
+    private let progressBarHeight = 15.0
     private var isFull: Bool { maxAvailable == restSprint }
     
     func makeBody(configuration: Configuration) -> some View {
@@ -75,7 +75,7 @@ struct BarProgressStyle: ProgressViewStyle {
                         }
                     }
                 }
-                .frame(height: height)
+                .frame(height: progressBarHeight)
         }
     }
 }

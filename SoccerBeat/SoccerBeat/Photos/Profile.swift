@@ -5,42 +5,43 @@
 //  Created by jose Yun on 11/9/23.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct Profile: View {
     @ObservedObject var viewModel: ProfileModel
+    @AppStorage("userImage") var userImage: Data = .init()
     let width : CGFloat
     let height : CGFloat
-    @AppStorage("userImage") var userImage: Data = .init()
-    var image: UIImage? {
+    private var image: UIImage? {
         let image = UIImage(data: userImage)
         return image
     }
+    
     var body: some View {
         VStack {
-            if self.image != nil {
-                Image(uiImage: self.image!)
+            if let profileImage = self.image {
+                Image(uiImage: profileImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: width, height: height)
                     .mask {
-                        Image("MaskLayer")
+                        Image(.maskLayer)
                             .resizable()
                             .scaledToFit()
                             .padding(2)
                     }
             } else {
-                
+                // TODO: - 로직 흐름에서 여기가 불릴 일이 없는 것 같습니다.
                 EditableCircularProfileImage(viewModel: viewModel,
                                              width: width,
                                              height: height)
-                .mask {
-                    Image("MaskLayer")
-                        .resizable()
-                        .scaledToFit()
-                        .padding(2)
-                }
+                    .mask {
+                        Image(.maskLayer)
+                            .resizable()
+                            .scaledToFit()
+                            .padding(2)
+                    }
             }
         }
     }

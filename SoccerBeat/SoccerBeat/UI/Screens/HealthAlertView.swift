@@ -12,10 +12,9 @@ struct HealthAlertView: View {
     
     var body: some View {
         ZStack {
-            Button(action: {
+            Button {
                 showingAlert.toggle()
-                UserDefaults.standard.set(false, forKey: "showingAlert")
-            }, label: {
+            } label: {
                 Text("확인")
                     .padding(.horizontal)
                     .overlay {
@@ -24,18 +23,15 @@ struct HealthAlertView: View {
                             .frame(height: 40)
                             .foregroundColor(.brightmint)
                     }
-            }).offset(y: 200)
+            }
+            .offset(y: 200)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            Image("HealthAlert")
+            Image(.healthAlert)
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
         )
     }
 }
-
-//#Preview {
-//    HealthAlertView()
-//}

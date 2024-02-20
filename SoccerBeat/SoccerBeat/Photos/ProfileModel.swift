@@ -5,9 +5,9 @@
 //  Created by jose Yun on 11/9/23.
 //
 
-import SwiftUI
-import PhotosUI
 import CoreTransferable
+import PhotosUI
+import SwiftUI
 
 @MainActor
 class ProfileModel: ObservableObject {
@@ -31,13 +31,7 @@ class ProfileModel: ObservableObject {
         static var transferRepresentation: some TransferRepresentation {
             DataRepresentation(importedContentType: .image) { data in
                 print("data transported")
-            #if canImport(AppKit)
-                guard let nsImage = NSImage(data: data) else {
-                    throw TransferError.importFailed
-                }
-                let image = Image(nsImage: nsImage)
-                return ProfileImage(image: image)
-            #elseif canImport(UIKit)
+            #if canImport(UIKit)
                 guard let uiImage = UIImage(data: data) else {
                     throw TransferError.importFailed
                 }
@@ -47,14 +41,12 @@ class ProfileModel: ObservableObject {
                 UserDefaults.standard.set(data, forKey: "userImage")
                 
                 return ProfileImage(image: image)
-            #else
-                throw TransferError.importFailed
             #endif
             }
         }
     }
     
-    @Published private(set) var imageState: ImageState = .empty
+    @Published private(set) var imageState = ImageState.empty
     
     @Published var imageSelection: PhotosPickerItem? {
         didSet {
@@ -66,8 +58,6 @@ class ProfileModel: ObservableObject {
             }
         }
     }
-    
-    // MARK: - Private Methods
     
     private func loadTransferable(from imageSelection: PhotosPickerItem) -> Progress {
         return imageSelection.loadTransferable(type: ProfileImage.self) { result in
@@ -84,7 +74,6 @@ class ProfileModel: ObservableObject {
                 case .failure(let error):
                     self.imageState = .failure(error)
                 }
-                
             }
         }
     }
