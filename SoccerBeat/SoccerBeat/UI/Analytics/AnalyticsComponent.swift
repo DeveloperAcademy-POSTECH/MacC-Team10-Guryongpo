@@ -10,8 +10,7 @@ import SwiftUI
 struct AnalyticsComponent: View {
     
     let userWorkouts: [WorkoutData]
-    
-    var activityType: ActivityEnum
+    let activityType: ActivityEnum
     
     private var navigationAssistantTitle: String {
         var content = ""

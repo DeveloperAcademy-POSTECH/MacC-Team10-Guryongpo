@@ -5,8 +5,8 @@
 //  Created by jose Yun on 10/22/23.
 //
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 struct SpeedChartView: View {
     let workouts: [WorkoutData]
@@ -16,6 +16,7 @@ struct SpeedChartView: View {
     private var endDate: String {
         workouts.last?.yearMonthDay ?? "2023.10.10"
     }
+    
     var body: some View {
         let fastest = maximum(of: workouts)
         let slowest = minimum(of: workouts)

@@ -14,15 +14,7 @@ final class SoundManager: ObservableObject {
     private var cardBackPlayer: AVAudioPlayer?
     private var photoSelectPlayer: AVAudioPlayer?
     
-    @Published var isPlaying: Bool = true {
-        willSet {
-            if isPlaying {
-                stopBackground()
-            } else {
-                playBackground()
-            }
-        }
-    }
+    @Published var isMusicPlaying = true
     
     init() {
         setupPlayer()
@@ -47,6 +39,9 @@ final class SoundManager: ObservableObject {
         } catch let error {
             print("재생하는데 오류가 발생했습니다. \(error.localizedDescription)")
         }
+        
+        // 상태 불러와서 저장
+        self.isMusicPlaying = UserDefaults.standard.bool(forKey: "isMusicPlaying")
     }
     
     func playBackground() {
@@ -70,5 +65,11 @@ final class SoundManager: ObservableObject {
     
     func playPhotoSelectEffect() {
         photoSelectPlayer?.play()
+    }
+    
+    func toggleMusic() {
+        isMusicPlaying ? stopBackground() : playBackground()
+        isMusicPlaying.toggle()
+        UserDefaults.standard.set(isMusicPlaying, forKey: "isMusicPlaying")
     }
 }

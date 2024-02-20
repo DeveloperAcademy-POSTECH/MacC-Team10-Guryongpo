@@ -11,7 +11,7 @@ struct AnalyticsView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: nil) {
             VStack(alignment: .leading) {
                 
                 InformationButton(message: "최근 경기 데이터의 변화를 확인해 보세요.")

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct TrophyView: View {
+    @State private var showTooltip = false
     let sort: Int
     let level: Int
     let isOpened: Bool
-    @State private var showTooltip = false
     
     private var imageName: String {
         isOpened 

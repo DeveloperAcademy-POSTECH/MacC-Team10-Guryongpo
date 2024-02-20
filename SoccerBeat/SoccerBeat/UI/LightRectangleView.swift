@@ -11,8 +11,8 @@ struct LightRectangleView: View {
     let backgroundAlpha: Double
     let backgroundColor: Color
     let radius: Double
-    var intensity: CGFloat = 0.5
-    var gradient = Gradient(colors: [
+    private let intensity = 0.5
+    private let gradient = Gradient(colors: [
         Color.white,
         Color.white,
         Color.white.opacity(0.2),

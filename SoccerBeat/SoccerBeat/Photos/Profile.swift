@@ -5,8 +5,8 @@
 //  Created by jose Yun on 11/9/23.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct Profile: View {
     @ObservedObject var viewModel: ProfileModel

@@ -7,8 +7,8 @@
 import SwiftUI
 
 struct InformationButton: View {
-    let message: String
     @State private var isInfoOpen = false
+    let message: String
 
     var body: some View {
         Button {

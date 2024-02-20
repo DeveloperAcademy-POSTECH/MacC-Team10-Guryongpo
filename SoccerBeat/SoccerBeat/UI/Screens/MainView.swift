@@ -24,21 +24,12 @@ struct MainView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
                 HStack {
-                    Button(action: {
-                        soundManager.isPlaying.toggle()
-                        
-                        // musicOff == true, music turned off
-                        // musicOff == false, music turend on
-                        var musicOff = soundManager.isPlaying
-                        
-                        // musicOff, isPlaying have opposite value.
-                        musicOff.toggle()
-                        UserDefaults.standard.set(musicOff, forKey: "musicOff")
-                    },
-                           label : {
+                    Button {
+                        soundManager.toggleMusic()
+                    } label: {
                         HStack {
-                            Image(systemName: soundManager.isPlaying ? "speaker" : "speaker.slash")
-                            Text(soundManager.isPlaying ? "On" : "Off")
+                            Image(systemName: soundManager.isMusicPlaying ? "speaker" : "speaker.slash")
+                            Text(soundManager.isMusicPlaying ? "On" : "Off")
                         }
                         .padding(.horizontal)
                         .font(.mainInfoText)
@@ -47,7 +38,7 @@ struct MainView: View {
                                 .stroke()
                                 .frame(height: 24)
                         }
-                    })
+                    }
                     .foregroundStyle(.white)
                     .padding(.top, 5)
                     Spacer()
@@ -80,14 +71,14 @@ struct MainView: View {
                             VStack {
                                 HStack {
                                     // MARK: 프리뷰 보려면 스파이더 맵 포함 하단의 변수들 각주 처리해주세요 -
-                                    let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
-                                                                     maxHeartRate: averageData.maxHeartRate,
-                                                                     maxVelocity: averageData.maxVelocity,
-                                                                     maxAcceleration: averageData.maxAcceleration,
-                                                                     sprintCount: averageData.sprintCount,
-                                                                     minHeartRate: averageData.minHeartRate,
-                                                                     rangeHeartRate: averageData.rangeHeartRate,
-                                                                     totalMatchTime: averageData.totalMatchTime)
+                                    let averageLevel = DataConverter.dataConverter(totalDistance: averageData.totalDistance,
+                                                                                   maxHeartRate: averageData.maxHeartRate,
+                                                                                   maxVelocity: averageData.maxVelocity,
+                                                                                   maxAcceleration: averageData.maxAcceleration,
+                                                                                   sprintCount: averageData.sprintCount,
+                                                                                   minHeartRate: averageData.minHeartRate,
+                                                                                   rangeHeartRate: averageData.rangeHeartRate,
+                                                                                   totalMatchTime: averageData.totalMatchTime)
                                     let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
                                                    (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
                                                    (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
@@ -99,14 +90,14 @@ struct MainView: View {
                                     let separatedTime = rawTime.components(separatedBy: ":")
                                     let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
                                     let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                                    let recentLevel = dataConverter(totalDistance: userWorkouts[0].distance,
-                                                                    maxHeartRate: userWorkouts[0].maxHeartRate,
-                                                                    maxVelocity: userWorkouts[0].velocity,
-                                                                    maxAcceleration: userWorkouts[0].acceleration,
-                                                                    sprintCount: userWorkouts[0].sprint,
-                                                                    minHeartRate: userWorkouts[0].minHeartRate,
-                                                                    rangeHeartRate: userWorkouts[0].maxHeartRate - userWorkouts[0].minHeartRate,
-                                                                    totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
+                                    let recentLevel = DataConverter.dataConverter(totalDistance: userWorkouts[0].distance,
+                                                                                  maxHeartRate: userWorkouts[0].maxHeartRate,
+                                                                                  maxVelocity: userWorkouts[0].velocity,
+                                                                                  maxAcceleration: userWorkouts[0].acceleration,
+                                                                                  sprintCount: userWorkouts[0].sprint,
+                                                                                  minHeartRate: userWorkouts[0].minHeartRate,
+                                                                                  rangeHeartRate: userWorkouts[0].maxHeartRate - userWorkouts[0].minHeartRate,
+                                                                                  totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
                                     let recent = [(recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.35,
                                                   (recentLevel["maxVelocity"] ?? 1.0) * 0.3 + (recentLevel["maxAcceleration"] ?? 1.0) * 0.2,
                                                   (recentLevel["maxVelocity"] ?? 1.0) * 0.25 + (recentLevel["sprintCount"] ?? 1.0) * 0.125 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.125,
@@ -197,18 +188,8 @@ struct MainView: View {
                 AnalyticsView()
             }
             .onAppear {
-                // UserDefaults return false if no saved value.
-                // musicOff == true, music turned off
-                // musicOff == false, music turend on
-                var musicOff = UserDefaults.standard.bool(forKey: "musicOff")
-                
-                // musicOff, isPlaying have opposite value.
-                musicOff.toggle()
-                soundManager.isPlaying = musicOff
-                if soundManager.isPlaying {
-                    soundManager.playBackground()
-                } else {
-                    soundManager.stopBackground()
+                if !soundManager.isMusicPlaying {
+                    soundManager.toggleMusic()
                 }
             }
         }
@@ -228,20 +209,8 @@ struct MainView: View {
             self.maximumData = healthInteractor.userMaximum
             self.userWorkouts = updateUserWorkouts!
         })
-
+        
         .padding(.horizontal)
         .navigationTitle("")
     }
 }
-
-//#Preview {
-//    @StateObject var healthInteractor = HealthInteractor.shared
-//    return MainView(userWorkouts: .constant(fakeWorkoutData),
-//                    averageData:
-//            .constant(fakeAverageData),
-//                    maximumData: .constant(fakeAverageData),
-//                    viewModel: ProfileModel()
-//    )
-//    .environmentObject(SoundManager())
-//    .environmentObject(healthInteractor)
-//}

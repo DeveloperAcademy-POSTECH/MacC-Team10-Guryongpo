@@ -14,8 +14,8 @@ import MapKit
 // polylineCoordinates: [CLLocationCoordinate2D(latitude, longitude)])
 
 struct HeatmapView: UIViewRepresentable {
-    var coordinate: CLLocationCoordinate2D
-    var polylineCoordinates: [CLLocationCoordinate2D]
+    let coordinate: CLLocationCoordinate2D
+    let polylineCoordinates: [CLLocationCoordinate2D]
     
     func updateUIView(_ uiView: MKMapView, context: Context) {}
     
@@ -30,7 +30,12 @@ struct HeatmapView: UIViewRepresentable {
         for polylineCoordinate in polylineCoordinates {
             counter += 1
             if counter % 10 == 0 {
-                let polyline = MKPolyline(points: [MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude, longitude: polylineCoordinate.longitude)), MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude + 0.0000001, longitude: polylineCoordinate.longitude + 0.0000001))], count: 2)
+                let polyline = MKPolyline(points: [
+                    MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude,
+                                                      longitude: polylineCoordinate.longitude)),
+                    MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude + 0.0000001,
+                                                      longitude: polylineCoordinate.longitude + 0.0000001))
+                ], count: 2)
                 mapView.addOverlay(polyline)
             }
         }

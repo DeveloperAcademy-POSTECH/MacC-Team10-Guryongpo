@@ -5,11 +5,12 @@
 //  Created by jose Yun on 11/10/23.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct PhotoSelectButtonView: View {
     @ObservedObject var viewModel: ProfileModel
+    
     var body: some View {
         PhotosPicker(selection: $viewModel.imageSelection,
                      matching: .images,

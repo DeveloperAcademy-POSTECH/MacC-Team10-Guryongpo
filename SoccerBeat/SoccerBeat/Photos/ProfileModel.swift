@@ -5,9 +5,9 @@
 //  Created by jose Yun on 11/9/23.
 //
 
-import SwiftUI
-import PhotosUI
 import CoreTransferable
+import PhotosUI
+import SwiftUI
 
 @MainActor
 class ProfileModel: ObservableObject {
@@ -46,7 +46,7 @@ class ProfileModel: ObservableObject {
         }
     }
     
-    @Published private(set) var imageState: ImageState = .empty
+    @Published private(set) var imageState = ImageState.empty
     
     @Published var imageSelection: PhotosPickerItem? {
         didSet {
@@ -58,8 +58,6 @@ class ProfileModel: ObservableObject {
             }
         }
     }
-    
-    // MARK: - Private Methods
     
     private func loadTransferable(from imageSelection: PhotosPickerItem) -> Progress {
         return imageSelection.loadTransferable(type: ProfileImage.self) { result in

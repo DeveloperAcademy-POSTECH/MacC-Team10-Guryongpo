@@ -15,11 +15,9 @@ struct TrophyCollectionView: View {
             VStack(alignment: .leading, spacing: nil) {
                 InformationButton(message: "경기 기록에 따라 수집된 뱃지입니다.")
                   
-                Group {
-                    Text("Badge Collection")
-                        .highlighter(activity: .sprint, isDefault: true)
-                }
-                .font(.navigationSportyTitle)
+                Text("Badge Collection")
+                    .font(.navigationSportyTitle)
+                    .highlighter(activity: .sprint, isDefault: true)
             }
             .padding(.horizontal, 10)
             
@@ -28,6 +26,9 @@ struct TrophyCollectionView: View {
         }
     }
     
+}
+
+extension TrophyCollectionView {
     private func floatingBadgeInfo(at sort: Int) -> some View {
         var message = ""
         switch sort {
@@ -40,18 +41,10 @@ struct TrophyCollectionView: View {
         }
         
         return Text(message)
-                .padding(.horizontal, 8)
-                .floatingCapsuleStyle()
+            .padding(.horizontal, 8)
+            .floatingCapsuleStyle()
     }
-}
-
-#Preview {
-    @StateObject var heathInteracter = HealthInteractor.shared
-    return TrophyCollectionView()
-        .environmentObject(heathInteracter)
-}
-
-extension TrophyCollectionView {
+    
     @ViewBuilder
     var trophyCollection: some View {
         VStack(spacing: 31) {
@@ -70,3 +63,10 @@ extension TrophyCollectionView {
         }
     }
 }
+
+#Preview {
+    @StateObject var heathInteracter = HealthInteractor.shared
+    return TrophyCollectionView()
+        .environmentObject(heathInteracter)
+}
+

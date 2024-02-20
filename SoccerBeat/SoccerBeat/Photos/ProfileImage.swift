@@ -5,10 +5,10 @@
 //  Created by jose Yun on 11/9/23.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
-// Render Image
+//  렌더링 과정을 거친 이후의 이미지
 struct ProfileImage: View {
     let imageState: ProfileModel.ImageState
     

@@ -94,8 +94,8 @@ struct PlayerAbilityView: View {
                     }
                     HStack {
                         Spacer()
-                        
-                        let averageLevel = dataConverter(totalDistance: averageData.totalDistance,
+                        // TODO: - DataConverter의 코드가 중복됨 3
+                        let averageLevel = DataConverter.dataConverter(totalDistance: averageData.totalDistance,
                                                          maxHeartRate: averageData.maxHeartRate,
                                                          maxVelocity: averageData.maxVelocity,
                                                          maxAcceleration: averageData.maxAcceleration,
@@ -114,7 +114,7 @@ struct PlayerAbilityView: View {
                         let separatedTime = rawTime.components(separatedBy: ":")
                         let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
                         let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                        let matchLevel = dataConverter(totalDistance: workoutData.distance,
+                        let matchLevel = DataConverter.dataConverter(totalDistance: workoutData.distance,
                                                        maxHeartRate: workoutData.maxHeartRate,
                                                        maxVelocity: workoutData.velocity,
                                                        maxAcceleration: workoutData.acceleration,
