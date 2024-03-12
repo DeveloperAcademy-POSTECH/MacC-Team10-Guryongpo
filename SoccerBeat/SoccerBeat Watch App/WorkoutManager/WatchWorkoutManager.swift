@@ -16,6 +16,7 @@ import SwiftUI
 /// WorkoutManager는 여러가지 일을 수행하고 있습니다.
 /// 1. 경기 세션의 상태 변화 관리
 /// 2. 위치 정보 수집
+/// ----
 /// 3. HealthKit에 read, write 작업
 /// 4. HealthKit에 관련한 권한이 있는지 확인
 final class WorkoutManager: NSObject, ObservableObject {
@@ -39,6 +40,7 @@ final class WorkoutManager: NSObject, ObservableObject {
                              HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
                              
     ]
+    
     var hasNotHealthAuthorization: Bool {
         var right = false
         for type in typesToShare {
@@ -90,13 +92,13 @@ final class WorkoutManager: NSObject, ObservableObject {
     let heartRateQuantity = HKUnit(from: "count/min")
     let meterUnit = HKUnit.meter()
     func computeProperMaxHeartRate() {
-                do {
-                    let birthYear = try healthStore.dateOfBirthComponents().year
-                    let year = Calendar.current.component(.year, from: Date())
-                    properMaxHeartRate = Double(220 - ( year - birthYear!))
-                } catch {
-                    properMaxHeartRate = 190
-                }
+        do {
+            let birthYear = try healthStore.dateOfBirthComponents().year
+            let year = Calendar.current.component(.year, from: Date())
+            properMaxHeartRate = Double(220 - ( year - birthYear!))
+        } catch {
+            properMaxHeartRate = 190
+        }
     }
     
     // 데이터 상수 선언
@@ -153,9 +155,8 @@ final class WorkoutManager: NSObject, ObservableObject {
     }
     
     
-    // MARK: - 데이터 수집 및 경기 시작
-    func startWorkout() {
-        
+    private func setupWorkoutConfig() {
+        // workout configuration 설정
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = .running
         configuration.locationType = .outdoor
@@ -175,8 +176,9 @@ final class WorkoutManager: NSObject, ObservableObject {
         builder?.delegate = self
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
                                                       workoutConfiguration: configuration)
-        
-        // Start the workout session and begin data collection.
+    }
+    
+    private func startWorkoutSession() {
         let startDate = Date()
         session?.startActivity(with: startDate)
         builder?.beginCollection(withStart: startDate) { (_, _) in
@@ -188,9 +190,17 @@ final class WorkoutManager: NSObject, ObservableObject {
         : kCLLocationAccuracyBest
         
         // 위치 정보 수집
-        startLocationUpdates()
+        // TODO: - Loaction Manager한테 넘어가도 될 것 같네요
+        locationManager.startUpdatingLocation()
+
         // 헬스킷에서 나이 정보를 통해 적절한 최대심박수 찾기
         computeProperMaxHeartRate()
+    }
+    
+    // MARK: - 데이터 수집 및 경기 시작
+    func startWorkout() {
+        setupWorkoutConfig()
+        startWorkoutSession()
     }
     
     
@@ -229,7 +239,6 @@ final class WorkoutManager: NSObject, ObservableObject {
     }
     
     // MARK: - Distance
-    
     @Published var distanceMeter: Double = 0
     public var isDistanceActive: Bool {
         distanceMeter != 0
@@ -259,7 +268,7 @@ final class WorkoutManager: NSObject, ObservableObject {
             }
         }
     }
-    
+    // heartZone 과 관련 -> MatricsIndicator
     private func resetZone5Timer() {
         self.timer?.invalidate()
         self.timer = .none
@@ -288,6 +297,7 @@ final class WorkoutManager: NSObject, ObservableObject {
         }
     }
     
+    // 두 부분으로 나누기
     func resetWorkout() {
         builder = nil
         workout = nil
@@ -306,7 +316,7 @@ final class WorkoutManager: NSObject, ObservableObject {
         recentSprintSpeedMPS = 0
     }
     
-    // MARK: - Heart Rate Setup
+    // MARK: - Heart Rate Setup -> MatricsIndicator
     func computeHeartZone(_ heartRate: Double) -> Int {
         if heartRate < Double(properMaxHeartRate!) * 0.6 {
             return 1
@@ -322,7 +332,7 @@ final class WorkoutManager: NSObject, ObservableObject {
     }
 }
 
-// MARK: - HKWorkoutSessionDelegate
+// MARK: - HKWorkoutSessionDelegate -> SessionManager
 extension WorkoutManager: HKWorkoutSessionDelegate {
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
                         from fromState: HKWorkoutSessionState, date: Date) {
@@ -372,7 +382,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
     }
 }
 
-// MARK: - HKLiveWorkoutBuilderDelegate
+// MARK: - HKLiveWorkoutBuilderDelegate, SessionManager
 extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
         
@@ -389,64 +399,5 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
             // Update the published values.
             updateForStatistics(statistics)
         }
-    }
-}
-
-// MARK: - CLLocationManagerDelegate
-extension WorkoutManager: CLLocationManagerDelegate {
-    // MARK: - 위치 정보가 수집되면 불리는 메서드
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        // Filter the raw data.
-        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
-            // 필터 조정치 필요, 예시 121, 66등으로 20 미만인 필터 데이터가 존재하지 않음
-            location.horizontalAccuracy <= 20.0
-        }
-        
-        guard !filteredLocations.isEmpty else {
-            routeBuilder?.insertRouteData(locations, completion: { _, _ in
-            })
-            return
-        }
-        
-        // Add the filtered data to the route.
-        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
-            if !success {
-                // Handle any errors here.
-                print(error.debugDescription)
-            }
-            
-        }
-    }
-    
-    // MARK: - 위치 공유 권한 정보가 업데이트 되면 불리는 메서드
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
-        case .notDetermined:
-            NSLog("위치 권한 결정 안됨")
-            manager.requestWhenInUseAuthorization()
-        case .restricted:
-            NSLog("위치 권한 제한됨")
-            manager.requestAlwaysAuthorization()
-        case .denied:
-            NSLog("위치 권한 거부")
-            manager.requestAlwaysAuthorization()
-        case .authorizedAlways:
-            NSLog("위치 권한 항상 허용")
-            startLocationUpdates()
-        case .authorizedWhenInUse:
-            NSLog("위치 권한 사용중 허용")
-            startLocationUpdates()
-        @unknown default:
-            NSLog(manager.authorizationStatus.rawValue.description)
-        }
-    }
-    
-    private func startLocationUpdates() {
-        locationManager.startUpdatingLocation()
-    }
-    
-    private func stopLocationUpdates() {
-        locationManager.stopUpdatingHeading()
     }
 }

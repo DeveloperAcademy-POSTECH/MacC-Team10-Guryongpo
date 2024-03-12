@@ -59,6 +59,7 @@ struct PrecountView: View {
                     showingSession = true
                 }
             }
+            // TODO: - 이 네비게이션이 PrecountView가 아니라 다른 곳에 있어야 하지 않을까?
             .navigationDestination(isPresented: $showingSession) {
                 // MARK: - 세션 화면으로 전환 2 
                 SessionPagingView()
