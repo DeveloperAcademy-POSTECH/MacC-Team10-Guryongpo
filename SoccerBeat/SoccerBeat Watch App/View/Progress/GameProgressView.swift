@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct GameProgressView: View {
+    @EnvironmentObject var matricsIndicator: MatricsIndicator
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var isSprintSheet = false
     private var isGamePaused: Bool { workoutManager.session?.state == .paused }
     private var whenTheGameStarted: Date { workoutManager.builder?.startDate ?? Date() }
     private var distanceKM: String {
-        workoutManager.isDistanceActive
-        ? (workoutManager.distanceMeter / 1000).rounded(at: 2)
+        matricsIndicator.isDistanceActive
+        ? (matricsIndicator.distanceMeter / 1000).rounded(at: 2)
         : "--'--"
     }
     
-    private var distanceUnit: String { workoutManager.isDistanceActive ? "KM" : "" }
+    private var distanceUnit: String { matricsIndicator.isDistanceActive ? "KM" : "" }
     
     // MARK: - Body
     var body: some View {
@@ -70,7 +71,7 @@ struct GameProgressView: View {
                         
                         HStack(alignment: .bottom) {
                             Spacer()
-                            Text("\(workoutManager.sprint)")
+                            Text("\(matricsIndicator.sprintCount)")
                                 .font(.distanceTimeNumber)
                                 .foregroundStyle(.ongoingNumber)
                             Text("TIMES")
@@ -86,14 +87,14 @@ struct GameProgressView: View {
                 Spacer()
             }
             .padding(.horizontal)
-            .onChange(of: workoutManager.isSprint) { isSprint in
+            .onChange(of: matricsIndicator.isSprint) { isSprint in
                 if isSprint == false {
                     self.isSprintSheet.toggle()
                 }
             }
             .fullScreenCover(isPresented: $isSprintSheet) {
                 // 1 m/s = 3.6 km/h
-                let sprintSpeedKPH = (workoutManager.recentSprintSpeedMPS * 3.6).rounded(at: 1)
+                let sprintSpeedKPH = (matricsIndicator.recentSprintSpeedMPS * 3.6).rounded(at: 1)
                 let unit = "km/h"
                 SprintSheetView(speedKPH: sprintSpeedKPH + unit)
             }
@@ -103,7 +104,8 @@ struct GameProgressView: View {
 
 #Preview {
     GameProgressView()
-        .environmentObject(WorkoutManager.shared)
+        .environmentObject(DIContianer.makeWorkoutManager())
+        .environmentObject(DIContianer.makeMatricsIndicator())
 }
 
 private struct ProgressTimelineSchedule: TimelineSchedule {

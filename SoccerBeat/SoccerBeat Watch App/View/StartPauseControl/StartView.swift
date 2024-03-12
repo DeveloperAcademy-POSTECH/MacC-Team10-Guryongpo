@@ -44,13 +44,13 @@ struct StartView: View {
     
     private func requestAuthorizationIfNeeded() {
         if workoutManager.hasNotLocationAuthorization || workoutManager.hasNotHealthAuthorization {
-            workoutManager.requestAuthorization()
+            workoutManager.requestHealthAuthorization()
         }
     }
 }
 
 #Preview {
-    @StateObject var workoutManager = WorkoutManager()
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
     
     return StartView()
         .environmentObject(workoutManager)

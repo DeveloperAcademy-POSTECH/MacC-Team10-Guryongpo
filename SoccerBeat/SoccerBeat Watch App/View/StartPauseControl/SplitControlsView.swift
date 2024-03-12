@@ -11,6 +11,7 @@ import SwiftUI
 struct SplitControlsView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var workoutManager: WorkoutManager
+    @EnvironmentObject var matrics: MatricsIndicator
     @State private var isClicked = false
     @State private var isMoving = false
     @State private var offset = 12.0 // TODO: - 어떤 오프셋인지 설명 필요 1
@@ -84,7 +85,7 @@ private extension SplitControlsView {
     }
     
     private var zoneBPMGradient: LinearGradient {
-        switch workoutManager.heartZone {
+        switch matrics.heartZone {
         case 1:
             return .zone1Bpm
         case 2:

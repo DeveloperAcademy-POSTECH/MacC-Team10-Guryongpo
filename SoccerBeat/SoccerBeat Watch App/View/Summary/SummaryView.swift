@@ -10,18 +10,18 @@ import HealthKit
 
 struct SummaryView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var workoutManager: WorkoutManager
+    @EnvironmentObject var matricsIndicator: MatricsIndicator
     @State private var isShowingSummary = false
     
     var body: some View {
         if isShowingSummary {
             ScrollView(showsIndicators: false) {
                 SummaryComponent(title: "뛴 거리",
-                                 content: (workoutManager.distanceMeter / 1000).rounded(at: 2) + " km")
-                SummaryComponent(title: "최고 속도", content: (workoutManager.maxSpeedMPS * 3.6).rounded(at: 1) + " km/h")
-                SummaryComponent(title: "스프린트 횟수", content:  workoutManager.sprint.formatted() + " Times")
+                                 content: (matricsIndicator.distanceMeter / 1000).rounded(at: 2) + " km")
+                SummaryComponent(title: "최고 속도", content: (matricsIndicator.maxSpeedMPS * 3.6).rounded(at: 1) + " km/h")
+                SummaryComponent(title: "스프린트 횟수", content:  matricsIndicator.sprintCount.formatted() + " Times")
                 
-                SummaryComponent(title: "가속도", content:  workoutManager.acceleration.rounded(at: 1) + " m/s")
+                SummaryComponent(title: "가속도", content:  matricsIndicator.acceleration.rounded(at: 1) + " m/s")
 
                 Button {
                     dismiss()
