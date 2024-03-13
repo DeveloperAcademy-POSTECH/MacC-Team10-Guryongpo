@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SprintSheetView: View {
-    @State private var beatAnimation = true
     @Environment(\.dismiss) var dismiss
+    @State private var beatAnimation = true
     let speedKPH: String
     
     var body: some View {

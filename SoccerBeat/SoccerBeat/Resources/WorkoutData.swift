@@ -13,7 +13,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var id: UUID = UUID()
     var dataID: Int
     let date: String
-    let time: String // Total play time in the match.
+    let time: String // == Total play time in the match.
     let distance: Double // Total distance played during the match.
     let sprint: Int // Number of sprints during the match.
     let velocity: Double // Maximum speed during the match.. km/h

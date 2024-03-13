@@ -49,6 +49,9 @@
 		BE323D462B0CC4A700F289D4 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE323D442B0CC4A700F289D4 /* SF-Pro-Text-Light.otf */; };
 		BE323D482B0CC5DE00F289D4 /* SF-Pro-Text-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE323D472B0CC5DE00F289D4 /* SF-Pro-Text-MediumItalic.otf */; };
 		BE323D492B0CC5DE00F289D4 /* SF-Pro-Text-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE323D472B0CC5DE00F289D4 /* SF-Pro-Text-MediumItalic.otf */; };
+		BE360EFE2B9703A700071C30 /* WorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */; };
+		BE360F002B9FF4A100071C30 /* MatricsIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE360EFF2B9FF4A100071C30 /* MatricsIndicator.swift */; };
+		BE360F022BA016EA00071C30 /* WorkoutManager+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE360F012BA016EA00071C30 /* WorkoutManager+extensions.swift */; };
 		BE4069992AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699A2AF0EB3E00FA3030 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE4069962AF0E84300FA3030 /* Phrase.json */; };
 		BE40699C2AF0EB7700FA3030 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40699B2AF0EB7700FA3030 /* Phrase.swift */; };
@@ -196,6 +199,8 @@
 		BE323D412B0CC49500F289D4 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		BE323D442B0CC4A700F289D4 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		BE323D472B0CC5DE00F289D4 /* SF-Pro-Text-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-MediumItalic.otf"; sourceTree = "<group>"; };
+		BE360EFF2B9FF4A100071C30 /* MatricsIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatricsIndicator.swift; sourceTree = "<group>"; };
+		BE360F012BA016EA00071C30 /* WorkoutManager+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutManager+extensions.swift"; sourceTree = "<group>"; };
 		BE4069972AF0E84800FA3030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE4069982AF0E8AC00FA3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
@@ -324,6 +329,8 @@
 			isa = PBXGroup;
 			children = (
 				685D7B5E2AE3F3D000783433 /* WatchWorkoutManager.swift */,
+				BE360F012BA016EA00071C30 /* WorkoutManager+extensions.swift */,
+				BE360EFF2B9FF4A100071C30 /* MatricsIndicator.swift */,
 			);
 			path = WorkoutManager;
 			sourceTree = "<group>";
@@ -849,6 +856,7 @@
 				BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */,
 				BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */,
 				BEA63A672B0AFDFF000A309D /* ActivityEnum.swift in Sources */,
+				BE360F022BA016EA00071C30 /* WorkoutManager+extensions.swift in Sources */,
 				683825052B06249F00FE9CDF /* SprintSheetView.swift in Sources */,
 				6898F2852AEFD7FC0075A573 /* SprintView.swift in Sources */,
 				6820884C2AF11EB200F51A3E /* PrecountView.swift in Sources */,
@@ -856,6 +864,7 @@
 				BE93F1922B00937000C33756 /* TextBorder+extension.swift in Sources */,
 				BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */,
 				BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */,
+				BE360F002B9FF4A100071C30 /* MatricsIndicator.swift in Sources */,
 				BE010D3A2B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */,
 				BE010D3D2B0512680093A5FE /* Double+extension.swift in Sources */,
 				BE40699D2AF0EB7700FA3030 /* Phrase.swift in Sources */,
@@ -865,6 +874,7 @@
 				D3C500252AE36F3F00EFAEFF /* SoccerBeatApp.swift in Sources */,
 				685D7B5F2AE3F3D000783433 /* WatchWorkoutManager.swift in Sources */,
 				BEB666C22AE4E16D0090195A /* StartView.swift in Sources */,
+				BE360EFE2B9703A700071C30 /* WorkoutData.swift in Sources */,
 				BE4069A02AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,
 				68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */,
 				BE4498272AEFF2AC00252561 /* Font+extension.swift in Sources */,

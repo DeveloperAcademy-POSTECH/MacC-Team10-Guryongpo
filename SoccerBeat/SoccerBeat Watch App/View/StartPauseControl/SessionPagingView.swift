@@ -47,7 +47,7 @@ struct SessionPagingView: View {
 }
 
 #Preview {
-    @StateObject var workoutManager = WorkoutManager()
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
     
     return SessionPagingView()
         .environmentObject(workoutManager)

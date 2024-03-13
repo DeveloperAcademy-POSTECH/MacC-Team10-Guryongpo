@@ -9,7 +9,7 @@ import SwiftUI
 import HealthKit
 
 struct SprintView: View {
-    @EnvironmentObject var workoutManager: WorkoutManager
+    @EnvironmentObject var matricsIndicator: MatricsIndicator
     
     var body: some View {
         
@@ -22,19 +22,19 @@ struct SprintView: View {
                     .frame(maxWidth: .infinity)
                     .overlay {
                         ZStack {
-                            ProgressView(value: min(workoutManager.speed, workoutManager.sprintSpeed), total: workoutManager.sprintSpeed)
+                            ProgressView(value: min(matricsIndicator.speedMPS, matricsIndicator.sprintSpeed), total: matricsIndicator.sprintSpeed)
                                 .progressViewStyle(GucciBarProgressStyle(accentGradient: .sprintOnGradient))
                                 .padding(.horizontal, 2)
                             
                             HStack {
                                 Spacer()
                                 
-                                if workoutManager.isSprint {
+                                if matricsIndicator.isSprint {
                                     Text("SPRINT!")
                                         .font(.sprintText)
                                         .padding(.horizontal)
                                 } else {
-                                    Text((workoutManager.speed * 3.6).rounded(at: 1) + " km/h")
+                                    Text((matricsIndicator.speedMPS * 3.6).rounded(at: 1) + " km/h")
                                         .font(.sprintText)
                                         .padding(.horizontal)
                                 }

@@ -10,9 +10,19 @@ import CoreLocation
 import HealthKit
 import SwiftUI
 
+
+/// 1. 유저 최고 능력치 계산
+/// 2.유저 평군 능력치 계산
+/// 3. HealthStore와 통신
+/// 4. 월별 경기 데이터 가지고 있음
+/// 5. 경기별 경로 데이터
+/// 6. HKHealthStore에서 경기 데이터 가져오기
+/// 7. 커스텀 데이터 계산
+/// 8. 추세 analysis 데이터 계산
+// MARK: - 역할
 final class HealthInteractor: ObservableObject {
     // Object to request permission to read HealthKit data.
-    var healthStore = HKHealthStore()
+    private var healthStore = HKHealthStore()
     // Entire user workouts in HealthKit data.
     var userWorkouts: [WorkoutData] = []
     // Average of the user workout data.
