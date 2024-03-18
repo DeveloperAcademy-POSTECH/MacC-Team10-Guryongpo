@@ -290,6 +290,9 @@ final class HealthInteractor: ObservableObject {
     }
 
     func getWorkoutRoute(workout: HKWorkout) async -> ([CLLocation]?) {
+    // HKWorkout + Metadata
+    // TODO: - throws로 바꿔야 할 것
+    // TODO: - withCheckedThrowingContinuation을 어떻게 바꿀것인가?
         let byWorkout = HKQuery.predicateForObjects(from: workout)
 
         let samples = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
@@ -362,6 +365,7 @@ extension HealthInteractor {
         return recentMatches
     }
     
+    // 추세 데이터에서 데이터가 4개 이하인 경우에 실제 데이터와 fake 데이터를 혼합해서 보여줌
     private func makeBlankWorkouts(with workouts: [WorkoutData]) -> [WorkoutData] {
         var blanks = [WorkoutData]()
         if workouts.count < 4 {
@@ -379,4 +383,6 @@ extension HealthInteractor {
             preWork.formattedDate < postWork.formattedDate
         }
     }
+    
+    // dictionary를 안전하게 옵셔널 언래핑하기 위한 메서드
 }

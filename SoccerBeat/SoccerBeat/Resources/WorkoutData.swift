@@ -18,6 +18,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     let sprint: Int // Number of sprints during the match.
     let velocity: Double // Maximum speed during the match.. km/h
     let acceleration: Double // Maximum acceleration, velocity. m/s
+    // TODO: min, max 각각 프로퍼티로 나누기 
     var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
     var route: [CLLocationCoordinate2D] // whole route
     var center: [Double] // center of heatmap
