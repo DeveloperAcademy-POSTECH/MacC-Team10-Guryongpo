@@ -56,7 +56,7 @@ struct ContentView: View {
                 healthInteractor.requestAuthorization()
             }
             .onReceive(healthInteractor.authSuccess) {
-                Task { await healthInteractor.fetchAllData() }
+                Task { await healthInteractor.fetchHKWorkout() }
             }
             .onReceive(healthInteractor.fetchSuccess) {
                 self.workoutData = healthInteractor.userWorkouts
