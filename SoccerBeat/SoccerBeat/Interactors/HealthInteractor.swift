@@ -102,10 +102,10 @@ final class HealthInteractor: ObservableObject {
         }
     }
     
-    func fetchHKWorkout() async {
+    func fetchWorkoutData() async {
         print("fetchHKWorkout: attempting to fetch all data..")
         // Fetch from HealthStore
-        let workouts = await fetchWorkouts() ?? []
+        let workouts = await fetchHKWorkouts()
         
         // Convert WorkoutData(Bussiness Model)
         var workoutData = [WorkoutData]()
@@ -116,8 +116,9 @@ final class HealthInteractor: ObservableObject {
         
         await calculateAverageAndMaxAbility(workoutData)
         settingForChartView()
-        self.workoutData = workoutData
         
+        // TODO: Combine에서 직접 전달할 방법을 찾아보기
+        self.workoutData = workoutData
         self.fetchSuccess.send()
     }
     
@@ -212,9 +213,9 @@ final class HealthInteractor: ObservableObject {
         }
     }
 
-    func fetchWorkouts() async -> [HKWorkout]? {
+    private func fetchHKWorkouts() async -> [HKWorkout] {
         let soccer = HKQuery.predicateForObjects(from: .default())
-        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+        let data = try? await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
             healthStore.execute(HKSampleQuery(sampleType: .workoutType(), predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
                 if let hasError = error {
                     continuation.resume(throwing: hasError)
@@ -223,34 +224,8 @@ final class HealthInteractor: ObservableObject {
                 continuation.resume(returning: samples!)
             }))
         }
-        guard let workouts = data as? [HKWorkout] else {
-            return nil
-        }
+        guard let workouts = data as? [HKWorkout] else { return [] }
         return workouts
-    }
-
-    func getCustomData() async -> [HKQuantitySample]? {
-
-        guard let speedType =
-                HKObjectType.quantityType(forIdentifier:
-                                            HKQuantityTypeIdentifier.runningSpeed) else {
-            fatalError("*** Unable to create a distance type ***")
-        }
-
-        let soccer = HKQuery.predicateForObjects(from: .default())
-        let data = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-            self.healthStore.execute(HKSampleQuery(sampleType: speedType, predicate: soccer, limit: HKObjectQueryNoLimit,sortDescriptors: [.init(keyPath: \HKSample.startDate, ascending: false)], resultsHandler: { query, samples, error in
-                if let hasError = error {
-                    continuation.resume(throwing: hasError)
-                    return
-                }
-                continuation.resume(returning: samples!)
-            }))
-        }
-        guard let speedData = data as? [HKQuantitySample] else {
-            return nil
-        }
-        return speedData
     }
 
     func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
