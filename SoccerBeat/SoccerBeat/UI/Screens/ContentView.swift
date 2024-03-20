@@ -56,10 +56,10 @@ struct ContentView: View {
                 healthInteractor.requestAuthorization()
             }
             .onReceive(healthInteractor.authSuccess) {
-                Task { await healthInteractor.fetchAllData() }
+                Task { await healthInteractor.fetchWorkoutData() }
             }
             .onReceive(healthInteractor.fetchSuccess) {
-                self.workoutData = healthInteractor.userWorkouts
+                self.workoutData = healthInteractor.workoutData
                 self.averageData = healthInteractor.userAverage
                 self.maximumData = healthInteractor.userMaximum
                 self.userWorkouts = workoutData!
