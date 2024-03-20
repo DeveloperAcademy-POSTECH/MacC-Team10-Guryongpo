@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import HealthKit
-import HealthKitUI
-import os
 
 @main
 struct SoccerBeatApp: App {
