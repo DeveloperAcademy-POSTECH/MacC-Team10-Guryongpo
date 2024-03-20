@@ -221,9 +221,9 @@ struct FieldMovementView: View {
 
 #Preview {
     @StateObject var healthInteractor = HealthInteractor.shared
-    return MatchDetailView(workoutData: fakeWorkoutData[0],
-                           averageData: .constant(fakeAverageData),
-                           maximumData: .constant(fakeAverageData))
+    return MatchDetailView(workoutData: WorkoutData.example,
+                           averageData: .constant(WorkoutAverageData.exampleAverage),
+                           maximumData: .constant(WorkoutAverageData.exampleAverage))
     .environmentObject(healthInteractor)
 }
 

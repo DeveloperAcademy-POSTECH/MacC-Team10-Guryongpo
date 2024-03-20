@@ -48,13 +48,12 @@ struct EmptyDataView: View {
                     }
                     Spacer()
                     NavigationLink {
-                        ProfileView(averageData: $workoutAverageData, maximumData: $maximumData, viewModel: viewModel)
+                        ProfileView(viewModel: viewModel, averageData: $workoutAverageData, maximumData: $maximumData)
                     } label: {
-                        CardFront(width: 72, height: 96, degree: .constant(0), viewModel: viewModel)
+                        CardFront(viewModel: viewModel, degree: .constant(0), width: 72, height: 96)
                     }
                 }
                 .padding()
-                
                 
                 LightRectangleView(alpha: 0.6, color: .black, radius: 15.0)
                     .frame(height: 234)
