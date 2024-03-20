@@ -1095,7 +1095,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = SoccerBeat_watch_Dist;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = SoccerBeat_watch_AdHoc;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1143,7 +1143,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SoccerBeat_iOS_Dev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SoccerBeat_Dev;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1190,7 +1190,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SoccerBeat_iOS_Dist;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = SoccerBeat_AdHoc;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
