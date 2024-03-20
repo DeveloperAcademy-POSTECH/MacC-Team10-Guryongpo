@@ -219,13 +219,13 @@ struct FieldMovementView: View {
     }
 }
 
-#Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    return MatchDetailView(workoutData: fakeWorkoutData[0],
-                           averageData: .constant(fakeAverageData),
-                           maximumData: .constant(fakeAverageData))
-    .environmentObject(healthInteractor)
-}
+//#Preview {
+//    @StateObject var healthInteractor = HealthInteractor.shared
+//    return MatchDetailView(workoutData: fakeWorkoutData[0],
+//                           averageData: .constant(fakeAverageData),
+//                           maximumData: .constant(fakeAverageData))
+//    .environmentObject(healthInteractor)
+//}
 
 struct FieldRecordDataView: View {
     let workoutData: WorkoutData

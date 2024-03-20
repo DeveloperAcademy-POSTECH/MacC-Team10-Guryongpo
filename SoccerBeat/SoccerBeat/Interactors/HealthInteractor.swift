@@ -22,7 +22,15 @@ import SwiftUI
 // MARK: - 역할
 final class HealthInteractor: ObservableObject {
     // Object to request permission to read HealthKit data.
-    private var healthStore = HKHealthStore()
+    var healthStore = HKHealthStore()
+    let typesToRead = Set([HKObjectType.quantityType(forIdentifier: .heartRate)!,
+                          HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                          HKObjectType.quantityType(forIdentifier: .runningSpeed)!,
+                          HKObjectType.quantityType(forIdentifier: .walkingSpeed)!,
+                          HKSeriesType.workoutType(),
+                          HKSeriesType.workoutRoute(),
+                          HKObjectType.activitySummaryType()
+                         ])
     // Entire user workouts in HealthKit data.
     var userWorkouts: [WorkoutData] = []
     // Average of the user workout data.
@@ -81,26 +89,23 @@ final class HealthInteractor: ObservableObject {
     @MainActor
     func requestAuthorization() {
         print("requestAuthorization: request user authorization..")
-        let typeToRead = Set([HKObjectType.quantityType(forIdentifier: .heartRate)!,
-                              HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-                              HKObjectType.quantityType(forIdentifier: .runningSpeed)!,
-                              HKObjectType.quantityType(forIdentifier: .walkingSpeed)!,
-                              HKSeriesType.workoutType(),
-                              HKSeriesType.workoutRoute(),
-                              HKObjectType.activitySummaryType()
-                             ])
         
+        // 해당 기기가 헬스킷을 사용할 수 있는지 확인 함
         guard HKHealthStore.isHealthDataAvailable() else {
             print("requestAuthorization: health data not available")
             return
         }
         
-        healthStore.requestAuthorization(toShare: nil, read: typeToRead) { success, error in
+        healthStore.requestAuthorization(toShare: nil, read: typesToRead) { success, error in
             // Success means that the Permission window appears.
             if success {
                 self.authSuccess.send()
+            } else {
+                NSLog("Error in getting healthstore reading authorization. ")
             }
         }
+                
+
     }
     
     @MainActor
