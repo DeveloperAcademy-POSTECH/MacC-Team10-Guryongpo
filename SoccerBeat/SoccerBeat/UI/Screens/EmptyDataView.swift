@@ -80,14 +80,13 @@ struct EmptyDataView: View {
                             .font(.mainTitleText)
                     }
                     Spacer()
-//                    NavigationLink {
-//                        ProfileView(averageData: $workoutAverageData, maximumData: $maximumData, viewModel: viewModel)
-//                    } label: {
-//                        CardFront(width: 72, height: 96, degree: .constant(0), viewModel: viewModel)
-//                    }
+                    NavigationLink {
+                        ProfileView(viewModel: viewModel, averageData: $workoutAverageData, maximumData: $maximumData)
+                    } label: {
+                        CardFront(viewModel: viewModel, degree: .constant(0), width: 72, height: 96)
+                    }
                 }
                 .padding()
-                
                 
                 LightRectangleView(alpha: 0.6, color: .black, radius: 15.0)
                     .frame(height: 234)
@@ -112,10 +111,10 @@ struct EmptyDataView: View {
                                 .buttonStyle(BorderedButtonStyle())
                                 
                                 Button("건강 권한 설정하기") {
-//                                    let healthSettingURLString =  "x-apple-health://"
-                                    let bundleId = Bundle.main.bundleIdentifier
-                                    let url = "\(UIApplication.openSettingsURLString)&path=HEALTH/"
-                                    openSettings(urlString: url)
+                                    if let BUNDLE_IDENTIFIER = Bundle.main.bundleIdentifier,
+                                        let url = URL(string: "\(UIApplication.openSettingsURLString)&path=HEALTH/\(BUNDLE_IDENTIFIER)") {
+                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    }
                                 }
                                 .buttonStyle(BorderedButtonStyle())
                             }                            

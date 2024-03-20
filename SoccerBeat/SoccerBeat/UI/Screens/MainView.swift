@@ -86,11 +86,11 @@ struct MainView: View {
                             .font(.mainTitleText)
                     }
                     Spacer()
-//                    NavigationLink {
-//                        ProfileView(averageData: $averageData, maximumData: $maximumData, viewModel: viewModel)
-//                    } label: {
-//                        CardFront(width: 72, height: 110, degree: .constant(0), viewModel: viewModel)
-//                    }
+                    NavigationLink {
+                        ProfileView(viewModel: viewModel, averageData: $averageData, maximumData: $maximumData)
+                    } label: {
+                        CardFront(viewModel: viewModel, degree: .constant(0), width: 72, height: 110)
+                    }
                 }
                 .padding()
                 
@@ -231,12 +231,12 @@ struct MainView: View {
         .onReceive(healthInteractor.authSuccess, perform: {
             Task {
                 print("ContentView: attempting to fetch all data..")
-                await healthInteractor.fetchAllData()
+                await healthInteractor.fetchWorkoutData()
             }
         })
         .onReceive(healthInteractor.fetchSuccess, perform: {
             print("ContentView: fetching user data success..")
-            self.updateUserWorkouts = healthInteractor.userWorkouts
+            self.updateUserWorkouts = healthInteractor.workoutData
             self.averageData = healthInteractor.userAverage
             self.maximumData = healthInteractor.userMaximum
             self.userWorkouts = updateUserWorkouts!
