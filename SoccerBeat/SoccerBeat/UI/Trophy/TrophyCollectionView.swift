@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TrophyCollectionView: View {
-    @EnvironmentObject var healthInteractor: HealthInteractor
+    @EnvironmentObject var profileModel: ProfileModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -48,12 +48,12 @@ extension TrophyCollectionView {
     @ViewBuilder
     var trophyCollection: some View {
         VStack(spacing: 31) {
-            ForEach(0..<healthInteractor.allBadges.count, id: \.self) { sortIndex in
+            ForEach(0..<profileModel.allBadges.count, id: \.self) { sortIndex in
                 VStack(alignment: .leading, spacing: 10) {
                     floatingBadgeInfo(at: sortIndex)
                     HStack {
-                        ForEach(0..<healthInteractor.allBadges[sortIndex].count, id: \.self) { levelIndex in
-                            let isOpened = healthInteractor.allBadges[sortIndex][levelIndex]
+                        ForEach(0..<profileModel.allBadges[sortIndex].count, id: \.self) { levelIndex in
+                            let isOpened = profileModel.allBadges[sortIndex][levelIndex]
                             
                             TrophyView(sort: sortIndex, level: levelIndex, isOpened: isOpened)
                         }
@@ -65,8 +65,8 @@ extension TrophyCollectionView {
 }
 
 #Preview {
-    @StateObject var heathInteracter = HealthInteractor.shared
+    @StateObject var profileModel = ProfileModel(healthInteractor: HealthInteractor.shared)
+    
     return TrophyCollectionView()
-        .environmentObject(heathInteracter)
+        .environmentObject(profileModel)
 }
-

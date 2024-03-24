@@ -9,7 +9,14 @@ import Foundation
 
 final class DataConverter {
     // TODO: - 매개 변수가 4개가 넘어가면 별도의 타입을 고려
-    static func dataConverter(totalDistance: Double, maxHeartRate: Int, maxVelocity: Double, maxAcceleration: Double, sprintCount: Int, minHeartRate: Int, rangeHeartRate: Int, totalMatchTime: Int) -> [String: Double] {
+    static private func toLevelDictionary(totalDistance: Double,
+                                      maxHeartRate: Int,
+                                      maxVelocity: Double,
+                                      maxAcceleration: Double,
+                                      sprintCount: Int,
+                                      minHeartRate: Int,
+                                      rangeHeartRate: Int,
+                                      totalMatchTime: Int) -> [String: Double] {
         var levels: [String: Double] = [:]
         
         if totalDistance <= 1.0 {
@@ -109,5 +116,42 @@ final class DataConverter {
         }
         
         return levels
+    }
+    
+    static func toLevels(_ workout: WorkoutData) -> [Double] {
+        let recentLevel = toLevelDictionary(totalDistance: workout.distance,
+                                       maxHeartRate: workout.maxHeartRate,
+                                       maxVelocity: workout.velocity,
+                                       maxAcceleration: workout.acceleration,
+                                       sprintCount: workout.sprint,
+                                       minHeartRate: workout.minHeartRate,
+                                       rangeHeartRate: workout.maxHeartRate-workout.minHeartRate,
+                                       totalMatchTime: workout.playtimeSec)
+        
+        
+        return toTriple(recentLevel)
+    }
+    
+    static func toLevels(_ averageWorkout: WorkoutAverageData) -> [Double] {
+        let averageLevel = toLevelDictionary(totalDistance: averageWorkout.totalDistance,
+                                             maxHeartRate: averageWorkout.maxHeartRate,
+                                             maxVelocity: averageWorkout.maxVelocity,
+                                             maxAcceleration: averageWorkout.maxAcceleration,
+                                             sprintCount: averageWorkout.sprintCount,
+                                             minHeartRate: averageWorkout.minHeartRate,
+                                             rangeHeartRate: averageWorkout.maxHeartRate-averageWorkout.minHeartRate,
+                                             totalMatchTime: averageWorkout.totalMatchTime)
+        return toTriple(averageLevel)
+    }
+    
+    static private func toTriple(_ level: [String: Double]) -> [Double] {
+        return [
+            (level["totalDistance"] ?? 1.0) * 0.15 + (level["maxHeartRate"] ?? 1.0) * 0.35,
+            (level["maxVelocity"] ?? 1.0) * 0.3 + (level["maxAcceleration"] ?? 1.0) * 0.2,
+            (level["maxVelocity"] ?? 1.0) * 0.25 + (level["sprintCount"] ?? 1.0) * 0.125 + (level["maxHeartRate"] ?? 1.0) * 0.125,
+            (level["maxAcceleration"] ?? 1.0) * 0.4 + (level["minHeartRate"] ?? 1.0) * 0.1,
+            (level["totalDistance"] ?? 1.0) * 0.15 + (level["rangeHeartRate"] ?? 1.0) * 0.15 + (level["totalMatchTime"] ?? 1.0) * 0.2,
+            (level["totalDistance"] ?? 1.0) * 0.3 + (level["sprintCount"] ?? 1.0) * 0.1 + (level["maxHeartRate"] ?? 1.0) * 0.1
+        ]
     }
 }

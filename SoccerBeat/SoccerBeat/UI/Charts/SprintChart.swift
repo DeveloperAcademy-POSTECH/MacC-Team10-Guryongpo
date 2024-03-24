@@ -191,6 +191,6 @@ extension SprintChartView {
 
 #Preview {
     NavigationStack {
-        SprintChartView(workouts: fakeWorkoutData)
+        SprintChartView(workouts: WorkoutData.exampleWorkouts)
     }
 }

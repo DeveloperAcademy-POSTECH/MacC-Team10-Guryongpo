@@ -13,42 +13,19 @@ struct ContentView: View {
     @EnvironmentObject var soundManager: SoundManager
     
     @AppStorage("healthAlert") var healthAlert = true
-    @State var workoutData: [WorkoutData]?
-    @State var userWorkouts: [WorkoutData] = []
-    @State var averageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
-                                                                    minHeartRate: 0,
-                                                                    rangeHeartRate: 0,
-                                                                    totalDistance: 0.0,
-                                                                    maxAcceleration: 0,
-                                                                    maxVelocity: 0.0,
-                                                                    sprintCount: 0,
-                                                                    totalMatchTime: 0)
-    @State var maximumData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
-                                                                    minHeartRate: 0,
-                                                                    rangeHeartRate: 0,
-                                                                    totalDistance: 0.0,
-                                                                    maxAcceleration: 0,
-                                                                    maxVelocity: 0.0,
-                                                                    sprintCount: 0,
-                                                                    totalMatchTime: 0)
-    
-    @StateObject var viewModel = ProfileModel()
+    @State private var workouts: [WorkoutData] = []
     
     var body: some View {
         NavigationStack {
             ZStack {
+                // TODO: - 건강 경보라고만 되어있는데 어떤 경보인지 알 수 있도록 renaming
                 if healthAlert {
                     HealthAlertView(showingAlert: $healthAlert)
                 } else {
-                    if let _ = self.workoutData {
-                        MainView(userWorkouts: $userWorkouts,
-                                 averageData: $averageData,
-                                 maximumData: $maximumData,
-                                 viewModel: viewModel)
+                    if workouts.isEmpty {
+                        EmptyDataView()
                     } else {
-                        // No soccer data OR,
-                        // User does not allow permisson.
-                        EmptyDataView(viewModel: viewModel, maximumData: $maximumData)
+                        MainView(workouts: $workouts)
                     }
                 }
             }
@@ -58,11 +35,8 @@ struct ContentView: View {
             .onReceive(healthInteractor.authSuccess) {
                 Task { await healthInteractor.fetchWorkoutData() }
             }
-            .onReceive(healthInteractor.fetchSuccess) {
-                self.workoutData = healthInteractor.workoutData
-                self.averageData = healthInteractor.userAverage
-                self.maximumData = healthInteractor.userMaximum
-                self.userWorkouts = workoutData!
+            .onReceive(healthInteractor.fetchWorkoutsSuccess) { workouts in
+                self.workouts = workouts
             }
             .onAppear {
                 // 음악을 틀기
@@ -76,6 +50,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(userWorkouts: [])
+    ContentView()
         .preferredColorScheme(.dark)
 }

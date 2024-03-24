@@ -9,7 +9,7 @@ import PhotosUI
 import SwiftUI
 
 struct Profile: View {
-    @ObservedObject var viewModel: ProfileModel
+    @EnvironmentObject var viewModel: ProfileModel
     @AppStorage("userImage") var userImage: Data = .init()
     let width : CGFloat
     let height : CGFloat
@@ -33,8 +33,7 @@ struct Profile: View {
                     }
             } else {
                 // TODO: - 로직 흐름에서 여기가 불릴 일이 없는 것 같습니다.
-                EditableCircularProfileImage(viewModel: viewModel,
-                                             width: width,
+                EditableCircularProfileImage(width: width,
                                              height: height)
                     .mask {
                         Image(.maskLayer)

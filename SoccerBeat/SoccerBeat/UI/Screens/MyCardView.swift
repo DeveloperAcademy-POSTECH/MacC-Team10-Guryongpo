@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MyCardView: View {
     @EnvironmentObject var soundManager: SoundManager
-    @ObservedObject var viewModel: ProfileModel
+    @EnvironmentObject var viewModel: ProfileModel
     @State private var backDegree = 0.0
     @State private var frontDegree = -90.0
     @Binding var isFlipped: Bool
@@ -23,7 +23,7 @@ struct MyCardView: View {
         ZStack {
             VStack {
                 ZStack {
-                    CardFront(viewModel: viewModel, degree: $frontDegree, width: width, height: height)
+                    CardFront(degree: $frontDegree, width: width, height: height)
                     CardBack(degree: $backDegree, width: width, height: height)
                 }
                 .onTapGesture {
@@ -61,7 +61,7 @@ struct MyCardView: View {
 }
 
 struct CardFront : View {
-    @ObservedObject var viewModel: ProfileModel
+    @EnvironmentObject var viewModel: ProfileModel
     @State private var selectedItem: PhotosPickerItem?
     @Binding var degree : Double
     let width : CGFloat
@@ -69,8 +69,7 @@ struct CardFront : View {
     
     var body: some View {
         ZStack {
-            Profile(viewModel: viewModel,
-                    width: width,
+            Profile(width: width,
                     height: height)
                 
             Image(.profileLayer)
@@ -97,5 +96,5 @@ struct CardBack : View {
 }
 
 #Preview {
-    MyCardView(viewModel: ProfileModel(), isFlipped: .constant(true))
+    MyCardView(isFlipped: .constant(true))
 }

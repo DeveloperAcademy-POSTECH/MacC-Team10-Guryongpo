@@ -32,5 +32,5 @@ struct DistanceChartOverview: View {
 }
 
 #Preview {
-    DistanceChartOverview(workouts: fakeWorkoutData)
+    DistanceChartOverview(workouts: WorkoutData.exampleWorkouts)
 }

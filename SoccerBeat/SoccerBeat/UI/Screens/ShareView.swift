@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct ShareView: View {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    @ObservedObject var viewModel: ProfileModel
     @State var geoSize = CGSize(width: 0, height: 0)
-    @State var highresImage: UIImage = UIImage()
+    @State var highresImage = UIImage()
     @State var renderImage: UIImage?
     
     var body: some View {
         VStack {
             GeometryReader { geo in
-                TargetImageView(cgSize: geo.size, degree: 0, viewModel: viewModel)
-                    .environmentObject(healthInteractor)
+                TargetImageView(cgSize: geo.size, degree: 0)
                     .onAppear {
                         self.geoSize = CGSize(width: geo.size.width, height: geo.size.height)
                     }
@@ -26,8 +23,7 @@ struct ShareView: View {
         }
         .toolbar {
             Button {
-                renderImage = TargetImageView(cgSize: self.geoSize, viewModel: viewModel)
-                .environmentObject(healthInteractor)
+                renderImage = TargetImageView(cgSize: self.geoSize)
                                     .asImage(size: self.geoSize)
                 share()
             } label: {
@@ -43,9 +39,7 @@ struct ShareView: View {
 }
 
 #Preview {
-    @StateObject var viewModel = ProfileModel()
-    
-    return ShareView(viewModel: viewModel)
+    ShareView()
 }
 
 extension UIScreen {
@@ -74,10 +68,10 @@ extension View {
 }
 
 struct TargetImageView: View {
+    @EnvironmentObject var viewModel: ProfileModel
+    @EnvironmentObject var healthInteractor: HealthInteractor
     @State var cgSize: CGSize
     @State var degree: Double = 0
-    @ObservedObject var viewModel: ProfileModel
-    @EnvironmentObject var healthInteractor: HealthInteractor
     private var userName: String {
         return UserDefaults.standard.string(forKey: "userName") ?? "닉네임"
     }
@@ -91,7 +85,7 @@ struct TargetImageView: View {
             VStack {
                 Spacer()
                 HStack(alignment: .bottom) {
-                    CardFront(viewModel: viewModel, degree: $degree, width: 100, height: 140)
+                    CardFront(degree: $degree, width: 100, height: 140)
                     VStack(alignment: .leading, spacing: 0) {
                         Text("# Soccer Beat")
                             .floatingCapsuleStyle()
@@ -148,12 +142,12 @@ extension TargetImageView {
     @ViewBuilder
     private var currentBadge: some View {
         VStack(alignment: .leading, spacing: 31) {
-            ForEach(0..<healthInteractor.allBadges.count, id: \.self) { sortIndex in
+            ForEach(0..<viewModel.allBadges.count) { sortIndex in
                 VStack(alignment: .leading, spacing: 10) {
                     floatingBadgeInfo(at: sortIndex)
                     HStack {
-                        ForEach(0..<healthInteractor.allBadges[sortIndex].count, id: \.self) { levelIndex in
-                            let isOpened = healthInteractor.allBadges[sortIndex][levelIndex]
+                        ForEach(0..<viewModel.allBadges[sortIndex].count, id: \.self) { levelIndex in
+                            let isOpened = viewModel.allBadges[sortIndex][levelIndex]
                             
                             TrophyView(sort: sortIndex, level: levelIndex, isOpened: isOpened)
                                 .frame(width: 74, height: 82)
@@ -166,5 +160,5 @@ extension TargetImageView {
 }
 
 #Preview {
-    ShareView(viewModel: ProfileModel())
+    ShareView()
 }

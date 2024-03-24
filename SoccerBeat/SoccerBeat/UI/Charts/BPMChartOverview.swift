@@ -36,5 +36,5 @@ struct BPMChartOverview: View {
 }
 
 #Preview {
-    BPMChartOverview(workouts: fakeWorkoutData)
+    BPMChartOverview(workouts: WorkoutData.exampleWorkouts)
 }

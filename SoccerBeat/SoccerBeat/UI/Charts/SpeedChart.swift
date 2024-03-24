@@ -190,22 +190,8 @@ extension SpeedChartView {
     }
 }
 
-let fakeWorkoutData: [WorkoutData] = [
-    WorkoutData(dataID: 1,
-                date: "2024-1-23",
-                time: "130",
-                distance: 7,
-                sprint: 3,
-                velocity: 15,
-                acceleration: 0,
-                heartRate: [:],
-                route: [],
-                center: [],
-                matchBadge: [])
-]
-
 #Preview {
     NavigationStack {
-        SpeedChartView(workouts: fakeWorkoutData)
+        SpeedChartView(workouts: WorkoutData.exampleWorkouts)
     }
 }
