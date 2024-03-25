@@ -64,6 +64,7 @@ struct ContentView: View {
                 self.averageData = healthInteractor.userAverage
                 self.maximumData = healthInteractor.userMaximum
                 self.userWorkouts = workoutData!
+                // 데이터가 없을 때에는 EmptyView를 보여줄 수 있도록.
                 if !(workoutData?.isEmpty ?? true) {
                     showingScenes.toggle()
                 }

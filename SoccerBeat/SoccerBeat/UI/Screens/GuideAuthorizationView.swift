@@ -8,24 +8,25 @@
 import SwiftUI
 
 struct GuideAuthorizationView: View {
-    var healthAuthorization: Bool
+    let requestingAuth: Auth
+    enum Auth {
+        case health
+        case location
+    }
     var body: some View {
         VStack {
-            
-            if healthAuthorization {
-                
+            if requestingAuth == .health {
                 Button("건강 권한 설정하기") {
-                    if let BUNDLE_IDENTIFIER = Bundle.main.bundleIdentifier,
-                       let url = URL(string: "\(UIApplication.openSettingsURLString)&path=HEALTH/\(BUNDLE_IDENTIFIER)") {
+                    if let bundleIdentifier = Bundle.main.bundleIdentifier,
+                       let url = URL(string: "\(UIApplication.openSettingsURLString)&path=HEALTH/\(bundleIdentifier)") {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-
                     }
                 }
                 .buttonStyle(BorderedButtonStyle())
             } else {
                 Button("위치 권한 설정하기") {
-                    if let BUNDLE_IDENTIFIER = Bundle.main.bundleIdentifier,
-                       let url = URL(string: "\(UIApplication.openSettingsURLString)&body=LOCATION/\(BUNDLE_IDENTIFIER)") {
+                    if let bundleIdentifier = Bundle.main.bundleIdentifier,
+                       let url = URL(string: "\(UIApplication.openSettingsURLString)&body=LOCATION/\(bundleIdentifier)") {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                 }
@@ -36,5 +37,5 @@ struct GuideAuthorizationView: View {
 }
 
 #Preview {
-    GuideAuthorizationView(healthAuthorization: false)
+    GuideAuthorizationView(requestingAuth: .health)
 }

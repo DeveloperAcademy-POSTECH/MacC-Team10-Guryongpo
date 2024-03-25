@@ -15,9 +15,9 @@ struct SoccerBeatApp: App {
         WindowGroup {
 //             if Authorization == sharingDenied, 명시적으로 거절함.
             if healthInteracter.haveNoHealthAuthorization() {
-                 GuideAuthorizationView(healthAuthorization: true)
+                GuideAuthorizationView(requestingAuth: .health)
             } else if healthInteracter.haveNoLocationAuthorization() {
-                GuideAuthorizationView(healthAuthorization: false)
+                GuideAuthorizationView(requestingAuth: .location)
             } else {
                 ContentView()
                     .environmentObject(soundManager)
