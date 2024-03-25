@@ -23,6 +23,7 @@ import SwiftUI
 final class HealthInteractor: ObservableObject {
     // Object to request permission to read HealthKit data.
     var healthStore = HKHealthStore()
+    let locationManager = CLLocationManager()
     let typesToRead = Set([HKObjectType.quantityType(forIdentifier: .heartRate)!,
                           HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
                           HKObjectType.quantityType(forIdentifier: .runningSpeed)!,
@@ -31,6 +32,14 @@ final class HealthInteractor: ObservableObject {
                           HKSeriesType.workoutRoute(),
                           HKObjectType.activitySummaryType()
                          ])
+    
+    let typesToShare: Set = [HKQuantityType.workoutType(),
+                                     HKSeriesType.workoutRoute(),
+                                     HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+                                     HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+                                     
+    ]
+    
     // Entire user workouts in HealthKit data.
     var workoutData: [WorkoutData] = []
     // Average of the user workout data.
@@ -85,9 +94,29 @@ final class HealthInteractor: ObservableObject {
         return dict
     }
     
+    func haveNoLocationAuthorization() -> Bool {
+        return locationManager.authorizationStatus == .denied
+    }
+    
+    func haveNoHealthAuthorization() -> Bool {
+        for type in typesToShare {
+            if healthStore.authorizationStatus(for: type) == .sharingDenied {
+                print(type, healthStore.authorizationStatus(for: type).rawValue)
+                return true
+            }}
+        return false
+    }
+    
     @MainActor
     func requestAuthorization() {
         print("requestAuthorization: request user authorization..")
+        
+        // 휴대폰에서 위치 권한 얻기
+        if locationManager.authorizationStatus == .denied ||
+            locationManager.authorizationStatus == .notDetermined ||
+            locationManager.authorizationStatus == .restricted {
+            self.locationManager.requestAlwaysAuthorization()
+        }
         
         // 해당 기기가 헬스킷을 사용할 수 있는지 확인 함
         guard HKHealthStore.isHealthDataAvailable() else {
@@ -95,16 +124,13 @@ final class HealthInteractor: ObservableObject {
             return
         }
         
-        healthStore.requestAuthorization(toShare: nil, read: typesToRead) { success, error in
-            // Success means that the Permission window appears.
-            if success {
-                self.authSuccess.send()
+        healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
+            if success && !self.haveNoHealthAuthorization() {
+                    self.authSuccess.send()
             } else {
                 NSLog("Error in getting healthstore reading authorization. ")
             }
         }
-                
-
     }
     
     func fetchWorkoutData() async {
@@ -124,6 +150,7 @@ final class HealthInteractor: ObservableObject {
         
         // TODO: Combine에서 직접 전달할 방법을 찾아보기
         self.workoutData = workoutData
+        print(workoutData)
         self.fetchSuccess.send()
     }
     

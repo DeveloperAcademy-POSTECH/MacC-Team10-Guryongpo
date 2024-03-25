@@ -12,6 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
     
+    @State var showingScenes = false
     @AppStorage("healthAlert") var healthAlert = true
     @State var workoutData: [WorkoutData]?
     @State var userWorkouts: [WorkoutData] = []
@@ -40,7 +41,7 @@ struct ContentView: View {
                 if healthAlert {
                     HealthAlertView(showingAlert: $healthAlert)
                 } else {
-                    if let _ = self.workoutData {
+                    if showingScenes {
                         MainView(userWorkouts: $userWorkouts,
                                  averageData: $averageData,
                                  maximumData: $maximumData,
@@ -63,13 +64,16 @@ struct ContentView: View {
                 self.averageData = healthInteractor.userAverage
                 self.maximumData = healthInteractor.userMaximum
                 self.userWorkouts = workoutData!
-            }
-            .onAppear {
-                // 음악을 틀기
-                if !soundManager.isMusicPlaying {
-                    soundManager.toggleMusic()
+                if !(workoutData?.isEmpty ?? true) {
+                    showingScenes.toggle()
                 }
             }
+//            .onAppear {
+//                // 음악을 틀기
+//                if !soundManager.isMusicPlaying {
+//                    soundManager.toggleMusic()
+//                }
+//            }
         }
         .tint(.white)
     }
