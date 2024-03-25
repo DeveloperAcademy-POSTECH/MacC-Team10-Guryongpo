@@ -11,7 +11,7 @@ import HealthKit
 import SwiftUI
 
 final class WorkoutManager: NSObject, ObservableObject {
-    private let healthStore = HKHealthStore()
+    let healthStore = HKHealthStore()
     let locationManager = CLLocationManager()
     let matrics: MatricsIndicator
     
@@ -26,51 +26,67 @@ final class WorkoutManager: NSObject, ObservableObject {
     
     // MARK: - 헬스킷과 위치데이터 권한 받기
     var authHealthKit = PassthroughSubject<(), Never>()
-    private let typesToShare: Set = [HKQuantityType.workoutType(),
+    
+    let typesToShare: Set = [HKQuantityType.workoutType(),
                                      HKSeriesType.workoutRoute(),
                                      HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
                                      HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
                                      
     ]
     
+    let typesToRead: Set = [
+        HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+        HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+        HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
+        HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
+        HKSeriesType.workoutType(),
+        HKSeriesType.workoutRoute(),
+        HKObjectType.activitySummaryType()
+    ]
+    
     @Published var workout: HKWorkout?
-    var hasNotLocationAuthorization: Bool {
+    var hasNoLocationAuthorization: Bool {
         [CLAuthorizationStatus.notDetermined, .denied, .restricted].contains(locationManager.authorizationStatus)
     }
     
-    var hasNotHealthAuthorization: Bool {
+    var hasNoHealthAuthorization: Bool {
         var right = false
-        for type in typesToShare {
+        for type in typesToShare  {
             if [HKAuthorizationStatus.notDetermined, .sharingDenied].contains(healthStore.authorizationStatus(for: type)) {
+                print(type, healthStore.authorizationStatus(for: type).rawValue)
+                right = true
+            }
+        }
+        
+        for type in typesToRead {
+            if [HKAuthorizationStatus.notDetermined, .sharingDenied].contains(healthStore.authorizationStatus(for: type)) {
+                print(type, healthStore.authorizationStatus(for: type).rawValue)
                 right = true
                 break
             }
         }
+        
         return right
     }
 
-    func requestHealthAuthorization() {
-        
-        let typesToRead: Set = [
-            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-            HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
-            HKQuantityType.quantityType(forIdentifier: .walkingSpeed)!,
-            HKSeriesType.workoutType(),
-            HKSeriesType.workoutRoute(),
-            HKObjectType.activitySummaryType()
-        ]
-        healthStore.requestAuthorization(toShare: typesToShare,
-                                         read: typesToRead) { (success, error) in
+    func requestAuthorization() {
+
             // 위치 정보 권한 요청
-            if self.hasNotLocationAuthorization {
-                self.locationManager.requestWhenInUseAuthorization()
+            if self.hasNoLocationAuthorization {
+                self.locationManager.requestAlwaysAuthorization()
             }
-            
+    
             // 헬스킷 권한이 없다면
-            if self.hasNotHealthAuthorization {
-                self.authHealthKit.send()
-            }
+            if self.hasNoHealthAuthorization {
+            healthStore.requestAuthorization(toShare: typesToShare,
+                                                 read: typesToRead) { (success, error) in
+                    
+                    if success {
+                        print("Success in HealthKit Authorization!")
+                    } else {
+                        print("HealthKit authorization in watch has problems. ")
+                    }
+                }
         }
     }
     

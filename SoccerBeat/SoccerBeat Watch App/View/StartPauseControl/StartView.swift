@@ -20,7 +20,7 @@ struct StartView: View {
                         .aspectRatio(contentMode: .fill)
                     
                     Button {
-                        if workoutManager.hasNotLocationAuthorization {
+                        if workoutManager.hasNoLocationAuthorization || workoutManager.hasNoHealthAuthorization {
                             isShowingAlert.toggle()
                         } else {
                             workoutManager.showingPrecount.toggle()
@@ -31,9 +31,10 @@ struct StartView: View {
                 }
                 .alert(isPresented: $isShowingAlert) {
                     // TODO: - Magic number, Magic String
-                    Alert(title: Text("위치 권한이 허용되지 않았습니다."),
-                          message: Text("원활한 앱 사용을 위해\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한을 허용한 후 재실행 해주세요."),
-                          dismissButton: .default(Text("요청하기"), action: requestAuthorizationIfNeeded))
+                    Alert(title: Text("위치 권한 또는 건강 정보 권한이 허용되지 않았습니다."),
+                          message: Text("원활한 앱 사용을 위해\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한 또는 설정의 건강에서 건강 권한을 허용한 후 다시 실행해주세요."),
+                          dismissButton: .default(Text("요청하기"), action: { requestAuthorization()
+                    }))
                 }
             } else {
                 PrecountView()
@@ -42,10 +43,10 @@ struct StartView: View {
         .buttonStyle(.borderless)
     }
     
-    private func requestAuthorizationIfNeeded() {
-        if workoutManager.hasNotLocationAuthorization || workoutManager.hasNotHealthAuthorization {
-            workoutManager.requestHealthAuthorization()
-        }
+    
+    
+    private func requestAuthorization() {
+        workoutManager.requestAuthorization()
     }
 }
 

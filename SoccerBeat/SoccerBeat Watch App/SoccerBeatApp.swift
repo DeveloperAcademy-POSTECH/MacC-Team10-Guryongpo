@@ -12,6 +12,7 @@ struct SoccerBeat_Watch_AppApp: App {
     
     @StateObject private var workoutManager = DIContianer.makeWorkoutManager()
     @StateObject private var matricsIndicator = DIContianer.makeMatricsIndicator()
+    @State var triggerHealthKitAuthorization = false
 
     var body: some Scene {
         WindowGroup {
@@ -23,6 +24,7 @@ struct SoccerBeat_Watch_AppApp: App {
             }
             .environmentObject(workoutManager)
             .environmentObject(matricsIndicator)
+
         }
     }
 }

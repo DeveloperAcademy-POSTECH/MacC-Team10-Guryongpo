@@ -13,6 +13,9 @@ struct EmptyDataView: View {
     @ObservedObject var viewModel: ProfileModel
     @Binding var maximumData: WorkoutAverageData
     
+    @State var isShowingBug = false
+    let alertTitle: String = "문제가 있으신가요?"
+    
     var body: some View {
             VStack(spacing: 0.0) {
                 
@@ -23,20 +26,50 @@ struct EmptyDataView: View {
                         HStack {
                             Image(systemName: soundManager.isMusicPlaying ? "speaker" : "speaker.slash")
                             Text(soundManager.isMusicPlaying ? "On" : "Off")
-                                .font(.mainInfoText)
                         }
                         .padding(.horizontal)
+                        .font(.mainInfoText)
                         .overlay {
                             Capsule()
                                 .stroke()
-                                .frame(width: 77, height: 24)
+                                .frame(height: 24)
                         }
                     }
                     .foregroundStyle(.white)
                     .padding(.top, 5)
                     Spacer()
+                    
+                    Button(action: { isShowingBug.toggle() } ) {
+                        Image(systemName: "ant")
+                            .foregroundStyle(.white)
+                            .font(.mainInfoText)
+                            .padding()
+                    }
+                    .overlay {
+                        Capsule()
+                            .stroke()
+                            .frame(height: 24)
+                    }
+                    .padding(.horizontal)
+                    .alert(
+                                alertTitle,
+                                isPresented: $isShowingBug
+                            ) {
+                                Button("취소", role: .cancel) {
+                                    // Handle the acknowledgement.
+                                    isShowingBug.toggle()
+                                }
+                                Button("문의하기") {
+                                    let url = createEmailUrl(to: "guryongpo23@gmail.com", subject: "", body: "")
+                                    openURL(urlString: url)
+                                    // TODO: 로그인 안될 때엔 어떻게 됩니까?
+                                }
+                            } message: {
+                               Text("불편을 드려 죄송합니다. \n\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다. ")
+                            }
                 }
                 .padding(.horizontal)
+            
                 
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading) {
@@ -69,13 +102,19 @@ struct EmptyDataView: View {
                                 .font(.custom("NotoSans-Regular", size: 14))
                             HStack {
                                 Button("위치 권한 설정하기") {
-                                    openSettings(urlString: UIApplication.openSettingsURLString)
+                                    if let BUNDLE_IDENTIFIER = Bundle.main.bundleIdentifier,
+                                        let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(BUNDLE_IDENTIFIER)") {
+                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    }
+                                    
                                 }
                                 .buttonStyle(BorderedButtonStyle())
                                 
                                 Button("건강 권한 설정하기") {
-                                    let healthSettingURLString =  "x-apple-health://"
-                                    openSettings(urlString: healthSettingURLString)
+                                    if let BUNDLE_IDENTIFIER = Bundle.main.bundleIdentifier,
+                                        let url = URL(string: "\(UIApplication.openSettingsURLString)&path=HEALTH/\(BUNDLE_IDENTIFIER)") {
+                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    }
                                 }
                                 .buttonStyle(BorderedButtonStyle())
                             }                            
@@ -124,5 +163,25 @@ struct EmptyDataView: View {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
+    }
+    
+    func openURL(urlString: String){
+        if let url = URL(string: "\(urlString)"){
+            if #available(iOS 10.0, *){
+                UIApplication.shared.open(url)
+            }
+            else{
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+
+    func createEmailUrl(to: String, subject: String, body: String) -> String {
+        let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            
+        let defaultUrl = "mailto:\(to)?subject=\(subjectEncoded)&body=\(bodyEncoded)"
+            
+        return defaultUrl
     }
 }
