@@ -57,15 +57,7 @@ final class WorkoutManager: NSObject, ObservableObject {
                 right = true
             }
         }
-        
-        for type in typesToRead {
-            if [HKAuthorizationStatus.notDetermined, .sharingDenied].contains(healthStore.authorizationStatus(for: type)) {
-                print(type, healthStore.authorizationStatus(for: type).rawValue)
-                right = true
-                break
-            }
-        }
-        
+
         return right
     }
 

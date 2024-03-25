@@ -12,6 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
     
+    @State var showingScenes = false
     @AppStorage("healthAlert") var healthAlert = true
     @State private var workouts: [WorkoutData] = []
     

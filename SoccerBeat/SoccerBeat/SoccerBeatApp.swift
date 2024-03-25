@@ -15,10 +15,17 @@ struct SoccerBeatApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//             if Authorization == sharingDenied, 명시적으로 거절함.
+            if healthInteracter.haveNoHealthAuthorization() {
+                GuideAuthorizationView(requestingAuth: .health)
+            } else if healthInteracter.haveNoLocationAuthorization() {
+                GuideAuthorizationView(requestingAuth: .location)
+            } else {
+              ContentView()
                 .environmentObject(soundManager)
                 .environmentObject(healthInteracter)
                 .environmentObject(profileModel)
+            }
         }
     }
 }
