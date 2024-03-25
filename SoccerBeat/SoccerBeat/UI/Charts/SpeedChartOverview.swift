@@ -32,5 +32,5 @@ struct SpeedChartOverview: View {
 }
 
 #Preview {
-    SpeedChartOverview(workouts: fakeWorkoutData)
+    SpeedChartOverview(workouts: WorkoutData.exampleWorkouts)
 }

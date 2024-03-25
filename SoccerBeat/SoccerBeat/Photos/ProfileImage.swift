@@ -32,7 +32,7 @@ struct ProfileImage: View {
 
 // Transmit Profile ViewModel
 struct EditableCircularProfileImage: View {
-    @ObservedObject var viewModel: ProfileModel
+    @EnvironmentObject var viewModel: ProfileModel
     let width : CGFloat
     let height : CGFloat
     var body: some View {

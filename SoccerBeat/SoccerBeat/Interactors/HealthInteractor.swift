@@ -20,6 +20,7 @@ import SwiftUI
 /// 7. 커스텀 데이터 계산
 /// 8. 추세 analysis 데이터 계산
 // MARK: - 역할
+@MainActor
 final class HealthInteractor: ObservableObject {
     // Object to request permission to read HealthKit data.
     var healthStore = HKHealthStore()
@@ -32,38 +33,12 @@ final class HealthInteractor: ObservableObject {
                           HKObjectType.activitySummaryType()
                          ])
     // Entire user workouts in HealthKit data.
-    var workoutData: [WorkoutData] = []
-    // Average of the user workout data.
-    var userAverage: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
-                                                             minHeartRate: 0,
-                                                             rangeHeartRate: 0,
-                                                             totalDistance: 0.0,
-                                                             maxAcceleration: 0,
-                                                             maxVelocity: 0.0,
-                                                             sprintCount: 0,
-                                                             totalMatchTime: 0)
-    // Maximum of the user workout data.
-    var userMaximum: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0,
-                                                             minHeartRate: 0,
-                                                             rangeHeartRate: 0,
-                                                             totalDistance: 0.0,
-                                                             maxAcceleration: 0,
-                                                             maxVelocity: 0.0,
-                                                             sprintCount: 0,
-                                                             totalMatchTime: 0)
-    
-    var allMetadata: [[String : Any]] = []
-    var allRoutes: [CLLocation] = []
-    // Badges in ProfileView
-    // Value changes when the user gets the badge
-    @Published var allBadges: [[Bool]] = [[false, false, false, false],
-                                          [false, false, false, false],
-                                          [false, false, false, false]]
+    private var workoutData: [WorkoutData] = []
     
     // Send when permission is granted by the user.
     var authSuccess = PassthroughSubject<(), Never>()
     // Send when data fetch is successful.
-    var fetchSuccess = PassthroughSubject<(), Never>()
+    var fetchWorkoutsSuccess = PassthroughSubject<([WorkoutData]), Never>()
     
     static let shared = HealthInteractor()
     
@@ -113,18 +88,14 @@ final class HealthInteractor: ObservableObject {
         let workouts = await fetchHKWorkouts()
         
         // Convert WorkoutData(Bussiness Model)
-        var workoutData = [WorkoutData]()
         for (index, workout) in workouts.enumerated() {
             let workoutDatum = await convert(from: workout, at: index)
             workoutData.append(workoutDatum)
         }
         
-        await calculateAverageAndMaxAbility(workoutData)
         settingForChartView()
+        self.fetchWorkoutsSuccess.send(workoutData)
         
-        // TODO: Combine에서 직접 전달할 방법을 찾아보기
-        self.workoutData = workoutData
-        self.fetchSuccess.send()
     }
     
     private func convert(from workout: HKWorkout, at index: Int) async -> WorkoutData {
@@ -140,19 +111,19 @@ final class HealthInteractor: ObservableObject {
         }
         
         // Metadata를 WorkoutData로 변환
-        guard let distance: Double = getValue(from: metadata, forKey: "Distance"),
-              let sprintCount: Int = getValue(from: metadata, forKey: "SprintCount"),
-              let velocityMPS: Double = getValue(from: metadata, forKey: "MaxSpeed"),
-              let acceleration: Double = getValue(from: metadata, forKey: "Acceleration"),
-              let maxHeartRate: Int = getValue(from: metadata, forKey: "MaxHeartRate"),
-              let minHeartRate: Int = getValue(from: metadata, forKey: "MinHeartRate")
+        guard let distance: Double = metadata.getValue(forKey: "Distance"),
+              let sprintCount: Int = metadata.getValue(forKey: "SprintCount"),
+              let velocityMPS: Double = metadata.getValue(forKey: "MaxSpeed"),
+              let acceleration: Double = metadata.getValue(forKey: "Acceleration"),
+              let maxHeartRate: Int = metadata.getValue(forKey: "MaxHeartRate"),
+              let minHeartRate: Int = metadata.getValue(forKey: "MinHeartRate")
         else { return  WorkoutData.blankExample }
         
         let velocityKMPH = Double((velocityMPS * 3.6).rounded(at: 2)) ?? 0
         
         // TODO: - badgeData를 WorkoutData로 바꾸는 정도만 해야할 듯
         // 바뀌어야 하는 이유, workoutData 가 있으면 for문 돌면서 뱃지를 계산하면 될 것
-        let matchBadge = calculateBadgeData(distance: distance, sprint: sprintCount, velocity: velocityKMPH)
+//        let matchBadge = calculateBadgeData(distance: distance, sprint: sprintCount, velocity: velocityKMPH)
         
         let displayedTime = String(Int(workout.duration)/60) + " : " + String(Int(workout.duration) % 60)
         let dotCount = routes.count
@@ -167,55 +138,7 @@ final class HealthInteractor: ObservableObject {
                                        "min": minHeartRate],
                            route: routes,
                            center: [latSum / Double(dotCount),
-                                    lonSum / Double(dotCount)],
-                           matchBadge: matchBadge)
-    }
-    
-    func calculateAverageAndMaxAbility(_ workouts: [WorkoutData]) async {
-        guard !workouts.isEmpty else { return }
-
-        if workoutData.isEmpty {
-            for workout in workouts {
-                // Calculating average value..
-                let maxHeartRate = workout.heartRate["max"] ?? 0
-                let minHeartRate = workout.heartRate["min"] ?? 0
-                userAverage.maxHeartRate += maxHeartRate
-                userAverage.minHeartRate += minHeartRate
-                userAverage.rangeHeartRate += maxHeartRate - minHeartRate
-                userAverage.totalDistance += workout.distance
-                userAverage.maxAcceleration += workout.acceleration
-                userAverage.maxVelocity += workout.velocity
-                userAverage.sprintCount += workout.sprint
-                let rawTime = workout.time
-                let separatedTime = rawTime.components(separatedBy: ":")
-                let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                let currentPlayTime = (Int(separatedMinutes) ?? 0) * 60 + (Int(separatedSeconds) ?? 0)
-                userAverage.totalMatchTime += currentPlayTime
-                
-                // Calculating Max value..
-                userMaximum.maxHeartRate = max(userMaximum.maxHeartRate, maxHeartRate)
-                userMaximum.minHeartRate = min(userMaximum.minHeartRate, minHeartRate)
-                userMaximum.rangeHeartRate = max(userMaximum.rangeHeartRate, maxHeartRate - minHeartRate)
-                userMaximum.totalDistance = max(userMaximum.totalDistance, workout.distance)
-                userMaximum.maxAcceleration = max(userMaximum.maxAcceleration, workout.acceleration)
-                userMaximum.maxVelocity = max(userMaximum.maxVelocity, workout.velocity)
-                userMaximum.sprintCount = max(userMaximum.sprintCount, workout.sprint)
-                userMaximum.totalMatchTime = max(userMaximum.totalMatchTime, currentPlayTime)
-            }
-            
-            // Calculating average value..
-            let workoutCount = workouts.count
-            userAverage.maxHeartRate /= workoutCount
-            userAverage.minHeartRate /= workoutCount
-            userAverage.rangeHeartRate /= workoutCount
-            userAverage.totalDistance /= Double(workoutCount)
-            userAverage.maxAcceleration /= Double(workoutCount)
-            userAverage.maxVelocity /= Double(workoutCount)
-            userAverage.sprintCount /= workoutCount
-            userAverage.totalMatchTime /= workoutCount
-            
-        }
+                                    lonSum / Double(dotCount)])
     }
 
     private func fetchHKWorkouts() async -> [HKWorkout] {
@@ -231,67 +154,6 @@ final class HealthInteractor: ObservableObject {
         }
         guard let workouts = data as? [HKWorkout] else { return [] }
         return workouts
-    }
-
-    func calculateBadgeData(distance: Double, sprint: Int, velocity: Double) -> [Int] {
-        // matchBadge: [distance, sprint, velocity]
-        // [nil, first trophy, second trophy, third trophy] == [-1, 0, 1, 2]
-        
-        // 쇼케이스 시연을 위해 기준 하향 조정
-        // Distance: 1, 2, 3, 4 -> 0.2, 0.4, 0.6, 0.8
-        // Sprint: 1, 3, 5, 7 -> 1, 2, 3, 4
-        // Velocity: 10, 15, 20, 25
-        var matchBadge: [Int] = [0, 0, 0]
-
-        if distance < 0.2 {
-            matchBadge[0] = -1
-        } else if (0.2 <= distance && distance < 0.4) {
-            matchBadge[0] = 0
-            allBadges[0][0] = true
-        } else if (0.4 <= distance && distance < 0.6) {
-            matchBadge[0] = 1
-            allBadges[0][1] = true
-        } else if (0.6 <= distance && distance < 0.8) {
-            matchBadge[0] = 2
-            allBadges[0][2] = true
-        } else {
-            matchBadge[0] = 3
-            allBadges[0][3] = true
-        }
-
-        if sprint < 1 {
-            matchBadge[1] = -1
-        } else if (1 <= sprint && sprint < 2) {
-            matchBadge[1] = 0
-            allBadges[1][0] = true
-        } else if (2 <= sprint && sprint < 3) {
-            matchBadge[1] = 1
-            allBadges[1][1] = true
-        } else if (3 <= sprint && sprint < 4) {
-            matchBadge[1] = 2
-            allBadges[1][2] = true
-        } else {
-            matchBadge[1] = 3
-            allBadges[1][3] = true
-        }
-
-        if velocity < 10 {
-            matchBadge[2] = -1
-        } else if (10 <= velocity && velocity < 15) {
-            matchBadge[2] = 0
-            allBadges[2][0] = true
-        } else if (15 <= velocity && velocity < 20) {
-            matchBadge[2] = 1
-            allBadges[2][1] = true
-        } else if (20 <= velocity && velocity < 25) {
-            matchBadge[2] = 2
-            allBadges[2][2] = true
-        } else {
-            matchBadge[2] = 3
-            allBadges[2][3] = true
-        }
-
-        return matchBadge
     }
 
     // HKWorkout + Metadata
@@ -385,10 +247,5 @@ extension HealthInteractor {
         return workouts.sorted { preWork, postWork in
             preWork.formattedDate < postWork.formattedDate
         }
-    }
-    
-    // dictionary를 안전하게 옵셔널 언래핑하기 위한 메서드
-    private func getValue<T>(from dictionary: [String: Any], forKey: String) -> T? {
-        dictionary[forKey] as? T
     }
 }

@@ -30,7 +30,46 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
         heartRate["min", default: 50] // Minimum heart rate during the match.
     }
     
-    var matchBadge: [Int]
+    var matchBadge: [Int] {
+        var badge = [0,0,0]
+
+        if distance < 0.2 {
+            badge[0] = -1
+        } else if (0.2 <= distance && distance < 0.4) {
+            badge[0] = 0
+        } else if (0.4 <= distance && distance < 0.6) {
+            badge[0] = 1
+        } else if (0.6 <= distance && distance < 0.8) {
+            badge[0] = 2
+        } else {
+            badge[0] = 3
+        }
+
+        if sprint < 1 {
+            badge[1] = -1
+        } else if (1 <= sprint && sprint < 2) {
+            badge[1] = 0
+        } else if (2 <= sprint && sprint < 3) {
+            badge[1] = 1
+        } else if (3 <= sprint && sprint < 4) {
+            badge[1] = 2
+        } else {
+            badge[1] = 3
+        }
+
+        if velocity < 10 {
+        } else if (10 <= velocity && velocity < 15) {
+            badge[2] = 0
+        } else if (15 <= velocity && velocity < 20) {
+            badge[2] = 1
+        } else if (20 <= velocity && velocity < 25) {
+            badge[2] = 2
+        } else {
+            badge[2] = 3
+        }
+
+        return badge
+    }
     
     var day: Int {
         let beforeT = String(date.split(separator: "T")[0])
@@ -43,6 +82,13 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
         return String(rawValueOfYearMonthDay)
     }
     
+    var playtimeSec: Int {
+        let separatedTime = time.components(separatedBy: ":")
+        let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
+        return (Int(separatedMinutes) ?? 0) * 60 + (Int(separatedSeconds) ?? 0)
+    }
+    
     static let example = Self(dataID: 0,
                               date: "2023-10-09T01:20:32Z",
                               time: "34:43",
@@ -52,8 +98,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               acceleration: 3.0,
                               heartRate: ["max": 190, "min": 70],
                               route: [],
-                              center: [37.58647414212885, 126.9748537678651],
-                              matchBadge: [-1, 2, 0])
+                              center: [37.58647414212885, 126.9748537678651])
     
     static let blankExample = Self(dataID: 0,
                                    date: "2023-10-09T01:20:32Z",
@@ -64,18 +109,19 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                                    acceleration: 1.0,
                                    heartRate: ["max": 80, "min": 60],
                                    route: [],
-                                   center: [37.58647414212885, 126.9748537678651], matchBadge: [0, 0, 0])
+                                   center: [37.58647414212885, 126.9748537678651])
     
+    // TODO: - Factory Method Pattern으로 빼내는건 어떨까요?
     static let exampleWorkouts = [
-        WorkoutData(dataID: 1, date: "2023-10-09T01:20:32Z", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0], matchBadge: [0,3,2]),
-        WorkoutData(dataID: 2, date: "2023-10-09T01:20:35Z", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, acceleration: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0], matchBadge: [0,1,3]),
-        WorkoutData(dataID: 3, date: "2023-10-09T01:20:38Z", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, acceleration: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-        WorkoutData(dataID: 4, date: "2023-10-19T01:20:32Z", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, acceleration: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-        WorkoutData(dataID: 5, date: "2023-10-20T01:20:32Z", time: "60:10", distance: 4.5, sprint: 11, velocity: 17.2, acceleration: 3.0, heartRate: ["max": 175, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-        WorkoutData(dataID: 6, date: "2023-10-21T01:20:32Z", time: "60:10", distance: 3.6, sprint: 5, velocity: 24.4, acceleration: 3.0, heartRate: ["max": 190, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-        WorkoutData(dataID: 7, date: "2023-10-23T01:20:32Z", time: "60:10", distance: 3.8, sprint: 13, velocity: 15.9, acceleration: 3.0, heartRate: ["max": 183, "min": 91], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.9, sprint: 17, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 169, "min": 79], route: [], center: [0, 0], matchBadge: [-1,2,0]),
-        WorkoutData(dataID: 9, date: "2023-10-27T01:20:32Z", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, acceleration: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0], matchBadge: [-1,2,0])
+        WorkoutData(dataID: 1, date: "2023-10-09T01:20:32Z", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0]),
+        WorkoutData(dataID: 2, date: "2023-10-09T01:20:35Z", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, acceleration: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0]),
+        WorkoutData(dataID: 3, date: "2023-10-09T01:20:38Z", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, acceleration: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0]),
+        WorkoutData(dataID: 4, date: "2023-10-19T01:20:32Z", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, acceleration: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0]),
+        WorkoutData(dataID: 5, date: "2023-10-20T01:20:32Z", time: "60:10", distance: 4.5, sprint: 11, velocity: 17.2, acceleration: 3.0, heartRate: ["max": 175, "min": 60], route: [], center: [0, 0]),
+        WorkoutData(dataID: 6, date: "2023-10-21T01:20:32Z", time: "60:10", distance: 3.6, sprint: 5, velocity: 24.4, acceleration: 3.0, heartRate: ["max": 190, "min": 79], route: [], center: [0, 0]),
+        WorkoutData(dataID: 7, date: "2023-10-23T01:20:32Z", time: "60:10", distance: 3.8, sprint: 13, velocity: 15.9, acceleration: 3.0, heartRate: ["max": 183, "min": 91], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.9, sprint: 17, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 169, "min": 79], route: [], center: [0, 0]),
+        WorkoutData(dataID: 9, date: "2023-10-27T01:20:32Z", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, acceleration: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0])
     ]
     
     
@@ -106,6 +152,27 @@ struct WorkoutAverageData: Hashable, Equatable, Identifiable {
                                                              sprintCount: 3,
                                                              totalMatchTime: 80)
     
+    init(maxHeartRate: Int, minHeartRate: Int, rangeHeartRate: Int, totalDistance: Double, maxAcceleration: Double, maxVelocity: Double, sprintCount: Int, totalMatchTime: Int) {
+        self.maxHeartRate = maxHeartRate
+        self.minHeartRate = minHeartRate
+        self.rangeHeartRate = rangeHeartRate
+        self.totalDistance = totalDistance
+        self.maxAcceleration = maxAcceleration
+        self.maxVelocity = maxVelocity
+        self.sprintCount = sprintCount
+        self.totalMatchTime = totalMatchTime
+    }
+    
+    init() {
+        self.maxHeartRate = 0
+        self.minHeartRate = 0
+        self.rangeHeartRate = 0
+        self.totalDistance = 0
+        self.maxAcceleration = 0
+        self.maxVelocity = 0
+        self.sprintCount = 0
+        self.totalMatchTime = 0
+    }
 }
 
 extension CLLocationCoordinate2D: Hashable {

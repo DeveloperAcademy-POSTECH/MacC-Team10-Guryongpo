@@ -12,9 +12,6 @@ import CoreLocation
 struct MatchDetailView: View {
     let workoutData: WorkoutData
     
-    @Binding var averageData: WorkoutAverageData
-    @Binding var maximumData: WorkoutAverageData
-    
     var body: some View {
         ScrollView(showsIndicators: false) {
             ZStack {
@@ -22,7 +19,7 @@ struct MatchDetailView: View {
                     MatchTimeView(workoutData: workoutData)
                     Spacer()
                         .frame(height: 48)
-                    PlayerAbilityView(averageData: $averageData, maximumData: $maximumData, workoutData: workoutData)
+                    PlayerAbilityView(workoutData: workoutData)
                         .zIndex(-1)
                     Spacer()
                         .frame(height: 100)
@@ -63,9 +60,6 @@ struct MatchTimeView: View {
 }
 
 struct PlayerAbilityView: View {
-    @Binding var averageData: WorkoutAverageData
-    @Binding var maximumData: WorkoutAverageData
-    
     let workoutData: WorkoutData
     var body: some View {
         VStack {
@@ -94,49 +88,14 @@ struct PlayerAbilityView: View {
                     }
                     HStack {
                         Spacer()
-                        // TODO: - DataConverter의 코드가 중복됨 3
-                        let averageLevel = DataConverter.dataConverter(totalDistance: averageData.totalDistance,
-                                                         maxHeartRate: averageData.maxHeartRate,
-                                                         maxVelocity: averageData.maxVelocity,
-                                                         maxAcceleration: averageData.maxAcceleration,
-                                                         sprintCount: averageData.sprintCount,
-                                                         minHeartRate: averageData.minHeartRate,
-                                                         rangeHeartRate: averageData.rangeHeartRate,
-                                                         totalMatchTime: averageData.totalMatchTime)
-                        let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                       (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                       (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                       (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                       (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
+//                        RadarChartView(workout: workoutData)
+//                            .fixedSize()
+//                            .frame(width: 304, height: 348)
+//                            .zIndex(-1)
                         
-                        let rawTime = workoutData.time
-                        let separatedTime = rawTime.components(separatedBy: ":")
-                        let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                        let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                        let matchLevel = DataConverter.dataConverter(totalDistance: workoutData.distance,
-                                                       maxHeartRate: workoutData.maxHeartRate,
-                                                       maxVelocity: workoutData.velocity,
-                                                       maxAcceleration: workoutData.acceleration,
-                                                       sprintCount: workoutData.sprint,
-                                                       minHeartRate: workoutData.minHeartRate,
-                                                       rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
-                                                       totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
-                        let recent = [(matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.3 + (matchLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                      (matchLevel["maxVelocity"] ?? 1.0) * 0.25 + (matchLevel["sprintCount"] ?? 1.0) * 0.125 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                      (matchLevel["maxAcceleration"] ?? 1.0) * 0.4 + (matchLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                      (matchLevel["totalDistance"] ?? 1.0) * 0.15 + (matchLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (matchLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                      (matchLevel["totalDistance"] ?? 1.0) * 0.3 + (matchLevel["sprintCount"] ?? 1.0) * 0.1 + (matchLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                        
-                        
-                        // 방구석 리뷰룸 시연을 위해 작성한 코드
-                        let tripleAverage = average.map { min($0 * 3, 5.0) }
-                        let tripleRecent = recent.map { min($0 * 3, 5.0) }
-                        
-                        ViewControllerContainer(RadarViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
+                        RadarChartView(workout: workoutData,width: 304, height: 348)
                             .fixedSize()
-                            .frame(width: 304, height: 348)
+//                            .frame(width: 304, height: 348)
                             .zIndex(-1)
                         
                         Spacer()
@@ -221,9 +180,7 @@ struct FieldMovementView: View {
 
 #Preview {
     @StateObject var healthInteractor = HealthInteractor.shared
-    return MatchDetailView(workoutData: WorkoutData.example,
-                           averageData: .constant(WorkoutAverageData.exampleAverage),
-                           maximumData: .constant(WorkoutAverageData.exampleAverage))
+    return MatchDetailView(workoutData: WorkoutData.example)
     .environmentObject(healthInteractor)
 }
 

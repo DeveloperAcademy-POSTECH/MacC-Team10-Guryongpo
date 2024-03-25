@@ -10,8 +10,7 @@ import SwiftUI
 struct EmptyDataView: View {
     @State var workoutAverageData: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 0, minHeartRate: 0, rangeHeartRate: 0, totalDistance: 0, maxAcceleration: 0, maxVelocity: 0, sprintCount: 0, totalMatchTime: 0)
     @EnvironmentObject var soundManager: SoundManager
-    @ObservedObject var viewModel: ProfileModel
-    @Binding var maximumData: WorkoutAverageData
+    @EnvironmentObject var viewModel: ProfileModel
     
     @State var isShowingBug = false
     let alertTitle: String = "문제가 있으신가요?"
@@ -81,9 +80,9 @@ struct EmptyDataView: View {
                     }
                     Spacer()
                     NavigationLink {
-                        ProfileView(viewModel: viewModel, averageData: $workoutAverageData, maximumData: $maximumData)
+                        ProfileView()
                     } label: {
-                        CardFront(viewModel: viewModel, degree: .constant(0), width: 72, height: 96)
+                        CardFront(degree: .constant(0), width: 72, height: 96)
                     }
                 }
                 .padding()

@@ -110,7 +110,7 @@ struct AnalyticsComponent: View {
 
 #Preview {
     ForEach(ActivityEnum.allCases, id: \.self) { act in
-        AnalyticsComponent(userWorkouts: fakeWorkoutData,
+        AnalyticsComponent(userWorkouts: WorkoutData.exampleWorkouts,
                            activityType: act)
     }
     .padding(.horizontal, 16)
