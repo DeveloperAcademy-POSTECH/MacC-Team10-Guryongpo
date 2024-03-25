@@ -11,6 +11,8 @@ import SwiftUI
 struct SoccerBeatApp: App {
     @StateObject var soundManager = SoundManager()
     @StateObject var healthInteracter = HealthInteractor.shared
+    @StateObject var profileModel = ProfileModel(healthInteractor: HealthInteractor.shared)
+    
     var body: some Scene {
         WindowGroup {
 //             if Authorization == sharingDenied, 명시적으로 거절함.
@@ -19,9 +21,10 @@ struct SoccerBeatApp: App {
             } else if healthInteracter.haveNoLocationAuthorization() {
                 GuideAuthorizationView(requestingAuth: .location)
             } else {
-                ContentView()
-                    .environmentObject(soundManager)
-                    .environmentObject(healthInteracter)
+              ContentView()
+                .environmentObject(soundManager)
+                .environmentObject(healthInteracter)
+                .environmentObject(profileModel)
             }
         }
     }

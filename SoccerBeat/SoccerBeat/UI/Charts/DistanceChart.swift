@@ -190,6 +190,6 @@ extension DistanceChartView {
 
 #Preview {
     NavigationStack {
-        DistanceChartView(workouts: fakeWorkoutData)
+        DistanceChartView(workouts: WorkoutData.exampleWorkouts)
     }
 }

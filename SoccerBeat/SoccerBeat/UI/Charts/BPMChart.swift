@@ -193,6 +193,6 @@ extension BPMChartView {
 
 #Preview {
     NavigationStack {
-        BPMChartView(workouts: fakeWorkoutData)
+        BPMChartView(workouts: WorkoutData.exampleWorkouts)
     }
 }

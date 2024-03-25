@@ -132,7 +132,6 @@ final class MatricsIndicator: NSObject, ObservableObject {
         self.zone5Count = 0
     }
     
-    
     func updateForStatistics(_ statistics: HKStatistics?) {
         guard let statistics = statistics else { return }
         DispatchQueue.main.async {

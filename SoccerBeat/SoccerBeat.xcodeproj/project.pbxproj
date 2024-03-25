@@ -95,6 +95,7 @@
 		BEA63A662B0AFDFF000A309D /* ActivityEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA63A652B0AFDFF000A309D /* ActivityEnum.swift */; };
 		BEA63A672B0AFDFF000A309D /* ActivityEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA63A652B0AFDFF000A309D /* ActivityEnum.swift */; };
 		BEA63A6A2B0B386C000A309D /* AnalyticsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA63A692B0B386C000A309D /* AnalyticsComponent.swift */; };
+		BEB1D21D2BB01AE9007B2846 /* RadarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB1D21C2BB01AE9007B2846 /* RadarChartView.swift */; };
 		BEB666C22AE4E16D0090195A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB666C12AE4E16D0090195A /* StartView.swift */; };
 		BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */; };
 		BECCFAB22B0665D2009F4BE5 /* SpeedChartOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECCFAB12B0665D2009F4BE5 /* SpeedChartOverview.swift */; };
@@ -229,6 +230,7 @@
 		BEA63A602B0AF608000A309D /* HighlightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightModifier.swift; sourceTree = "<group>"; };
 		BEA63A652B0AFDFF000A309D /* ActivityEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEnum.swift; sourceTree = "<group>"; };
 		BEA63A692B0B386C000A309D /* AnalyticsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsComponent.swift; sourceTree = "<group>"; };
+		BEB1D21C2BB01AE9007B2846 /* RadarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartView.swift; sourceTree = "<group>"; };
 		BEB666C12AE4E16D0090195A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeView.swift; sourceTree = "<group>"; };
 		BEC1E5CF2AE6B4AF008B285E /* SoccerBeat-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SoccerBeat-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -375,6 +377,7 @@
 				D3A1F1102B06847600EB2049 /* ProfileView.swift */,
 				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
 				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
+				BEB1D21C2BB01AE9007B2846 /* RadarChartView.swift */,
 				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
 				FBA3DA612B00E6EF0025AD7B /* ShareView.swift */,
 				682D64882AFDBF8C00D7F07B /* PhotoSelectButtonView.swift */,
@@ -800,6 +803,7 @@
 			files = (
 				BEA63A612B0AF608000A309D /* HighlightModifier.swift in Sources */,
 				BECCFAB42B06698F009F4BE5 /* DistanceChartOverview.swift in Sources */,
+				BEB1D21D2BB01AE9007B2846 /* RadarChartView.swift in Sources */,
 				FB2EC9C32B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */,
 				BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */,
 				BE4A91562B011A46004AAFA3 /* BPMChart.swift in Sources */,

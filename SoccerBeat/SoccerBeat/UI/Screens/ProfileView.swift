@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @ObservedObject var viewModel: ProfileModel
+    @EnvironmentObject var viewModel: ProfileModel
     @State private var isFlipped = false
     @State private var userName = ""
     @State private var userImage: UIImage?
     @FocusState private var isFocused: Bool
-    @Binding var averageData: WorkoutAverageData
-    @Binding var maximumData: WorkoutAverageData
     
     var body: some View {
         NavigationStack {
@@ -67,7 +65,7 @@ struct ProfileView: View {
                                 .font(.custom("SFProDisplay-HeavyItalic", size: 36))
                                 
                                 VStack {
-                                    MyCardView(viewModel: viewModel, isFlipped: $isFlipped)
+                                    MyCardView(isFlipped: $isFlipped)
                                         .frame(width: 105)
                                     PhotoSelectButtonView(viewModel: viewModel)
                                         .opacity(isFlipped ? 1 : 0)
@@ -109,50 +107,12 @@ struct ProfileView: View {
                         }
                     }
                     
-                    // TODO: - DataConverter의 코드가 중복됨 1
-                    let averageLevel = DataConverter.dataConverter(totalDistance: averageData.totalDistance,
-                                                     maxHeartRate: averageData.maxHeartRate,
-                                                     maxVelocity: averageData.maxVelocity,
-                                                     maxAcceleration: averageData.maxAcceleration,
-                                                     sprintCount: averageData.sprintCount,
-                                                     minHeartRate: averageData.minHeartRate,
-                                                     rangeHeartRate: averageData.rangeHeartRate,
-                                                     totalMatchTime: averageData.totalMatchTime)
-                    let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                   (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                   (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                   (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                   (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                   (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                    
-                    let maximumLevel = DataConverter.dataConverter(totalDistance: maximumData.totalDistance,
-                                                     maxHeartRate: maximumData.maxHeartRate,
-                                                     maxVelocity: maximumData.maxVelocity,
-                                                     maxAcceleration: maximumData.maxAcceleration,
-                                                     sprintCount: maximumData.sprintCount,
-                                                     minHeartRate: maximumData.minHeartRate,
-                                                     rangeHeartRate: maximumData.rangeHeartRate,
-                                                     totalMatchTime: maximumData.totalMatchTime)
-                    let recent = [(maximumLevel["totalDistance"] ?? 1.0) * 0.15 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                                  (maximumLevel["maxVelocity"] ?? 1.0) * 0.3 + (maximumLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                                  (maximumLevel["maxVelocity"] ?? 1.0) * 0.25 + (maximumLevel["sprintCount"] ?? 1.0) * 0.125 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                                  (maximumLevel["maxAcceleration"] ?? 1.0) * 0.4 + (maximumLevel["minHeartRate"] ?? 1.0) * 0.1,
-                                  (maximumLevel["totalDistance"] ?? 1.0) * 0.15 + (maximumLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (maximumLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                                  (maximumLevel["totalDistance"] ?? 1.0) * 0.3 + (maximumLevel["sprintCount"] ?? 1.0) * 0.1 + (maximumLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                    
-                    // 방구석 리뷰룸 시연을 위해 작성한 코드
-                    let tripleAverage = average.map { min($0 * 3, 5.0) }
-                    let tripleRecent = recent.map { min($0 * 3, 5.0) }
-                    
-                    ViewControllerContainer(ProfileViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
-                        .fixedSize()
-                        .frame(width: 304, height: 348)
-                        .zIndex(-1)
+                    RadarChartView(width: 304, height: 348)
+//                        .frame(width: 304, height: 348)
                     
                     Spacer()
                         .frame(height: 110)
-                    
-                    
+
                     TrophyCollectionView()
                     
                 }
@@ -166,7 +126,7 @@ struct ProfileView: View {
         }
         .toolbar {
             NavigationLink {
-                ShareView(viewModel: viewModel)
+                ShareView()
             } label: {
                 Text("공유하기")
                     .foregroundStyle(.shareViewTitleTint)

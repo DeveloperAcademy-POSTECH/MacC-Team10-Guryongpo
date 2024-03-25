@@ -36,5 +36,5 @@ struct SprintChartOverview: View {
 }
 
 #Preview {
-    SprintChartOverview(workouts: fakeWorkoutData)
+    SprintChartOverview(workouts: WorkoutData.exampleWorkouts)
 }

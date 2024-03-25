@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct MatchRecapView: View {
-    
-    @EnvironmentObject var healthInteractor: HealthInteractor
-    @Binding var userWorkouts: [WorkoutData]
-    @Binding var averageData: WorkoutAverageData
-    @Binding var maximumData: WorkoutAverageData
-    @State var userName: String = ""
+    let userWorkouts: [WorkoutData]
+    @State private var userName = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -49,14 +45,12 @@ struct MatchRecapView: View {
             .padding(.leading, 32)
             
             VStack(spacing: 15) {
-                ForEach(userWorkouts ?? [], id: \.self) { workout in
+                ForEach(userWorkouts) { workout in
                     NavigationLink {
-                        MatchDetailView(workoutData: workout,
-                                        averageData: $averageData,
-                                        maximumData: $maximumData)
+                        MatchDetailView(workoutData: workout)
                         .toolbarRole(.editor)
                     } label: {
-                        MatchListItemView(workoutData: workout, averageData: $averageData)
+                        MatchListItemView(workoutData: workout)
                     }
                 }
             }
@@ -72,7 +66,6 @@ struct MatchRecapView: View {
 struct MatchListItemView: View {
     let workoutData: WorkoutData
     @State private var currentLocation = "--'--"
-    @Binding var averageData: WorkoutAverageData
     
     var body: some View {
         ZStack {
@@ -102,49 +95,11 @@ struct MatchListItemView: View {
             
             HStack {
                 Spacer ()
-                // TODO: - DataConverter의 코드가 중복됨 2
-                let averageLevel = DataConverter.dataConverter(totalDistance: averageData.totalDistance,
-                                                 maxHeartRate: averageData.maxHeartRate,
-                                                 maxVelocity: averageData.maxVelocity,
-                                                 maxAcceleration: averageData.maxAcceleration,
-                                                 sprintCount: averageData.sprintCount,
-                                                 minHeartRate: averageData.minHeartRate,
-                                                 rangeHeartRate: averageData.rangeHeartRate,
-                                                 totalMatchTime: averageData.totalMatchTime)
-                let average = [(averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                               (averageLevel["maxVelocity"] ?? 1.0) * 0.3 + (averageLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                               (averageLevel["maxVelocity"] ?? 1.0) * 0.25 + (averageLevel["sprintCount"] ?? 1.0) * 0.125 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                               (averageLevel["maxAcceleration"] ?? 1.0) * 0.4 + (averageLevel["minHeartRate"] ?? 1.0) * 0.1,
-                               (averageLevel["totalDistance"] ?? 1.0) * 0.15 + (averageLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (averageLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                               (averageLevel["totalDistance"] ?? 1.0) * 0.3 + (averageLevel["sprintCount"] ?? 1.0) * 0.1 + (averageLevel["maxHeartRate"] ?? 1.0) * 0.1]
                 
-                let rawTime = workoutData.time
-                let separatedTime = rawTime.components(separatedBy: ":")
-                let separatedMinutes = separatedTime[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                let separatedSeconds = separatedTime[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                let recentLevel = DataConverter.dataConverter(totalDistance: workoutData.distance,
-                                                maxHeartRate: workoutData.maxHeartRate,
-                                                maxVelocity: workoutData.velocity,
-                                                maxAcceleration: workoutData.acceleration,
-                                                sprintCount: workoutData.sprint,
-                                                minHeartRate: workoutData.minHeartRate,
-                                                rangeHeartRate: workoutData.maxHeartRate - workoutData.minHeartRate,
-                                                totalMatchTime: Int(separatedMinutes)! * 60 + Int(separatedSeconds)!)
-                let recent = [(recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.35,
-                              (recentLevel["maxVelocity"] ?? 1.0) * 0.3 + (recentLevel["maxAcceleration"] ?? 1.0) * 0.2,
-                              (recentLevel["maxVelocity"] ?? 1.0) * 0.25 + (recentLevel["sprintCount"] ?? 1.0) * 0.125 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.125,
-                              (recentLevel["maxAcceleration"] ?? 1.0) * 0.4 + (recentLevel["minHeartRate"] ?? 1.0) * 0.1,
-                              (recentLevel["totalDistance"] ?? 1.0) * 0.15 + (recentLevel["rangeHeartRate"] ?? 1.0) * 0.15 + (recentLevel["totalMatchTime"] ?? 1.0) * 0.2,
-                              (recentLevel["totalDistance"] ?? 1.0) * 0.3 + (recentLevel["sprintCount"] ?? 1.0) * 0.1 + (recentLevel["maxHeartRate"] ?? 1.0) * 0.1]
-                
-                // 방구석 리뷰룸 시연을 위해 작성한 코드
-                let tripleAverage = average.map { min($0 * 3, 5.0) }
-                let tripleRecent = recent.map { min($0 * 3, 5.0) }
-                
-                ViewControllerContainer(ThumbnailViewController(radarAverageValue: tripleAverage, radarAtypicalValue: tripleRecent))
+                RadarChartView(workout: workoutData, width: 88, height: 88)
                     .scaleEffect(CGSize(width: 0.4, height: 0.4))
                     .fixedSize()
-                    .frame(width: 88, height: 88)
+//                    .frame(width: 88, height: 88)
  
                 VStack(alignment: .leading) {
                     Group {
@@ -193,9 +148,5 @@ struct MatchListItemView: View {
 }
 
 #Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    return MatchRecapView(userWorkouts: .constant(WorkoutData.exampleWorkouts),
-                          averageData: .constant(WorkoutAverageData.exampleAverage),
-                          maximumData: .constant(WorkoutAverageData.exampleAverage))
-    .environmentObject(healthInteractor)
+    MatchRecapView(userWorkouts: WorkoutData.exampleWorkouts)
 }
