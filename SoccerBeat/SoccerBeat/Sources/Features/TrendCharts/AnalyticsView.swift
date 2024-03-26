@@ -41,3 +41,7 @@ struct AnalyticsView: View {
         }
     }
 }
+#Preview {
+    AnalyticsView()
+        .environmentObject(HealthInteractor())
+}

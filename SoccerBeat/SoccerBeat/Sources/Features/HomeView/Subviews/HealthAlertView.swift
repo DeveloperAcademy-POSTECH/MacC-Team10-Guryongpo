@@ -35,3 +35,7 @@ struct HealthAlertView: View {
         )
     }
 }
+
+#Preview {
+    HealthAlertView(showingAlert: .constant(true))
+}
