@@ -60,7 +60,9 @@ struct MatchTimeView: View {
 }
 
 struct PlayerAbilityView: View {
+    @EnvironmentObject var profileModel: ProfileModel
     let workoutData: WorkoutData
+    
     var body: some View {
         VStack {
             HStack {
@@ -88,15 +90,14 @@ struct PlayerAbilityView: View {
                     }
                     HStack {
                         Spacer()
-//                        RadarChartView(workout: workoutData)
-//                            .fixedSize()
-//                            .frame(width: 304, height: 348)
-//                            .zIndex(-1)
+
+                        let recent = DataConverter.toLevels(workoutData)
+                        let average = DataConverter.toLevels(profileModel.averageAbility)
                         
-                        RadarChartView(workout: workoutData,width: 304, height: 348)
-                            .fixedSize()
-//                            .frame(width: 304, height: 348)
-                            .zIndex(-1)
+                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                            .fixedSize()
+                            .frame(width: 304, height: 348)
+                            .zIndex(-1)
                         
                         Spacer()
                     }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MatchRecapView: View {
-    let userWorkouts: [WorkoutData]
     @State private var userName = ""
+    let userWorkouts: [WorkoutData]
 
     var body: some View {
         VStack(spacing: 0) {
@@ -64,8 +64,9 @@ struct MatchRecapView: View {
 }
 
 struct MatchListItemView: View {
-    let workoutData: WorkoutData
+    @EnvironmentObject var profileModel: ProfileModel
     @State private var currentLocation = "--'--"
+    let workoutData: WorkoutData
     
     var body: some View {
         ZStack {
@@ -95,11 +96,14 @@ struct MatchListItemView: View {
             
             HStack {
                 Spacer ()
+            
+                let recent = DataConverter.toLevels(workoutData)
+                let average = DataConverter.toLevels(profileModel.averageAbility)
                 
-                RadarChartView(workout: workoutData, width: 88, height: 88)
-                    .scaleEffect(CGSize(width: 0.4, height: 0.4))
-                    .fixedSize()
-//                    .frame(width: 88, height: 88)
+                ViewControllerContainer(ThumbnailViewController(radarAverageValue: average, radarAtypicalValue: recent))
+                    .scaleEffect(CGSize(width: 0.4, height: 0.4))
+                    .fixedSize()
+                    .frame(width: 88, height: 88)
  
                 VStack(alignment: .leading) {
                     Group {
