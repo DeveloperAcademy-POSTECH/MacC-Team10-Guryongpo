@@ -79,3 +79,8 @@ struct GucciBarProgressStyle: ProgressViewStyle {
         }
     }
 }
+
+#Preview {
+    SprintView()
+        .environmentObject(MatricsIndicator())
+}
