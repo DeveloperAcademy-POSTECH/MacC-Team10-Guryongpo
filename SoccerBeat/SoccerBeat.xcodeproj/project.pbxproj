@@ -292,14 +292,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		681887F02B0374D400580DB9 /* Summary */ = {
+		681887F02B0374D400580DB9 /* EndRecording */ = {
 			isa = PBXGroup;
 			children = (
+				FB954B0C2BB3B84700A365FB /* Models */,
+				FB954B0B2BB3B74C00A365FB /* Subviews */,
 				68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */,
 				681297382AE64432000CC957 /* PhraseView.swift */,
-				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
 			);
-			path = Summary;
+			path = EndRecording;
 			sourceTree = "<group>";
 		};
 		682D64A62AFE768600D7F07B /* SoundEffect */ = {
@@ -342,24 +343,12 @@
 		BE22D62F2AE586AA009035C9 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
-				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
-				68B0732C2AF11847004C723F /* AlertView.swift */,
+				FB954B0E2BB3BB9400A365FB /* Models */,
+				FB954B0D2BB3BAEE00A365FB /* Subviews */,
 				BE22D6302AE586AA009035C9 /* GameProgressView.swift */,
-				BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */,
-				BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */,
-				BE22D6322AE586AA009035C9 /* SprintStatusView.swift */,
 				683825042B06249F00FE9CDF /* SprintSheetView.swift */,
 			);
 			path = Progress;
-			sourceTree = "<group>";
-		};
-		BE22D6392AE586CA009035C9 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				BE4069962AF0E84300FA3030 /* Phrase.json */,
-				BE40699B2AF0EB7700FA3030 /* Phrase.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		BE4069DC2AF212B500FA3030 /* Common */ = {
@@ -387,14 +376,14 @@
 			path = Utiles;
 			sourceTree = "<group>";
 		};
-		BEB666BE2AE4E13E0090195A /* View */ = {
+		BEB666BE2AE4E13E0090195A /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				BEB666BF2AE4E14B0090195A /* StartPauseControl */,
 				BE22D62F2AE586AA009035C9 /* Progress */,
-				681887F02B0374D400580DB9 /* Summary */,
+				681887F02B0374D400580DB9 /* EndRecording */,
 			);
-			path = View;
+			path = Features;
 			sourceTree = "<group>";
 		};
 		BEB666BF2AE4E14B0090195A /* StartPauseControl */ = {
@@ -452,14 +441,13 @@
 		D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				BE22D6392AE586CA009035C9 /* Model */,
-				BEB666BE2AE4E13E0090195A /* View */,
-				685D7B5D2AE3F3BD00783433 /* WorkoutManager */,
-				D3C500282AE36F4000EFAEFF /* Assets.xcassets */,
+				FB954B0F2BB3BC0000A365FB /* Sources */,
+				FB954B102BB3BC1600A365FB /* Resources */,
 				D3C5002A2AE36F4000EFAEFF /* Preview Content */,
 				D3C500242AE36F3F00EFAEFF /* SoccerBeatApp.swift */,
 				685D7B602AE3F3E700783433 /* SoccerBeat Watch App.entitlements */,
 				BEC1E5CF2AE6B4AF008B285E /* SoccerBeat-Watch-App-Info.plist */,
+				FB954B112BB3C0BD00A365FB /* BeforeRemoved */,
 			);
 			path = "SoccerBeat Watch App";
 			sourceTree = "<group>";
@@ -654,6 +642,66 @@
 				682D64822AFD1B6B00D7F07B /* ProfileModel.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		FB954B0B2BB3B74C00A365FB /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				6812973A2AE648E0000CC957 /* SummaryComponent.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		FB954B0C2BB3B84700A365FB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BE4069962AF0E84300FA3030 /* Phrase.json */,
+				BE40699B2AF0EB7700FA3030 /* Phrase.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FB954B0D2BB3BAEE00A365FB /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BEC1E5CD2AE6A254008B285E /* ElapsedTimeView.swift */,
+				6898F2842AEFD7FC0075A573 /* SprintView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		FB954B0E2BB3BB9400A365FB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FB954B0F2BB3BC0000A365FB /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				685D7B5D2AE3F3BD00783433 /* WorkoutManager */,
+				BEB666BE2AE4E13E0090195A /* Features */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		FB954B102BB3BC1600A365FB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D3C500282AE36F4000EFAEFF /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FB954B112BB3C0BD00A365FB /* BeforeRemoved */ = {
+			isa = PBXGroup;
+			children = (
+				68B0732C2AF11847004C723F /* AlertView.swift */,
+				BE22D6322AE586AA009035C9 /* SprintStatusView.swift */,
+			);
+			path = BeforeRemoved;
 			sourceTree = "<group>";
 		};
 		FBCED9212AE3DAC700C57BF9 /* Fonts */ = {
