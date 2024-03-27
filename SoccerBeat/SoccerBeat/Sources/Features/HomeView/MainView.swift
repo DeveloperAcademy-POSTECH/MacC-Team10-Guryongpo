@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
+    @EnvironmentObject var profileModel: ProfileModel
     @EnvironmentObject var soundManager: SoundManager
     @EnvironmentObject var viewModel: ProfileModel
     @State private var isFlipped = false
@@ -97,17 +98,12 @@ struct MainView: View {
                         HStack {
                             VStack {
                                 HStack {
-//                                    RadarChartView(workout: workouts[0])
-//                                        .scaleEffect(CGSize(width: 0.7, height: 0.7))
-//                                        .frame(width: 210, height: 210)
-//                                        .fixedSize()
-//                                        .border(.yellow)
+                                    let recent = DataConverter.toLevels(workouts[0])
+                                    let average = DataConverter.toLevels(profileModel.averageAbility)
                                     
-                                    RadarChartView(workout: workouts[0], width: 210, height: 210)
-                                        .scaleEffect(CGSize(width: 0.7, height: 0.7))
-//                                        .frame(width: 210, height: 210)
-                                        .fixedSize()
-                                        .border(.yellow)
+                                    ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))                              .scaleEffect(CGSize(width: 0.7, height: 0.7))
+                                        .fixedSize()
+                                        .frame(width: 210, height: 210)
                                     
                                     Spacer()
                                     

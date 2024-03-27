@@ -107,12 +107,17 @@ struct ProfileView: View {
                         }
                     }
                     
-                    RadarChartView(width: 304, height: 348)
-//                        .frame(width: 304, height: 348)
+                    let average = DataConverter.toLevels(viewModel.averageAbility)
+                    let maximumAbility = DataConverter.toLevels(viewModel.maxAbility)
+                    
+                    ViewControllerContainer(ProfileViewController(radarAverageValue: average, radarAtypicalValue: maximumAbility))
+                        .fixedSize()
+                        .frame(width: 304, height: 348)
+                        .zIndex(-1)
                     
                     Spacer()
                         .frame(height: 110)
-
+                    
                     TrophyCollectionView()
                     
                 }
