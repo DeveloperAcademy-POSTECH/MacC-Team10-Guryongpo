@@ -86,7 +86,43 @@
 <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team10-Guryongpo/assets/52576276/cb4ff231-ab41-42db-8e7f-cde35e973ef5" width="50%"></td>
 </table>
 
+</br>
 
+## 🗂️ Folder Structure
+
+⚽️ SoccerBeat
+├── 🗂️ Common
+│   ├── 📁 Data
+│   ├── 📁 Extensions
+│   └── 📁 Fonts
+├── 🗂️ SoccerBeat
+│   ├── 🗝️ Sources
+│   │   ├── 📁 Features
+│   │   │   ├── 📁 Homeview
+│   │   │   ├── 📁 MatchRecords
+│   │   │   ├── 📁 TrendCharts
+│   │   │   ├── 📁 Profile
+│   │   │   ├── 📁 SoundEffect
+│   │   │   └── 📁 Share
+│   │   └── 📁 Components
+│   ├── 🛠️ Resources
+│   │   └── 💾 Assets
+│   ├── 📄 SoccerBeatApp
+│   ├── 🗒️ Entitlements.plist
+│   └── 🗒️ Info.plist
+└── 🗂️ SoccerBeat Watch App
+    ├── 🗝️ Sources
+    │   ├── 📁 WorkoutManager
+    │   └── 📁 Features
+    │       ├── 📁 StartPauseControl
+    │       ├── 📁 Progress
+    │       └── 📁 EndRecording
+    ├── 🛠️ Resources
+    │   └── 💾 Assets
+    ├── 📄 SoccerBeatApp
+    ├── 🗒️ Entitlements.plist
+    ├── 🗒️ Info.plist
+    └── 📁 (BeforeRemoved)
 
 </br>
 
