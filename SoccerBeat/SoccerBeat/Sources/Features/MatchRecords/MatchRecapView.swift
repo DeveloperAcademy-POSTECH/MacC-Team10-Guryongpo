@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MatchRecapView: View {
     @State private var userName = ""
-    let userWorkouts: [WorkoutData]
+    @Binding var userWorkouts: [WorkoutData]
 
     var body: some View {
         VStack(spacing: 0) {
@@ -44,7 +44,7 @@ struct MatchRecapView: View {
             }
             .padding(.leading, 32)
             
-            VStack(spacing: 15) {
+            List {
                 ForEach(userWorkouts) { workout in
                     NavigationLink {
                         MatchDetailView(workoutData: workout)
@@ -53,8 +53,11 @@ struct MatchRecapView: View {
                         MatchListItemView(workoutData: workout)
                     }
                 }
+                .onDelete { indexSet in
+                    userWorkouts.remove(atOffsets: indexSet)
+                }
             }
-            .padding(.top, 61)
+            .listStyle(.plain)
             .padding(.horizontal, 16)
         }
         .onAppear {

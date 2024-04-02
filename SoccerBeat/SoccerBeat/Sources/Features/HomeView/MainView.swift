@@ -153,9 +153,7 @@ struct MainView: View {
                 }
                 
                 NavigationLink {
-                    ScrollView(showsIndicators: false) {
-                        MatchRecapView(userWorkouts: workouts)
-                    }
+                    MatchRecapView(userWorkouts: $workouts)
                 } label: {
                     ZStack {
                         LightRectangleView(alpha: 0.15, color: .seeAllMatch, radius: 22)
