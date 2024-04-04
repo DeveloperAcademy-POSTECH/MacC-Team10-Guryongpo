@@ -86,6 +86,7 @@
 		BE4A91582B011C8B004AAFA3 /* SprintChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91572B011C8B004AAFA3 /* SprintChart.swift */; };
 		BE4B72742BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
 		BE4B72752BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
+		BE91CF402BBE43BC00F0EB6F /* RadarChartShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */; };
 		BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
 		BE93F1922B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
 		BE93F1952B009FA300C33756 /* ElapsedTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */; };
@@ -223,6 +224,7 @@
 		BE4A91552B011A46004AAFA3 /* BPMChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMChart.swift; sourceTree = "<group>"; };
 		BE4A91572B011C8B004AAFA3 /* SprintChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintChart.swift; sourceTree = "<group>"; };
 		BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+extension.swift"; sourceTree = "<group>"; };
+		BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartShape.swift; sourceTree = "<group>"; };
 		BE93F1902B00937000C33756 /* TextBorder+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBorder+extension.swift"; sourceTree = "<group>"; };
 		BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeFormatter.swift; sourceTree = "<group>"; };
 		BEA63A602B0AF608000A309D /* HighlightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightModifier.swift; sourceTree = "<group>"; };
@@ -336,40 +338,6 @@
 				D3C500162AE36F3F00EFAEFF /* Assets.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		685D7B702AE53D7E00783433 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				BEA63A682B0B384E000A309D /* Analytics */,
-				BE323D3C2B0B7ED000F289D4 /* Trophy */,
-				BE4A91522B010C26004AAFA3 /* Charts */,
-				685D7B6D2AE5396200783433 /* LightRectangleView.swift */,
-				D3D1749D2B00F92C0022F631 /* TKRadarChart.swift */,
-				D3D1749F2B00FE230022F631 /* RadarViewController.swift */,
-				D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */,
-				FB5859962B14F0A2002617E0 /* InformationButton.swift */,
-				685D7B712AE53D8400783433 /* Screens */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		685D7B712AE53D8400783433 /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				D3C500142AE36F3F00EFAEFF /* ContentView.swift */,
-				D31B4ABD2B0AF35B00DD9100 /* EmptyDataView.swift */,
-				D3A1F10E2B067E8F00EB2049 /* MainView.swift */,
-				D3A1F1102B06847600EB2049 /* ProfileView.swift */,
-				FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */,
-				FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */,
-				FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */,
-				FBA3DA612B00E6EF0025AD7B /* ShareView.swift */,
-				682D64882AFDBF8C00D7F07B /* PhotoSelectButtonView.swift */,
-				D37F6ABB2B0CDFAC00A37E4F /* HealthAlertView.swift */,
-				68D5A5FF2BAD503100C80831 /* GuideAuthorizationView.swift */,
-			);
-			path = Screens;
 			sourceTree = "<group>";
 		};
 		BE22D62F2AE586AA009035C9 /* Progress */ = {
@@ -599,8 +567,8 @@
 			isa = PBXGroup;
 			children = (
 				D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */,
-				BEB1D21C2BB01AE9007B2846 /* RadarChartView.swift */,
 				D3D1749D2B00F92C0022F631 /* TKRadarChart.swift */,
+				BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -954,6 +922,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEA63A612B0AF608000A309D /* HighlightModifier.swift in Sources */,
+				BE91CF402BBE43BC00F0EB6F /* RadarChartShape.swift in Sources */,
 				BECCFAB42B06698F009F4BE5 /* DistanceChartOverview.swift in Sources */,
 				FB2EC9C32B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */,
 				BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */,

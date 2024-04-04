@@ -46,11 +46,17 @@ struct MatchRecapView: View {
             
             List {
                 ForEach(userWorkouts) { workout in
-                    NavigationLink {
-                        MatchDetailView(workoutData: workout)
-                        .toolbarRole(.editor)
-                    } label: {
+                    ZStack {
+                        NavigationLink {
+                            MatchDetailView(workoutData: workout)
+                            .toolbarRole(.editor)
+                        } label: {
+                            EmptyView()
+                        }
+                        .hidden()
+
                         MatchListItemView(workoutData: workout)
+                            .buttonStyle(.plain)
                     }
                 }
                 .onDelete { indexSet in
@@ -58,7 +64,6 @@ struct MatchRecapView: View {
                 }
             }
             .listStyle(.plain)
-            .padding(.horizontal, 16)
         }
         .onAppear {
             userName = UserDefaults.standard.string(forKey: "userName") ?? ""
@@ -73,87 +78,106 @@ struct MatchListItemView: View {
     
     var body: some View {
         ZStack {
+            // 배경뷰
             LightRectangleView(alpha: 0.2, color: .white, radius: 15)
             
+            // 좌상단 뱃지뷰
             VStack {
                 HStack(spacing: 0) {
-                    ForEach(workoutData.matchBadge.indices, id: \.self) { index in
-                        if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
-                            if badgeName.isEmpty {
-                                EmptyView()
-                            } else {
-                                Image(badgeName)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 32, height: 36)
-                            }
-                        } else {
-                            EmptyView()
-                        }
-                    }
-                    .offset(CGSize(width: 15.0, height: -10.0))
+                    badges
+                        .offset(y: -8)
                     Spacer()
                 }
                 Spacer()
             }
             
-            HStack {
-                Spacer ()
-            
-                let recent = DataConverter.toLevels(workoutData)
-                let average = DataConverter.toLevels(profileModel.averageAbility)
+            HStack(spacing: 0) {
+                // 스파이더 차트
+                radarCharts
+                    .padding(.top, 16)
                 
-                ViewControllerContainer(ThumbnailViewController(radarAverageValue: average, radarAtypicalValue: recent))
-                    .scaleEffect(CGSize(width: 0.4, height: 0.4))
-                    .fixedSize()
-                    .frame(width: 88, height: 88)
- 
+                // 경기 데이터들
                 VStack(alignment: .leading) {
-                    Group {
-                        Text(workoutData.yearMonthDay.description + " - " + currentLocation)
-                            .task {
-                                currentLocation = await workoutData.location
-                            }
-                        Text("경기 시간 " + workoutData.time)
-                        
-                    }
-                    .opacity(0.6)
-                    .font(.matchDateLocationText)
+                    timeAndLocation
                     
                     Spacer()
                     
-                    HStack(spacing: 16) {
-                        VStack(alignment: .leading) {
-                            Text("뛴 거리")
-                            Text(String(format: "%.1f", workoutData.distance) + "km")
-                                .bold()
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("최고 속도")
-                            Text("\(Int(workoutData.velocity).formatted()) km/h")
-                                .bold()
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("스프린트 횟수")
-                            Text("\(workoutData.sprint) 회")
-                                .bold()
-                        }
-                    }
-                    .font(.system(size: 14))
-                    
+                    matchMatrics
                 }
+                .frame(width: 225)
                 .foregroundStyle(.white)
-                .padding()
-                
-                Spacer()
             }
         }
-        .frame(height: 114)
+    }
+}
+
+extension MatchListItemView {
+    @ViewBuilder
+    var badges: some View {
+        ForEach(workoutData.matchBadge.indices, id: \.self) { index in
+            if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                if badgeName.isEmpty {
+                    EmptyView()
+                } else {
+                    Image(badgeName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 32, height: 36)
+                }
+            } else {
+                EmptyView()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    var radarCharts: some View {
+        let recent = DataConverter.toLevels(workoutData)
+        let average = DataConverter.toLevels(profileModel.averageAbility)
+        
+        RadarChartView(averageDataPoints: recent, maximumDataPoints: average, limitValue: 2.5)
+    }
+    
+    @ViewBuilder
+    var timeAndLocation: some View {
+        Group {
+            Text(workoutData.yearMonthDay.description + " - " + currentLocation)
+                .task {
+                    currentLocation = await workoutData.location
+                }
+            Text("경기 시간 " + workoutData.time)
+            
+        }
+        .opacity(0.6)
+        .font(.matchDateLocationText)
+    }
+    
+    @ViewBuilder
+    var matchMatrics: some View {
+        HStack(spacing: 16) {
+            VStack(alignment: .leading) {
+                Text("뛴 거리")
+                Text(String(format: "%.1f", workoutData.distance) + "km")
+                    .bold()
+            }
+            
+            VStack(alignment: .leading) {
+                Text("최고 속도")
+                Text("\(Int(workoutData.velocity).formatted()) km/h")
+                    .bold()
+            }
+            
+            VStack(alignment: .leading) {
+                Text("스프린트")
+                Text("\(workoutData.sprint) 회")
+                    .bold()
+            }
+        }
+        .padding(.vertical, 8)
+        .font(.system(size: 14))
     }
 }
 
 #Preview {
-    MatchRecapView(userWorkouts: WorkoutData.exampleWorkouts)
+    MatchRecapView(userWorkouts: .constant(WorkoutData.exampleWorkouts))
 }
