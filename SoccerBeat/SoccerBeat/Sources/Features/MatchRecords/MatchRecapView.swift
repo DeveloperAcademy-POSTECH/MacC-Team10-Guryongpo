@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MatchRecapView: View {
+    @EnvironmentObject var healthInteractor: HealthInteractor
     @State private var userName = ""
     @Binding var userWorkouts: [WorkoutData]
 
@@ -49,24 +50,35 @@ struct MatchRecapView: View {
                     ZStack {
                         NavigationLink {
                             MatchDetailView(workoutData: workout)
-                            .toolbarRole(.editor)
+                                .toolbarRole(.editor)
                         } label: {
                             EmptyView()
                         }
-                        .hidden()
-
+                        .opacity(0.0)
+                        
                         MatchListItemView(workoutData: workout)
                             .buttonStyle(.plain)
                     }
                 }
-                .onDelete { indexSet in
-                    userWorkouts.remove(atOffsets: indexSet)
+                .onDelete { offset in
+                    Task {
+                        await delete(offset)
+                    }
                 }
             }
             .listStyle(.plain)
         }
         .onAppear {
             userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+        }
+    }
+    
+    private func delete(_ offset: IndexSet) async {
+        userWorkouts.remove(atOffsets: offset)
+        do {
+            try await healthInteractor.delete(at: offset)
+        } catch {
+            NSLog("Deleting HKWorkout failed")
         }
     }
 }

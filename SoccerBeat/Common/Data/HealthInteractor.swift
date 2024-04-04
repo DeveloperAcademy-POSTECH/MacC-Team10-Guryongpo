@@ -19,8 +19,7 @@ import SwiftUI
 /// 6. HKHealthStore에서 경기 데이터 가져오기
 /// 7. 커스텀 데이터 계산
 /// 8. 추세 analysis 데이터 계산
-// MARK: - 역할
-@MainActor
+
 final class HealthInteractor: ObservableObject {
     // Object to request permission to read HealthKit data.
     var healthStore = HKHealthStore()
@@ -42,7 +41,7 @@ final class HealthInteractor: ObservableObject {
     ]
     
     // Entire user workouts in HealthKit data.
-//    private var workoutData: [WorkoutData] = []
+    private var hkWorkouts = [HKWorkout]()
     
     // Send when permission is granted by the user.
     var authSuccess = PassthroughSubject<(), Never>()
@@ -103,14 +102,19 @@ final class HealthInteractor: ObservableObject {
         }
     }
     
+    func delete(at offset: IndexSet) async throws {
+        for index in offset {
+            try await healthStore.delete(hkWorkouts[index])
+        }
+    }
+    
     func fetchWorkoutData() async {
-        print("fetchHKWorkout: attempting to fetch all data..")
         // Fetch from HealthStore
-        let workouts = await fetchHKWorkouts()
+        self.hkWorkouts = await fetchHKWorkouts()
         
         // Convert WorkoutData(Bussiness Model)
         var workoutData = [WorkoutData]()
-        for (index, workout) in workouts.enumerated() {
+        for (index, workout) in self.hkWorkouts.enumerated() {
             let workoutDatum = await convert(from: workout, at: index)
             workoutData.append(workoutDatum)
         }
