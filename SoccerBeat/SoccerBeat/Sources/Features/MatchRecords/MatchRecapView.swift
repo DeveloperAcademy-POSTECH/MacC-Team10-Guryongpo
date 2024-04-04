@@ -59,6 +59,8 @@ struct MatchRecapView: View {
                         MatchListItemView(workoutData: workout)
                             .buttonStyle(.plain)
                     }
+                    .padding(.vertical, 2)
+                    .listRowSeparator(.hidden)
                 }
                 .onDelete { offset in
                     Task {
@@ -97,7 +99,7 @@ struct MatchListItemView: View {
             VStack {
                 HStack(spacing: 0) {
                     badges
-                        .offset(y: -8)
+                        .offset(y: -12)
                     Spacer()
                 }
                 Spacer()
@@ -116,6 +118,7 @@ struct MatchListItemView: View {
                     
                     matchMatrics
                 }
+                .padding(.vertical, 8)
                 .frame(width: 225)
                 .foregroundStyle(.white)
             }
