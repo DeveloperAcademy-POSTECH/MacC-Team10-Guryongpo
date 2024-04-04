@@ -103,6 +103,7 @@ final class HealthInteractor: ObservableObject {
     }
     
     func delete(at offset: IndexSet) async throws {
+        hkWorkouts.remove(atOffsets: offset)
         for index in offset {
             try await healthStore.delete(hkWorkouts[index])
         }
