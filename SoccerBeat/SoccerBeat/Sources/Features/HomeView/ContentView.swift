@@ -28,7 +28,7 @@ struct ContentView: View {
                     LoadingView(workouts: $workouts)
                 } else if !healthInteractor.isLoading {
                     if workouts.isEmpty {
-                        Text("Empty View")
+                        EmptyDataView()
                     } else {
                         MainView(workouts: $workouts)
                     }
