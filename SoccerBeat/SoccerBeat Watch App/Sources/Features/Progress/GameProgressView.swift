@@ -27,7 +27,6 @@ struct GameProgressView: View {
         GeometryReader { proxy in
             TabView {
                 Group {
-                    // MARK: - Vertical Page 1
                     progressView
                     
                     ZStack {

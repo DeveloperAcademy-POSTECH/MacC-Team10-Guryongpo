@@ -62,6 +62,9 @@ extension ShapeStyle where Self == Color {
     static var seeAllMatch: Self { .init(hex: 0x565656)}
     static var mainSubTitleColor: Self { .init(hex: 0xB4B4B4) }
     
+    // MARK: - EmptyDataView
+    static var subInfomational: Self { .init(hex: 0xC0C0C1) }
+    
     // MARK: - SummaryView
     
     static var columnTitle: Self { .init(hex: 0x474747) }

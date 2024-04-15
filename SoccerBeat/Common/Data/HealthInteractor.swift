@@ -109,7 +109,11 @@ final class HealthInteractor: ObservableObject {
         }
     }
     
+    @Published var isLoading = false
+    
     func fetchWorkoutData() async {
+        isLoading = true
+        
         // Fetch from HealthStore
         self.hkWorkouts = await fetchHKWorkouts()
         
@@ -122,6 +126,7 @@ final class HealthInteractor: ObservableObject {
         
         settingForChartView(workoutData)
         monthly = divideWorkoutsByMonthly(workoutData)
+        isLoading = false
         self.fetchWorkoutsSuccess.send(workoutData)
     }
     
