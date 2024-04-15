@@ -35,7 +35,7 @@ struct MatchRecapView: View {
             
             HStack {
                 VStack(alignment: .leading, spacing: 0.0) {
-                    Text(userName.isEmpty ? "Player, " : "Player \(userName.split(separator: " ").last!),")
+                        Text(userName.isEmpty ? "Player, " : "Player \(userName.split(separator: " ").last ?? ""),")
                         .lineLimit(1)
                     Text("Your past games")
                 }
