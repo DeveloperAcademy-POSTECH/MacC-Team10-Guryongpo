@@ -40,8 +40,6 @@
 		BE010D3D2B0512680093A5FE /* Double+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D3B2B0512680093A5FE /* Double+extension.swift */; };
 		BE0639D82AE61BC2008D1D4E /* SplitControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D72AE61BC2008D1D4E /* SplitControlsView.swift */; };
 		BE0639DA2AE66D93008D1D4E /* SessionPagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0639D92AE66D93008D1D4E /* SessionPagingView.swift */; };
-		BE0AF4EF2BC7AA3C00D4FDF2 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = BE0AF4EE2BC7AA3C00D4FDF2 /* SkeletonUI */; };
-		BE0AF4F12BC7AA4500D4FDF2 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = BE0AF4F02BC7AA4500D4FDF2 /* SkeletonUI */; };
 		BE16B7C32B0B7D0300192C3B /* TrophyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE16B7C22B0B7D0300192C3B /* TrophyCollectionView.swift */; };
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
 		BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6322AE586AA009035C9 /* SprintStatusView.swift */; };
@@ -90,6 +88,7 @@
 		BE4A91582B011C8B004AAFA3 /* SprintChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91572B011C8B004AAFA3 /* SprintChart.swift */; };
 		BE4B72742BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
 		BE4B72752BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
+		BE4CAB152BCE044100CE0020 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CAB142BCE044100CE0020 /* SkeletonUI */; };
 		BE91CF402BBE43BC00F0EB6F /* RadarChartShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */; };
 		BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
 		BE93F1922B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
@@ -291,7 +290,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE0AF4EF2BC7AA3C00D4FDF2 /* SkeletonUI in Frameworks */,
+				BE4CAB152BCE044100CE0020 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +298,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE0AF4F12BC7AA4500D4FDF2 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,7 +776,7 @@
 			);
 			name = SoccerBeat;
 			packageProductDependencies = (
-				BE0AF4EE2BC7AA3C00D4FDF2 /* SkeletonUI */,
+				BE4CAB142BCE044100CE0020 /* SkeletonUI */,
 			);
 			productName = SoccerBeat;
 			productReference = D3C5000F2AE36F3F00EFAEFF /* SoccerBeat.app */;
@@ -799,7 +797,6 @@
 			);
 			name = "SoccerBeat Watch App";
 			packageProductDependencies = (
-				BE0AF4F02BC7AA4500D4FDF2 /* SkeletonUI */,
 			);
 			productName = "SoccerBeat Watch App";
 			productReference = D3C5001F2AE36F3F00EFAEFF /* SoccerBeat Watch App.app */;
@@ -1419,12 +1416,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BE0AF4EE2BC7AA3C00D4FDF2 /* SkeletonUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BE4982B32BC7A74F003208E3 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
-			productName = SkeletonUI;
-		};
-		BE0AF4F02BC7AA4500D4FDF2 /* SkeletonUI */ = {
+		BE4CAB142BCE044100CE0020 /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BE4982B32BC7A74F003208E3 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
 			productName = SkeletonUI;
