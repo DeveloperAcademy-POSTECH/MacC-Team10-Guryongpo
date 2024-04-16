@@ -80,7 +80,6 @@ struct MainView: View {
                         }
                         Text("최근 경기")
                             .font(.mainTitleText)
-                            .skeleton(with: healthInteractor.isLoading)
                     }
                     
                     
@@ -89,7 +88,6 @@ struct MainView: View {
                         ProfileView()
                     } label: {
                         CardFront(degree: .constant(0), width: 72, height: 110)
-                            .skeleton(with: healthInteractor.isLoading)
                     }
                 }
                 .padding()
@@ -111,7 +109,6 @@ struct MainView: View {
                                         ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))                              .scaleEffect(CGSize(width: 0.7, height: 0.7))
                                                                                 .fixedSize()
                                                                                 .frame(width: 210, height: 210)
-                                            .skeleton(with: healthInteractor.isLoading)
                                     }
                                     Spacer()
                                     
@@ -121,7 +118,6 @@ struct MainView: View {
                                         VStack(alignment: .leading) {
                                             Text(currentLocation)
                                                 .font(.mainDateLocation)
-                                                .skeleton(with: healthInteractor.isLoading)
                                                 .foregroundStyle(.mainDateTime)
                                                 .opacity(0.8)
                                                 .task {
@@ -131,7 +127,7 @@ struct MainView: View {
                                                 }
                                             Group {
                                                 Text("경기 시간")
-                                                    .skeleton(with: healthInteractor.isLoading)
+
                                                 if !workouts.isEmpty {
                                                     Text(workouts[0].time)
                                                 }
@@ -182,7 +178,6 @@ struct MainView: View {
                             
                             Spacer()
                         }
-                        .skeleton(with: healthInteractor.isLoading)
                         .padding()
                     }
                 }
@@ -191,7 +186,6 @@ struct MainView: View {
                     .frame(height: 80)
                 
                 AnalyticsView()
-                    .skeleton(with: healthInteractor.isLoading)
             }
         }
         .refreshable {

@@ -4,11 +4,9 @@
 //
 //  Created by Gucci on 4/15/24.
 //
-import SkeletonUI
 import SwiftUI
 
 struct EmptyDataView: View {
-    @EnvironmentObject var healthInteractor: HealthInteractor
     private let emptyDataMessage = "저장된 경기 기록이 없습니다."
     
     var body: some View {
@@ -25,11 +23,9 @@ struct EmptyDataView: View {
                     // 최근 경기
                     VStack(alignment: .leading, spacing: 4) {
                         InformationButton(message: "가장 최근에 기록한 경기를 만나보세요")
-                            .skeleton(with: healthInteractor.isLoading)
                         
                         Text("최근 경기")
                             .font(.mainTitleText)
-                            .skeleton(with: healthInteractor.isLoading)
                     }
                     
                     Spacer()
@@ -42,24 +38,20 @@ struct EmptyDataView: View {
                     }
                 }
                 .padding(.horizontal, 16)
-                .skeleton(with: healthInteractor.isLoading)
                     
                 // 최근 경기 알림판
                 ZStack {
                     LightRectangleView()
                         .frame(height: 234)
-                        .opacity(healthInteractor.isLoading ? 0 : 1)
                         .padding(.horizontal, 16)
                         .foregroundStyle(.white.opacity(0.1))
                     
                     VStack(spacing: nil) {
                         highlightedInfomationalText(emptyDataMessage)
-                            .skeleton(with: healthInteractor.isLoading)
                             .padding(.top, 46)
                         
                         Text("애플워치를 차고 당신의 첫 번째 경기를 기록해 보세요!")
                             .font(.notoSans(size: 14))
-                            .skeleton(with: healthInteractor.isLoading)
                             .foregroundStyle(.subInfomational)
                             .padding(.top, 20)
                     }
@@ -68,11 +60,9 @@ struct EmptyDataView: View {
                 // 추세
                 VStack(alignment: .leading, spacing: 4) {
                     InformationButton(message: "경기 퍼포먼스의 변화 추세를 살펴보세요")
-                        .skeleton(with: healthInteractor.isLoading)
                     
                     Text("추세")
                         .font(.mainTitleText)
-                        .skeleton(with: healthInteractor.isLoading)
                 }
                 .padding(.leading, 16)
                 .padding(.top, 40)
@@ -86,7 +76,6 @@ struct EmptyDataView: View {
                     
                     VStack(spacing: nil) {
                         highlightedInfomationalText(emptyDataMessage)
-                            .skeleton(with: healthInteractor.isLoading)
                     }
                 }
                 
