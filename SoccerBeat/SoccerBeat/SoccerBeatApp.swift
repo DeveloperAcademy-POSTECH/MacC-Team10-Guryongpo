@@ -22,7 +22,7 @@ struct SoccerBeatApp: App {
     var body: some Scene {
         WindowGroup {
             //             if Authorization == sharingDenied, 명시적으로 거절함.
-            ZStack {
+            Group {
                 if noHealth {
                     NoAuthorizationView(requestingAuth: .health)
                 } else if noLocation {
@@ -44,6 +44,12 @@ struct SoccerBeatApp: App {
                         await self.healthInteracter.fetchWorkoutData()
                     }
                 }
+            }
+            .task {
+                healthInteracter.requestAuthorization()
+            }
+            .onReceive(healthInteracter.authSuccess) {
+                Task { await healthInteracter.fetchWorkoutData() }
             }
         }
     }

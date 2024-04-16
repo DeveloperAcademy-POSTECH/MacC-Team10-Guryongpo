@@ -9,22 +9,19 @@ import SkeletonUI
 import SwiftUI
 
 struct LoadingView: View {
-    @Binding var workouts: [WorkoutData]
+    @EnvironmentObject var healthInteractor: HealthInteractor
     
     var body: some View {
         ForEach(0..<6) { _ in
-            ZStack {
-                LightRectangleView()
-                
-                Text("Loading Now")
-            }
-            .skeleton(with: workouts.isEmpty)
+            Text("Loading Now")
+                .skeleton(with: healthInteractor.isLoading)
         }
     }
 }
 
 #Preview {
-    @State var examples: [WorkoutData] = []
+    @StateObject var healthInteractor = HealthInteractor.shared
 
-    return LoadingView(workouts: $examples)
+    return LoadingView()
+        .environmentObject(healthInteractor)
 }

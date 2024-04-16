@@ -20,34 +20,25 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                // TODO: - 건강 경보라고만 되어있는데 어떤 경보인지 알 수 있도록 renaming
-                if healthAlert {
-                    HealthAlertView(showingAlert: $healthAlert)
-                } else if healthInteractor.isLoading {
-                    LoadingView(workouts: $workouts)
-                } else if !healthInteractor.isLoading {
-                    if workouts.isEmpty {
-                        EmptyDataView()
-                    } else {
-                        MainView(workouts: $workouts)
-                    }
+            if healthAlert {
+                HealthAlertView(showingAlert: $healthAlert)
+            } else if healthInteractor.isLoading {
+                LoadingView()
+            } else {
+                if workouts.isEmpty {
+                    EmptyDataView()
+                } else {
+                    MainView(workouts: $workouts)
                 }
             }
-            .task {
-                healthInteractor.requestAuthorization()
-            }
-            .onReceive(healthInteractor.authSuccess) {
-                Task { await healthInteractor.fetchWorkoutData() }
-            }
-            .onReceive(healthInteractor.fetchWorkoutsSuccess) { workouts in
-                self.workouts = workouts
-            }
-            .onAppear {
-                // 음악을 틀기
-                if soundManager.isMusicPlaying {
-                    soundManager.playBackground()
-                }
+        }
+        .onReceive(healthInteractor.fetchWorkoutsSuccess) { workouts in
+            self.workouts = workouts
+        }
+        .onAppear {
+            // 음악을 틀기
+            if soundManager.isMusicPlaying {
+                soundManager.playBackground()
             }
         }
         .tint(.white)

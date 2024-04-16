@@ -10,16 +10,6 @@ import CoreLocation
 import HealthKit
 import SwiftUI
 
-
-/// 1. 유저 최고 능력치 계산
-/// 2.유저 평군 능력치 계산
-/// 3. HealthStore와 통신
-/// 4. 월별 경기 데이터 가지고 있음
-/// 5. 경기별 경로 데이터
-/// 6. HKHealthStore에서 경기 데이터 가져오기
-/// 7. 커스텀 데이터 계산
-/// 8. 추세 analysis 데이터 계산
-
 final class HealthInteractor: ObservableObject {
     // Object to request permission to read HealthKit data.
     var healthStore = HKHealthStore()
@@ -112,7 +102,9 @@ final class HealthInteractor: ObservableObject {
     @Published var isLoading = false
     
     func fetchWorkoutData() async {
-        isLoading = true
+        await MainActor.run {
+            isLoading = true
+        }
         
         // Fetch from HealthStore
         self.hkWorkouts = await fetchHKWorkouts()
@@ -124,10 +116,13 @@ final class HealthInteractor: ObservableObject {
             workoutData.append(workoutDatum)
         }
         
-        settingForChartView(workoutData)
+        await settingForChartView(workoutData)
         monthly = divideWorkoutsByMonthly(workoutData)
-        isLoading = false
-        self.fetchWorkoutsSuccess.send(workoutData)
+
+        await MainActor.run { [workoutData] in
+            isLoading = false
+            self.fetchWorkoutsSuccess.send(workoutData)
+        }
     }
     
     private func convert(from workout: HKWorkout, at index: Int) async -> WorkoutData {
@@ -231,7 +226,7 @@ final class HealthInteractor: ObservableObject {
 
 extension HealthInteractor {
     
-    private func settingForChartView(_ workouts: [WorkoutData]) {
+    private func settingForChartView(_ workouts: [WorkoutData]) async {
         let nineGames: [WorkoutData] = {
             let games = readRecentMatches(with: workouts, for: 9)
             return sortWorkoutsForChart(games)
@@ -241,8 +236,15 @@ extension HealthInteractor {
             let sorted = sortWorkoutsForChart(games)
             return makeBlankWorkouts(with: sorted)
         }()
-        recent4Games = fourGames
-        recent9Games = nineGames
+        
+//        DispatchQueue.main.async { [unowned self] in
+//            recent4Games = fourGames
+//            recent9Games = nineGames
+//        }
+        await MainActor.run {
+            recent4Games = fourGames
+            recent9Games = nineGames
+        }
     }
     
     private func readRecentMatches(with workouts: [WorkoutData], for count: Int) -> [WorkoutData] {
