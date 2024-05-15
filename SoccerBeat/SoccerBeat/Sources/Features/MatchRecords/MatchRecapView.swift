@@ -170,7 +170,10 @@ extension MatchListItemView {
                 .task {
                     currentLocation = await workoutData.location
                 }
-            Text("경기 시간 " + workoutData.time)
+            HStack(spacing: 0) {
+                Text("경기 시간")
+                Text(" " + workoutData.time)
+            }
             
         }
         .opacity(0.6)
@@ -194,7 +197,11 @@ extension MatchListItemView {
             
             VStack(alignment: .leading) {
                 Text("스프린트")
-                Text("\(workoutData.sprint) 회")
+                HStack(spacing: 0) {
+                    Text("\(workoutData.sprint) ")
+                    Text("회")
+                }
+                
                     .bold()
             }
         }

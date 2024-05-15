@@ -87,13 +87,19 @@ struct SprintChart: View {
                     .annotation(position: .bottom, alignment: .center) {
                         let isMaxOrMin = isMin(workout) || isMax(workout)
                         VStack(spacing: 6) {
-                            Text(workout.sprint.formatted() + "회")
+                            HStack(spacing: 0) {
+                                Text(workout.sprint.formatted())
+                                Text("회")
+                            }
                                 .font(.maxValueUint)
                                 .foregroundStyle(.maxValueStyle)
                                 .opacity(isMaxOrMin ? 1.0 : 0.5)
                                 .padding(.top, 8)
                             
-                            Text("\(workout.day)일")
+                            HStack(spacing: 0) {
+                                Text("\(workout.day)")
+                                Text("일")
+                            }
                                 .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
                                 .foregroundStyle(.defaultDayStyle)
                         }
@@ -175,7 +181,7 @@ extension SprintChartView {
             .frame(height: 100)
             .overlay {
                 VStack(alignment: .center, spacing: 4) {
-                    Text("움바페의 평균 스프린트 횟수는 21회 입니다.")
+                    Text("음바페의 평균 스프린트 횟수는 21회 입니다.")
                         .font(.playerComapareSaying)
                         .foregroundStyle(.playerCompareStyle)
                     Spacer()

@@ -22,9 +22,6 @@ struct StartView: View {
                     Button {
                         if workoutManager.hasNoLocationAuthorization || workoutManager.hasNoHealthAuthorization {
                             isShowingAlert.toggle()
-                            print("here")
-                            print(workoutManager.hasNoLocationAuthorization)
-                            print(workoutManager.hasNoHealthAuthorization)
                         } else {
                             workoutManager.showingPrecount.toggle()
                         }

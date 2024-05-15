@@ -1,4 +1,5 @@
 {
+  "originHash" : "12e207aad7a0cfa82e9a513efcadea51181b6321e055d46c8781d398b55052ea",
   "pins" : [
     {
       "identity" : "skeletonui",
@@ -23,10 +24,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax",
       "state" : {
-        "revision" : "fa8f95c2d536d6620cc2f504ebe8a6167c9fc2dd",
-        "version" : "510.0.1"
+        "revision" : "303e5c5c36d6a558407d364878df131c3546fad8",
+        "version" : "510.0.2"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

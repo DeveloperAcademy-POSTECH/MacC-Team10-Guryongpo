@@ -51,7 +51,10 @@ struct MatchTimeView: View {
             .zIndex(1)
             
             VStack(alignment: .leading, spacing: -8) {
-                Text("경기 시간 \(workoutData.time)")
+                HStack(spacing: 0) {
+                    Text("경기 시간")
+                    Text(" \(workoutData.time)")
+                }
             }
             .font(.matchDetailTitle)
         }
@@ -71,9 +74,9 @@ struct PlayerAbilityView: View {
                     Spacer()
                         .frame(minHeight: 30)
                     
-                    VStack(spacing: 6) {
+                    VStack(alignment: .leading, spacing: 6) {
                         HStack(spacing: 0) {
-                            Text(" 빨간색")
+                            Text("빨간색")
                                 .bold()
                                 .foregroundStyle(.matchDetailViewTitleColor)
                             Text("은 이번 경기의 능력치입니다.")
@@ -81,7 +84,7 @@ struct PlayerAbilityView: View {
                         .floatingCapsuleStyle()
                         
                         HStack(spacing: 0) {
-                            Text(" 민트색")
+                            Text("민트색")
                                 .bold()
                                 .foregroundStyle(.matchDetailViewAverageStatColor)
                             Text("은 경기의 평균 능력치입니다.")
@@ -95,9 +98,11 @@ struct PlayerAbilityView: View {
                         let average = DataConverter.toLevels(profileModel.averageAbility)
                         
                         ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))
-                            .fixedSize()
-                            .frame(width: 304, height: 348)
-                            .zIndex(-1)
+                            .scaleEffect(CGSize(width: 0.9, height: 0.9))
+                            .padding()
+                            .fixedSize()
+                            .frame(width: 304, height: 348)
+                            .zIndex(-1)
                         
                         Spacer()
                     }

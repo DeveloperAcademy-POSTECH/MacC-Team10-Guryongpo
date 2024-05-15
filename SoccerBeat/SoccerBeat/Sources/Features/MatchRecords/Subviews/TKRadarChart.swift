@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftUI
+
 
 #if swift( >=4.2)
 typealias NSAttributedStringKey = NSAttributedString.Key
@@ -38,7 +40,7 @@ public protocol TKRadarChartDelegate: AnyObject {
 
 extension TKRadarChartDelegate {
     public func fontOfTitleForRadarChart(_ radarChart: TKRadarChart) -> UIFont {
-        return UIFont.boldSystemFont(ofSize: 12)
+        return UIFont.boldSystemFont(ofSize: 7)
     }
     public func colorOfTitleForRadarChart(_ radarChart: TKRadarChart) -> UIColor {
         return UIColor.gray
@@ -142,7 +144,6 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
         }
     }
     
-    
     public weak var dataSource: TKRadarChartDataSource?
     public weak var delegate: TKRadarChartDelegate?
     
@@ -200,8 +201,8 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                                       y: centerPoint.y - radius * cos(i * perAngle))
             let attributeTextSize = (title as NSString)
                 .size(withAttributes: [NSAttributedStringKey.font: textFont])
-            
-            let width = attributeTextSize.width
+        
+            let width = attributeTextSize.width + 40
             let xOffset = pointOnEdge.x >=  centerPoint .x ? width / 2.0 + padding : -width / 2.0 - padding
             let yOffset = pointOnEdge.y >=  centerPoint .y ? height / 2.0 + padding : -height / 2.0 - padding
             var legendCenter = CGPoint(x: pointOnEdge.x + xOffset, y: pointOnEdge.y + yOffset)
@@ -225,7 +226,10 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
             let rect = CGRect(x: legendCenter.x - width / 2.0,
                               y: legendCenter.y - height / 2.0,
                               width: width, height: height)
-            (title as NSString).draw(in: rect, withAttributes: attributes)
+            
+            let localizedKey = String.LocalizationValue(stringLiteral: title)
+            let convertTitle = String(localized: localizedKey)
+            (convertTitle as NSString).draw(in: rect, withAttributes: attributes)
         }
         
         /// Draw the background rectangle

@@ -89,7 +89,7 @@ struct AnalyticsComponent: View {
                     Text(lastGameValue)
                         .font(Font.sfProDisplay(size: 32,
                                                 weight: .heavyItalic))
-                    Text(navigationAssistantTitle)
+                    Text(LocalizedStringKey(navigationAssistantTitle))
                         .font(Font.notoSans(size: 14, weight: .regular))
                 }
                 .foregroundStyle(.linearGradient(colors: [.white, .white.opacity(0.6)], startPoint: .leading, endPoint: .trailing))

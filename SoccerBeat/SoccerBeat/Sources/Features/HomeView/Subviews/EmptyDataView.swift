@@ -86,7 +86,7 @@ struct EmptyDataView: View {
     }
 
     private func highlightedInfomationalText(_ message: String) -> some View {
-        Text(emptyDataMessage)
+        Text(LocalizedStringKey(emptyDataMessage))
             .font(.summaryContent)
             .foregroundStyle(.playTimeNumber)
     }

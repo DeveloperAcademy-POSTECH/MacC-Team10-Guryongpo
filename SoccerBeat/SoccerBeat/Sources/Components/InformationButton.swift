@@ -20,7 +20,8 @@ struct InformationButton: View {
                     .resizable()
                     .frame(width: 11, height: 15)
                 if isInfoOpen {
-                    Text(" \(message)")
+                    Text(" ")
+                    Text(LocalizedStringKey(message))
                         .foregroundStyle(.white)
                 }
                 Text(" ")

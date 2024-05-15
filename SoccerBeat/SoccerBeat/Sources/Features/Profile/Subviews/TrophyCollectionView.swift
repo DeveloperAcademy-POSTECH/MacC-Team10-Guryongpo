@@ -39,7 +39,7 @@ extension TrophyCollectionView {
             message = "최고 속도에 따라 획득하는 뱃지입니다."
         }
         
-        return Text(message)
+        return Text(LocalizedStringKey(message))
             .padding(.horizontal, 8)
             .floatingCapsuleStyle()
     }

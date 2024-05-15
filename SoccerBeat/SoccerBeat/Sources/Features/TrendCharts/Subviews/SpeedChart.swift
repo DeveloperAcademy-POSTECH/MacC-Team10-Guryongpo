@@ -96,7 +96,10 @@ struct SpeedChart: View {
                                 .opacity(isMaxOrMin ? 1.0 : 0.5)
                                 .padding(.top, 8)
                             
-                            Text("\(workout.day)일")
+                            HStack(spacing: 0) {
+                                Text("\(workout.day)")
+                                Text("일")
+                            }
                                 .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
                                 .foregroundStyle(.defaultDayStyle)
                         }

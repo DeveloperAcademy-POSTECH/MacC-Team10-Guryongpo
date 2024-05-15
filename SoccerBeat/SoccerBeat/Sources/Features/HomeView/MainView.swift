@@ -52,7 +52,7 @@ struct MainView: View {
                             .frame(height: 24)
                     }
                     .alert(
-                        alertTitle,
+                        LocalizedStringKey(alertTitle),
                         isPresented: $isShowingBug
                     ) {
                         Button("취소", role: .cancel) {
@@ -106,9 +106,10 @@ struct MainView: View {
                                         let recent = DataConverter.toLevels(workouts[0])
                                         let average = DataConverter.toLevels(profileModel.averageAbility)
                                         
-                                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent))                              .scaleEffect(CGSize(width: 0.7, height: 0.7))
-                                                                                .fixedSize()
-                                                                                .frame(width: 210, height: 210)
+                                        ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent)).scaleEffect(CGSize(width: 0.6, height: 0.6))
+                                            .padding()
+                                            .fixedSize()
+                                            .frame(width: 220, height: 210)
                                     }
                                     Spacer()
                                     

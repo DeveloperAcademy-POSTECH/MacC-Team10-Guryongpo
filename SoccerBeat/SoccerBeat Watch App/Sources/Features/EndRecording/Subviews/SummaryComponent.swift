@@ -35,7 +35,7 @@ struct SummaryComponent: View {
                         .frame(maxWidth: 25, maxHeight: 25)
                         .padding(.horizontal)
                     Spacer()
-                    Text(title)
+                    Text(LocalizedStringKey(title))
                         .font(.summaryTraillingTop)
                         .foregroundStyle(.white)
                         .padding(.horizontal)

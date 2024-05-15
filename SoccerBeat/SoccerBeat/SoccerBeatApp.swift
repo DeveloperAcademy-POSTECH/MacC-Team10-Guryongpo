@@ -33,6 +33,7 @@ struct SoccerBeatApp: App {
                     ContentView()
                 }
             }
+            .environment(\.locale, .init(identifier: "en"))
             .environmentObject(soundManager)
             .environmentObject(healthInteracter)
             .environmentObject(profileModel)
