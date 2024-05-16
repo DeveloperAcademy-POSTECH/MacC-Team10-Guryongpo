@@ -200,6 +200,7 @@
 		6876C0BE2B0B7F73005C6872 /* FifaBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FifaBackground.mp3; sourceTree = "<group>"; };
 		688DEBDC2BF4A4B300F75E1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		688DEBDF2BF4A4C400F75E1A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		688DEBE52BF4E07200F75E1A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ko; path = ko.lproj/Phrase.json; sourceTree = "<group>"; };
 		6898F2842AEFD7FC0075A573 /* SprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintView.swift; sourceTree = "<group>"; };
 		68B0732C2AF11847004C723F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		68D5A5FF2BAD503100C80831 /* GuideAuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAuthorizationView.swift; sourceTree = "<group>"; };
@@ -219,7 +220,6 @@
 		BE323D472B0CC5DE00F289D4 /* SF-Pro-Text-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-MediumItalic.otf"; sourceTree = "<group>"; };
 		BE360EFF2B9FF4A100071C30 /* MatricsIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatricsIndicator.swift; sourceTree = "<group>"; };
 		BE360F012BA016EA00071C30 /* WorkoutManager+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutManager+extensions.swift"; sourceTree = "<group>"; };
-		BE4069972AF0E84800FA3030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE4069982AF0E8AC00FA3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Phrase.json; sourceTree = "<group>"; };
 		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
 		BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+extension.swift"; sourceTree = "<group>"; };
@@ -830,12 +830,12 @@
 			};
 			buildConfigurationList = D3C5000A2AE36F3E00EFAEFF /* Build configuration list for PBXProject "SoccerBeat" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				ko,
+				Base,
 			);
 			mainGroup = D3C500062AE36F3E00EFAEFF;
 			packageReferences = (
@@ -1087,8 +1087,8 @@
 		BE4069962AF0E84300FA3030 /* Phrase.json */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BE4069972AF0E84800FA3030 /* Base */,
 				BE4069982AF0E8AC00FA3030 /* en */,
+				688DEBE52BF4E07200F75E1A /* ko */,
 			);
 			name = Phrase.json;
 			sourceTree = "<group>";
@@ -1320,6 +1320,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "축구 기록을 활용하기 위해 건강 정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "선수 프로필 저장 및 공유를 위해 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1368,6 +1369,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "축구 기록을 활용하기 위해 건강 정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "선수 프로필 저장 및 공유를 위해 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
