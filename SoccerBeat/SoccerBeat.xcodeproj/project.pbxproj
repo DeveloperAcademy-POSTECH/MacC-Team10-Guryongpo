@@ -844,7 +844,7 @@
 			};
 			buildConfigurationList = D3C5000A2AE36F3E00EFAEFF /* Build configuration list for PBXProject "SoccerBeat" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = ko;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
