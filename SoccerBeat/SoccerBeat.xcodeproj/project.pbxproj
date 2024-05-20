@@ -199,6 +199,8 @@
 		685D7B6D2AE5396200783433 /* LightRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightRectangleView.swift; sourceTree = "<group>"; };
 		685D7B742AE53DC400783433 /* SpeedChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedChart.swift; sourceTree = "<group>"; };
 		686E99892BD0DB4900B9FD56 /* NameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldView.swift; sourceTree = "<group>"; };
+		687606A52BFB61D50023B4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		687606A62BFB61D50023B4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "zh-Hans"; path = "zh-Hans.lproj/Phrase.json"; sourceTree = "<group>"; };
 		6876C0BE2B0B7F73005C6872 /* FifaBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FifaBackground.mp3; sourceTree = "<group>"; };
 		688DEBDC2BF4A4B300F75E1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		688DEBDF2BF4A4C400F75E1A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -848,6 +850,7 @@
 				en,
 				ko,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = D3C500062AE36F3E00EFAEFF;
 			packageReferences = (
@@ -1094,6 +1097,7 @@
 			children = (
 				688DEBDC2BF4A4B300F75E1A /* en */,
 				688DEBDF2BF4A4C400F75E1A /* ko */,
+				687606A52BFB61D50023B4F0 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1103,6 +1107,7 @@
 			children = (
 				BE4069982AF0E8AC00FA3030 /* en */,
 				688DEBE52BF4E07200F75E1A /* ko */,
+				687606A62BFB61D50023B4F0 /* zh-Hans */,
 			);
 			name = Phrase.json;
 			sourceTree = "<group>";
