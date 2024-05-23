@@ -29,7 +29,8 @@ struct SessionPagingView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(selection == .progress)
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: isLuminanceReduced ? .never : .automatic))
+        .tabViewStyle(.page)
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .onChange(of: isLuminanceReduced) { _ in
             displayMetricsView()
         }

@@ -28,30 +28,22 @@ struct GameProgressView: View {
             TabView {
                 Group {
                     progressView
+                        .offset(y: 10)
                     
-                    ZStack {
+                    VStack {
                             zoneBar
-                                .scaledToFit()
-                                .offset(y: 10)
+                                .offset(y: 25)
                         BPMView()
                     }
-                    .offset(y: 20)
                 }
-                .rotationEffect(.degrees(-90)) // Rotate content
                 .frame(
-                    width: proxy.size.width,
-                    height: proxy.size.height
+                    width: proxy.size.width - 10,
+                    height: proxy.size.height - 10
                 )
+                .padding()
             }
-            .frame(
-                width: proxy.size.height, // Height & width swap
-                height: proxy.size.width
-            )
-            .rotationEffect(.degrees(90), anchor: .topLeading) // Rotate TabView
-            .offset(x: proxy.size.width) // Offset back into screens bounds
-            .tabViewStyle(
-                PageTabViewStyle(indexDisplayMode: .never)
-            )
+            .tabViewStyle(.carousel)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         }
     }
 }
@@ -213,11 +205,10 @@ extension GameProgressView {
     @ViewBuilder
     private var zoneBar: some View {
 
-        GeometryReader { geo in
             let circleHeight = 16.0
             let currentZoneWidth = 50.0
             
-            HStack(spacing: 4) {
+            HStack(alignment: .center, spacing: 4) {
                 ForEach(1...5, id: \.self) { index in
                     if zone.rawValue == index {
                         currentZone
@@ -229,7 +220,6 @@ extension GameProgressView {
                     }
                 }
             }
-        }
     }
     
     @ViewBuilder
