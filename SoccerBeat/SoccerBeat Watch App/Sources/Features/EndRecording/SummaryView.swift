@@ -21,7 +21,7 @@ struct SummaryView: View {
                 SummaryComponent(title: "최고 속도", content: (matricsIndicator.maxSpeedMPS * 3.6).rounded(at: 1) + " km/h")
                 SummaryComponent(title: "스프린트 횟수", content:  matricsIndicator.sprintCount.formatted() + " Times")
                 
-                SummaryComponent(title: "가속도", content:  matricsIndicator.acceleration.rounded(at: 1) + " m/s")
+                SummaryComponent(title: "파워", content:  matricsIndicator.power.rounded(at: 1) + " w")
 
                 Button {
                     dismiss()

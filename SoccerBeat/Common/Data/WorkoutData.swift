@@ -17,7 +17,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     let distance: Double // Total distance played during the match.
     let sprint: Int // Number of sprints during the match.
     let velocity: Double // Maximum speed during the match.. km/h
-    let acceleration: Double // Maximum acceleration, velocity. m/s
+    let power: Double // Maximum power, w
     // TODO: min, max 각각 프로퍼티로 나누기
     var heartRate: [String: Int] // min, max of heartRate. ex) ["max": 00, "min": 00]
     var route: [CLLocationCoordinate2D] // whole route
@@ -95,7 +95,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               distance: 4.5,
                               sprint: 6,
                               velocity: 24.5,
-                              acceleration: 3.0,
+                              power: 3.0,
                               heartRate: ["max": 190, "min": 70],
                               route: [],
                               center: [37.58647414212885, 126.9748537678651])
@@ -106,28 +106,28 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                                    distance: 0.1,
                                    sprint: 1,
                                    velocity: 0.5,
-                                   acceleration: 1.0,
+                                   power: 1.0,
                                    heartRate: ["max": 80, "min": 60],
                                    route: [],
                                    center: [37.58647414212885, 126.9748537678651])
     
     // TODO: - Factory Method Pattern으로 빼내는건 어떨까요?
     static let exampleWorkouts = [
-        WorkoutData(dataID: 1, date: "2023-10-09T01:20:32Z", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, acceleration: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0]),
-        WorkoutData(dataID: 2, date: "2023-10-09T01:20:35Z", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, acceleration: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0]),
-        WorkoutData(dataID: 3, date: "2023-10-09T01:20:38Z", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, acceleration: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0]),
-        WorkoutData(dataID: 4, date: "2023-10-19T01:20:32Z", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, acceleration: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0]),
-        WorkoutData(dataID: 5, date: "2023-10-20T01:20:32Z", time: "60:10", distance: 4.5, sprint: 11, velocity: 17.2, acceleration: 3.0, heartRate: ["max": 175, "min": 60], route: [], center: [0, 0]),
-        WorkoutData(dataID: 6, date: "2023-10-21T01:20:32Z", time: "60:10", distance: 3.6, sprint: 5, velocity: 24.4, acceleration: 3.0, heartRate: ["max": 190, "min": 79], route: [], center: [0, 0]),
-        WorkoutData(dataID: 7, date: "2023-10-23T01:20:32Z", time: "60:10", distance: 3.8, sprint: 13, velocity: 15.9, acceleration: 3.0, heartRate: ["max": 183, "min": 91], route: [], center: [0, 0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.5, sprint: 17, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 159, "min": 69], route: [], center: [0, 0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.1, sprint: 1, velocity: 17.3, acceleration: 3.0, heartRate: ["max": 144, "min": 73], route: [], center: [0, 0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 3.2, sprint: 7, velocity: 16.3, acceleration: 3.0, heartRate: ["max": 159, "min": 72], route: [], center: [0, 0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 0.5, sprint: 8, velocity: 14.3, acceleration: 3.0, heartRate: ["max": 162, "min": 63], route: [], center: [0, 0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 1.9, sprint: 9, velocity: 12.3, acceleration: 3.0, heartRate: ["max": 168, "min": 59], route: [], center: [0, 0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 4.9, sprint: 10, velocity: 13.3, acceleration: 3.0, heartRate: ["max": 171, "min": 68], route: [], center: [0, 0]),
-        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.9, sprint: 17, velocity: 11.3, acceleration: 3.0, heartRate: ["max": 158, "min": 69], route: [], center: [0, 0]),
-        WorkoutData(dataID: 9, date: "2023-10-27T01:20:32Z", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, acceleration: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0])
+        WorkoutData(dataID: 1, date: "2023-10-09T01:20:32Z", time: "61:10", distance: 3.5, sprint: 3, velocity: 10.5, power: 3.0, heartRate: ["max": 171, "min": 53], route: [], center: [0, 0]),
+        WorkoutData(dataID: 2, date: "2023-10-09T01:20:35Z", time: "62:10", distance: 2.1, sprint: 5, velocity: 11.5, power: 3.0, heartRate: ["max": 152, "min": 70], route: [], center: [0, 0]),
+        WorkoutData(dataID: 3, date: "2023-10-09T01:20:38Z", time: "60:10", distance: 1.1, sprint: 7, velocity: 8.5, power: 3.0, heartRate: ["max": 167, "min": 92], route: [], center: [0, 0]),
+        WorkoutData(dataID: 4, date: "2023-10-19T01:20:32Z", time: "60:10", distance: 5.1, sprint: 9, velocity: 12.5, power: 3.0, heartRate: ["max": 185, "min": 100], route: [], center: [0, 0]),
+        WorkoutData(dataID: 5, date: "2023-10-20T01:20:32Z", time: "60:10", distance: 4.5, sprint: 11, velocity: 17.2, power: 3.0, heartRate: ["max": 175, "min": 60], route: [], center: [0, 0]),
+        WorkoutData(dataID: 6, date: "2023-10-21T01:20:32Z", time: "60:10", distance: 3.6, sprint: 5, velocity: 24.4, power: 3.0, heartRate: ["max": 190, "min": 79], route: [], center: [0, 0]),
+        WorkoutData(dataID: 7, date: "2023-10-23T01:20:32Z", time: "60:10", distance: 3.8, sprint: 13, velocity: 15.9, power: 3.0, heartRate: ["max": 183, "min": 91], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.5, sprint: 17, velocity: 17.3, power: 3.0, heartRate: ["max": 159, "min": 69], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.1, sprint: 1, velocity: 17.3, power: 3.0, heartRate: ["max": 144, "min": 73], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 3.2, sprint: 7, velocity: 16.3, power: 3.0, heartRate: ["max": 159, "min": 72], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 0.5, sprint: 8, velocity: 14.3, power: 3.0, heartRate: ["max": 162, "min": 63], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 1.9, sprint: 9, velocity: 12.3, power: 3.0, heartRate: ["max": 168, "min": 59], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 4.9, sprint: 10, velocity: 13.3, power: 3.0, heartRate: ["max": 171, "min": 68], route: [], center: [0, 0]),
+        WorkoutData(dataID: 8, date: "2023-10-24T01:20:32Z", time: "60:10", distance: 2.9, sprint: 17, velocity: 11.3, power: 3.0, heartRate: ["max": 158, "min": 69], route: [], center: [0, 0]),
+        WorkoutData(dataID: 9, date: "2023-10-27T01:20:32Z", time: "60:10", distance: 5.3, sprint: 12, velocity: 23.5, power: 3.0, heartRate: ["max": 187, "min": 60], route: [], center: [0, 0])
     ]
     
     
@@ -144,7 +144,7 @@ struct WorkoutAverageData: Hashable, Equatable, Identifiable {
     var minHeartRate: Int // Minimum heart rate during the match.
     var rangeHeartRate: Int // Range of heart rate during the match.
     var totalDistance: Double // Total distance played during the match.
-    var maxAcceleration: Double // Maximum acceleration during the match.
+    var maxPower: Double // Maximum power during the match.
     var maxVelocity: Double // Maximum speed during the match.
     var sprintCount: Int // Number of sprints during the match.
     var totalMatchTime: Int // Total play time in the match.
@@ -153,17 +153,17 @@ struct WorkoutAverageData: Hashable, Equatable, Identifiable {
                                                              minHeartRate: 50,
                                                              rangeHeartRate: 5,
                                                              totalDistance: 2.0,
-                                                             maxAcceleration: 5.8,
+                                                             maxPower: 5.8,
                                                              maxVelocity: 22.4,
                                                              sprintCount: 3,
                                                              totalMatchTime: 80)
     
-    init(maxHeartRate: Int, minHeartRate: Int, rangeHeartRate: Int, totalDistance: Double, maxAcceleration: Double, maxVelocity: Double, sprintCount: Int, totalMatchTime: Int) {
+    init(maxHeartRate: Int, minHeartRate: Int, rangeHeartRate: Int, totalDistance: Double, maxPower: Double, maxVelocity: Double, sprintCount: Int, totalMatchTime: Int) {
         self.maxHeartRate = maxHeartRate
         self.minHeartRate = minHeartRate
         self.rangeHeartRate = rangeHeartRate
         self.totalDistance = totalDistance
-        self.maxAcceleration = maxAcceleration
+        self.maxPower = maxPower
         self.maxVelocity = maxVelocity
         self.sprintCount = sprintCount
         self.totalMatchTime = totalMatchTime
@@ -174,7 +174,7 @@ struct WorkoutAverageData: Hashable, Equatable, Identifiable {
         self.minHeartRate = 0
         self.rangeHeartRate = 0
         self.totalDistance = 0
-        self.maxAcceleration = 0
+        self.maxPower = 0
         self.maxVelocity = 0
         self.sprintCount = 0
         self.totalMatchTime = 0

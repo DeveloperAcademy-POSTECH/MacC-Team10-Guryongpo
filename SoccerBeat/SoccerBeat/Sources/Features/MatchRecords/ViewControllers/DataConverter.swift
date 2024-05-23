@@ -12,7 +12,7 @@ final class DataConverter {
     static private func toLevelDictionary(totalDistance: Double,
                                       maxHeartRate: Int,
                                       maxVelocity: Double,
-                                      maxAcceleration: Double,
+                                      maxPower: Double,
                                       sprintCount: Int,
                                       minHeartRate: Int,
                                       rangeHeartRate: Int,
@@ -55,16 +55,16 @@ final class DataConverter {
             levels["maxVelocity"] = 5.0
         }
         
-        if maxAcceleration <= 2.0 {
-            levels["maxAcceleration"] = 1.0
-        } else if maxAcceleration > 2.0 && maxAcceleration <= 3.0 {
-            levels["maxAcceleration"] = 2.0
-        } else if maxAcceleration > 3.0 && maxAcceleration <= 4.0 {
-            levels["maxAcceleration"] = 3.0
-        } else if maxAcceleration > 4.0 && maxAcceleration <= 5.0 {
-            levels["maxAcceleration"] = 4.0
-        } else if maxAcceleration > 5.0 {
-            levels["maxAcceleration"] = 5.0
+        if maxPower <= 2.0 {
+            levels["maxPower"] = 1.0
+        } else if maxPower > 2.0 && maxPower <= 3.0 {
+            levels["maxPower"] = 2.0
+        } else if maxPower > 3.0 && maxPower <= 4.0 {
+            levels["maxPower"] = 3.0
+        } else if maxPower > 4.0 && maxPower <= 5.0 {
+            levels["maxPower"] = 4.0
+        } else if maxPower > 5.0 {
+            levels["maxPower"] = 5.0
         }
         
         if sprintCount <= 1 {
@@ -122,7 +122,7 @@ final class DataConverter {
         let recentLevel = toLevelDictionary(totalDistance: workout.distance,
                                        maxHeartRate: workout.maxHeartRate,
                                        maxVelocity: workout.velocity,
-                                       maxAcceleration: workout.acceleration,
+                                       maxPower: workout.power,
                                        sprintCount: workout.sprint,
                                        minHeartRate: workout.minHeartRate,
                                        rangeHeartRate: workout.maxHeartRate-workout.minHeartRate,
@@ -136,7 +136,7 @@ final class DataConverter {
         let averageLevel = toLevelDictionary(totalDistance: averageWorkout.totalDistance,
                                              maxHeartRate: averageWorkout.maxHeartRate,
                                              maxVelocity: averageWorkout.maxVelocity,
-                                             maxAcceleration: averageWorkout.maxAcceleration,
+                                             maxPower: averageWorkout.maxPower,
                                              sprintCount: averageWorkout.sprintCount,
                                              minHeartRate: averageWorkout.minHeartRate,
                                              rangeHeartRate: averageWorkout.maxHeartRate-averageWorkout.minHeartRate,
@@ -147,9 +147,9 @@ final class DataConverter {
     static private func toTriple(_ level: [String: Double]) -> [Double] {
         return [
             (level["totalDistance"] ?? 1.0) * 0.15 + (level["maxHeartRate"] ?? 1.0) * 0.35,
-            (level["maxVelocity"] ?? 1.0) * 0.3 + (level["maxAcceleration"] ?? 1.0) * 0.2,
+            (level["maxVelocity"] ?? 1.0) * 0.3 + (level["maxPower"] ?? 1.0) * 0.2,
             (level["maxVelocity"] ?? 1.0) * 0.25 + (level["sprintCount"] ?? 1.0) * 0.125 + (level["maxHeartRate"] ?? 1.0) * 0.125,
-            (level["maxAcceleration"] ?? 1.0) * 0.4 + (level["minHeartRate"] ?? 1.0) * 0.1,
+            (level["maxPower"] ?? 1.0) * 0.4 + (level["minHeartRate"] ?? 1.0) * 0.1,
             (level["totalDistance"] ?? 1.0) * 0.15 + (level["rangeHeartRate"] ?? 1.0) * 0.15 + (level["totalMatchTime"] ?? 1.0) * 0.2,
             (level["totalDistance"] ?? 1.0) * 0.3 + (level["sprintCount"] ?? 1.0) * 0.1 + (level["maxHeartRate"] ?? 1.0) * 0.1
         ]

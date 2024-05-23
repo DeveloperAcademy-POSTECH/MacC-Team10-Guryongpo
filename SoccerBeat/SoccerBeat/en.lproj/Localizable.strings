@@ -43,7 +43,7 @@
 "스프린트" = "Sprint";
 "최고 속도" = "Max Speed";
 "스프린트 횟수" = "Sprint Counts";
-"가속도" = "Acceleration";
+"가속도" = "Power";
 "완료" = "Finish";
 "일시 정지" = "Pause";
 "재개" = "Resume";
@@ -94,3 +94,4 @@
 "최고속도\n20 km/h 초과" = "Maximum speed\nOver 20 km/h";
 "최고속도\n25 km/h 초과" = "Maximum speed\nOver 25 km/h";
 "설정에서 '정확한 위치'를 허용하면 보다 정확한 데이터를 얻을 수 있어요." = "Allowing the 'Precise Location' in the settings will give you more accurate data.";
+"파워" = "Power";

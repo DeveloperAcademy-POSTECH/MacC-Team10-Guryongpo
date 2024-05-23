@@ -246,16 +246,13 @@ struct FieldRecordDataView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("가속도")
+                        Text("파워")
                             .font(.fieldRecordTitle)
                         HStack(alignment: .bottom,spacing: 0) {
-                            Text(workoutData.acceleration.rounded(at: 1))
+                            Text(workoutData.power.rounded(at: 1))
                                 .font(.fieldRecordMeasure)
-                            Text(" m/s")
+                            Text(" w")
                                 .font(.fieldRecordUnit)
-                            Text("2")
-                                .font(.fieldRecordSquare)
-                                .baselineOffset(10.0)
                         }
                     }
                     

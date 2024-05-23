@@ -141,7 +141,8 @@ final class HealthInteractor: ObservableObject {
         guard let distance: Double = metadata.getValue(forKey: "Distance"),
               let sprintCount: Int = metadata.getValue(forKey: "SprintCount"),
               let velocityMPS: Double = metadata.getValue(forKey: "MaxSpeed"),
-              let acceleration: Double = metadata.getValue(forKey: "Acceleration"),
+              // Acceleration -> Power 변경. 이전 데이터 터짐 방지 위해 Power -> Acceleration 으로 변환 표시. 
+              let power: Double = metadata.getValue(forKey: "Power") ?? metadata.getValue(forKey: "Acceleration"),
               let maxHeartRate: Int = metadata.getValue(forKey: "MaxHeartRate"),
               let minHeartRate: Int = metadata.getValue(forKey: "MinHeartRate")
         else { return  WorkoutData.blankExample }
@@ -155,7 +156,7 @@ final class HealthInteractor: ObservableObject {
                            distance: distance,
                            sprint: sprintCount,
                            velocity: velocityKMPH, // km/h
-                           acceleration: acceleration,
+                           power: power,
                            heartRate: ["max": maxHeartRate,
                                        "min": minHeartRate],
                            route: routes,

@@ -86,7 +86,7 @@ final class ProfileModel: ObservableObject {
             maxAbility.minHeartRate = min(maxAbility.minHeartRate, workout.minHeartRate)
             maxAbility.rangeHeartRate = max(maxAbility.rangeHeartRate, workout.maxHeartRate - workout.minHeartRate)
             maxAbility.totalDistance = max(maxAbility.totalDistance, workout.distance)
-            maxAbility.maxAcceleration = max(maxAbility.maxAcceleration, workout.acceleration)
+            maxAbility.maxPower = max(maxAbility.maxPower, workout.power)
             maxAbility.maxVelocity = max(maxAbility.maxVelocity, workout.velocity)
             maxAbility.sprintCount = max(maxAbility.sprintCount, workout.sprint)
             maxAbility.totalMatchTime = max(maxAbility.totalMatchTime, workout.playtimeSec)
@@ -101,7 +101,7 @@ final class ProfileModel: ObservableObject {
             averageAbility.minHeartRate += workout.minHeartRate
             averageAbility.rangeHeartRate += workout.maxHeartRate - workout.minHeartRate
             averageAbility.totalDistance += workout.distance
-            averageAbility.maxAcceleration += workout.acceleration
+            averageAbility.maxPower += workout.power
             averageAbility.maxVelocity += workout.velocity
             averageAbility.sprintCount += workout.sprint
             averageAbility.totalMatchTime += workout.playtimeSec
@@ -113,7 +113,7 @@ final class ProfileModel: ObservableObject {
         averageAbility.minHeartRate /= workoutCount
         averageAbility.rangeHeartRate /= workoutCount
         averageAbility.totalDistance /= Double(workoutCount)
-        averageAbility.maxAcceleration /= Double(workoutCount)
+        averageAbility.maxPower /= Double(workoutCount)
         averageAbility.maxVelocity /= Double(workoutCount)
         averageAbility.sprintCount /= workoutCount
         averageAbility.totalMatchTime /= workoutCount
