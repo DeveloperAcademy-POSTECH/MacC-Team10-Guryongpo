@@ -5,6 +5,8 @@
 //  Created by daaan on 11/17/23.
 //
 
+// 추후 로직 변경 필요
+
 import SwiftUI
 
 struct ProfileView: View {
