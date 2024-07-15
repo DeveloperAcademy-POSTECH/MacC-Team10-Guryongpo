@@ -25,11 +25,7 @@ struct ContentView: View {
             } else if healthInteractor.isLoading {
                 LoadingView()
             } else {
-                if workouts.isEmpty {
-                    EmptyDataView()
-                } else {
-                    MainView(workouts: $workouts)
-                }
+                MainView(workouts: $workouts)
             }
         }
         .onReceive(healthInteractor.fetchWorkoutsSuccess) { workouts in

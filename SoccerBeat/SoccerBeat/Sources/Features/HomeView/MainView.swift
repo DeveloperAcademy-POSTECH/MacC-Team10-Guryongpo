@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var isShowingOnboardingView = true
+
     @EnvironmentObject var profileModel: ProfileModel
     @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
@@ -17,6 +19,7 @@ struct MainView: View {
     
     @State var isShowingBug = false
     private let alertTitle = "문제가 있으신가요?"
+    private let emptyDataMessage = "저장된 경기 기록이 없습니다."
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -77,6 +80,10 @@ struct MainView: View {
                             Text(workouts[0].yearMonthDay)
                                 .font(.mainSubTitleText)
                                 .opacity(0.7)
+                        } else {
+                            Text("----.--.--")
+                                .font(.mainSubTitleText)
+                                .opacity(0.7)
                         }
                         Text("최근 경기")
                             .font(.mainTitleText)
@@ -92,17 +99,15 @@ struct MainView: View {
                 }
                 .padding()
                 
-                NavigationLink {
-                    if !workouts.isEmpty {
+                if !workouts.isEmpty {
+                    NavigationLink {
                         MatchDetailView(workoutData: workouts[0])
-                    }
-                } label: {
-                    ZStack {
-                        LightRectangleView(alpha: 0.6, color: .black, radius: 15)
-                        HStack {
-                            VStack {
-                                HStack {
-                                    if !workouts.isEmpty {
+                    } label: {
+                        ZStack {
+                            LightRectangleView(alpha: 0.6, color: .black, radius: 15)
+                            HStack {
+                                VStack {
+                                    HStack {
                                         let recent = DataConverter.toLevels(workouts[0])
                                         let average = DataConverter.toLevels(profileModel.averageAbility)
                                         
@@ -110,47 +115,47 @@ struct MainView: View {
                                             .padding()
                                             .fixedSize()
                                             .frame(width: 220, height: 210)
-                                    }
-                                    Spacer()
-                                    
-                                    // 최근 경기 미리보기 오른쪽
-                                    VStack(alignment: .trailing) {
-                                        
-                                        VStack(alignment: .leading) {
-                                            Text(currentLocation)
-                                                .font(.mainDateLocation)
-                                                .foregroundStyle(.mainDateTime)
-                                                .opacity(0.8)
-                                                .task {
-                                                    if !workouts.isEmpty {
-                                                        currentLocation = await workouts[0].location
-                                                    }
-                                                }
-                                            Group {
-                                                Text("경기 시간")
-
-                                                if !workouts.isEmpty {
-                                                    Text(workouts[0].time)
-                                                }
-                                            }
-                                            .font(.mainTime)
-                                            .foregroundStyle(.mainMatchTime)
-                                        }
-                                        
                                         Spacer()
                                         
-                                        // 뱃지
-                                        HStack {
-                                            if !workouts.isEmpty {
-                                                ForEach(workouts[0].matchBadge.indices, id: \.self) { index in
-                                                    if let badgeName = ShortenedBadgeImageDictionary[index][workouts[0].matchBadge[index]] {
-                                                        if badgeName.isEmpty {
-                                                            EmptyView()
-                                                        } else {
-                                                            Image(badgeName)
-                                                                .resizable()
-                                                                .aspectRatio(contentMode: .fit)
-                                                                .frame(width: 32, height: 36)
+                                        // 최근 경기 미리보기 오른쪽
+                                        VStack(alignment: .trailing) {
+                                            
+                                            VStack(alignment: .leading) {
+                                                Text(currentLocation)
+                                                    .font(.mainDateLocation)
+                                                    .foregroundStyle(.mainDateTime)
+                                                    .opacity(0.8)
+                                                    .task {
+                                                        if !workouts.isEmpty {
+                                                            currentLocation = await workouts[0].location
+                                                        }
+                                                    }
+                                                Group {
+                                                    Text("경기 시간")
+                                                    
+                                                    if !workouts.isEmpty {
+                                                        Text(workouts[0].time)
+                                                    }
+                                                }
+                                                .font(.mainTime)
+                                                .foregroundStyle(.mainMatchTime)
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            // 뱃지
+                                            HStack {
+                                                if !workouts.isEmpty {
+                                                    ForEach(workouts[0].matchBadge.indices, id: \.self) { index in
+                                                        if let badgeName = ShortenedBadgeImageDictionary[index][workouts[0].matchBadge[index]] {
+                                                            if badgeName.isEmpty {
+                                                                EmptyView()
+                                                            } else {
+                                                                Image(badgeName)
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fit)
+                                                                    .frame(width: 32, height: 36)
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -158,42 +163,98 @@ struct MainView: View {
                                         }
                                     }
                                 }
+                                Spacer()
                             }
-                            Spacer()
+                            .padding()
                         }
-                        .padding()
+                    }
+                } else {
+                    ZStack {
+                        LightRectangleView(alpha: 0.6, color: .black, radius: 15)
+                            .frame(height: 234)
+                            .foregroundStyle(.white.opacity(0.1))
+                        
+                        VStack(spacing: nil) {
+                            highlightedInfomationalText(emptyDataMessage)
+                                .padding(.top, 46)
+                            
+                            Text("애플워치를 차고 당신의 첫 번째 경기를 기록해 보세요!")
+                                .font(.notoSans(size: 14))
+                                .foregroundStyle(.subInfomational)
+                                .padding(.top, 20)
+                        }
                     }
                 }
                 
-                NavigationLink {
-                    MatchRecapView(userWorkouts: $workouts)
-                } label: {
-                    ZStack {
-                        LightRectangleView(alpha: 0.15, color: .seeAllMatch, radius: 22)
-                            .frame(height: 38)
-                        HStack {
-                            Spacer()
-                            
-                            Image(systemName: "soccerball")
-                            Text("모든 경기 보기 +")
-                            
-                            Spacer()
+                if !workouts.isEmpty {
+                    NavigationLink {
+                        MatchRecapView(userWorkouts: $workouts)
+                    } label: {
+                        ZStack {
+                            LightRectangleView(alpha: 0.15, color: .seeAllMatch, radius: 22)
+                                .frame(height: 38)
+                            HStack {
+                                Spacer()
+                                
+                                Image(systemName: "soccerball")
+                                Text("모든 경기 보기 +")
+                                
+                                Spacer()
+                            }
+                            .padding()
                         }
-                        .padding()
                     }
                 }
                 
                 Spacer()
                     .frame(height: 80)
                 
-                AnalyticsView()
+                if !workouts.isEmpty {
+                    AnalyticsView()
+                } else {
+                    VStack(alignment: .leading) {
+                        
+                        InformationButton(message: "최근 경기 데이터의 변화를 확인해 보세요.")
+                        
+                        HStack {
+                            Text("추세")
+                                .font(.mainTitleText)
+                            Spacer()
+                        }
+                        .padding()
+                    }
+                    ZStack {
+                        LightRectangleView(alpha: 0.6, color: .black, radius: 15)
+                            .frame(height: 91)
+                        
+                        VStack(spacing: nil) {
+                            highlightedInfomationalText(emptyDataMessage)
+                        }
+                    }
+                }
             }
+        }
+        .sheet(isPresented: $isShowingOnboardingView) {
+            OnboardingView()
+                .presentationDetents([.medium])
+        }
+        .onAppear {
+            isShowingOnboardingView = workouts.isEmpty
+        }
+        .onChange(of: workouts) { newValue in
+            isShowingOnboardingView = newValue.isEmpty
         }
         .refreshable {
             await healthInteractor.fetchWorkoutData()
         }
         .padding(.horizontal)
         .navigationTitle("")
+    }
+    
+    private func highlightedInfomationalText(_ message: String) -> some View {
+        Text(LocalizedStringKey(emptyDataMessage))
+            .font(.summaryContent)
+            .foregroundStyle(.playTimeNumber)
     }
     
     func openURL(urlString: String){
