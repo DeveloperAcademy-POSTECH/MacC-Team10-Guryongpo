@@ -19,6 +19,7 @@ struct MatchDetailView: View {
                     MatchTimeView(workoutData: workoutData)
                     Spacer()
                         .frame(height: 48)
+                    ErrorView(workoutData: workoutData)
                     PlayerAbilityView(workoutData: workoutData)
                         .zIndex(-1)
                     Spacer()
@@ -27,10 +28,37 @@ struct MatchDetailView: View {
                     Spacer()
                         .frame(height: 100)
                     FieldMovementView(workoutData: workoutData)
+                        .padding()
+                    }
                 }
-                .padding()
             }
             .scrollIndicators(.hidden)
+        }
+    }
+
+struct ErrorView: View {
+    let workoutData: WorkoutData
+    
+    var body: some View {
+        if !workoutData.error {
+            EmptyView()
+        } else {
+            VStack {
+                Image(.errormark)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 74, height: 80)
+                    .padding()
+                Text("데이터에 오류가 발생했습니다. ")
+                    .font(.averageValue)
+                    .foregroundStyle(.white)
+                    .padding(2)
+                Text("건강 및 위치 권한을 재확인하거나")
+                Text("삭제 및 재설치를 권장드립니다.")
+            }
+            .font(.fieldRecordTitle)
+            .foregroundStyle(.mainSubTitleColor)
+            .padding(32)
         }
     }
 }
@@ -131,19 +159,23 @@ struct FieldRecordView: View {
             Spacer()
                 .frame(minHeight: 30)
             HStack {
-                ForEach(workoutData.matchBadge.indices, id: \.self) { index in
-                    if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
-                        if badgeName.isEmpty {
-                            EmptyView()
+                if !workoutData.error {
+                    ForEach(workoutData.matchBadge.indices, id: \.self) { index in
+                        if let badgeName = BadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                            if badgeName.isEmpty {
+                                EmptyView()
+                            } else {
+                                Image(badgeName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 74, height: 82)
+                            }
                         } else {
-                            Image(badgeName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 74, height: 82)
+                            EmptyView()
                         }
-                    } else {
-                        EmptyView()
                     }
+                } else {
+                    EmptyView()
                 }
             }
             FieldRecordDataView(workoutData: workoutData)
@@ -182,7 +214,8 @@ struct FieldMovementView: View {
 
 #Preview {
     @StateObject var healthInteractor = HealthInteractor.shared
-    return MatchDetailView(workoutData: WorkoutData.example)
+//    return MatchDetailView(workoutData: WorkoutData.example)
+    return ErrorView(workoutData: WorkoutData.example)
     .environmentObject(healthInteractor)
 }
 

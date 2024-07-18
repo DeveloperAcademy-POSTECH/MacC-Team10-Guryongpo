@@ -66,9 +66,11 @@ struct MatchRecapView: View {
                         MatchListItemView(workoutData: workout)
                             .buttonStyle(.plain)
                     }
+                    .offset(y: 4)
                     .padding(.vertical, 2)
                     .listRowSeparator(.hidden)
                 }
+                
                 .onDelete { offset in
                     Task {
                         await delete(offset)
@@ -103,11 +105,14 @@ struct MatchListItemView: View {
             LightRectangleView(alpha: 0.2, color: .white, radius: 15)
             
             // 좌상단 뱃지뷰
+            
             VStack {
                 HStack(spacing: 0) {
                     badges
                         .offset(y: -12)
                     Spacer()
+                    errors
+                        .offset(x: -4, y: -8)
                 }
                 Spacer()
             }
@@ -120,6 +125,7 @@ struct MatchListItemView: View {
                 // 경기 데이터들
                 VStack(alignment: .leading) {
                     timeAndLocation
+                        .padding(.top, 3)
                     
                     Spacer()
                     
@@ -136,19 +142,35 @@ struct MatchListItemView: View {
 extension MatchListItemView {
     @ViewBuilder
     var badges: some View {
-        ForEach(workoutData.matchBadge.indices, id: \.self) { index in
-            if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
-                if badgeName.isEmpty {
-                    EmptyView()
+        if !workoutData.error {
+            ForEach(workoutData.matchBadge.indices, id: \.self) { index in
+                if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                    if badgeName.isEmpty {
+                        EmptyView()
+                    } else {
+                        Image(badgeName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 32, height: 36)
+                    }
                 } else {
-                    Image(badgeName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 32, height: 36)
-                }
-            } else {
+                        EmptyView()
+                    }
+            }
+        } else {
                 EmptyView()
             }
+    }
+    
+    @ViewBuilder
+    var errors: some View {
+        if workoutData.error {
+            Image(.errormark)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 32, height: 32)
+        } else {
+            EmptyView()
         }
     }
     
@@ -207,6 +229,6 @@ extension MatchListItemView {
     }
 }
 
-#Preview {
-    MatchRecapView(userWorkouts: .constant(WorkoutData.exampleWorkouts))
-}
+//#Preview {
+//    MatchRecapView(userWorkouts: .constant(WorkoutData.exampleWorkouts))
+//}

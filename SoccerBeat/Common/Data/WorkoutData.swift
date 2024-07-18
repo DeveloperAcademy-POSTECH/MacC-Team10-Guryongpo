@@ -30,6 +30,8 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
         heartRate["min", default: 50] // Minimum heart rate during the match.
     }
     
+    var error = false
+    
     var matchBadge: [Int] {
         var badge = [0,0,0]
 
@@ -98,7 +100,8 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               power: 3.0,
                               heartRate: ["max": 190, "min": 70],
                               route: [],
-                              center: [37.58647414212885, 126.9748537678651])
+                              center: [37.58647414212885, 126.9748537678651],
+                              error: true)
     
     static let blankExample = Self(dataID: 0,
                                    date: "2023-10-09T01:20:32Z",
