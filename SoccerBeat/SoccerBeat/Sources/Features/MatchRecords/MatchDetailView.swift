@@ -186,6 +186,7 @@ struct FieldRecordView: View {
 struct FieldMovementView: View {
     let workoutData: WorkoutData
     @State var isInfoOpen: Bool = false
+    @State private var slider = 0.5
     var body: some View {
         VStack {
             HStack {
@@ -202,9 +203,15 @@ struct FieldMovementView: View {
                 }
             }
             
-            HeatmapView(coordinate: CLLocationCoordinate2D(latitude: workoutData.center[0], longitude: workoutData.center[1]), polylineCoordinates: workoutData.route)
+            HeatmapView(slider: $slider, coordinate: CLLocationCoordinate2D(latitude: workoutData.center[0], longitude: workoutData.center[1]), polylineCoordinates: workoutData.route)
                 .frame(height: 500)
                 .cornerRadius(15.0)
+            
+            Slider(
+                value: $slider,
+                in: 0...1
+            )
+            
         }
         
         Spacer()

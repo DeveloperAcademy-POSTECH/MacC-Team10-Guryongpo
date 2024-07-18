@@ -14,31 +14,36 @@ import MapKit
 // polylineCoordinates: [CLLocationCoordinate2D(latitude, longitude)])
 
 struct HeatmapView: UIViewRepresentable {
+    @Binding var slider: Double
     let coordinate: CLLocationCoordinate2D
     let polylineCoordinates: [CLLocationCoordinate2D]
     
-    func updateUIView(_ uiView: MKMapView, context: Context) {}
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        
+        for idx in polylineCoordinates.indices {
+            if idx % 10 == 0 {
+                let index = Int(Double(idx) * slider)
+                let polyline = MKPolyline(points: [
+                    MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinates[index].latitude,
+                                                      longitude: polylineCoordinates[index].longitude)),
+                    MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinates[index].latitude + 0.0000001,
+                                                      longitude: polylineCoordinates[index].longitude + 0.0000001))
+                ], count: 2)
+                uiView.addOverlay(polyline)
+                print("Overlay added")
+                print("index: ", index)
+            }
+        }
+        
+    }
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
-        var counter = 0
         
         mapView.delegate = context.coordinator
         mapView.region = MKCoordinateRegion(center: coordinate,
                                                 latitudinalMeters: 100,
                                                 longitudinalMeters: 100)
-        for polylineCoordinate in polylineCoordinates {
-            counter += 1
-            if counter % 10 == 0 {
-                let polyline = MKPolyline(points: [
-                    MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude,
-                                                      longitude: polylineCoordinate.longitude)),
-                    MKMapPoint(CLLocationCoordinate2D(latitude: polylineCoordinate.latitude + 0.0000001,
-                                                      longitude: polylineCoordinate.longitude + 0.0000001))
-                ], count: 2)
-                mapView.addOverlay(polyline)
-            }
-        }
         
         return mapView
     }

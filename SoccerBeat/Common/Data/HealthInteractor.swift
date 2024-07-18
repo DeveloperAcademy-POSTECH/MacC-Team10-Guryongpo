@@ -126,6 +126,7 @@ final class HealthInteractor: ObservableObject {
     }
     
     private func convert(from workout: HKWorkout, at index: Int) async -> WorkoutData {
+        
         var latSum = 0.0
         var lonSum = 0.0
         var routes: [CLLocationCoordinate2D] = []
@@ -136,51 +137,49 @@ final class HealthInteractor: ObservableObject {
             latSum += location.coordinate.latitude
             lonSum += location.coordinate.longitude
         }
+        let displayedTime = String(Int(workout.duration)/60) + " : " + String(Int(workout.duration) % 60)
+        var dotCount = routes.isEmpty ? 1 : routes.count
         
         // Metadata를 WorkoutData로 변환
         // 기본으로 데이터 오류 있음 가정
         var dataError = true
-        if let _: Double = metadata.getValue(forKey: "Distance"),
-              let _: Int = metadata.getValue(forKey: "SprintCount"),
-              let _: Double = metadata.getValue(forKey: "MaxSpeed"),
-              let _: Double = metadata.getValue(forKey: "Power") ?? metadata.getValue(forKey: "Acceleration"),
-              let _: Int = metadata.getValue(forKey: "MaxHeartRate"),
-              let _: Int = metadata.getValue(forKey: "MinHeartRate")
-        {   // 문제 없이 변환될 경우 데이터 오류 없음 표기
-            dataError = false }
         
-        // 저변환되는 데이터
-          let distance: Double = metadata.getValue(forKey: "Distance") ?? 0
-          let sprintCount: Int = metadata.getValue(forKey: "SprintCount") ?? 0
-          let velocityMPS: Double = metadata.getValue(forKey: "MaxSpeed") ?? -1
-          // Acceleration -> Power 변경. 이전 데이터 터짐 방지 위해 Power -> Acceleration 으로 변환 표시.
-          let power: Double = metadata.getValue(forKey: "Power") ?? metadata.getValue(forKey: "Acceleration") ?? 0
-          let maxHeartRate: Int = metadata.getValue(forKey: "MaxHeartRate") ?? 0
-          let minHeartRate: Int = metadata.getValue(forKey: "MinHeartRate") ?? 0
-
-        var velocityKMPH = Double((velocityMPS * 3.6).rounded(at: 2)) ?? -1
-        if velocityKMPH < 0 {
-            velocityKMPH = 0
+        if let distance: Double? = metadata.getValue(forKey: "Distance"),
+           let sprintCount: Int? = metadata.getValue(forKey: "SprintCount"),
+           let velocityMPS: Double? = metadata.getValue(forKey: "MaxSpeed"),
+           let power: Double = metadata.getValue(forKey: "Power") ?? metadata.getValue(forKey: "Acceleration"),
+           let maxHeartRate: Int = metadata.getValue(forKey: "MaxHeartRate"),
+           let minHeartRate: Int = metadata.getValue(forKey: "MinHeartRate") {
+            var velocityKMPH: Double = Double(((velocityMPS ?? 0) * 3.6).rounded(at: 2)) ?? 0
+            dataError = false
+            return WorkoutData(dataID: index+1,
+                               date: dateFormatter.string(from: workout.startDate),
+                               time: displayedTime,
+                               distance: distance ?? 0,
+                               sprint: sprintCount ?? 0,
+                               velocity: velocityKMPH, // km/h
+                               power: power,
+                               heartRate: ["max": maxHeartRate,
+                                           "min": minHeartRate],
+                               route: routes,
+                               center: [latSum / Double(dotCount),
+                                        lonSum / Double(dotCount)],
+                               error: dataError)
+        } else {
+            return WorkoutData(dataID: index+1,
+                               date: dateFormatter.string(from: workout.startDate),
+                               time: displayedTime,
+                               distance: 0,
+                               sprint: 0,
+                               velocity: 0, // km/h
+                               power: 0,
+                               heartRate: ["max": 0,
+                                           "min": 0],
+                               route: routes,
+                               center: [latSum / Double(dotCount),
+                                        lonSum / Double(dotCount)],
+                               error: dataError)
         }
-        let displayedTime = String(Int(workout.duration)/60) + " : " + String(Int(workout.duration) % 60)
-        var dotCount = routes.count
-        // 0 으로 나눔 방지
-        if dotCount == 0 {
-            dotCount = 1
-        }
-        return WorkoutData(dataID: index+1,
-                           date: dateFormatter.string(from: workout.startDate),
-                           time: displayedTime,
-                           distance: distance,
-                           sprint: sprintCount,
-                           velocity: velocityKMPH, // km/h
-                           power: power,
-                           heartRate: ["max": maxHeartRate,
-                                       "min": minHeartRate],
-                           route: routes,
-                           center: [latSum / Double(dotCount),
-                                    lonSum / Double(dotCount)],
-                           error: dataError)
     }
 
     private func fetchHKWorkouts() async -> [HKWorkout] {
