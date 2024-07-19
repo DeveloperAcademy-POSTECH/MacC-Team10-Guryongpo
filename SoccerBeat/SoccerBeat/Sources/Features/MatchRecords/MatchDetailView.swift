@@ -186,7 +186,7 @@ struct FieldRecordView: View {
 struct FieldMovementView: View {
     let workoutData: WorkoutData
     @State var isInfoOpen: Bool = false
-    @State private var slider = 0.5
+    @State private var slider = 0.0
     var body: some View {
         VStack {
             HStack {
