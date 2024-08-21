@@ -87,7 +87,7 @@ struct TooltipView<Content: View>: View {
 #Preview {
     @State var showTooltip = true
     
-    return Text("Hello Wolrd")
+    return Text("Hello World")
         .overlay {
             TooltipView(isVisible: $showTooltip, alignment: .top) {
                 Text("Hint 내용입니다.")

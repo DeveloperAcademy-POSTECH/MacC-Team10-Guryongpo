@@ -9,7 +9,7 @@ struct ShareView: View {
     @State private var showingAlert: Bool = false
     
     private var userName: String {
-        return UserDefaults.standard.string(forKey: "userName") ?? " "
+        return UserDefaults.standard.string(forKey: "userName") ?? ""
     }
     
     var body: some View {

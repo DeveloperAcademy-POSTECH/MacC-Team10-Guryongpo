@@ -212,8 +212,8 @@ extension MatchListItemView {
                     currentLocation = await workoutData.location
                 }
             HStack(spacing: 0) {
-                Text("경기 시간")
-                Text(" " + workoutData.time)
+                Text("경기 시간 ")
+                Text(workoutData.time)
             }
             
         }
@@ -228,8 +228,7 @@ extension MatchListItemView {
                 Text("뛴 거리")
                 HStack(spacing: 0) {
                     Text((workoutData.error ? "--" : String(format: "%.1f", workoutData.distance)))
-                    Text(" ")
-                    Text("km")
+                    Text(" km")
                 }
                 .bold()
             }
@@ -238,8 +237,7 @@ extension MatchListItemView {
                 Text("최고 속도")
                 HStack(spacing: 0) {
                     Text((workoutData.error ? "--" :  "\(Int(workoutData.velocity).formatted())"))
-                    Text(" ")
-                    Text("km/h")
+                    Text(" km/h")
                 }
                 .bold()
             }
@@ -249,12 +247,10 @@ extension MatchListItemView {
                 HStack(spacing: 0) {
                     if workoutData.sprint == 1 {
                         Text((workoutData.error ? "--" : "\(workoutData.sprint)"))
-                        Text(" ")
-                        Text("time")
+                        Text(" time")
                     } else {
                         Text((workoutData.error ? "--" : "\(workoutData.sprint)"))
-                        Text(" ")
-                        Text("times")
+                        Text(" times")
                     }
                 }
                 

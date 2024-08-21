@@ -78,7 +78,6 @@ struct ProfileView: View {
                     VStack(spacing: 6) {
                         HStack {
                             HStack(spacing: 0) {
-                                Text("")
                                 Text("파란색")
                                     .bold()
                                     .foregroundStyle(
@@ -91,7 +90,6 @@ struct ProfileView: View {
                         
                         HStack {
                             HStack(spacing: 0) {
-                                Text("")
                                 Text("빨간색")
                                     .bold()
                                     .foregroundStyle(.matchDetailViewTitleColor)
