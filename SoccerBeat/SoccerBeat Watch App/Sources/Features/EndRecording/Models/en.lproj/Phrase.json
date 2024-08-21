@@ -1,3 +1,5 @@
+#  Wise Saying in Soccer
+
 {
   "phrase":[
      {
@@ -38,8 +40,7 @@
      },
      {
        "name": "Rio Ferdinand",
-       "saying": "Confidence is a massive part of success in football. If you believe in yourself and your team, you can achieve anything"
+       "saying": "If you believe in yourself and your team, you can achieve anything"
      }
   ]
 }
-

@@ -1,5 +1,5 @@
 {
-  "sourceLanguage" : "en",
+  "sourceLanguage" : "ko",
   "strings" : {
     "%@의 결승골 득점시 심박수는 %@입니다." : {
       "comment" : "결승골 심박수 명언",
