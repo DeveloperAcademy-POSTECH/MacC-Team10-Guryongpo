@@ -1,9 +1,37 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
+    "" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
+    },
     " --:--" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " --:--"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : " --:--"
@@ -25,6 +53,12 @@
             "value" : " %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " %@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -36,6 +70,12 @@
     " Bpm" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Bpm"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : " Bpm"
@@ -57,6 +97,12 @@
             "value" : " km"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " km"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -68,6 +114,12 @@
     " km/h" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " km/h"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : " km/h"
@@ -89,6 +141,12 @@
             "value" : " time"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " time"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -100,6 +158,12 @@
     " times" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " times"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : " times"
@@ -121,6 +185,12 @@
             "value" : " Times"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Times"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -132,6 +202,12 @@
     " w" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " w"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : " w"
@@ -153,6 +229,12 @@
             "value" : " 회"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " 회"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -164,6 +246,12 @@
     "--" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "--"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "--"
@@ -185,6 +273,12 @@
             "value" : "----.--.--"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "----.--.--"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -196,6 +290,12 @@
     "--:--" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "--:--"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "--:--"
@@ -217,6 +317,12 @@
             "value" : "# Hello World"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# Hola Mundo"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,6 +334,12 @@
     "# Soccer Beat" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# Soccer Beat"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "# Soccer Beat"
@@ -249,6 +361,12 @@
             "value" : "%@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -260,6 +378,12 @@
     "%@ - %@" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ - %2$@"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ - %2$@"
@@ -289,6 +413,12 @@
             "value" : "%@'s heart rate was %@ when he scored the winning goal."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuando %@ marcó el gol de la victoria, su ritmo cardíaco era %@."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -311,6 +441,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The top speed of %@ is %@km/h."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La velocidad máxima de %@ es de %@km/h."
           }
         },
         "ko" : {
@@ -337,6 +473,12 @@
             "value" : "The average number of sprints for %@ is %@."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El número medio de sprints para %@ es %@."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -361,6 +503,12 @@
             "value" : "Average distance per 90min in %@ is %@km."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La actividad media para %@ es %@km."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -383,6 +531,12 @@
             "value" : "%lld"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -397,6 +551,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "> 개인 정보 보호 및 보안\n> 건강\n> SoccerBeat > 모두켜기\n 순서로 설정해주세요."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "> Privacidad y seguridad\n> Salud\n> SoccerBeat > Activar todo\n Por favor, configúralos en este orden."
           }
         },
         "ko" : {
@@ -421,6 +581,12 @@
             "value" : "> 개인 정보 보호 및 보안\n> 위치\n> SoccerBeat > 모두켜기\n 순서로 설정해주세요."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "> Privacidad y seguridad\n> Localización\n> SoccerBeat > Activar todo\n en este orden."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -441,6 +607,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🏆 Level Up! ⚽️🏃‍♂️\n\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\n\n지금 바로 업데이트하고 즐겨보세요!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏆 ¡Sube de nivel! ⚽️🏃‍♂️\n\nHemos escuchado tus comentarios y mejorado la usabilidad de SoccerBeat\n\n¡Actualiza y disfruta ahora!"
           }
         },
         "ko" : {
@@ -467,6 +639,12 @@
             "value" : "🏆 Level Up! ⚽️🏃‍♂️\\n\\nSoccerBeat has improved usability based on user feedback.\\n\\nUpdate now and enjoy the new experience!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏆 ¡Sube de nivel! ⚽️🏃‍♂️\\nSoccerBeat ha escuchado tus comentarios y ha realizado mejoras de usabilidad\\n\\n¡Actualiza y disfruta ahora!"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,6 +665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Badge Collection"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colección de insignias"
           }
         },
         "ko" : {
@@ -513,6 +697,12 @@
             "value" : "close"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cerrar"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -533,6 +723,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Distance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A distancia"
           }
         },
         "ko" : {
@@ -557,6 +753,12 @@
             "value" : "Field Movement"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Movimiento en el campo"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -577,6 +779,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Field Record"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registro de campo"
           }
         },
         "ko" : {
@@ -601,6 +809,12 @@
             "value" : "Heartbeat"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latido del corazón"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -621,6 +835,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HeartRate"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ritmo cardíaco"
           }
         },
         "ko" : {
@@ -645,6 +865,12 @@
             "value" : "Hello"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hola"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -665,6 +891,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hello World"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hola Mundo"
           }
         },
         "ko" : {
@@ -689,6 +921,12 @@
             "value" : "Hint 내용입니다."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contenido de la pista."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -709,6 +947,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How "
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cómo "
           }
         },
         "ko" : {
@@ -735,6 +979,12 @@
             "value" : "For optimal app usage, please allow SoccerBeat to access health information using your iPhone. Go to Settings > Privacy & Security > Health > SoccerBeat. After enabling all health permissions, return to SoccerBeat, press Start, and begin the game."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para un uso óptimo de la aplicación, permite que SoccerBeat utilice tu iPhone para acceder a tu información sanitaria. Vaya a Ajustes > Privacidad y seguridad > Salud > SoccerBeat. Después de habilitar todos los permisos de salud, vuelva a SoccerBeat, pulse Inicio y empiece a jugar."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -759,6 +1009,12 @@
             "value" : "For optimal app usage, SoccerBeat needs to access location information from your Apple Watch. To enable location access, go to Settings > Privacy & Security > Location Services > SoccerBeat on your iPhone. After enabling it, return to SoccerBeat, press Start, and begin the game."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para un uso óptimo de la app, SoccerBeat necesita acceder a la información de localización de tu Apple Watch. Para habilitar el acceso a la ubicación, en tu iPhone, ve a Ajustes > Privacidad y seguridad > Servicios de ubicación > SoccerBeat. Después de habilitarlo, vuelve a SoccerBeat, pulsa Inicio e inicia un partido."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -781,6 +1037,12 @@
             "value" : "like"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "como"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -795,6 +1057,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "최고 속도"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad máxima"
           }
         },
         "ko" : {
@@ -817,6 +1085,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "이름"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre"
           }
         },
         "ko" : {
@@ -843,6 +1117,12 @@
             "value" : "Health Access Permission Required"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requiere acceso sanitario"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -867,6 +1147,12 @@
             "value" : "Location Access Permission Required"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requiere acceso a la ubicación"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -887,6 +1173,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "끄기"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuera de"
           }
         },
         "ko" : {
@@ -911,6 +1203,12 @@
             "value" : "켜기"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -931,6 +1229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "순서"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pida"
           }
         },
         "ko" : {
@@ -955,6 +1259,12 @@
             "value" : "%@ 플레이어, "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Jugador, "
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -975,6 +1285,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SoccerBeat 카드"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjeta SoccerBeat"
           }
         },
         "ko" : {
@@ -1001,6 +1317,12 @@
             "value" : "Used for the analysis of SoccerBeat's match data."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se utiliza para analizar los datos de los partidos para SoccerBeat."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1021,6 +1343,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "스프린트"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint"
           }
         },
         "ko" : {
@@ -1045,6 +1373,12 @@
             "value" : "that?"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿eso?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1059,6 +1393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The trends of"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las tendencias de"
           }
         },
         "zh-Hans" : {
@@ -1077,6 +1417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tiempo"
           }
         },
         "ko" : {
@@ -1103,6 +1449,12 @@
             "value" : "times"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1124,19 +1476,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Turn on SoccerBeat on your Apple Watch to record your first game!"
+            "value" : "Turn on SoccerBeat on your Apple Watch to play your first game!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 Apple Watch 上的 SoccerBeat，开始第一场比赛！"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple Watch에서 SoccerBeat를 켜서 첫 경기를 녹화하세요!"
+            "value" : "Apple Watch에서 SoccerBeat를 켜서 첫 경기를 시작하세요!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在您的 Apple Watch 上打开 SoccerBeat 以记录您的第一场比赛！"
+            "value" : "打开 Apple Watch 上的 SoccerBeat，开始第一场比赛！"
           }
         }
       }
@@ -1147,6 +1505,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "속력"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad"
           }
         },
         "ko" : {
@@ -1173,6 +1537,12 @@
             "value" : "There are no recorded games currently."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no has jugado ningún partido."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1195,6 +1565,12 @@
             "value" : "World!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Mundial!"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1211,6 +1587,12 @@
             "value" : "you"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usted"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1225,6 +1607,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "지난 게임"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juegos anteriores"
           }
         },
         "ko" : {
@@ -1251,6 +1639,12 @@
             "value" : "Acceleration"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceleración"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1275,6 +1669,12 @@
             "value" : "Meet the most recent game"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vea sus partidos más recientes"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1297,6 +1697,12 @@
             "value" : "건강 (필수)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salud (obligatorio)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1311,6 +1717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "건강 권한 설정하기"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Establecer permisos sanitarios"
           }
         },
         "zh-Hans" : {
@@ -1329,6 +1741,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please re-check your health and location permissions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconfirme sus permisos sanitarios y de localización o"
           }
         },
         "ko" : {
@@ -1355,6 +1773,12 @@
             "value" : "Game Record"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historia del partido"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1377,6 +1801,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Badges are collected from game records."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insignias recogidas en función de tu historial de partidos."
           }
         },
         "ko" : {
@@ -1403,6 +1833,12 @@
             "value" : "Game time"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horario de los partidos"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1417,6 +1853,28 @@
         }
       }
     },
+    "경기 시간 " : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game time "
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horario de los partidos "
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "比赛时间 "
+          }
+        }
+      }
+    },
     "경기 종료" : {
       "comment" : "경기 종료",
       "extractionState" : "manual",
@@ -1425,6 +1883,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stop"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin del partido"
           }
         },
         "ko" : {
@@ -1451,6 +1915,12 @@
             "value" : "Check your position during the game."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprueba tu posición durante un partido."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1473,6 +1943,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "See the Trend of Change in Performance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explorar las tendencias en el rendimiento de los partidos"
           }
         },
         "ko" : {
@@ -1499,6 +1975,12 @@
             "value" : "Badges are awarded from game data"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las insignias se conceden en función de los datos detallados del partido."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1521,6 +2003,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "See the detailed report of the game."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obtenga un informe detallado del partido."
           }
         },
         "ko" : {
@@ -1547,6 +2035,12 @@
             "value" : "Share"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1569,6 +2063,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meet your player card and maximum ability."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descubre tu tarjeta de jugador y tus estadísticas máximas."
           }
         },
         "ko" : {
@@ -1595,6 +2095,12 @@
             "value" : "Later"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más tarde"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1619,6 +2125,12 @@
             "value" : "Nickname"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apodo"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1641,6 +2153,12 @@
             "value" : "단계별 설정 방법"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cómo configurarlo paso a paso"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1657,6 +2175,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "while wearing an Apple Watch!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Graba tu primer partido!"
           }
         },
         "ko" : {
@@ -1683,6 +2207,12 @@
             "value" : "Error occurred in this data."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Había un error en los datos."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1705,6 +2235,12 @@
             "value" : "데이터에 오류가 발생했습니다. "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Había un error en los datos. "
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1721,6 +2257,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Distance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancia recorrida"
           }
         },
         "ko" : {
@@ -1747,6 +2289,12 @@
             "value" : "Badges with the running distance"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insignias obtenidas en función de la distancia recorrida."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1769,6 +2317,12 @@
             "value" : "뛴거리 및 속도 측정에 사용"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se utiliza para medir la distancia y la velocidad"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1785,6 +2339,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Run distance\\nOver 1 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancia recorridaMás de 1 km"
           }
         },
         "ko" : {
@@ -1811,6 +2371,12 @@
             "value" : "Run distance\\nOver 2 km"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancia recorrida\\nMás de 2 km"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1833,6 +2399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Run distance\\nOver 3 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancia Run\\nMás de 3 km"
           }
         },
         "ko" : {
@@ -1859,6 +2431,12 @@
             "value" : "Run distance\\nOver 4 km"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancia Run\\nMás de 4 km"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1881,6 +2459,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "See all games +"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver todos los partidos +"
           }
         },
         "ko" : {
@@ -1907,6 +2491,12 @@
             "value" : "Check out all the games at a glance."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulta todos tus partidos de un vistazo."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1929,6 +2519,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Send Message"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Póngase en contacto con nosotros"
           }
         },
         "ko" : {
@@ -1955,6 +2551,12 @@
             "value" : "Do you have a problem?"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Tiene problemas?"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1977,6 +2579,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " Agility"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agilidad"
           }
         },
         "ko" : {
@@ -2003,6 +2611,12 @@
             "value" : "Color Mint"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menta"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2025,6 +2639,12 @@
             "value" : "불편을 드려 죄송합니다. \n\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다. "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disculpa las molestias. \n\nPonte en contacto con nosotros a través de la cuenta de desarrollador de SoccerBeat y te responderemos lo antes posible. "
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2041,6 +2661,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "We apologize for the inconvenience. \\n\\nIf you contact the developer account of SoccerBeat, we will respond to you as soon as possible."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disculpa las molestias. \\Ponte en contacto con nosotros a través de tu cuenta de desarrollador de SoccerBeat y te responderemos lo antes posible."
           }
         },
         "ko" : {
@@ -2067,6 +2693,12 @@
             "value" : "Color Red"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rojo"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2089,6 +2721,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "or delete and reinstall the application."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendamos desinstalar y volver a instalar."
           }
         },
         "ko" : {
@@ -2115,6 +2753,12 @@
             "value" : "Use to save and share profile."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sirve para almacenar y compartir perfiles de jugadores."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2137,6 +2781,12 @@
             "value" : "설정하기"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puesta en marcha"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2150,6 +2800,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sprint"
@@ -2177,6 +2833,12 @@
             "value" : "스프린트 및 경기장 위치 조회에 사용"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se utiliza para buscar la ubicación de sprint y estadios"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2193,6 +2855,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sprint Counts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de sprints"
           }
         },
         "ko" : {
@@ -2219,6 +2887,12 @@
             "value" : "Badges with the sprint counts"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insignias obtenidas en función del número de sprints."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2241,6 +2915,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sprint counts\\n Over 1 time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más de 1 sprints"
           }
         },
         "ko" : {
@@ -2267,6 +2947,12 @@
             "value" : "Sprint counts\\n Over 3 times"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más de 3 sprints"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2289,6 +2975,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sprint counts\\n Over 5 times"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más de 5 sprints"
           }
         },
         "ko" : {
@@ -2315,6 +3007,12 @@
             "value" : "Sprint counts\\n Over 7 times"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más de 7 sprints"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2337,6 +3035,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Move Slider to check out your position."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mueve el control deslizante para ver en qué punto del partido te encuentras."
           }
         },
         "ko" : {
@@ -2363,6 +3067,12 @@
             "value" : "Heart rate"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frecuencia cardiaca"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2385,6 +3095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Record your first game"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ponte el Apple Watch y entra en SoccerBeat"
           }
         },
         "ko" : {
@@ -2411,6 +3127,12 @@
             "value" : "Record your first game with Soccerbeat while wearing an Apple Watch!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ponte tu Apple Watch y graba tu primer partido con Soccerbeat."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2433,6 +3155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Update"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualización"
           }
         },
         "ko" : {
@@ -2459,6 +3187,12 @@
             "value" : "Finish"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2481,6 +3215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reqeust"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hacer una petición"
           }
         },
         "ko" : {
@@ -2507,6 +3247,12 @@
             "value" : "Please allow permissions on your iPhone and then run again."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para garantizar una experiencia sin problemas, permite el permiso de localización de SoccerBeat en la aplicación Ajustes de tu iPhone o el permiso de salud en Ajustes y, a continuación, vuelve a iniciar la aplicación."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2529,6 +3275,12 @@
             "value" : "위치 (필수)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lugar (obligatorio)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2545,6 +3297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Location Authorization or Health Authorization are not allowed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se permitían permisos de localización ni de información sanitaria."
           }
         },
         "ko" : {
@@ -2569,6 +3327,12 @@
             "value" : "위치 권한 설정하기"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Establecer permisos de ubicación"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2585,6 +3349,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " is the average ability of all games."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "es la estadística media del partido."
           }
         },
         "ko" : {
@@ -2611,6 +3381,12 @@
             "value" : " is the average ability of all games."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "es la estadística media del partido."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2633,6 +3409,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " is the season high."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "es la estadística más alta de la temporada."
           }
         },
         "ko" : {
@@ -2659,6 +3441,12 @@
             "value" : " is the season average."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "es la estadística media de la temporada."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2681,6 +3469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " is the ability of this game."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "son las estadísticas de este partido."
           }
         },
         "ko" : {
@@ -2707,6 +3501,12 @@
             "value" : "Mbappé's max speed is 36km/h."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mbappe alcanza una velocidad máxima de 36 km/h en carrera."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2731,6 +3531,12 @@
             "value" : "Mbappé's average distance is 12km."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mbappe recorre una media de 12 kilómetros por partido."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2746,13 +3552,19 @@
       }
     },
     "일" : {
-      "comment" : "날짜 단위",
+      "comment" : "날짜 단위 (2nd, 17th,_",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "th"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día"
           }
         },
         "ko" : {
@@ -2779,6 +3591,12 @@
             "value" : "Pause"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausa"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2801,6 +3619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Potential"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posible"
           }
         },
         "ko" : {
@@ -2827,6 +3651,12 @@
             "value" : "Resume"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currículum"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2849,6 +3679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No saved game history."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay registros de coincidencias guardados."
           }
         },
         "ko" : {
@@ -2875,6 +3711,12 @@
             "value" : "Activity"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agresividad"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2897,6 +3739,12 @@
             "value" : "접근 권한 안내"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acerca de los derechos de acceso"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2913,6 +3761,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mentality"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuerza mental"
           }
         },
         "ko" : {
@@ -2939,6 +3793,12 @@
             "value" : "Endurance"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resistencia"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2961,6 +3821,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Max Speed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad máxima"
           }
         },
         "ko" : {
@@ -2987,6 +3853,12 @@
             "value" : "Badges with the maximum speed"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insignias obtenidas en función de la velocidad máxima."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3009,6 +3881,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maximum speed\\nOver 10 km/h"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad máxima superior a 10 km/h"
           }
         },
         "ko" : {
@@ -3035,6 +3913,12 @@
             "value" : "Maximum speed\\nOver 15 km/h"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad máxima superior a 15 km/h"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3057,6 +3941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maximum speed\\nOver 20 km/h"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad máxima superior a 20 km/h"
           }
         },
         "ko" : {
@@ -3083,6 +3973,12 @@
             "value" : "Maximum speed\\nOver 25 km/h"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad máxima superior a 25 km/h"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3105,6 +4001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent Game"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partidos recientes"
           }
         },
         "ko" : {
@@ -3131,6 +4033,12 @@
             "value" : "Check out the recent data changes!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compruebe los cambios en los datos recientes de los partidos."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3153,6 +4061,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent average of games"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promedio de partidos recientes"
           }
         },
         "ko" : {
@@ -3179,6 +4093,12 @@
             "value" : "Latest distances"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver la distancia recorrida recientemente"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3201,6 +4121,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent changes in running distance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cambio en tu última distancia recorrida."
           }
         },
         "ko" : {
@@ -3227,6 +4153,12 @@
             "value" : "Latest sprints"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver sprints recientes"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3249,6 +4181,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent changes in the number of sprints."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cambio en el número de sprints recientes."
           }
         },
         "ko" : {
@@ -3275,6 +4213,12 @@
             "value" : "Latest heart rate"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulta tu frecuencia cardiaca reciente"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3297,6 +4241,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent changes in heart rate"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cambio reciente en el ritmo cardíaco."
           }
         },
         "ko" : {
@@ -3323,6 +4273,12 @@
             "value" : "Latest max speeds"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver las velocidades máximas recientes"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3345,6 +4301,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent changes in maximum speed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El reciente cambio en la velocidad punta."
           }
         },
         "ko" : {
@@ -3371,6 +4333,12 @@
             "value" : "Maximum Speed"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad máxima"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3393,6 +4361,12 @@
             "value" : "최대 심박수"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frecuencia cardiaca máxima"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3409,6 +4383,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Max heart rate"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frecuencia cardiaca máxima\t"
           }
         },
         "ko" : {
@@ -3435,6 +4415,12 @@
             "value" : "Min heart rate"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frecuencia cardíaca mínima"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3459,6 +4445,12 @@
             "value" : "Trend"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tendencias"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3481,6 +4473,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ask for location authorization to indicate the location during the game."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te pide permiso para mostrar tu ubicación durante un partido de fútbol."
           }
         },
         "ko" : {
@@ -3537,6 +4535,12 @@
             "value" : "Cancel"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cancela"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3559,6 +4563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Color Blue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Azul"
           }
         },
         "ko" : {
@@ -3585,6 +4595,12 @@
             "value" : "Power"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potencia"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3607,6 +4623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Explosivity"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potencia explosiva"
           }
         },
         "ko" : {
@@ -3633,6 +4655,12 @@
             "value" : "Harry's normal heart rate is 40bpm."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La frecuencia cardíaca normal de Harry Kane es de 40 lpm."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3655,6 +4683,12 @@
             "value" : "확인"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirme"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3669,6 +4703,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "회"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta"
           }
         },
         "zh-Hans" : {
