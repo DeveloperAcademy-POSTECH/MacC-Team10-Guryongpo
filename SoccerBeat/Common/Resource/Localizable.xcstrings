@@ -1,0 +1,2580 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@의 결승골 득점시 심박수는 %@입니다." : {
+      "comment" : "결승골 심박수 명언",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@'s heart rate was %@ when he scored the winning goal."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@의 결승골 득점시 심박수는 %@입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当%@打进制胜一球时 他的心率是%@"
+          }
+        }
+      }
+    },
+    "%@의 최고 속도는 %@km/h입니다." : {
+      "comment" : "최고 속도 명언",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The top speed of %@ is %@km/h."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@의 최고 속도는 %@km/h입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@的平均冲刺次数为%@."
+          }
+        }
+      }
+    },
+    "%@의 평균 스프린트 횟수는 %@입니다." : {
+      "comment" : "스프린트 횟수 명언",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The average number of sprints for %@ is %@."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@의 평균 스프린트 횟수는 %@입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@的平均冲刺次数为%@."
+          }
+        }
+      }
+    },
+    "%@의 평균 활동량은 %@km입니다." : {
+      "comment" : "활동량 명언",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average distance per 90min in %@ is %@km."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@의 평균 활동량은 %@km입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@每 90 分钟的平均距离为 %@公里."
+          }
+        }
+      }
+    },
+    "🏆 Level Up! ⚽️🏃‍♂️\\n\\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\\n\\n지금 바로 업데이트하고 즐겨보세요!" : {
+      "comment" : "업데이트 메시지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏆 Level Up! ⚽️🏃‍♂️\\n\\nSoccerBeat has improved usability based on user feedback.\\n\\nUpdate now and enjoy the new experience!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏆 Level Up! ⚽️🏃‍♂️\\n\\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\\n\\n지금 바로 업데이트하고 즐겨보세요!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏆 Level Up! ⚽️🏃‍♂️\\n\\nSoccerBeat 反映用户的意见，改善了使用经验。\\n\\n现在立即更新并享受崭新的SOCCERBEAT吧！"
+          }
+        }
+      }
+    },
+    "close" : {
+      "comment" : "닫기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "close"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "닫기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
+    "inform_need_health" : {
+      "comment" : "건강 정보 요구",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For optimal app usage, please allow SoccerBeat to access health information using your iPhone. Go to Settings > Privacy & Security > Health > SoccerBeat. After enabling all health permissions, return to SoccerBeat, press Start, and begin the game."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최적의 앱 사용을 위해 SoccerBeat가 iPhone을 사용하여 건강 정보에 액세스할 수 있도록 허용하세요. 설정 > 개인정보 및 보안 > 건강 > SoccerBeat로 이동합니다. 모든 건강 권한을 활성화한 후 SoccerBeat로 돌아가서 시작을 누르고 게임을 시작합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为了正常使用软件，请允许 SoccerBeat使用您的iPhone健康信息。请前往设置>隐私与安全>健康>SoccerBeat。启用所有健康权限后，返回 SoccerBeat，按下开始按钮并开始记录比赛。"
+          }
+        }
+      }
+    },
+    "inform_need_location" : {
+      "comment" : "위치 정보 요구",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For optimal app usage, SoccerBeat needs to access location information from your Apple Watch. To enable location access, go to Settings > Privacy & Security > Location Services > SoccerBeat on your iPhone. After enabling it, return to SoccerBeat, press Start, and begin the game."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최적의 앱 사용을 위해 SoccerBeat는 Apple Watch의 위치 정보에 액세스해야 합니다. 위치 액세스를 활성화하려면 iPhone에서 설정 > 개인정보 및 보안 > 위치 서비스 > SoccerBeat로 이동합니다. 활성화한 후 SoccerBeat로 돌아가서 시작을 누르고 게임을 시작합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为了正常使用软件，SoccerBeat需要您的Apple Watch上的位置信息。要启用位置信息，请在iPhone上前往设置>隐私与安全>位置服务>SoccerBeat允许位置信息。之后返回 SoccerBeat，按下开始按钮并开始记录比赛。"
+          }
+        }
+      }
+    },
+    "need_health_authorization" : {
+      "comment" : "건강 정보 권한 설정",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Access Permission Required"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "건강 액세스 권한 필요"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请设置健康信息权限"
+          }
+        }
+      }
+    },
+    "need_location_authorization" : {
+      "comment" : "위치 정보 권한 설정",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location Access Permission Required"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "위치 액세스 권한 필요"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请设置位置信息权限"
+          }
+        }
+      }
+    },
+    "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다." : {
+      "comment" : "데이터 사용처",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used for the analysis of SoccerBeat's match data."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于分析SoccerBeat的比赛数据。"
+          }
+        }
+      }
+    },
+    "time" : {
+      "comment" : "시간",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "time"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "time"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次"
+          }
+        }
+      }
+    },
+    "times" : {
+      "comment" : "횟수",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "times"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "회"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次"
+          }
+        }
+      }
+    },
+    "try_game_in_watch" : {
+      "comment" : "워치 참여 독려",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on SoccerBeat on your Apple Watch to record your first game!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch에서 SoccerBeat를 켜서 첫 경기를 녹화하세요!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在您的 Apple Watch 上打开 SoccerBeat 以记录您的第一场比赛！"
+          }
+        }
+      }
+    },
+    "workout_empty" : {
+      "comment" : "데이터 없음 알림",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no recorded games currently."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 경기를 치루지 않았습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前没有记录的比赛。"
+          }
+        }
+      }
+    },
+    "가속도" : {
+      "comment" : "가속도",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceleration"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가속도"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加速度"
+          }
+        }
+      }
+    },
+    "가장 최근에 기록한 경기를 만나보세요" : {
+      "comment" : "최근 경기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meet the most recent game"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가장 최근에 기록한 경기를 만나보세요"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看看最近记录的比赛。"
+          }
+        }
+      }
+    },
+    "건강 및 위치 권한을 재확인하거나" : {
+      "comment" : "권한 재확인",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please re-check your health and location permissions"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "건강 및 위치 권한을 재확인하거나"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在设置检查健康及位置信息权限"
+          }
+        }
+      }
+    },
+    "경기 기록" : {
+      "comment" : "경기 기록",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Record"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기 기록"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "比赛记录"
+          }
+        }
+      }
+    },
+    "경기 기록에 따라 수집된 뱃지입니다." : {
+      "comment" : "경기 결과 수집 뱃지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Badges are collected from game records."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기 기록에 따라 수집된 뱃지입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据比赛记录收集的徽章。"
+          }
+        }
+      }
+    },
+    "경기 시간" : {
+      "comment" : "경기 시간",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game time"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기 시간"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "比赛时间"
+          }
+        }
+      }
+    },
+    "경기 종료" : {
+      "comment" : "경기 종료",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기 종료"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结束"
+          }
+        }
+      }
+    },
+    "경기 중 나의 위치를 확인해 보세요." : {
+      "comment" : "경기 중 위치 확인",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your position during the game."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기 중 나의 위치를 확인해 보세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看一看比赛中的位置。"
+          }
+        }
+      }
+    },
+    "경기 퍼포먼스의 변화 추세를 살펴보세요" : {
+      "comment" : "변화 추세 알림",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See the Trend of Change in Performance"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기 퍼포먼스의 변화 추세를 살펴보세요"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看看比赛表演的变化趋势。"
+          }
+        }
+      }
+    },
+    "경기의 상세 데이터에 따라 뱃지가 수여됩니다." : {
+      "comment" : "뱃지 수여 기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Badges are awarded from game data"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기의 상세 데이터에 따라 뱃지가 수여됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据比赛的详细数据颁发徽章。"
+          }
+        }
+      }
+    },
+    "경기의 상세 리포트를 만나보세요." : {
+      "comment" : "리포트 알림",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See the detailed report of the game."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기의 상세 리포트를 만나보세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请查看比赛的详细报告。"
+          }
+        }
+      }
+    },
+    "공유하기" : {
+      "comment" : "공유하기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공유하기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共享"
+          }
+        }
+      }
+    },
+    "나의 선수 카드와 최대 능력치를 만나보세요." : {
+      "comment" : "선수카드 메시지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meet your player card and maximum ability."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "나의 선수 카드와 최대 능력치를 만나보세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看看我的选手卡和最大能力值。"
+          }
+        }
+      }
+    },
+    "나중에" : {
+      "comment" : "나중에",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "나중에"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "稍后更新"
+          }
+        }
+      }
+    },
+    "닉네임" : {
+      "comment" : "닉네임",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickname"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "닉네임"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昵称"
+          }
+        }
+      }
+    },
+    "당신의 첫 번째 경기를 기록해 보세요!" : {
+      "comment" : "첫번째 경기 독려",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "while wearing an Apple Watch!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "당신의 첫 번째 경기를 기록해 보세요!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录你的第一场比赛！"
+          }
+        }
+      }
+    },
+    "데이터에 오류가 발생했습니다." : {
+      "comment" : "데이터 오류 알림",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error occurred in this data."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데이터에 오류가 발생했습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "信息记录发生异常"
+          }
+        }
+      }
+    },
+    "뛴 거리" : {
+      "comment" : "뛴 거리",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴 거리"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步距离"
+          }
+        }
+      }
+    },
+    "뛴 거리에 따라 획득하는 뱃지입니다." : {
+      "comment" : "뛴 거리 뱃지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Badges with the running distance"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴 거리에 따라 획득하는 뱃지입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据跑步距离获得的徽章。"
+          }
+        }
+      }
+    },
+    "뛴거리\\n1 km 초과" : {
+      "comment" : "뛴거리 1기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run distance\\nOver 1 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\\n1 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步距离\\n超过1公里"
+          }
+        }
+      }
+    },
+    "뛴거리\\n2 km 초과" : {
+      "comment" : "뛴거리 2기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run distance\\nOver 2 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\\n2 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步距离\\n超过2公里"
+          }
+        }
+      }
+    },
+    "뛴거리\\n3 km 초과" : {
+      "comment" : "뛴거리 3기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run distance\\nOver 3 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\\n3 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步距离\\n超过3公里"
+          }
+        }
+      }
+    },
+    "뛴거리\\n4 km 초과" : {
+      "comment" : "뛴거리 4기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run distance\\nOver 4 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\\n4 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步距离\\n超过4公里"
+          }
+        }
+      }
+    },
+    "모든 경기 보기 +" : {
+      "comment" : "모든 경기 버튼",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See all games +"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모든 경기 보기 +"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看所有比赛 +"
+          }
+        }
+      }
+    },
+    "모든 경기를 한 눈에 확인해 보세요." : {
+      "comment" : "한눈에 확인",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check out all the games at a glance."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모든 경기를 한 눈에 확인해 보세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请一目了然地查看所有比赛。"
+          }
+        }
+      }
+    },
+    "문의하기" : {
+      "comment" : "문의하기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Message"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "문의하기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "咨询"
+          }
+        }
+      }
+    },
+    "문제가 있으신가요?" : {
+      "comment" : "문의 버튼",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you have a problem?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "문제가 있으신가요?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发生问题了吗？"
+          }
+        }
+      }
+    },
+    "민첩성" : {
+      "comment" : "민첩성",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Agility"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "민첩성"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "敏捷性"
+          }
+        }
+      }
+    },
+    "민트색" : {
+      "comment" : "민트색",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color Mint"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "민트색"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "湛蓝色"
+          }
+        }
+      }
+    },
+    "불편을 드려 죄송합니다. \\n\\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다." : {
+      "comment" : "사과 및 문의",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We apologize for the inconvenience. \\n\\nIf you contact the developer account of SoccerBeat, we will respond to you as soon as possible."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "불편을 드려 죄송합니다. \\n\\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "抱歉给您带来不便。\\n\\n请联系SoccerBeat的开发者帐户，我们将尽快回复您。 "
+          }
+        }
+      }
+    },
+    "빨간색" : {
+      "comment" : "빨간색",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color Red"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "빨간색"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "红色"
+          }
+        }
+      }
+    },
+    "삭제 및 재설치를 권장드립니다." : {
+      "comment" : "재설치 권장",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "or delete and reinstall the application."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "삭제 및 재설치를 권장드립니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "或删除及重新下载软件"
+          }
+        }
+      }
+    },
+    "선수 프로필 저장 및 공유를 위해 사용합니다." : {
+      "comment" : "프로필 저장 및 공유",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use to save and share profile."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선수 프로필 저장 및 공유를 위해 사용합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于保存和共享球员配置文件。"
+          }
+        }
+      }
+    },
+    "스프린트" : {
+      "comment" : "스프린트",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冲刺"
+          }
+        }
+      }
+    },
+    "스프린트 횟수" : {
+      "comment" : "스프린트 횟수",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint Counts"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트 횟수"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冲刺次数"
+          }
+        }
+      }
+    },
+    "스프린트 횟수에 따라 획득하는 뱃지입니다." : {
+      "comment" : "스프린트 횟수 뱃지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Badges with the sprint counts"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트 횟수에 따라 획득하는 뱃지입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据冲刺次数获得的徽章。"
+          }
+        }
+      }
+    },
+    "스프린트\\n1 회 초과" : {
+      "comment" : "스프린트 1기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\\n Over 1 time"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\\n1 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步距离\\n超过1公里"
+          }
+        }
+      }
+    },
+    "스프린트\\n3 회 초과" : {
+      "comment" : "스프린트 2기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\\n Over 3 times"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\\n3 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冲刺\\n超过3次"
+          }
+        }
+      }
+    },
+    "스프린트\\n5 회 초과" : {
+      "comment" : "스프린트 3기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\\n Over 5 times"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\\n5 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冲刺\\n超过5次"
+          }
+        }
+      }
+    },
+    "스프린트\\n7 회 초과" : {
+      "comment" : "스프린트 4기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\\n Over 7 times"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\\n7 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冲刺\\n超过7次"
+          }
+        }
+      }
+    },
+    "슬라이더를 움직여 경기 중 위치를 확인해보세요." : {
+      "comment" : "슬라이더 메시지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Slider to check out your position."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "슬라이더를 움직여 경기 중 위치를 확인해보세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动滑块来显示比赛中的位置。"
+          }
+        }
+      }
+    },
+    "심박수" : {
+      "comment" : "심박수",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "심박수"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "心率"
+          }
+        }
+      }
+    },
+    "애플워치를 차고 사커비트로" : {
+      "comment" : "참여 독려 메시지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record your first game"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "애플워치를 차고 사커비트로"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戴上Apple Watch"
+          }
+        }
+      }
+    },
+    "애플워치를 차고 사커비트로 당신의 첫 번째 경기를 기록해 보세요!" : {
+      "comment" : "참여 독려 메시지 길게",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record your first game with Soccerbeat while wearing an Apple Watch!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "애플워치를 차고 사커비트로 당신의 첫 번째 경기를 기록해 보세요!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戴上Apple Watch，记录你的第一场比赛！"
+          }
+        }
+      }
+    },
+    "업데이트" : {
+      "comment" : "업데이트",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "업데이트"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新"
+          }
+        }
+      }
+    },
+    "완료" : {
+      "comment" : "완료",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
+    "요청하기" : {
+      "comment" : "요청하기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reqeust"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "요청하기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邀请"
+          }
+        }
+      }
+    },
+    "원활한 앱 사용을 위해\\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한 또는 설정의 건강에서 건강 권한을 허용한 후 다시 실행해주세요." : {
+      "comment" : "권한 요청 메시지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please allow permissions on your iPhone and then run again."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "원활한 앱 사용을 위해\\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한 또는 설정의 건강에서 건강 권한을 허용한 후 다시 실행해주세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为了使用应用程序，\\n请在iPhone的设置应用程序中允许SoccerBeat的位置权限或设置的健康权限，然后重新运行。"
+          }
+        }
+      }
+    },
+    "위치 권한 또는 건강 정보 권한이 허용되지 않았습니다." : {
+      "comment" : "권한 미획득",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location Authorization or Health Authorization are not allowed."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "위치 권한 또는 건강 정보 권한이 허용되지 않았습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未允许位置权限或健康信息权限"
+          }
+        }
+      }
+    },
+    "은 경기 평균 능력치입니다." : {
+      "comment" : "평균 능력치",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " is the average ability of all games."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "은 경기 평균 능력치입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是所有比赛的平均能力值。"
+          }
+        }
+      }
+    },
+    "은 경기의 평균 능력치입니다." : {
+      "comment" : "평균 능력치",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " is the average ability of all games."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "은 경기의 평균 능력치입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是所有比赛的能力值。"
+          }
+        }
+      }
+    },
+    "은 시즌 최고 능력치입니다." : {
+      "comment" : "최고 능력치",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " is the season high."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "은 시즌 최고 능력치입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是赛季的最高能力值。"
+          }
+        }
+      }
+    },
+    "은 시즌 평균 능력치입니다." : {
+      "comment" : "최고 능력치",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " is the season average."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "은 시즌 평균 능력치입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是赛季平均能力值。"
+          }
+        }
+      }
+    },
+    "은 이번 경기의 능력치입니다." : {
+      "comment" : "경기 능력치",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " is the ability of this game."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "은 이번 경기의 능력치입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是这次比赛的能力值。"
+          }
+        }
+      }
+    },
+    "음바페의 경기 최고 속도는 36km/h 입니다." : {
+      "comment" : "음바페 속도",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mbappé's max speed is 36km/h."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음바페의 경기 최고 속도는 36km/h 입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "姆巴佩的最高速度是36公里/小时。"
+          }
+        }
+      }
+    },
+    "음바페의 경기 평균 뛴 거리는 12km 입니다." : {
+      "comment" : "음바페 뛴거리",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mbappé's average distance is 12km."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음바페의 경기 평균 뛴 거리는 12km 입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "姆巴佩的平均跑程为12公里。"
+          }
+        }
+      }
+    },
+    "일" : {
+      "comment" : "날짜 단위",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "th"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日"
+          }
+        }
+      }
+    },
+    "일시 정지" : {
+      "comment" : "일시 정지 버튼",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일시 정지"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂停"
+          }
+        }
+      }
+    },
+    "잠재력" : {
+      "comment" : "잠재력",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potential"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "잠재력"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "潜力"
+          }
+        }
+      }
+    },
+    "재개" : {
+      "comment" : "재개 버튼",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재개"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始"
+          }
+        }
+      }
+    },
+    "저장된 경기 기록이 없습니다." : {
+      "comment" : "경기 기록 없음 메시지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No saved game history."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장된 경기 기록이 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有保存的比赛记录。"
+          }
+        }
+      }
+    },
+    "적극성" : {
+      "comment" : "적극성",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "적극성"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "积极性"
+          }
+        }
+      }
+    },
+    "정신력" : {
+      "comment" : "정신력",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mentality"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정신력"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精神力"
+          }
+        }
+      }
+    },
+    "지구력" : {
+      "comment" : "지구력",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endurance"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지구력"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "持久力"
+          }
+        }
+      }
+    },
+    "최고 속도" : {
+      "comment" : "최고 속도",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max Speed"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최고 속도"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高速度"
+          }
+        }
+      }
+    },
+    "최고 속도에 따라 획득하는 뱃지입니다." : {
+      "comment" : "최고 속도 뱃지",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Badges with the maximum speed"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최고 속도에 따라 획득하는 뱃지입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据最高速度获得的徽章。"
+          }
+        }
+      }
+    },
+    "최고속도\\n10 km/h 초과" : {
+      "comment" : "최고 속도 1기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum speed\\nOver 10 km/h"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최고속도\\n10 km/h 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高速度\\n超过10km/h"
+          }
+        }
+      }
+    },
+    "최고속도\\n15 km/h 초과" : {
+      "comment" : "최고 속도 2기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum speed\\nOver 15 km/h"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최고속도\\n15 km/h 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高速度\\n超过15km/h"
+          }
+        }
+      }
+    },
+    "최고속도\\n20 km/h 초과" : {
+      "comment" : "최고 속도 3기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum speed\\nOver 20 km/h"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최고속도\\n20 km/h 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高速度\\n超过20km/h"
+          }
+        }
+      }
+    },
+    "최고속도\\n25 km/h 초과" : {
+      "comment" : "최고 속도 4기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum speed\\nOver 25 km/h"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최고속도\\n25 km/h 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高速度\\n超过25km/h"
+          }
+        }
+      }
+    },
+    "최근 경기" : {
+      "comment" : "최근 경기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent Game"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 경기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近比赛"
+          }
+        }
+      }
+    },
+    "최근 경기 데이터의 변화를 확인해 보세요." : {
+      "comment" : "최근 경기 데이터 변화",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check out the recent data changes!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 경기 데이터의 변화를 확인해 보세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看最近比赛数据的变化。"
+          }
+        }
+      }
+    },
+    "최근 경기 평균" : {
+      "comment" : "최근 경기 평균",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent average of games"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 경기 평균"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近比赛的平均值"
+          }
+        }
+      }
+    },
+    "최근 뛴 거리 보기" : {
+      "comment" : "최근 뛴 거리 보기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest distances"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 뛴 거리 보기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看最近跑步距离"
+          }
+        }
+      }
+    },
+    "최근 뛴 거리의 변화입니다." : {
+      "comment" : "최근 뛴 거리 변화",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent changes in running distance"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 뛴 거리의 변화입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是最近跑步距离的趋势。"
+          }
+        }
+      }
+    },
+    "최근 스프린트 보기" : {
+      "comment" : "최근 스프린트 보기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest sprints"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 스프린트 보기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看最近冲冲刺"
+          }
+        }
+      }
+    },
+    "최근 스프린트 횟수의 변화입니다." : {
+      "comment" : "최근 스프린트 변화",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent changes in the number of sprints."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 스프린트 횟수의 변화입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是最近冲刺次数的趋势。"
+          }
+        }
+      }
+    },
+    "최근 심박수 보기" : {
+      "comment" : "최근 심박수 보기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest heart rate"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 심박수 보기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看最近心率"
+          }
+        }
+      }
+    },
+    "최근 심박수의 변화입니다." : {
+      "comment" : "최근 심박수 변화",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent changes in heart rate"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 심박수의 변화입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是最近心率的趋势。"
+          }
+        }
+      }
+    },
+    "최근 최고 속도 보기" : {
+      "comment" : "최근 최고 속도 보기",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest max speeds"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 최고 속도 보기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看最近最高速度"
+          }
+        }
+      }
+    },
+    "최근 최고 속도의 변화입니다." : {
+      "comment" : "최근 최고 속도 변화",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent changes in maximum speed"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 최고 속도의 변화입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是最近最高速度的趋势。"
+          }
+        }
+      }
+    },
+    "최대 속도" : {
+      "comment" : "최대 속도",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum Speed"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최대 속도"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高速度"
+          }
+        }
+      }
+    },
+    "최대 심박수\t" : {
+      "comment" : "최대 심박수",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max heart rate"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최대 심박수\t"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高心率"
+          }
+        }
+      }
+    },
+    "최소 심박수" : {
+      "comment" : "최소 심박수",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Min heart rate"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최소 심박수"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最低心率"
+          }
+        }
+      }
+    },
+    "추세" : {
+      "comment" : "추세",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trend"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추세"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "趋势"
+          }
+        }
+      }
+    },
+    "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다." : {
+      "comment" : "위치 정보 제공 제안",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ask for location authorization to indicate the location during the game."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为了显示足球比赛中的位置，请允许职位授权。"
+          }
+        }
+      }
+    },
+    "축구 기록을 활용하기 위해 건강 정보가 필요합니다." : {
+      "comment" : "건강 정보 제공 제안",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We need health information to utilize soccer records."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Necesitamos información sanitaria para utilizar los registros de fútbol."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "축구 기록을 활용하기 위해 건강 정보가 필요합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为了利用足球记录，需要健康信息。"
+          }
+        }
+      }
+    },
+    "취소" : {
+      "comment" : "취소",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "취소"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
+    "파란색" : {
+      "comment" : "파란색",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color Blue"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "파란색"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝色"
+          }
+        }
+      }
+    },
+    "파워" : {
+      "comment" : "파워",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "파워"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "力量"
+          }
+        }
+      }
+    },
+    "폭발력" : {
+      "comment" : "폭발력",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explosivity"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "폭발력"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "爆发力"
+          }
+        }
+      }
+    },
+    "해리 케인의 평소 심박수는 40bpm 입니다." : {
+      "comment" : "헤리케인 심박수",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harry's normal heart rate is 40bpm."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "해리 케인의 평소 심박수는 40bpm 입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "哈里·凯恩平时的心率是40 bpm。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
