@@ -232,4 +232,3 @@ extension DistanceChartView {
         DistanceChartView(workouts: WorkoutData.exampleWorkouts)
     }
 }
-
