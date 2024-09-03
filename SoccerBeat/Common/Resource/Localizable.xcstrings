@@ -1107,7 +1107,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para un uso óptimo de la aplicación, permite que SoccerBeat utilice tu iPhone para acceder a tu información sanitaria. Vaya a Ajustes > Privacidad y seguridad > Salud > SoccerBeat. Después de habilitar todos los permisos de salud, vuelva a SoccerBeat, pulse Inicio y empiece a jugar."
+            "value" : "Para un uso óptimo de la aplicación, permite que SoccerBeat utilice tu iPhone para acceder a tu datos de Salud. Vaya a Ajustes > Privacidad y seguridad > Salud > SoccerBeat. Después de habilitar todos los permisos de salud, vuelva a SoccerBeat, pulse Inicio y empiece a jugar."
           }
         },
         "ko" : {
@@ -1137,7 +1137,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para un uso óptimo de la app, SoccerBeat necesita acceder a la información de localización de tu Apple Watch. Para habilitar el acceso a la ubicación, en tu iPhone, ve a Ajustes > Privacidad y seguridad > Servicios de ubicación > SoccerBeat. Después de habilitarlo, vuelve a SoccerBeat, pulsa Inicio e inicia un partido."
+            "value" : "Para un uso óptimo de la app, SoccerBeat necesita acceder a la datos de localización de tu Apple Watch. Para habilitar el acceso a la ubicación, en tu iPhone, ve a Ajustes > Privacidad y seguridad > Servicios de ubicación > SoccerBeat. Después de habilitarlo, vuelve a SoccerBeat, pulsa Inicio e inicia un partido."
           }
         },
         "ko" : {
@@ -1243,7 +1243,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Requiere acceso sanitario"
+            "value" : "Requiere acceso de Salud"
           }
         },
         "ko" : {
@@ -1839,7 +1839,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Establecer permisos sanitarios"
+            "value" : "Establecer permisos de Salud"
           }
         },
         "zh-Hans" : {
@@ -1863,7 +1863,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reconfirme sus permisos sanitarios y de localización o"
+            "value" : "Reconfirme sus permisos de Salud y de localización o"
           }
         },
         "ko" : {
@@ -3435,7 +3435,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Actualización"
+            "value" : "Actualizar"
           }
         },
         "ko" : {
@@ -3465,7 +3465,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Complete"
+            "value" : "Completar"
           }
         },
         "ko" : {
@@ -3495,7 +3495,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hacer una petición"
+            "value" : "Solicitar"
           }
         },
         "ko" : {
@@ -3577,7 +3577,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No se permitían permisos de localización ni de información sanitaria."
+            "value" : "No se permitían permisos de localización ni de datos de Salud"
           }
         },
         "ko" : {
@@ -3921,7 +3921,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Posible"
+            "value" : "Potencial"
           }
         },
         "ko" : {
@@ -3951,7 +3951,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Currículum"
+            "value" : "reanuda"
           }
         },
         "ko" : {
@@ -4980,7 +4980,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Potencia"
+            "value" : "fuerza"
           }
         },
         "ko" : {
@@ -5010,7 +5010,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Potencia explosiva"
+            "value" : "explosividad"
           }
         },
         "ko" : {
