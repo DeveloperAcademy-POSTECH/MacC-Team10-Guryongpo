@@ -545,7 +545,6 @@
 		D3C500232AE36F3F00EFAEFF /* SoccerBeat Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				68D89FF52C59401E0057B8E9 /* StartGlow.gif */,
 				FB954B0F2BB3BC0000A365FB /* Sources */,
 				FB954B102BB3BC1600A365FB /* Resources */,
 				D3C5002A2AE36F4000EFAEFF /* Preview Content */,
@@ -808,6 +807,7 @@
 		FB954B102BB3BC1600A365FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				68D89FF52C59401E0057B8E9 /* StartGlow.gif */,
 				D3C500282AE36F4000EFAEFF /* Assets.xcassets */,
 			);
 			path = Resources;

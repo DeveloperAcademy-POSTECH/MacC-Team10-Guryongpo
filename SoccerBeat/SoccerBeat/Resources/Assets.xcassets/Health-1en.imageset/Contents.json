@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Health-1en.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

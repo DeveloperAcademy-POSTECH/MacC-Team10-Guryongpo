@@ -48,8 +48,11 @@ struct DetailGuideView: View {
                 .padding(.horizontal)
             
             TabView {
+                let langStr = Locale.current.language.languageCode?.identifier ?? "en"
                 ForEach(0..<4) { index in
-                    VStack() {Image(requestingAuth == .health ? "Health-\(index)" : "Location-\(index)")
+
+                    VStack() {
+                        Image(requestingAuth == .health ? "Health-\(index)\(langStr)" : "Location-\(index)\(langStr)")
                             .resizable()
                             .scaledToFit()
                             .mask{
