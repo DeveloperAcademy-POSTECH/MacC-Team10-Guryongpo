@@ -238,7 +238,10 @@ extension WorkoutData {
     
     private func showCurrentAddress(_ location: CLLocationCoordinate2D?) async -> String {
         guard let position = location else { return "" }
-        let locale = Locale(identifier: "Ko-kr")
+        let currentLocale = Locale.current
+        let languageCode = currentLocale.language.languageCode ?? "en"
+        let regionCode = currentLocale.region?.identifier ?? "US"
+        let locale = Locale(identifier: "\(languageCode)_\(regionCode)")
         let geoCoder = CLGeocoder()
         
         let location : CLLocation = CLLocation(latitude: position.latitude, longitude: position.longitude)
