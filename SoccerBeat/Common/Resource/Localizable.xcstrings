@@ -104,6 +104,12 @@
             "value" : " kcal"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " kcal"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -444,6 +450,12 @@
             "value" : "%@"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -700,32 +712,32 @@
         }
       }
     },
-    "🏆 Level Up! ⚽️🏃‍♂️\\n\\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\\n\\n지금 바로 업데이트하고 즐겨보세요!" : {
+    "🏆 Level Up! ⚽️🏃‍♂️\n\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\n\n지금 바로 업데이트하고 즐겨보세요!" : {
       "comment" : "업데이트 메시지",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏆 Level Up! ⚽️🏃‍♂️\\n\\nSoccerBeat has improved usability based on user feedback.\\n\\nUpdate now and enjoy the new experience!"
+            "value" : "🏆 Level Up! ⚽️🏃‍♂️\n\nSoccerBeat has improved usability based on user feedback.\n\nUpdate now and enjoy the new experience!"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏆 ¡Sube de nivel! ⚽️🏃‍♂️\\nSoccerBeat ha escuchado tus comentarios y ha realizado mejoras de usabilidad\\n\\n¡Actualiza y disfruta ahora!"
+            "value" : "🏆 ¡Sube de nivel! ⚽️🏃‍♂️\nSoccerBeat ha escuchado tus comentarios y ha realizado mejoras de usabilidad\n\n¡Actualiza y disfruta ahora!"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏆 Level Up! ⚽️🏃‍♂️\\n\\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\\n\\n지금 바로 업데이트하고 즐겨보세요!"
+            "value" : "🏆 Level Up! ⚽️🏃‍♂️\n\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\n\n지금 바로 업데이트하고 즐겨보세요!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏆 Level Up! ⚽️🏃‍♂️\\n\\nSoccerBeat 反映用户的意见，改善了使用经验。\\n\\n现在立即更新并享受崭新的SOCCERBEAT吧！"
+            "value" : "🏆 Level Up! ⚽️🏃‍♂️\n\nSoccerBeat 反映用户的意见，改善了使用经验。\n\n现在立即更新并享受崭新的SOCCERBEAT吧！"
           }
         }
       }
@@ -1738,6 +1750,12 @@
             "value" : "Your past games"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your past games"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2450,6 +2468,126 @@
         }
       }
     },
+    "뛴거리\n1 km 초과" : {
+      "comment" : "뛴거리 1기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Run distance\nOver 1 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Distancia recorridaMás de 1 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\n1 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "跑步距离\n超过1公里"
+          }
+        }
+      }
+    },
+    "뛴거리\n2 km 초과" : {
+      "comment" : "뛴거리 2기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run distance\nOver 2 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Distancia recorrida\nMás de 2 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\n2 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "跑步距离\n超过2公里"
+          }
+        }
+      }
+    },
+    "뛴거리\n3 km 초과" : {
+      "comment" : "뛴거리 3기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run distance\nOver 3 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Distancia Run\nMás de 3 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\n3 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "跑步距离\n超过3公里"
+          }
+        }
+      }
+    },
+    "뛴거리\n4 km 초과" : {
+      "comment" : "뛴거리 4기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run distance\nOver 4 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Distancia Run\nMás de 4 km"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛴거리\n4 km 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "跑步距离\n超过4公里"
+          }
+        }
+      }
+    },
     "뛴거리 및 속도 측정에 사용" : {
       "localizations" : {
         "en" : {
@@ -2468,126 +2606,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用于测量距离和速度"
-          }
-        }
-      }
-    },
-    "뛴거리\\n1 km 초과" : {
-      "comment" : "뛴거리 1기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Run distance\\nOver 1 km"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Distancia recorridaMás de 1 km"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "뛴거리\\n1 km 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跑步距离\\n超过1公里"
-          }
-        }
-      }
-    },
-    "뛴거리\\n2 km 초과" : {
-      "comment" : "뛴거리 2기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Run distance\\nOver 2 km"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Distancia recorrida\\nMás de 2 km"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "뛴거리\\n2 km 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跑步距离\\n超过2公里"
-          }
-        }
-      }
-    },
-    "뛴거리\\n3 km 초과" : {
-      "comment" : "뛴거리 3기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Run distance\\nOver 3 km"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Distancia Run\\nMás de 3 km"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "뛴거리\\n3 km 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跑步距离\\n超过3公里"
-          }
-        }
-      }
-    },
-    "뛴거리\\n4 km 초과" : {
-      "comment" : "뛴거리 4기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Run distance\\nOver 4 km"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Distancia Run\\nMás de 4 km"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "뛴거리\\n4 km 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跑步距离\\n超过4公里"
           }
         }
       }
@@ -2816,14 +2834,14 @@
         }
       }
     },
-    "불편을 드려 죄송합니다. \\n\\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다." : {
+    "불편을 드려 죄송합니다. \n\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다." : {
       "comment" : "사과 및 문의",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We apologize for the inconvenience. \\n\\nIf you contact the developer account of SoccerBeat, we will respond to you as soon as possible."
+            "value" : "We apologize for the inconvenience. \n\nIf you contact the developer account of SoccerBeat, we will respond to you as soon as possible."
           }
         },
         "es" : {
@@ -2835,13 +2853,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "불편을 드려 죄송합니다. \\n\\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다."
+            "value" : "불편을 드려 죄송합니다. \n\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "抱歉给您带来不便。\\n\\n请联系SoccerBeat的开发者帐户，我们将尽快回复您。 "
+            "value" : "抱歉给您带来不便。\n\n请联系SoccerBeat的开发者帐户，我们将尽快回复您。 "
           }
         }
       }
@@ -3078,6 +3096,126 @@
         }
       }
     },
+    "스프린트\n1 회 초과" : {
+      "comment" : "스프린트 1기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\nOver 1 time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más de 1 sprints"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\n1 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "跑步距离\n超过1公里"
+          }
+        }
+      }
+    },
+    "스프린트\n3 회 초과" : {
+      "comment" : "스프린트 2기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\nOver 3 times"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más de 3 sprints"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\n3 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "冲刺\n超过3次"
+          }
+        }
+      }
+    },
+    "스프린트\n5 회 초과" : {
+      "comment" : "스프린트 3기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\nOver 5 times"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más de 5 sprints"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\n5 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "冲刺\n超过5次"
+          }
+        }
+      }
+    },
+    "스프린트\n7 회 초과" : {
+      "comment" : "스프린트 4기준",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint counts\nOver 7 times"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más de 7 sprints"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프린트\n7 회 초과"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "冲刺\n超过7次"
+          }
+        }
+      }
+    },
     "스프린트 및 경기장 위치 조회에 사용" : {
       "localizations" : {
         "en" : {
@@ -3156,126 +3294,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "根据冲刺次数获得的徽章。"
-          }
-        }
-      }
-    },
-    "스프린트\\n1 회 초과" : {
-      "comment" : "스프린트 1기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sprint counts\\n Over 1 time"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Más de 1 sprints"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "스프린트\\n1 회 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跑步距离\\n超过1公里"
-          }
-        }
-      }
-    },
-    "스프린트\\n3 회 초과" : {
-      "comment" : "스프린트 2기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sprint counts\\n Over 3 times"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Más de 3 sprints"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "스프린트\\n3 회 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "冲刺\\n超过3次"
-          }
-        }
-      }
-    },
-    "스프린트\\n5 회 초과" : {
-      "comment" : "스프린트 3기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sprint counts\\n Over 5 times"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Más de 5 sprints"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "스프린트\\n5 회 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "冲刺\\n超过5次"
-          }
-        }
-      }
-    },
-    "스프린트\\n7 회 초과" : {
-      "comment" : "스프린트 4기준",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sprint counts\\n Over 7 times"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Más de 7 sprints"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "스프린트\\n7 회 초과"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "冲刺\\n超过7次"
           }
         }
       }
@@ -3512,7 +3530,7 @@
         }
       }
     },
-    "원활한 앱 사용을 위해\\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한 또는 설정의 건강에서 건강 권한을 허용한 후 다시 실행해주세요." : {
+    "원활한 앱 사용을 위해\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한 또는 설정의 건강에서 건강 권한을 허용한 후 다시 실행해주세요." : {
       "comment" : "권한 요청 메시지",
       "extractionState" : "manual",
       "localizations" : {
@@ -3531,13 +3549,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "원활한 앱 사용을 위해\\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한 또는 설정의 건강에서 건강 권한을 허용한 후 다시 실행해주세요."
+            "value" : "원활한 앱 사용을 위해\n아이폰의 설정 앱에서 SoccerBeat의 위치 권한 또는 설정의 건강에서 건강 권한을 허용한 후 다시 실행해주세요."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "为了使用应用程序，\\n请在iPhone的设置应用程序中允许SoccerBeat的位置权限或设置的健康权限，然后重新运行。"
+            "value" : "为了使用应用程序，\n请在iPhone的设置应用程序中允许SoccerBeat的位置权限或设置的健康权限，然后重新运行。"
           }
         }
       }
@@ -4192,122 +4210,122 @@
         }
       }
     },
-    "최고속도\\n10 km/h 초과" : {
+    "최고속도\n10 km/h 초과" : {
       "comment" : "최고 속도 1기준",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Max speed\\nOver 10 km/h"
+            "state" : "needs_review",
+            "value" : "Max speed\nOver 10 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Velocidad máxima superior a 10 km/h"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "최고속도\\n10 km/h 초과"
+            "value" : "최고속도\n10 km/h 초과"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "最高速度\\n超过10km/h"
+            "state" : "needs_review",
+            "value" : "最高速度\n超过10km/h"
           }
         }
       }
     },
-    "최고속도\\n15 km/h 초과" : {
+    "최고속도\n15 km/h 초과" : {
       "comment" : "최고 속도 2기준",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Max speed\\nOver 15 km/h"
+            "state" : "needs_review",
+            "value" : "Max speed\nOver 15 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Velocidad máxima superior a 15 km/h"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "최고속도\\n15 km/h 초과"
+            "value" : "최고속도\n15 km/h 초과"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "最高速度\\n超过15km/h"
+            "state" : "needs_review",
+            "value" : "最高速度\n超过15km/h"
           }
         }
       }
     },
-    "최고속도\\n20 km/h 초과" : {
+    "최고속도\n20 km/h 초과" : {
       "comment" : "최고 속도 3기준",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Max speed\\nOver 20 km/h"
+            "state" : "needs_review",
+            "value" : "Max speed\nOver 20 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Velocidad máxima superior a 20 km/h"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "최고속도\\n20 km/h 초과"
+            "value" : "최고속도\n20 km/h 초과"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "最高速度\\n超过20km/h"
+            "state" : "needs_review",
+            "value" : "最高速度\n超过20km/h"
           }
         }
       }
     },
-    "최고속도\\n25 km/h 초과" : {
+    "최고속도\n25 km/h 초과" : {
       "comment" : "최고 속도 4기준",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Max speed\\nOver 25 km/h"
+            "state" : "needs_review",
+            "value" : "Max speed\nOver 25 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Velocidad máxima superior a 25 km/h"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "최고속도\\n25 km/h 초과"
+            "value" : "최고속도\n25 km/h 초과"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "最高速度\\n超过25km/h"
+            "state" : "needs_review",
+            "value" : "最高速度\n超过25km/h"
           }
         }
       }
@@ -4927,6 +4945,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caloría"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "칼로리"
           }
         },
         "zh-Hans" : {

@@ -85,7 +85,7 @@ struct ShareView: View {
                 return "최고 속도에 따라 획득하는 뱃지입니다."
             }
         }
-        return Text(message)
+        return Text(message.localized())
             .padding(.horizontal, 8)
             .floatingCapsuleStyle()
     }
