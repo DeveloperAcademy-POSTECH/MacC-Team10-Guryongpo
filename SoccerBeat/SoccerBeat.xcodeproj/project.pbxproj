@@ -102,6 +102,8 @@
 		BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
 		BE93F1922B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
 		BE93F1952B009FA300C33756 /* ElapsedTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */; };
+		BE9B3AF02C89CE5500DE359D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BE9B3AEF2C89CE5500DE359D /* InfoPlist.xcstrings */; };
+		BE9B3AF12C89CE5500DE359D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BE9B3AEF2C89CE5500DE359D /* InfoPlist.xcstrings */; };
 		BEA576442C704E7A00B88773 /* HeartRate.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA576432C704E7A00B88773 /* HeartRate.json */; };
 		BEA576462C704E8800B88773 /* TopSpeed.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA576452C704E8800B88773 /* TopSpeed.json */; };
 		BEA576482C704EA800B88773 /* Sprints.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA576472C704EA800B88773 /* Sprints.json */; };
@@ -260,6 +262,7 @@
 		BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartShape.swift; sourceTree = "<group>"; };
 		BE93F1902B00937000C33756 /* TextBorder+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBorder+extension.swift"; sourceTree = "<group>"; };
 		BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeFormatter.swift; sourceTree = "<group>"; };
+		BE9B3AEF2C89CE5500DE359D /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		BEA576432C704E7A00B88773 /* HeartRate.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HeartRate.json; sourceTree = "<group>"; };
 		BEA576452C704E8800B88773 /* TopSpeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TopSpeed.json; sourceTree = "<group>"; };
 		BEA576472C704EA800B88773 /* Sprints.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Sprints.json; sourceTree = "<group>"; };
@@ -410,6 +413,7 @@
 				D3D7D1262AF23CA000B89196 /* SoccerBeat.entitlements */,
 				FBCED9252AE3DF5900C57BF9 /* Info.plist */,
 				BE0D7D7C2BD14B4800966FF7 /* PrivacyInfo.xcprivacy */,
+				BE9B3AEF2C89CE5500DE359D /* InfoPlist.xcstrings */,
 				BEC953A22C75FDE400EFF3C2 /* Localizable.xcstrings */,
 			);
 			path = Resource;
@@ -958,6 +962,7 @@
 				BE4069E42AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				BEA576442C704E7A00B88773 /* HeartRate.json in Resources */,
 				682D64B12AFE90A000D7F07B /* CardFlipEffect.mp3 in Resources */,
+				BE9B3AF02C89CE5500DE359D /* InfoPlist.xcstrings in Resources */,
 				BE4069BE2AF1D22B00FA3030 /* NotoSans-Black.ttf in Resources */,
 				FBA3DA872B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf in Resources */,
 				BEA576462C704E8800B88773 /* TopSpeed.json in Resources */,
@@ -1005,6 +1010,7 @@
 				BE4069C82AF1F80D00FA3030 /* SF-Pro-Text-BlackItalic.otf in Resources */,
 				BE4069CE2AF1F80D00FA3030 /* SF-Compact-Text-LightItalic.otf in Resources */,
 				FBA3DA822B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */,
+				BE9B3AF12C89CE5500DE359D /* InfoPlist.xcstrings in Resources */,
 				BE4069CA2AF1F80D00FA3030 /* SF-Compact-Text-Regular.otf in Resources */,
 				D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */,
 				BE4069CC2AF1F80D00FA3030 /* SF-Compact-Text-Medium.otf in Resources */,
