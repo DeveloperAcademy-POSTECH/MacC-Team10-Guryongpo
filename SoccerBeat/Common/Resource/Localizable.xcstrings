@@ -731,36 +731,6 @@
         }
       }
     },
-    "🏆 Level Up! ⚽️🏃‍♂️\n\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\n\n지금 바로 업데이트하고 즐겨보세요!" : {
-      "comment" : "업데이트 메시지",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏆 Level Up! ⚽️🏃‍♂️\n\nSoccerBeat has improved usability based on user feedback.\n\nUpdate now and enjoy the new experience!"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏆 ¡Sube de nivel! ⚽️🏃‍♂️\nSoccerBeat ha escuchado tus comentarios y ha realizado mejoras de usabilidad\n\n¡Actualiza y disfruta ahora!"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏆 Level Up! ⚽️🏃‍♂️\n\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\n\n지금 바로 업데이트하고 즐겨보세요!"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏆 Level Up! ⚽️🏃‍♂️\n\nSoccerBeat 反映用户的意见，改善了使用经验。\n\n现在立即更新并享受崭新的SOCCERBEAT吧！"
-          }
-        }
-      }
-    },
     "Badge Collection" : {
       "localizations" : {
         "en" : {
@@ -2630,14 +2600,14 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Run distance\nOver 1 km"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Distancia recorridaMás de 1 km"
+            "state" : "translated",
+            "value" : "Distancia recorrida\nMás de 1 km"
           }
         },
         "ko" : {
@@ -2648,7 +2618,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "跑步距离\n超过1公里"
           }
         }
@@ -2666,7 +2636,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Distancia recorrida\nMás de 2 km"
           }
         },
@@ -2678,7 +2648,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "跑步距离\n超过2公里"
           }
         }
@@ -2696,7 +2666,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Distancia Run\nMás de 3 km"
           }
         },
@@ -2708,7 +2678,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "跑步距离\n超过3公里"
           }
         }
@@ -2726,7 +2696,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Distancia Run\nMás de 4 km"
           }
         },
@@ -2738,7 +2708,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "跑步距离\n超过4公里"
           }
         }
@@ -2968,28 +2938,6 @@
         }
       }
     },
-    "불편을 드려 죄송합니다. \n\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다. " : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "We apologize for the inconvenience.\n\nIf you contact the developer account of SoccerBeat, we will respond to you as soon as possible."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Disculpa las molestias. \n\nPonte en contacto con nosotros a través de la cuenta de desarrollador de SoccerBeat y te responderemos lo antes posible. "
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我们对造成的不便深表歉意。\n\n请通过 SoccerBeat 的开发者账户联系我们，我们会尽快给您回复。"
-          }
-        }
-      }
-    },
     "불편을 드려 죄송합니다. \n\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다." : {
       "comment" : "사과 및 문의",
       "extractionState" : "manual",
@@ -3016,6 +2964,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "抱歉给您带来不便。\n\n请联系SoccerBeat的开发者帐户，我们将尽快回复您。 "
+          }
+        }
+      }
+    },
+    "불편을 드려 죄송합니다. \n\nSoccerBeat의 개발자 계정으로 문의를 주시면 빠른 시일 안에 답변드리겠습니다. " : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We apologize for the inconvenience.\n\nIf you contact the developer account of SoccerBeat, we will respond to you as soon as possible."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disculpa las molestias. \n\nPonte en contacto con nosotros a través de la cuenta de desarrollador de SoccerBeat y te responderemos lo antes posible. "
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我们对造成的不便深表歉意。\n\n请通过 SoccerBeat 的开发者账户联系我们，我们会尽快给您回复。"
           }
         }
       }
@@ -3264,8 +3234,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Más de 1 sprints"
+            "state" : "translated",
+            "value" : "Más de\n1 sprints"
           }
         },
         "ko" : {
@@ -3276,7 +3246,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "跑步距离\n超过1公里"
           }
         }
@@ -3294,8 +3264,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Más de 3 sprints"
+            "state" : "translated",
+            "value" : "Más de\n3 sprints"
           }
         },
         "ko" : {
@@ -3306,7 +3276,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "冲刺\n超过3次"
           }
         }
@@ -3324,8 +3294,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Más de 5 sprints"
+            "state" : "translated",
+            "value" : "Más de\n5 sprints"
           }
         },
         "ko" : {
@@ -3336,7 +3306,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "冲刺\n超过5次"
           }
         }
@@ -3354,8 +3324,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Más de 7 sprints"
+            "state" : "translated",
+            "value" : "Más de\n7 sprints"
           }
         },
         "ko" : {
@@ -3366,7 +3336,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "冲刺\n超过7次"
           }
         }
@@ -4372,14 +4342,14 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Max speed\nOver 10 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Velocidad máxima superior a 10 km/h"
+            "state" : "translated",
+            "value" : "Velocidad máxima\nsuperior a 10 km/h"
           }
         },
         "ko" : {
@@ -4390,7 +4360,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "最高速度\n超过10km/h"
           }
         }
@@ -4402,14 +4372,14 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Max speed\nOver 15 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Velocidad máxima superior a 15 km/h"
+            "state" : "translated",
+            "value" : "Velocidad máxima\nsuperior a 15 km/h"
           }
         },
         "ko" : {
@@ -4420,7 +4390,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "最高速度\n超过15km/h"
           }
         }
@@ -4432,14 +4402,14 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Max speed\nOver 20 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Velocidad máxima superior a 20 km/h"
+            "state" : "translated",
+            "value" : "Velocidad máxima\nsuperior a 20 km/h"
           }
         },
         "ko" : {
@@ -4450,7 +4420,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "最高速度\n超过20km/h"
           }
         }
@@ -4462,14 +4432,14 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Max speed\nOver 25 km/h"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Velocidad máxima superior a 25 km/h"
+            "state" : "translated",
+            "value" : "Velocidad máxima\nsuperior a 25 km/h"
           }
         },
         "ko" : {
@@ -4480,7 +4450,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "最高速度\n超过25km/h"
           }
         }
