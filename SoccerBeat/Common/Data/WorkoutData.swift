@@ -82,7 +82,12 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     }
     var monthDay: String {
         let beforeT = String(date.split(separator: "T")[0])
-        let rawValueOfMonthDay = "\(beforeT.split(separator: "-")[1]).\(beforeT.split(separator: "-")[2])"
+        var month = beforeT.split(separator: "-")[1]
+        let day = beforeT.split(separator: "-")[2]
+        if month.first == "0" {
+            month.removeFirst()
+        }
+        let rawValueOfMonthDay = "\(month).\(day)"
         return String(rawValueOfMonthDay)
     }
     var yearMonthDay: String {
