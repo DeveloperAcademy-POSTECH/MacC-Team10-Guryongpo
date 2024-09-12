@@ -21,7 +21,7 @@
       <img src="https://avatars.githubusercontent.com/Damagucci-Juice" alt="프로필 사진" style="width: 150px;">
     </td>
     <td>
-      <img src="https://avatars.githubusercontent.com/Henrykim1111" alt="프로필 사진" style="width: 150px;">
+      <img src="https://avatars.githubusercontent.com/hyungminkimdev" alt="프로필 사진" style="width: 150px;">
     </td>
     <td>
       <img src="https://avatars.githubusercontent.com/geee3" alt="프로필 사진" style="width: 150px;">
@@ -34,7 +34,7 @@
     </td>
    <tr>
     <td align="center"><a href="https://github.com/Damagucci-Juice"> Gucci </a></td>
-<td align="center"><a href="https://github.com/Henrykim1111"> Henry </a></td>
+<td align="center"><a href="https://github.com/hyungminkimdev"> Henry </a></td>
     <td align="center"><a href="https://github.com/geee3"> Daaan </a></td>
      <td align="center"><a href="https://github.com/yunwkgus"> Jose </a></td>
 <td align="center"><a href="https://github.com/choiuyeong"> Wesley </a></td>
