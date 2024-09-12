@@ -5,9 +5,27 @@
       "comment" : "Bundle display name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "SoccerBeat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "SoccerBeat"
           }
         }
@@ -17,9 +35,27 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "SoccerBeat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "SoccerBeat"
           }
         }
