@@ -14,8 +14,12 @@ struct TrophyCollectionView: View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: nil) {
                 InformationButton(message: "경기 기록에 따라 수집된 뱃지입니다.")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                 
                 Text("Badge Collection")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                     .font(.navigationSportyTitle)
                     .highlighter(activity: .sprint, isDefault: true)
             }
