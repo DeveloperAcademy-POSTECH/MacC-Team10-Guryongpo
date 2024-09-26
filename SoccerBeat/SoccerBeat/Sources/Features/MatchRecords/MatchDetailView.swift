@@ -54,8 +54,7 @@ struct ErrorView: View {
                         .font(.averageValue)
                         .foregroundStyle(.white)
                         .padding(2)
-                    Text("건강 및 위치 권한을 재확인하거나")
-                    Text("삭제 및 재설치를 권장드립니다.")
+                    Text("건강 및 위치 권한을 재확인하거나\n삭제 및 재설치를 권장드립니다.")
                 }
                 .font(.fieldRecordTitle)
                 .foregroundStyle(.mainSubTitleColor)
@@ -108,8 +107,6 @@ struct PlayerAbilityView: View {
                     
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(spacing: 0) {
-                            // 현재 빨간색이 이번경기로 보이고, 민트색이 평균으로 보임
-                            // 빨강 - 평균, 민트색 - 이번 경기 로 해야함
                             Text("빨간색")
                                 .bold()
                                 .foregroundStyle(.matchDetailViewTitleColor)
@@ -271,13 +268,6 @@ struct FieldMovementView: View {
     }
 }
 
-#Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
-    return MatchDetailView(workout: WorkoutData.blankExample)
-        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
-        .environmentObject(HealthInteractor())
-}
-
 struct FieldRecordDataView: View {
     var workout: WorkoutData?
     var body: some View {
@@ -417,4 +407,13 @@ struct FieldRecordDataView: View {
         }
         .kerning(-0.41)
     }
+}
+
+
+
+#Preview {
+    @StateObject var healthInteractor = HealthInteractor.shared
+    return MatchDetailView(workout: WorkoutData.example)
+        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
+        .environmentObject(HealthInteractor())
 }
