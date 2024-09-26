@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NameFieldView: View {
     @State private var userName = ""
-    let nameLength = 15
+    let nameLength = 14
     
     var body: some View {
         VStack(spacing: 0) {
