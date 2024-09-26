@@ -24,6 +24,8 @@ struct ProfileView: View {
                         VStack {
                             HStack {
                                 InformationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
                                 Spacer()
                             }
                             .padding(.bottom, 30)
@@ -96,6 +98,8 @@ struct ProfileView: View {
                                 Text("은 경기 평균 능력치입니다.")
                             }
                             .floatingCapsuleStyle()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                             Spacer()
                         }
                     }
@@ -143,4 +147,5 @@ extension View {
 #Preview {
     ProfileView()
         .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
+        .environment(\.locale, .init(identifier: "en"))
 }
