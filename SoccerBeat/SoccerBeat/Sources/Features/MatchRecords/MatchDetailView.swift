@@ -80,6 +80,9 @@ struct MatchTimeView: View {
             VStack(alignment: .leading, spacing: -8) {
                 HStack(spacing: 0) {
                     Text("경기 시간")
+                        .font(.largeTitle)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
                     if let workout = workout {
                         Text(" \(workout.time)")
                     } else {

@@ -2025,7 +2025,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Horario de los partidos"
+            "value" : "Hora del partido"
           }
         },
         "ko" : {
@@ -2053,7 +2053,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Horario de los partidos "
+            "value" : "Hora del partido"
           }
         },
         "zh-Hans" : {
@@ -4491,7 +4491,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Partidos recientes"
+            "value" : "Último partido"
           }
         },
         "ko" : {
@@ -4581,7 +4581,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ver la distancia recorrida recientemente"
+            "value" : "Ver distancia reciente"
           }
         },
         "ko" : {

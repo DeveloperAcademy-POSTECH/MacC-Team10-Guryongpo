@@ -222,7 +222,7 @@ extension MatchListItemView {
     
     @ViewBuilder
     var matchMatrics: some View {
-        HStack(spacing: 16) {
+        HStack(alignment: .lastTextBaseline, spacing: 16) {
             VStack(alignment: .leading) {
                 Text("뛴 거리")
                 HStack(spacing: 0) {

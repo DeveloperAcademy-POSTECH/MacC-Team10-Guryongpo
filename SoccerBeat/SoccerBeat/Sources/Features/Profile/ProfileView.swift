@@ -134,7 +134,6 @@ struct ProfileView: View {
             }
         }
         .navigationTitle("")
-        .padding()
     }
 }
 
