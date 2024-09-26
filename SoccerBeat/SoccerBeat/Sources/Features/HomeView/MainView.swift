@@ -183,6 +183,8 @@ struct MainView: View {
                                         }
                                     Group {
                                         Text("경기 시간")
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
                                         Group {
                                             if !workouts.isEmpty {
                                                 Text(workouts[0].time)
