@@ -275,6 +275,4 @@ struct MainView: View {
         .environmentObject(health)
         .environmentObject(sound)
         .environmentObject(profileModel)
-        .environment(\.locale, .init(identifier: "en"))
-
 }
