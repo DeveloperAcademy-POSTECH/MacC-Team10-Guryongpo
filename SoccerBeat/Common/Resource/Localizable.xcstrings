@@ -2304,6 +2304,28 @@
         }
       }
     },
+    "네!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Sí!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是的！"
+          }
+        }
+      }
+    },
     "닉네임" : {
       "comment" : "닉네임",
       "extractionState" : "manual",
@@ -3042,6 +3064,28 @@
         }
       }
     },
+    "사커비트 앱이 마음에 드시나요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you love the SoccerBeat App?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Te encanta la aplicación SoccerBeat?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你喜欢 SoccerBeat 应用吗？"
+          }
+        }
+      }
+    },
     "사커비트를 사용하기 위해 권한을 설정해주세요." : {
       "comment" : "NoAuthorizationView Info Button",
       "extractionState" : "manual",
@@ -3502,6 +3546,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "心率"
+          }
+        }
+      }
+    },
+    "아니요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不是"
           }
         }
       }
