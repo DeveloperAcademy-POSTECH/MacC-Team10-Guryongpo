@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct MatchRecapView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @State private var userName = ""
     @Binding var workouts: [WorkoutData]
+    @State private var requestReview = false
+    @State private var hasDoneReviewBefore = false
+    private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
+    
     
     private var lastName: String {
         guard let lastName = userName
@@ -87,7 +92,7 @@ struct MatchRecapView: View {
                         .opacity(0.3)
                     VStack {
                         Text("저장된 경기 기록이 없습니다.")
-                        .font(.matchRecapEmptyDataTop)
+                            .font(.matchRecapEmptyDataTop)
                         Group {
                             Text("애플워치를 차고 사커비트로")
                             Text("당신의 첫 번째 경기를 기록해 보세요!")
@@ -99,9 +104,40 @@ struct MatchRecapView: View {
                 Spacer()
             }
         }
+        .alert(isPresented: $requestReview) {
+            Alert(title: Text("사커비트 앱이 마음에 드시나요?"),
+                  primaryButton: .default(Text("네")) {
+                requestAppReview()
+                UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
+            },
+                  secondaryButton: .cancel(Text("아니요")) {
+                UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
+            })
+        }
         .onAppear {
             userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+            
+            if let lastRequestDate = UserDefaults.standard.object(forKey: "lastReviewRequestDate") as? Date {
+                let timeSinceLastRequest = Date().timeIntervalSince(lastRequestDate)
+                
+                if timeSinceLastRequest > reviewRequestThreshold {
+                    if workouts.count > 7 && !hasDoneReviewBefore {
+                        requestReview = true
+                    }
+                }
+            }
+            else if workouts.count > 7 && !hasDoneReviewBefore {
+                requestReview = true
+            }
         }
+    }
+    private func requestAppReview() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
+        } else {
+            SKStoreReviewController.requestReview()
+        }
+        hasDoneReviewBefore = true
     }
     
     private func delete(_ offset: IndexSet) async {
@@ -138,7 +174,7 @@ struct MatchListItemView: View {
             HStack(spacing: 0) {
                 // 스파이더 차트
                 radarCharts
-//                    .frame(width: 60, height: 60)
+                //                    .frame(width: 60, height: 60)
                     .padding(.top, 16)
                     .opacity(workoutData.error ? 0 : 1)
                 
@@ -200,7 +236,7 @@ extension MatchListItemView {
         let average = DataConverter.toLevels(profileModel.averageAbility)
         
         RadarChartView(averageDataPoints: recent, limitValue: 5.0)
-
+        
     }
     
     @ViewBuilder
