@@ -13,7 +13,7 @@ struct MatchRecapView: View {
     @State private var userName = ""
     @Binding var workouts: [WorkoutData]
     @State private var requestReview = false
-    @State private var hasRequestedReviewBefore = false
+    @State private var hasDoneReviewBefore = false
     private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
     
     
@@ -108,11 +108,10 @@ struct MatchRecapView: View {
             Alert(title: Text("사커비트 앱이 마음에 드시나요?"),
                   primaryButton: .default(Text("네!")) {
                 requestAppReview()
-                hasRequestedReviewBefore = true
                 UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
             },
                   secondaryButton: .cancel(Text("아니요")) {
-                hasRequestedReviewBefore = true
+                UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
             })
         }
         .onAppear {
@@ -122,12 +121,12 @@ struct MatchRecapView: View {
                 let timeSinceLastRequest = Date().timeIntervalSince(lastRequestDate)
                 
                 if timeSinceLastRequest > reviewRequestThreshold {
-                    if workouts.count > 7 && !hasRequestedReviewBefore {
+                    if workouts.count > 7 && !hasDoneReviewBefore {
                         requestReview = true
                     }
                 }
             }
-            else if workouts.count > 7 && !hasRequestedReviewBefore {
+            else if workouts.count > 7 && !hasDoneReviewBefore {
                 requestReview = true
             }
         }
@@ -138,6 +137,7 @@ struct MatchRecapView: View {
         } else {
             SKStoreReviewController.requestReview()
         }
+        hasDoneReviewBefore = true
     }
     
     private func delete(_ offset: IndexSet) async {
