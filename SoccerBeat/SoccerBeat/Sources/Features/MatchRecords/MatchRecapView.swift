@@ -13,7 +13,7 @@ struct MatchRecapView: View {
     @State private var userName = ""
     @Binding var workouts: [WorkoutData]
     @State private var requestReview = false
-    @State private var hasDoneReviewBefore = UserDefaults.standard.bool(forKey: "hasDoneReviewBefore")
+    @State private var hasDoneReviewBefore = false
     private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
     
     
@@ -120,6 +120,7 @@ struct MatchRecapView: View {
         }
         .onAppear {
             userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+            hasDoneReviewBefore = UserDefaults.standard.bool(forKey: "hasDoneReviewBefore")
             
             if let lastRequestDate = UserDefaults.standard.object(forKey: "lastReviewRequestDate") as? Date {
                 let timeSinceLastRequest = Date().timeIntervalSince(lastRequestDate)
