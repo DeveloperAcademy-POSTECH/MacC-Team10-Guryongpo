@@ -106,7 +106,7 @@ struct MatchRecapView: View {
         }
         .alert(isPresented: $requestReview) {
             Alert(title: Text("사커비트 앱이 마음에 드시나요?"),
-                  primaryButton: .default(Text("네!")) {
+                  primaryButton: .default(Text("네")) {
                 requestAppReview()
                 UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
             },
