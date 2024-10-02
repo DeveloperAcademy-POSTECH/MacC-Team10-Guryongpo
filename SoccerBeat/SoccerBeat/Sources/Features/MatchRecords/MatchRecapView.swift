@@ -14,7 +14,6 @@ struct MatchRecapView: View {
     @Binding var workouts: [WorkoutData]
     @State private var requestReview = false
     @State private var hasRequestedReviewBefore = false
-    @State private var hasDoneReview = false
     private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
     
     
@@ -106,14 +105,13 @@ struct MatchRecapView: View {
             }
         }
         .alert(isPresented: $requestReview) {
-            Alert(title: Text("리뷰를 남겨주세요!"),
-                  message: Text("이 앱이 도움이 되었나요?"),
-                  primaryButton: .default(Text("네")) {
+            Alert(title: Text("사커비트 앱이 마음에 드시나요?"),
+                  primaryButton: .default(Text("네!")) {
                 requestAppReview()
                 hasRequestedReviewBefore = true
                 UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
             },
-                  secondaryButton: .cancel() {
+                  secondaryButton: .cancel(Text("아니요")) {
                 hasRequestedReviewBefore = true
             })
         }
