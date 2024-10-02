@@ -12,7 +12,7 @@ struct MatchRecapView: View {
     @EnvironmentObject var healthInteractor: HealthInteractor
     @State private var userName = ""
     @Binding var workouts: [WorkoutData]
-    @State private var requestReview = UserDefaults.standard.bool(forKey: "requestReview")
+    @State private var requestReview = false
     @State private var hasDoneReviewBefore = UserDefaults.standard.bool(forKey: "hasDoneReviewBefore")
     private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
     
@@ -109,11 +109,13 @@ struct MatchRecapView: View {
                   primaryButton: .default(Text("네")) {
                 requestAppReview()
                 UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
-                UserDefaults.standard.set(false, forKey: "requestReview")
+                requestReview = false
+                UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
             },
                   secondaryButton: .cancel(Text("아니요")) {
                 UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
-                UserDefaults.standard.set(false, forKey: "requestReview")
+                requestReview = false
+                UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
             })
         }
         .onAppear {
@@ -139,8 +141,6 @@ struct MatchRecapView: View {
         } else {
             SKStoreReviewController.requestReview()
         }
-        hasDoneReviewBefore = true
-        UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
     }
     
     private func delete(_ offset: IndexSet) async {
