@@ -49,18 +49,17 @@ struct DetailGuideView: View {
             
             TabView {
                 let langStr = Locale.current.language.languageCode?.identifier ?? "en"
-                ForEach(0..<4) { index in
+                let isHealth = requestingAuth == .health
+                let lastIndex = isHealth ? 4 : 5
+                ForEach(0..<lastIndex) { index in
 
                     VStack() {
-                        Image(requestingAuth == .health ? "Health-\(index)\(langStr)" : "Location-\(index)\(langStr)")
+                        Image(isHealth ? "Health-\(index)\(langStr)" : "Location-\(index)\(langStr)")
                             .resizable()
                             .scaledToFit()
                             .mask{
                                 RoundedRectangle(cornerRadius: 20)
                             }
-                        
-                        Text(requestingAuth == .health ? "* \(TabViewHealthText[index])" : "* \(TabViewLocationText[index])")
-                            .font(.mainInfoText)
                         
                         Spacer()
                             .frame(height: 54)
