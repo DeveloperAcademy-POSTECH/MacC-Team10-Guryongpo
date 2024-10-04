@@ -119,6 +119,7 @@ struct ProfileView: View {
                     TrophyCollectionView()
                     
                 }
+                .padding(.horizontal)
                 .onTapGesture {
                     hideKeyboard()
                 }
