@@ -7,12 +7,14 @@
 
 import Combine
 import CoreLocation
+import CoreMotion
 import HealthKit
 import SwiftUI
 
 final class WorkoutManager: NSObject, ObservableObject {
     private let healthStore = HKHealthStore()
     private(set) var locationManager = CLLocationManager()
+    private(set) var motionManager = CMMotionActivityManager()
     private(set) var matrics: MatricsIndicator
 
     init(matrics: MatricsIndicator) {
@@ -50,6 +52,7 @@ final class WorkoutManager: NSObject, ObservableObject {
     @Published var workout: HKWorkout?
     // TODO: - 나중에 워치에서 경기 끝나고 바로 찍어볼 수 있게 지도 그리기
     @Published var route: HKWorkoutRoute?
+    @Published var isStationaryDetacted = false
 
     var isHealthDataAvailable: Bool {
         HKHealthStore.isHealthDataAvailable()
@@ -117,6 +120,15 @@ final class WorkoutManager: NSObject, ObservableObject {
 
         // 헬스킷에서 나이 정보를 통해 적절한 최대심박수 찾기
         matrics.computeProperMaxHeartRate(with: healthStore)
+
+        // collect motion information
+        motionManager.startActivityUpdates(to: .main) { [weak self] activity in
+            guard let activity = activity else { return }
+            // alert when stationary
+            if activity.stationary {
+                self?.isStationaryDetacted = true
+            }
+        }
     }
 
     enum SessionError: Error {

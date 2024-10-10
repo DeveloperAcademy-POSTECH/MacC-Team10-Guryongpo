@@ -857,6 +857,9 @@
         }
       }
     },
+    "Close" : {
+
+    },
     "Distance" : {
       "localizations" : {
         "en" : {
@@ -884,6 +887,9 @@
           }
         }
       }
+    },
+    "End Workout" : {
+
     },
     "Field Movement" : {
       "localizations" : {
@@ -940,6 +946,9 @@
           }
         }
       }
+    },
+    "Finished\nyour workout?" : {
+
     },
     "Heartbeat" : {
       "localizations" : {
@@ -1383,6 +1392,9 @@
         }
       }
     },
+    "Pause" : {
+
+    },
     "Player %@," : {
       "localizations" : {
         "en" : {
@@ -1500,6 +1512,9 @@
           }
         }
       }
+    },
+    "stationary" : {
+
     },
     "that?" : {
       "localizations" : {

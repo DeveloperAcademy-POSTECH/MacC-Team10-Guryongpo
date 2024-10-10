@@ -31,8 +31,9 @@ struct GameProgressView: View {
                         .offset(y: 10)
                     
                     VStack {
-                            zoneBar
-                                .offset(y: 25)
+                        zoneBar
+                            .offset(y: 25)
+
                         BPMView()
                     }
                 }
@@ -41,6 +42,11 @@ struct GameProgressView: View {
                     height: proxy.size.height - 10
                 )
                 .padding()
+                .fullScreenCover(isPresented: $workoutManager.isStationaryDetacted) {
+                    DetactStationaryView()
+                        .environmentObject(workoutManager)
+                        .toolbar(.hidden, for: .navigationBar)
+                }
             }
             .tabViewStyle(.carousel)
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
