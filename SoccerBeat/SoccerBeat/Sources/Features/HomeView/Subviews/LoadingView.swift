@@ -9,7 +9,7 @@ import SkeletonUI
 import SwiftUI
 
 struct LoadingView: View {
-    @EnvironmentObject var healthInteractor: HealthInteractor
+    @EnvironmentObject var workoutManager: WorkoutManager
     
     var body: some View {
         ProgressView()
@@ -17,8 +17,8 @@ struct LoadingView: View {
 }
 
 #Preview {
-    @StateObject var healthInteractor = HealthInteractor.shared
+    @StateObject var workoutManager = WorkoutManager.shared
 
     return LoadingView()
-        .environmentObject(healthInteractor)
+        .environmentObject(workoutManager)
 }

@@ -70,7 +70,6 @@ struct SummaryView: View {
                         .onAppear {
                             withAnimation {
                                 isHeartBlinking = true
-                                print("heart", isHeartBlinking)
                             }
                          }
                     }

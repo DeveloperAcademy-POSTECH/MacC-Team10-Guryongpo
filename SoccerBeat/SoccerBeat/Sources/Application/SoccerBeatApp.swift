@@ -11,17 +11,17 @@ import SwiftUI
 struct SoccerBeatApp: App {
     @State var isShowingOnboardingView : Bool
     @StateObject var soundManager = SoundManager()
-    @StateObject var healthInteracter = HealthInteractor.shared
-    @StateObject var profileModel = ProfileModel(healthInteractor: HealthInteractor.shared)
+    @StateObject var workoutManager = WorkoutManager.shared
+    @StateObject var profileModel = ProfileModel(workoutManager: WorkoutManager.shared)
     @State private var hasHealthAuthorization: Bool
     @State private var hasLocationAuthorization: Bool
     @State private var showUpdate: Bool = false
     
-    
     init() {
-        self.hasHealthAuthorization = HealthInteractor.shared.haveHealthAuthorization()
-        self.hasLocationAuthorization = HealthInteractor.shared.hasLocationAuthorization()
+        self.hasHealthAuthorization = WorkoutManager.shared.hasHealthAuthorization()
+        self.hasLocationAuthorization = WorkoutManager.shared.hasLocationAuthorization()
         self.isShowingOnboardingView = false
+        
     }
     var body: some Scene {
         WindowGroup {
@@ -35,7 +35,7 @@ struct SoccerBeatApp: App {
                 }
             }
             .environmentObject(soundManager)
-            .environmentObject(healthInteracter)
+            .environmentObject(workoutManager)
             .environmentObject(profileModel)
             .onReceive(
                 NotificationCenter
@@ -44,19 +44,19 @@ struct SoccerBeatApp: App {
                         for: UIApplication.didBecomeActiveNotification
                     )
             ) { _ in
-                hasHealthAuthorization = healthInteracter.haveHealthAuthorization()
-                hasLocationAuthorization = healthInteracter.hasLocationAuthorization()
+                hasHealthAuthorization = workoutManager.hasHealthAuthorization()
+                hasLocationAuthorization = workoutManager.hasLocationAuthorization()
                 Task {
                     if hasHealthAuthorization && hasLocationAuthorization {
-                        await self.healthInteracter.fetchWorkoutData()
+                        await self.workoutManager.fetchWorkoutData()
                     }
                 }
             }
             .task {
-                healthInteracter.requestAuthorization()
+                workoutManager.requestAuthorization()
             }
-            .onReceive(healthInteracter.authSuccess) {
-                Task { await healthInteracter.fetchWorkoutData() }
+            .onReceive(workoutManager.authSuccess) {
+                Task { await workoutManager.fetchWorkoutData() }
             }
             .alert("🏆 Level Up! ⚽️🏃‍♂️\n\n사커비트가 유저분들의 의견을 반영하여 사용성을 개선했어요\n\n지금 바로 업데이트하고 즐겨보세요!", isPresented: $showUpdate) {
                 Button("나중에") {}
