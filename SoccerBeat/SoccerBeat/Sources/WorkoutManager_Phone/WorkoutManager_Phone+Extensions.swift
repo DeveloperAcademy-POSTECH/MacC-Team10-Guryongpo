@@ -1,8 +1,6 @@
-//
-//  HealthInteractor.swift
-//  SoccerBeat
-//
-//  Created by daaan on 11/1/23.
+//  WorkoutManager_Phone+Extensions.swift
+//  아이폰과 워치 경기 관리 매니저가 통합되었습니다.
+//  개별 매니저는 exntesnion 으로 관리합니다.
 //
 
 import Combine
@@ -14,75 +12,7 @@ enum HealthKitError: Error {
     case failureConvertingRouteAndMeta
 }
 
-final class HealthInteractor: NSObject, ObservableObject {
-    // Object to request permission to read HealthKit data.
-    var healthStore = HKHealthStore()
-    let locationManager = CLLocationManager()
-    let typesToRead = Set([
-                           HKObjectType.quantityType(forIdentifier: .heartRate)!,
-                           HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-                           HKObjectType.quantityType(forIdentifier: .walkingSpeed)!,
-                           HKObjectType.quantityType(forIdentifier: .runningSpeed)!,
-                           HKQuantityType.quantityType(forIdentifier: .runningPower)!,
-                           HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-                           HKQuantityType.quantityType(forIdentifier: .vo2Max)!,
-                           HKSeriesType.workoutType(),
-                           HKSeriesType.workoutRoute(),
-                           HKObjectType.activitySummaryType()
-                          ])
-
-    let typesToShare: Set = [HKQuantityType.workoutType(),
-                             HKSeriesType.workoutRoute(),
-                             HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
-                             HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-    ]
-
-    // Entire user workouts in HealthKit data.
-    private var hkWorkouts = [HKWorkout]()
-
-    override init() {
-        super.init()
-        locationManager.delegate = self
-    }
-
-    // Send when permission is granted by the user.
-    var authSuccess = PassthroughSubject<(), Never>()
-    private(set) var onWorkoutRemoved = PassthroughSubject<(IndexSet), Never>()
-    // Send when data fetch is successful.
-    var fetchWorkoutsSuccess = PassthroughSubject<([WorkoutData]), Never>()
-
-    static let shared = HealthInteractor()
-
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        return formatter
-    }()
-
-    @Published var recentGames = [WorkoutData]()
-    @Published var recent4Games = [WorkoutData]()
-
-    private(set) var monthly = [String: [WorkoutData]]()
-
-    func hasLocationAuthorization() -> Bool {
-        [
-            CLAuthorizationStatus.authorizedAlways,
-            .authorizedWhenInUse
-        ].contains(locationManager.authorizationStatus)
-    }
-
-    func haveHealthAuthorization() -> Bool {
-        for type in typesToShare
-        where healthStore.authorizationStatus(for: type) == .sharingDenied {
-            NSLog(
-                type.debugDescription,
-                healthStore.authorizationStatus(for: type).rawValue
-            )
-            return false
-        }
-        return true
-    }
-
+extension WorkoutManager {
     @MainActor
     func requestAuthorization() {
         NSLog("requestAuthorization: request user authorization..")
@@ -108,7 +38,7 @@ final class HealthInteractor: NSObject, ObservableObject {
                 NSLog(error.debugDescription)
                 return
             }
-            if success && self.haveHealthAuthorization() {
+            if success && self.hasHealthAuthorization() {
                 DispatchQueue.main.async {
                     self.authSuccess.send()
                 }
@@ -127,8 +57,6 @@ final class HealthInteractor: NSObject, ObservableObject {
             self.onWorkoutRemoved.send(offset)
         }
     }
-
-    @Published var isLoading = false
 
     func fetchWorkoutData() async {
         await MainActor.run {
@@ -191,8 +119,6 @@ final class HealthInteractor: NSObject, ObservableObject {
         var power = 0.0
         var calories = 0
         var vo2Max = 0.0
-        
-        print(metadata)
 
         if let distanceMeta: Double = metadata.getValue(forKey: "Distance") {
             distance = distanceMeta
@@ -325,7 +251,7 @@ final class HealthInteractor: NSObject, ObservableObject {
 
 // MARK: - Chart Methods
 
-extension HealthInteractor {
+extension WorkoutManager {
 
     private func settingForChartView(_ workouts: [WorkoutData]) async {
         let fourGames = await MainActor.run {
@@ -364,7 +290,7 @@ private extension Array where Element == WorkoutData {
 
 // MARK: - CLLocationManagerDelegate
 
-extension HealthInteractor: CLLocationManagerDelegate {
+extension WorkoutManager {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let statusMessage: String
         switch manager.authorizationStatus {
@@ -383,4 +309,20 @@ extension HealthInteractor: CLLocationManagerDelegate {
         }
         NSLog(statusMessage)
     }
+}
+
+// MARK: - 워치 세션 연동 핸들러
+extension WorkoutManager {
+    // 폰에서 앱 실행 시 워치의 원격 세션과 연동함
+    func retrieveRemoteSession() {
+        /**
+         HealthKit calls this handler when a session starts mirroring.
+         */
+        self.healthStore.workoutSessionMirroringStartHandler = { mirroredSession in
+            Task { @MainActor in
+                self.session = mirroredSession
+            }
+        }
+    }
+    
 }
