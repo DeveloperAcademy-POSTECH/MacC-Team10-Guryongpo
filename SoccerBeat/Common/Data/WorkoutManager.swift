@@ -9,6 +9,7 @@ import Combine
 import CoreLocation
 import HealthKit
 import SwiftUI
+import CoreMotion
 
 final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
@@ -44,6 +45,9 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
             }
         }
     }
+    
+    private(set) var motionManager = CMMotionActivityManager()
+    @Published var isStationaryDetacted = false
     
     // MARK: - 세션 관리
     @Published var running = false
