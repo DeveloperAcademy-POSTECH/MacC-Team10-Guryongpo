@@ -292,7 +292,7 @@ struct MainView: View {
             }
             
             // 앱 종료 / 백그라운드 이동 시 타이머 비활성화
-            if scenePhase != .active {
+            if scenePhase == .background {
                 self.timer?.invalidate()
             }
             workoutManager.formerSession = workoutManager.session?.state == .running
