@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AnalyticsView: View {
-    @EnvironmentObject var healthInteractor: HealthInteractor
+    @EnvironmentObject var workoutManager: WorkoutManager
     @Binding var workouts: [WorkoutData]
     
     var body: some View {
@@ -35,7 +35,7 @@ struct AnalyticsView: View {
                         case .sprint: SprintChartView(workouts: workouts)
                         }
                     } label: {
-                        AnalyticsComponent(workouts: healthInteractor.recent4Games, activityType: activityType)
+                        AnalyticsComponent(workouts: workoutManager.recent4Games, activityType: activityType)
                     }
                 }
             }
@@ -43,7 +43,8 @@ struct AnalyticsView: View {
     }
 }
 #Preview {
-    AnalyticsView(workouts: .constant(WorkoutData.exampleWorkouts))
-        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
-        .environmentObject(HealthInteractor())
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
+    return AnalyticsView(workouts: .constant(WorkoutData.exampleWorkouts))
+        .environmentObject(ProfileModel(workoutManager: workoutManager))
+        .environmentObject(workoutManager)
 }
