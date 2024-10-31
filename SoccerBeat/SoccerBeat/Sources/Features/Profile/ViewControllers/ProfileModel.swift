@@ -13,7 +13,7 @@ import SwiftUI
 @MainActor
 final class ProfileModel: ObservableObject {
 
-    let workoutManager: WorkoutManager
+    let healthInteractor: HealthInteractor
     @Published var averageAbility = WorkoutAverageData()
     @Published var maxAbility = WorkoutAverageData()
     @Published var allBadges: [[Bool]] = [[false, false, false, false],
@@ -22,13 +22,13 @@ final class ProfileModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(workoutManager: WorkoutManager) {
-        self.workoutManager = workoutManager
+    init(healthInteractor: HealthInteractor) {
+        self.healthInteractor = healthInteractor
         binding()
     }
     
     private func binding() {
-        workoutManager.fetchWorkoutsSuccess.sink { workouts in
+        healthInteractor.fetchWorkoutsSuccess.sink { workouts in
             self.calculateAverageAbility(workouts)
             self.caculateMaxAbility(workouts)
             self.calculateBadge(workouts)

@@ -67,8 +67,8 @@ extension TrophyCollectionView {
 }
 
 #Preview {
-    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
+    @StateObject var profileModel = ProfileModel(healthInteractor: HealthInteractor.shared)
     
     return TrophyCollectionView()
-        .environmentObject(ProfileModel(workoutManager: workoutManager))
+        .environmentObject(profileModel)
 }
