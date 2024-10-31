@@ -23,10 +23,9 @@ struct TrophyCollectionView: View {
                     .font(.navigationSportyTitle)
                     .highlighter(activity: .sprint, isDefault: true)
             }
-            .padding(.horizontal, 10)
             
             trophyCollection
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 6)
         }
     }
 }

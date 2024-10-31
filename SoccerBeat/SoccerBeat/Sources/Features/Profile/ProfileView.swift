@@ -28,7 +28,7 @@ struct ProfileView: View {
                                 .minimumScaleFactor(0.8)
                                 Spacer()
                             }
-                            .padding(.bottom, 30)
+                            .padding(.vertical, 30)
                             
                             VStack(spacing: 0) {
                                 HStack {
@@ -119,6 +119,7 @@ struct ProfileView: View {
                     TrophyCollectionView()
                     
                 }
+                .padding(.horizontal)
                 .onTapGesture {
                     hideKeyboard()
                 }

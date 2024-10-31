@@ -857,6 +857,9 @@
         }
       }
     },
+    "Close" : {
+
+    },
     "Distance" : {
       "localizations" : {
         "en" : {
@@ -937,6 +940,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Field Record"
+          }
+        }
+      }
+    },
+    "Finished\nyour workout?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished\nyour workout?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Has terminado\ntu entrenamiento?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "경기를 \n종료하셨나요?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "锻炼结束了吗？"
           }
         }
       }
