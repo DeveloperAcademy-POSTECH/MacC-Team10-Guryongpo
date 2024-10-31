@@ -31,7 +31,7 @@ struct DetactStationaryView: View {
                     workoutManager.endWorkout()
                     dismiss()
                 } label: {
-                    Text("End Workout")
+                    Text("경기 종료")
                         .font(.headline)
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity)
@@ -46,7 +46,7 @@ struct DetactStationaryView: View {
                     workoutManager.togglePause()
                     dismiss()
                 } label: {
-                    Text("Pause")
+                    Text("일시 정지")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -60,7 +60,7 @@ struct DetactStationaryView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("Close")
+                    Text("close")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
