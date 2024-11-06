@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct MainView: View {
-    @Environment(\.scenePhase) private var scenePhase
     @Binding var isShowingOnboardingView: Bool
-    @Binding var isShowingSessionView: Bool
     
     @EnvironmentObject var profileModel: ProfileModel
-    @EnvironmentObject var workoutManager: WorkoutManager
+    @EnvironmentObject var healthInteractor: HealthInteractor
     @EnvironmentObject var soundManager: SoundManager
     @State private var isFlipped = false
     @State private var currentLocation = "---"
     @Binding var workouts: [WorkoutData]
-    @State var timer: Timer?
     
     @State private var isShowingBug = false
     private let alertTitle = "문제가 있으신가요?"
@@ -38,25 +35,11 @@ struct MainView: View {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
-        .sheet(isPresented: $isShowingSessionView) {
-            VStack {
-                RunningModalView()
-            }
-            .presentationDetents([.fraction(0.3)])
-            .presentationDragIndicator(.visible)
-        }
         .refreshable {
-            await workoutManager.fetchWorkoutData()
+            await healthInteractor.fetchWorkoutData()
         }
         .padding(.horizontal)
         .navigationTitle("")
-        .onAppear {
-            // 타이머 시작
-            startMonitoring()
-        }
-        .onDisappear {
-            timer?.invalidate()
-        }
     }
     
     private var headerView: some View {
@@ -279,36 +262,16 @@ struct MainView: View {
         let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         return "mailto:\(to)?subject=\(subjectEncoded)&body=\(bodyEncoded)"
     }
-    
-    func startMonitoring() {
-        // 워치 세션 모니터링
-        self.timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
-            if !workoutManager.formerSession && workoutManager.session?.state == .running {
-                self.isShowingSessionView = true
-            }
-            
-            if workoutManager.formerSession && workoutManager.session?.state != .running {
-                self.isShowingSessionView = false
-            }
-            
-            // 앱 종료 / 백그라운드 이동 시 타이머 비활성화
-            if scenePhase == .background {
-                self.timer?.invalidate()
-            }
-            workoutManager.formerSession = workoutManager.session?.state == .running
-        }
-    }
 }
 
 #Preview {
-    @StateObject var health = WorkoutManager.shared
+    @StateObject var health = HealthInteractor.shared
     @StateObject var sound = SoundManager()
-    @StateObject var profileModel = ProfileModel(workoutManager: .shared)
+    @StateObject var profileModel = ProfileModel(healthInteractor: .shared)
     @State var workouts = WorkoutData.exampleWorkouts
     @State var isShowingOnboardingView = false
-    @State var isShowingSessionView: Bool = false
     
-    return MainView(isShowingOnboardingView: $isShowingOnboardingView, isShowingSessionView: $isShowingSessionView, workouts: $workouts)
+    return MainView(isShowingOnboardingView: $isShowingOnboardingView, workouts: $workouts)
         .environmentObject(health)
         .environmentObject(sound)
         .environmentObject(profileModel)

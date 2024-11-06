@@ -414,8 +414,8 @@ struct FieldRecordDataView: View {
 
 
 #Preview {
-    @StateObject var workoutManager = WorkoutManager.shared
+    @StateObject var healthInteractor = HealthInteractor.shared
     return MatchDetailView(workout: WorkoutData.example)
-        .environmentObject(ProfileModel(workoutManager: workoutManager))
-        .environmentObject(workoutManager)
+        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
+        .environmentObject(HealthInteractor())
 }

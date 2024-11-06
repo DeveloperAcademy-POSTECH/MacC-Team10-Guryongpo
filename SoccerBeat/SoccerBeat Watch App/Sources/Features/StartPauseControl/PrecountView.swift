@@ -67,7 +67,7 @@ struct PrecountView: View {
             }
             .onChange(of: count) { newCount in
                 // MARK: - Session Start
-                if newCount == 1 {
+                if newCount < 2 {
                     workoutManager.startWorkout()
                 }
             }

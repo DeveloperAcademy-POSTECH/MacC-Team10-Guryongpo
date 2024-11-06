@@ -1,13 +1,32 @@
 //
-//  DIContainer.swift
+//  SoccerBeatApp.swift
 //  SoccerBeat Watch App
 //
-//  Created by jose Yun on 10/10/24.
+//  Created by daaan on 10/21/23.
 //
 
-import Foundation
+import SwiftUI
 
-// TODO: - MOVE DI Container
+@main
+struct SoccerBeat_Watch_AppApp: App {
+    
+    @StateObject private var workoutManager = DIContianer.makeWorkoutManager()
+    @StateObject private var matricsIndicator = DIContianer.makeMatricsIndicator()
+    @State var triggerHealthKitAuthorization = false
+
+    var body: some Scene {
+        WindowGroup {
+            NavigationView {
+                StartView()
+            }
+            .environmentObject(workoutManager)
+            .environmentObject(matricsIndicator)
+            .environment(\.locale, .current)
+        }
+    }
+}
+
+// TODO: - MOVE DI Container 
 final class DIContianer {
     static private(set) var matrics: MatricsIndicator?
     
