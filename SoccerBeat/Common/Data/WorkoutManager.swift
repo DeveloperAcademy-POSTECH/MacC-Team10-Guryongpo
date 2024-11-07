@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CoreMotion
 import CoreLocation
 import HealthKit
 import SwiftUI
@@ -15,8 +16,11 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     static let shared: WorkoutManager = WorkoutManager(matrics: DIContianer.makeMatricsIndicator())
     let healthStore = HKHealthStore()
     private(set) var locationManager = CLLocationManager()
+    private(set) var motionManager = CMMotionActivityManager()
     private(set) var matrics: MatricsIndicator
     var session: HKWorkoutSession?
+    
+    @Published var isStationaryDetacted = false
 
     init(matrics: MatricsIndicator) {
         self.matrics = matrics
