@@ -59,6 +59,16 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         // 헬스킷에서 나이 정보를 통해 적절한 최대심박수 찾기
         matrics.computeProperMaxHeartRate(with: healthStore)
         
+        
+        // collect motion information
+        motionManager.startActivityUpdates(to: .main) { [weak self] activity in
+            guard let activity = activity else { return }
+            // alert when stationary
+            if activity.stationary {
+                self?.isStationaryDetacted = true
+            }
+        }
+        
         // 워치 세션을 원격 세션과 연동
         Task {
             do {
