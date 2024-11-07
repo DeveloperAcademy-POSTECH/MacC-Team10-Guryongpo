@@ -251,17 +251,19 @@ struct FieldMovementView: View {
                 }
             }
             if let workout = workout {
-                HeatmapView(slider: $slider, coordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), polylineCoordinates: workout.route)
+                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+//                HeatmapView(slider: $slider, coordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), polylineCoordinates: workout.route)
                     .frame(height: 500)
                     .cornerRadius(15.0)
                 
-                Slider(
-                    value: $slider,
-                    in: 0...1
-                )
-                .padding(.vertical)
+//                Slider(
+//                    value: $slider,
+//                    in: 0...1
+//                )
+//                .padding(.vertical)
             } else {
-                HeatmapView(slider: $slider, coordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), polylineCoordinates: emptyDataRoute)
+                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+//                HeatmapView(slider: $slider, coordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), polylineCoordinates: emptyDataRoute)
             }
         }
         
