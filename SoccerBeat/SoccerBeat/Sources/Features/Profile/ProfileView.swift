@@ -145,7 +145,8 @@ extension View {
 }
 
 #Preview {
-    ProfileView()
-        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
+    return ProfileView()
+        .environmentObject(ProfileModel(workoutManager: workoutManager))
         .environment(\.locale, .init(identifier: "en"))
 }

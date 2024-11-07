@@ -9,14 +9,13 @@ import SwiftUI
 import StoreKit
 
 struct MatchRecapView: View {
-    @EnvironmentObject var healthInteractor: HealthInteractor
+    @EnvironmentObject var workoutManager: WorkoutManager
     @State private var userName = ""
     @Binding var workouts: [WorkoutData]
     @State private var requestReview = false
     @State private var hasDoneReviewBefore = false
     private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
-    
-    
+        
     private var lastName: String {
         guard let lastName = userName
             .split(separator: " ")
@@ -146,7 +145,7 @@ struct MatchRecapView: View {
     
     private func delete(_ offset: IndexSet) async {
         do {
-            try await healthInteractor.delete(at: offset)
+            try await workoutManager.delete(at: offset)
         } catch {
             NSLog("Deleting HKWorkout failed")
         }
@@ -302,7 +301,9 @@ extension MatchListItemView {
 }
 
 #Preview {
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
+    return
     MatchRecapView(workouts: .constant(WorkoutData.exampleWorkouts))
-        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
-        .environmentObject(HealthInteractor())
+        .environmentObject(ProfileModel(workoutManager: workoutManager))
+        .environmentObject(workoutManager)
 }
