@@ -413,6 +413,7 @@
       }
     },
     "# Hello World" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -857,9 +858,6 @@
         }
       }
     },
-    "Close" : {
-
-    },
     "Distance" : {
       "localizations" : {
         "en" : {
@@ -1029,6 +1027,7 @@
       }
     },
     "Hello" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1057,6 +1056,7 @@
       }
     },
     "Hello World" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1085,6 +1085,7 @@
       }
     },
     "Hint 내용입니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1763,6 +1764,7 @@
       }
     },
     "World!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
