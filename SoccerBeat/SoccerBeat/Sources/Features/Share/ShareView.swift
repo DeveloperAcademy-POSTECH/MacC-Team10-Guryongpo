@@ -4,7 +4,7 @@ import Photos
 struct ShareView: View {
     @Binding var isBackButtonHidden: Bool
     @EnvironmentObject var profileModel: ProfileModel
-    @EnvironmentObject var healthInteractor: HealthInteractor
+    @EnvironmentObject var workoutManager: WorkoutManager
     @State var degree: Double = 0
     @State private var showingAlert: Bool = false
     
@@ -136,6 +136,8 @@ extension ShareView {
 }
 
 #Preview {
-    ShareView(isBackButtonHidden: .constant(false))
-        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
+
+    return ShareView(isBackButtonHidden: .constant(false))
+        .environmentObject(ProfileModel(workoutManager: workoutManager))
 }

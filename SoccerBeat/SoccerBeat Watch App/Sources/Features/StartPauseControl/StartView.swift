@@ -63,20 +63,20 @@ struct StartView: View {
 
     private func checkLocationAuthorization() {
         workoutManager.checkLocationAuthorization()
-        if !workoutManager.hasLocationAuthorization {
+        if workoutManager.hasLocationAuthorization() == false {
             isShowingLocationAlert.toggle()
         }
     }
 
     private func checkHealthAuthorization() {
-        if !workoutManager.hasHealthAuthorization {
+        if workoutManager.hasHealthAuthorization() == false {
             isShowingHealthAlert.toggle()
         }
     }
 
     private func handleWorkoutStart() {
-        let hasAllAuthorization = workoutManager.hasHealthAuthorization
-        && workoutManager.hasLocationAuthorization
+        let hasAllAuthorization = workoutManager.hasHealthAuthorization()
+        && workoutManager.hasLocationAuthorization()
 
         if hasAllAuthorization && workoutManager.isHealthDataAvailable {
             workoutManager.showingPrecount.toggle()
