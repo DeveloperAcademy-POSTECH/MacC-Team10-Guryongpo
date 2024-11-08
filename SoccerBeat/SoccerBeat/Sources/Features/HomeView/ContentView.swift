@@ -11,8 +11,9 @@ import HealthKit
 
 struct ContentView: View {
     @Binding var isShowingOnboardingView : Bool
+    @State var isShowingSessionView: Bool = false
     @EnvironmentObject var profileModel: ProfileModel
-    @EnvironmentObject var healthInteractor: HealthInteractor
+    @EnvironmentObject var workoutManager: WorkoutManager
     @EnvironmentObject var soundManager: SoundManager
     
     @AppStorage("healthAlert") var healthAlert = true
@@ -22,23 +23,28 @@ struct ContentView: View {
         NavigationStack {
             if healthAlert {
                 HealthAlertView(showingAlert: $healthAlert)
-            } else if healthInteractor.isLoading {
+            } else if workoutManager.isLoading {
                 LoadingView()
             } else {
-                MainView(isShowingOnboardingView: $isShowingOnboardingView, workouts: $workouts)
+                MainView(isShowingOnboardingView: $isShowingOnboardingView, isShowingSessionView: $isShowingSessionView, workouts: $workouts)
             }
         }
-        .onReceive(healthInteractor.fetchWorkoutsSuccess) { workouts in
+        .onReceive(workoutManager.fetchWorkoutsSuccess) { workouts in
             self.workouts = workouts
             isShowingOnboardingView = workouts.isEmpty
         }
-        .onReceive(healthInteractor.onWorkoutRemoved) { indexSet in
+        .onReceive(workoutManager.onWorkoutRemoved) { indexSet in
             self.workouts.remove(atOffsets: indexSet)
         }
         .onAppear {
             // 음악을 틀기
+            workoutManager.retrieveRemoteSession()
             if soundManager.isMusicPlaying {
                 soundManager.playBackground()
+            }
+            
+            if workoutManager.session?.state == .running {
+                isShowingSessionView = true
             }
         }
         .tint(.white)
@@ -46,8 +52,11 @@ struct ContentView: View {
 }
 
 #Preview {
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
+
+    return
     ContentView(isShowingOnboardingView: .constant(true))        .preferredColorScheme(.dark)
-        .environmentObject(ProfileModel(healthInteractor: HealthInteractor()))
+        .environmentObject(ProfileModel(workoutManager: workoutManager))
         .environmentObject(SoundManager())
-        .environmentObject(HealthInteractor())
+        .environmentObject(workoutManager)
 }
