@@ -52,6 +52,7 @@
 		68D89FF62C59401E0057B8E9 /* StartGlow.gif in Resources */ = {isa = PBXBuildFile; fileRef = 68D89FF52C59401E0057B8E9 /* StartGlow.gif */; };
 		68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
 		68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */; };
+		BA3654B02CDE809A0059FE9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
 		BA8C99142C4115FD00C57E90 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8C99132C4115FD00C57E90 /* OnboardingView.swift */; };
 		BADCB6BA2C6E3E09000DDD9D /* AppstoreUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADCB6B92C6E3E09000DDD9D /* AppstoreUpdateChecker.swift */; };
 		BE010D392B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D382B0511CC0093A5FE /* FloatingCapsuleModifier.swift */; };
@@ -1039,6 +1040,7 @@
 				BE4069D22AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 				FBA3DA882B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf in Resources */,
 				BED269772AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
+				BA3654B02CDE809A0059FE9A /* Assets.xcassets in Resources */,
 				BE4069C82AF1F80D00FA3030 /* SF-Pro-Text-BlackItalic.otf in Resources */,
 				BE4069CE2AF1F80D00FA3030 /* SF-Compact-Text-LightItalic.otf in Resources */,
 				FBA3DA822B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */,
