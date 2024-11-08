@@ -33,7 +33,7 @@ struct HeatmapView: UIViewRepresentable {
         let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
                 
         mapView.addOverlays(overlays)
-                
+                    
         return mapView
     }
     
