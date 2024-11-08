@@ -110,7 +110,6 @@
 		BE4B72742BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
 		BE4B72752BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
 		BE58E6472CB7FC6F005B3E38 /* DetactStationaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE58E6462CB7FC6F005B3E38 /* DetactStationaryView.swift */; };
-		BE58E6482CB812E9005B3E38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C500162AE36F3F00EFAEFF /* Assets.xcassets */; };
 		BE87AC0C2C4B1D0700803A25 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = BE87AC0B2C4B1D0700803A25 /* SkeletonUI */; };
 		BE91CF402BBE43BC00F0EB6F /* RadarChartShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */; };
 		BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
@@ -1040,7 +1039,6 @@
 				BE4069D22AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
 				FBA3DA882B03B9F20025AD7B /* SF-Pro-Display-RegularItalic.otf in Resources */,
 				BED269772AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf in Resources */,
-				BE58E6482CB812E9005B3E38 /* Assets.xcassets in Resources */,
 				BE4069C82AF1F80D00FA3030 /* SF-Pro-Text-BlackItalic.otf in Resources */,
 				BE4069CE2AF1F80D00FA3030 /* SF-Compact-Text-LightItalic.otf in Resources */,
 				FBA3DA822B03B5770025AD7B /* SF-Pro-Display-HeavyItalic.otf in Resources */,
