@@ -49,7 +49,17 @@ struct HeatmapView: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if let rectangleOverlay = overlay as? FixedSizeRectangleOverlay {
-                let renderer = MKPolygonRenderer(polygon: MKPolygon(points: rectangleOverlay.points, count: rectangleOverlay.points.count))
+                
+                let shrinkFactor: Double = 0.8
+                let shrunkenPoints = rectangleOverlay.points.map { point -> MKMapPoint in
+                    let centerX = rectangleOverlay.boundingMapRect.midX
+                    let centerY = rectangleOverlay.boundingMapRect.midY
+                    let newX = centerX + (point.x - centerX) * shrinkFactor
+                    let newY = centerY + (point.y - centerY) * shrinkFactor
+                    return MKMapPoint(x: newX, y: newY)
+                }
+                
+                let renderer = MKPolygonRenderer(polygon: MKPolygon(points: shrunkenPoints, count: shrunkenPoints.count))
                 
                 switch rectangleOverlay.count {
                 case 0...1:
@@ -121,9 +131,6 @@ struct HeatmapView: UIViewRepresentable {
                 
                 let squareCenter = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let overlay = FixedSizeRectangleOverlay(center: squareCenter, width: squareSize, height: squareSize, count: gridCount[row][col])
-                
-                if gridCount[row][col] != 0 {
-                }
                 
                 overlays.append(overlay)
             }
