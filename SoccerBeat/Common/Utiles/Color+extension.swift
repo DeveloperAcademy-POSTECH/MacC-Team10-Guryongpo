@@ -122,6 +122,18 @@ extension ShapeStyle where Self == Color {
     static var averageStokeColor: Self { .init(hex: 0x03FFE0) }
     static var maxFillColor: Self { .maxStrokeColor.opacity(0.5) }
     static var maxStrokeColor: Self { .init(hex: 0xFF007A, alpha: 0.7) }
+    
+    // MARK: - HeatmapView
+    static var heatmap10: Self { .init(hex: 0x03FFC3, alpha: 0.8)}
+    static var heatmap20: Self { .init(hex: 0x03E6B0, alpha: 0.8)}
+    static var heatmap30: Self { .init(hex: 0x03CC9D, alpha: 0.8)}
+    static var heatmap40: Self { .init(hex: 0x03B38A, alpha: 0.8)}
+    static var heatmap50: Self { .init(hex: 0x039977, alpha: 0.7)}
+    static var heatmap60: Self { .init(hex: 0x038064, alpha: 0.7)}
+    static var heatmap70: Self { .init(hex: 0x036651, alpha: 0.6)}
+    static var heatmap80: Self { .init(hex: 0x034D3E, alpha: 0.6)}
+    static var heatmap90: Self { .init(hex: 0x03332B, alpha: 0.4)}
+    static var heatmap100: Self { .init(hex: 0x031A18, alpha: 0.1)}
 }
 
 extension ShapeStyle where Self == LinearGradient {

@@ -18,17 +18,12 @@ import MapKit
 struct HeatmapView: UIViewRepresentable {
     let centerCoordinate: CLLocationCoordinate2D
     let routes: [CLLocationCoordinate2D]
+    let mapView = MKMapView()
     
     func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
         
         mapView.delegate = context.coordinator
-        mapView.region = MKCoordinateRegion(center: centerCoordinate,
-                                            latitudinalMeters: 100,
-                                            longitudinalMeters: 100)
-        mapView.setRegion(mapView.region, animated: false)
-        mapView.isZoomEnabled = true
-        mapView.isScrollEnabled = true
+        mapView.region = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 150, longitudinalMeters: 150)
         
         let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
                 
@@ -57,18 +52,31 @@ struct HeatmapView: UIViewRepresentable {
                 let renderer = MKPolygonRenderer(polygon: MKPolygon(points: rectangleOverlay.points, count: rectangleOverlay.points.count))
                 
                 switch rectangleOverlay.count {
-                case 0:
+                case 0...1:
                     renderer.fillColor = UIColor.clear
-                case 1:
-                    renderer.fillColor = UIColor.yellow.withAlphaComponent(0.6)
-//                    renderer.strokeColor = UIColor.yellow
-//                    renderer.lineWidth = 1
                 case 2:
-                    renderer.fillColor = UIColor.orange.withAlphaComponent(0.6)
-//                    renderer.strokeColor = UIColor.orange
-//                    renderer.lineWidth = 1
+                    renderer.fillColor = UIColor(Color.heatmap100)
+                case 3:
+                    renderer.fillColor = UIColor(Color.heatmap90)
+                case 4:
+                    renderer.fillColor = UIColor(Color.heatmap80)
+                case 5:
+                    renderer.fillColor = UIColor(Color.heatmap70)
+                case 6:
+                    renderer.fillColor = UIColor(Color.heatmap60)
+                case 7:
+                    renderer.fillColor = UIColor(Color.heatmap50)
+                case 8:
+                    renderer.fillColor = UIColor(Color.heatmap40)
+                case 9:
+                    renderer.fillColor = UIColor(Color.heatmap30)
+                case 10:
+                    renderer.fillColor = UIColor(Color.heatmap20)
                 default:
-                    renderer.fillColor = UIColor.red.withAlphaComponent(0.6)
+                    renderer.fillColor = UIColor(Color.heatmap10)
+                    
+//                default:
+//                    renderer.fillColor = UIColor.red.withAlphaComponent(0.6)
 //                    renderer.strokeColor = UIColor.red
 //                    renderer.lineWidth = 1
                 }
@@ -115,7 +123,6 @@ struct HeatmapView: UIViewRepresentable {
                 let overlay = FixedSizeRectangleOverlay(center: squareCenter, width: squareSize, height: squareSize, count: gridCount[row][col])
                 
                 if gridCount[row][col] != 0 {
-                    print("Overlay at row \(row), col \(col) has count: \(gridCount[row][col])")
                 }
                 
                 overlays.append(overlay)
