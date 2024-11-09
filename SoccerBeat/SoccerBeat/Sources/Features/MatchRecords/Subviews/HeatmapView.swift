@@ -16,24 +16,64 @@ import MapKit
 // polylineCoordinates: [CLLocationCoordinate2D(latitude, longitude)])
 
 struct HeatmapView: UIViewRepresentable {
+    @Binding var slider: Double
+    @Binding var mapType: Int
+    
     let centerCoordinate: CLLocationCoordinate2D
     let routes: [CLLocationCoordinate2D]
     let mapView = MKMapView()
+    
     
     func makeUIView(context: Context) -> MKMapView {
         
         mapView.delegate = context.coordinator
         mapView.region = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 150, longitudinalMeters: 150)
         
-        let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
-                
-        mapView.addOverlays(overlays)
-                    
+        if mapType == 0 {
+            addPolylineToMap()
+        } else {
+            let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
+            mapView.addOverlays(overlays)
+        }
+        
         return mapView
     }
     
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
+        if mapType == 0 {
+            let convertIndex = Int(Double(routes.count - 1) * slider)
+            if (convertIndex < routes.count - 1) {
+                let coordinate = routes[convertIndex]
+                let pointStart = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude,
+                                                                   longitude: coordinate.longitude))
+                let pointEnd = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude + 0.0000001,
+                                                                 longitude: coordinate.longitude + 0.0000001))
+                let movePoint = MKPolyline(points: [pointStart, pointEnd], count: 2)
+                movePoint.title = String("Point")
+                uiView.addOverlay(movePoint)
+            }
+        }
+    }
+    
+    func addPolylineToMap() {
+        let coordinates = Array(routes).enumerated()
+            .filter { $0.offset % 5 == 0 && $0.element.latitude != 0}
+            .map { $0.element }
+        let polyline = MKPolyline(coordinates: coordinates,
+                                  count: coordinates.count)
+        mapView.addOverlay(polyline)
+        
+        if let coordinate = coordinates.first {
+            let pointStart = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude,
+                                                               longitude: coordinate.longitude))
+            let pointEnd = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude + 0.0000001,
+                                                             longitude: coordinate.longitude + 0.0000001))
+            let startPoint = MKPolyline(points: [pointStart, pointEnd], count: 2)
+            
+            startPoint.title = String("Point")
+            mapView.addOverlay(startPoint)
+        }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -42,56 +82,77 @@ struct HeatmapView: UIViewRepresentable {
     
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: HeatmapView
+        var currentPoint: MKOverlayRenderer?
         
         init(_ parent: HeatmapView) {
             self.parent = parent
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            if let rectangleOverlay = overlay as? FixedSizeRectangleOverlay {
-                
-                let shrinkFactor: Double = 0.8
-                let shrunkenPoints = rectangleOverlay.points.map { point -> MKMapPoint in
-                    let centerX = rectangleOverlay.boundingMapRect.midX
-                    let centerY = rectangleOverlay.boundingMapRect.midY
-                    let newX = centerX + (point.x - centerX) * shrinkFactor
-                    let newY = centerY + (point.y - centerY) * shrinkFactor
-                    return MKMapPoint(x: newX, y: newY)
+            if parent.mapType == 0 {
+                if let routePolyDot = overlay as? MKPolyline {
+                    if routePolyDot.title == "Point" {
+                        // Current Position Point
+                        self.currentPoint?.alpha = 0.0
+                        let renderer = MKPolylineRenderer(polyline: routePolyDot)
+                        renderer.strokeColor = .white
+                        renderer.alpha = CGFloat(1.0)
+                        renderer.lineWidth = 20
+                        renderer.blendMode = .lighten
+                        self.currentPoint = renderer
+                        return renderer
+                    } else {
+                        // Full line
+                        let renderer = MKPolylineRenderer(polyline: routePolyDot)
+                        renderer.strokeColor = .cyan
+                        renderer.alpha = CGFloat(1.0)
+                        renderer.lineWidth = 8
+                        renderer.blendMode = .lighten
+                        renderer.alpha = 0.8
+                        return renderer
+                    }
                 }
-                
-                let renderer = MKPolygonRenderer(polygon: MKPolygon(points: shrunkenPoints, count: shrunkenPoints.count))
-                
-                switch rectangleOverlay.count {
-                case 0...1:
-                    renderer.fillColor = UIColor.clear
-                case 2:
-                    renderer.fillColor = UIColor(Color.heatmap100)
-                case 3:
-                    renderer.fillColor = UIColor(Color.heatmap90)
-                case 4:
-                    renderer.fillColor = UIColor(Color.heatmap80)
-                case 5:
-                    renderer.fillColor = UIColor(Color.heatmap70)
-                case 6:
-                    renderer.fillColor = UIColor(Color.heatmap60)
-                case 7:
-                    renderer.fillColor = UIColor(Color.heatmap50)
-                case 8:
-                    renderer.fillColor = UIColor(Color.heatmap40)
-                case 9:
-                    renderer.fillColor = UIColor(Color.heatmap30)
-                case 10:
-                    renderer.fillColor = UIColor(Color.heatmap20)
-                default:
-                    renderer.fillColor = UIColor(Color.heatmap10)
+            } else {
+                if let rectangleOverlay = overlay as? FixedSizeRectangleOverlay {
                     
-//                default:
-//                    renderer.fillColor = UIColor.red.withAlphaComponent(0.6)
-//                    renderer.strokeColor = UIColor.red
-//                    renderer.lineWidth = 1
+                    let shrinkFactor: Double = 0.8
+                    let shrunkenPoints = rectangleOverlay.points.map { point -> MKMapPoint in
+                        let centerX = rectangleOverlay.boundingMapRect.midX
+                        let centerY = rectangleOverlay.boundingMapRect.midY
+                        let newX = centerX + (point.x - centerX) * shrinkFactor
+                        let newY = centerY + (point.y - centerY) * shrinkFactor
+                        return MKMapPoint(x: newX, y: newY)
+                    }
+                    
+                    let renderer = MKPolygonRenderer(polygon: MKPolygon(points: shrunkenPoints, count: shrunkenPoints.count))
+                    
+                    switch rectangleOverlay.count {
+                    case 0...1:
+                        renderer.fillColor = UIColor.clear
+                    case 2:
+                        renderer.fillColor = UIColor(Color.heatmap100)
+                    case 3:
+                        renderer.fillColor = UIColor(Color.heatmap90)
+                    case 4:
+                        renderer.fillColor = UIColor(Color.heatmap80)
+                    case 5:
+                        renderer.fillColor = UIColor(Color.heatmap70)
+                    case 6:
+                        renderer.fillColor = UIColor(Color.heatmap60)
+                    case 7:
+                        renderer.fillColor = UIColor(Color.heatmap50)
+                    case 8:
+                        renderer.fillColor = UIColor(Color.heatmap40)
+                    case 9:
+                        renderer.fillColor = UIColor(Color.heatmap30)
+                    case 10:
+                        renderer.fillColor = UIColor(Color.heatmap20)
+                    default:
+                        renderer.fillColor = UIColor(Color.heatmap10)
+                    }
+                    
+                    return renderer
                 }
-                
-                return renderer
             }
             return MKOverlayRenderer()
         }
@@ -171,8 +232,36 @@ class FixedSizeRectangleOverlay: NSObject, MKOverlay {
 //    let polylineCoordinates: [CLLocationCoordinate2D]
 //    let mapView = MKMapView()
 //
-//    func updateUIView(_ uiView: MKMapView, context: Context) {
+//    func makeUIView(context: Context) -> MKMapView {
+//
+//        mapView.delegate = context.coordinator
+//        mapView.region = MKCoordinateRegion(center: coordinate,
+//                                                latitudinalMeters: 100,
+//                                                longitudinalMeters: 100)
 //        
+//        let coordinates = Array(polylineCoordinates).enumerated()
+//            .filter { $0.offset % 5 == 0 && $0.element.latitude != 0}
+//            .map { $0.element }
+//        let polyline = MKPolyline(coordinates: coordinates,
+//                                  count: coordinates.count)
+//        mapView.addOverlay(polyline)
+//
+//        if let coordinate = coordinates.first {
+//            let pointStart = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude,
+//                                                               longitude: coordinate.longitude))
+//            let pointEnd = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude + 0.0000001,
+//                                                             longitude: coordinate.longitude + 0.0000001))
+//            let startPoint = MKPolyline(points: [pointStart, pointEnd], count: 2)
+//
+//            startPoint.title = String("Point")
+//            mapView.addOverlay(startPoint)
+//        }
+//
+//        return mapView
+//    }
+//    
+//    func updateUIView(_ uiView: MKMapView, context: Context) {
+//
 //        let convertIndex = Int(Double(polylineCoordinates.count - 1) * slider)
 //        if (convertIndex < polylineCoordinates.count - 1) {
 //            let coordinates = polylineCoordinates[convertIndex]
@@ -185,34 +274,8 @@ class FixedSizeRectangleOverlay: NSObject, MKOverlay {
 //            uiView.addOverlay(movePoint)
 //        }
 //    }
-//    
-//    func makeUIView(context: Context) -> MKMapView {
-//        
-//        mapView.delegate = context.coordinator
-//        mapView.region = MKCoordinateRegion(center: coordinate,
-//                                                latitudinalMeters: 100,
-//                                                longitudinalMeters: 100)
-//        let coordinates = Array(polylineCoordinates).enumerated()
-//            .filter { $0.offset % 5 == 0 && $0.element.latitude != 0}
-//            .map { $0.element }
-//        let polyline = MKPolyline(coordinates: coordinates,
-//                                  count: coordinates.count)
-//        mapView.addOverlay(polyline)
-//        
-//        if let coordinate = coordinates.first {
-//            let pointStart = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude,
-//                                                               longitude: coordinate.longitude))
-//            let pointEnd = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.latitude + 0.0000001,
-//                                                             longitude: coordinate.longitude + 0.0000001))
-//            let startPoint = MKPolyline(points: [pointStart, pointEnd], count: 2)
-//            
-//            startPoint.title = String("Point")
-//            mapView.addOverlay(startPoint)
-//        }
-//            
-//        return mapView
-//    }
-//    
+//
+//
 //    func makeCoordinator() -> Coordinator {
 //        Coordinator(self)
 //    }
@@ -221,12 +284,12 @@ class FixedSizeRectangleOverlay: NSObject, MKOverlay {
 //class Coordinator: NSObject, MKMapViewDelegate {
 //    var parent: HeatmapView
 //    var currentPoint: MKOverlayRenderer?
-//    
+//
 //    init(_ parent: HeatmapView) {
 //        self.parent = parent
 //        self.currentPoint = nil
 //    }
-//    
+//
 //    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 //        if let routePolyDot = overlay as? MKPolyline {
 //            if routePolyDot.title == "Point" {

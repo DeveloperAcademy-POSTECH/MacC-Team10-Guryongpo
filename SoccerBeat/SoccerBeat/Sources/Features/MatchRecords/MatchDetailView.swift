@@ -233,6 +233,7 @@ struct FieldMovementView: View {
     var workout: WorkoutData?
     @State var isInfoOpen: Bool = false
     @State private var slider = 0.0
+    @State private var mapType = 0
     private let emptyDataRoute: [CLLocationCoordinate2D] = []
     private let emptyDataCenter: [Double] = [0, 0]
     var body: some View {
@@ -250,20 +251,23 @@ struct FieldMovementView: View {
                     }
                 }
             }
+            Picker("Pick map type", selection: $mapType) {
+                Text("a").tag(0)
+                Text("Heatmap").tag(1)
+            }
+            .pickerStyle(.segmented)
             if let workout = workout {
-                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
-//                HeatmapView(slider: $slider, coordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), polylineCoordinates: workout.route)
+                HeatmapView(slider: $slider, mapType: $mapType, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
                     .frame(height: 500)
                     .cornerRadius(15.0)
                 
-//                Slider(
-//                    value: $slider,
-//                    in: 0...1
-//                )
-//                .padding(.vertical)
+                Slider(
+                    value: $slider,
+                    in: 0...1
+                )
+                .padding(.vertical)
             } else {
-                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-//                HeatmapView(slider: $slider, coordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), polylineCoordinates: emptyDataRoute)
+                HeatmapView(slider: $slider, mapType: $mapType, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
             }
         }
         
