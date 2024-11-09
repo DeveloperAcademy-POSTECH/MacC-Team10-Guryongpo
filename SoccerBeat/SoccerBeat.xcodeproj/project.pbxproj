@@ -78,6 +78,7 @@
 		BA3654F32CDE9CB60059FE9A /* SF-Compact-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069C52AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf */; };
 		BA3654F42CDE9CD60059FE9A /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069D62AF1F98B00FA3030 /* NotoSans-Regular.ttf */; };
 		BA3654F52CDE9CD60059FE9A /* NotoSans-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE4069D92AF1FE0500FA3030 /* NotoSans-BlackItalic.ttf */; };
+		BA3654F72CE01E9E0059FE9A /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3654F62CE01E9E0059FE9A /* LocationView.swift */; };
 		BA8C99142C4115FD00C57E90 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8C99132C4115FD00C57E90 /* OnboardingView.swift */; };
 		BADCB6BA2C6E3E09000DDD9D /* AppstoreUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADCB6B92C6E3E09000DDD9D /* AppstoreUpdateChecker.swift */; };
 		BE010D392B0511CC0093A5FE /* FloatingCapsuleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE010D382B0511CC0093A5FE /* FloatingCapsuleModifier.swift */; };
@@ -224,6 +225,7 @@
 		68D81B6F2C625C2800595FFC /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
 		68D89FF52C59401E0057B8E9 /* StartGlow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = StartGlow.gif; sourceTree = "<group>"; };
 		68FDD5DC2AE61D6B00B8ACB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		BA3654F62CE01E9E0059FE9A /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		BA8C99132C4115FD00C57E90 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		BADCB6B92C6E3E09000DDD9D /* AppstoreUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppstoreUpdateChecker.swift; sourceTree = "<group>"; };
 		BE010D382B0511CC0093A5FE /* FloatingCapsuleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCapsuleModifier.swift; sourceTree = "<group>"; };
@@ -697,6 +699,7 @@
 			isa = PBXGroup;
 			children = (
 				D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */,
+				BA3654F62CE01E9E0059FE9A /* LocationView.swift */,
 				D3D1749D2B00F92C0022F631 /* TKRadarChart.swift */,
 				BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */,
 				68C47FAC2C746A0700019099 /* HeartRatesView.swift */,
@@ -1081,6 +1084,7 @@
 				682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */,
 				BEA63A662B0AFDFF000A309D /* ActivityEnum.swift in Sources */,
 				D31B4AC02B0B819000DD9100 /* DataConverter.swift in Sources */,
+				BA3654F72CE01E9E0059FE9A /* LocationView.swift in Sources */,
 				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
 				BE40699F2AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,

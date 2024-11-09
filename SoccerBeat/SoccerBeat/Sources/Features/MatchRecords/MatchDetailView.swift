@@ -251,23 +251,35 @@ struct FieldMovementView: View {
                     }
                 }
             }
+            
             Picker("Pick map type", selection: $mapType) {
-                Text("a").tag(0)
-                Text("Heatmap").tag(1)
+                Text("Heatmap").tag(0)
+                Text("Location").tag(1)
             }
             .pickerStyle(.segmented)
+            
             if let workout = workout {
-                HeatmapView(slider: $slider, mapType: $mapType, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
-                    .frame(height: 500)
-                    .cornerRadius(15.0)
-                
-                Slider(
-                    value: $slider,
-                    in: 0...1
-                )
-                .padding(.vertical)
+                if mapType == 0 {
+                        HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                            .frame(height: 500)
+                            .cornerRadius(15.0)
+                    } else {
+                        LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                            .frame(height: 500)
+                            .cornerRadius(15.0)
+                        
+                        Slider(
+                            value: $slider,
+                            in: 0...1
+                        )
+                        .padding(.vertical)
+                    }
             } else {
-                HeatmapView(slider: $slider, mapType: $mapType, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                if mapType == 0 {
+                    HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                } else {
+                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                }
             }
         }
         
