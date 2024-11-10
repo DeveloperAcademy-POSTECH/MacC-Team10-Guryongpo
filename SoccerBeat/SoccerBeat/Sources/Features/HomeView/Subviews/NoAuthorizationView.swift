@@ -25,6 +25,8 @@ struct NoAuthorizationView: View {
                     .clipped()
                     .opacity(0.5)
                 VStack {
+                    Spacer()
+                        .frame(height: 60)
                     HStack {
                         VStack {
                             HStack {

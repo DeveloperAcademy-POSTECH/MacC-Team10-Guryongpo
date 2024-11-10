@@ -14,47 +14,47 @@ struct MatchDetailView: View {
     var workout: WorkoutData?
     
     var body: some View {
-        Image("BackgroundPattern")
-            .resizable()
-            .scaledToFill()
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-            .clipped()
-            .opacity(0.5)
-            .overlay {
-                ScrollView(showsIndicators: false) {
-                    ZStack {
-                        VStack {
-                            Spacer()
-                                .frame(height: 40)
-                            MatchTimeView(workout: workout)
-                            Spacer()
-                                .frame(height: 48)
-                            ErrorView(workout: workout)
-                            PlayerAbilityView(workout: workout)
-                                .zIndex(-1)
-                            Spacer()
-                                .frame(height: 100)
-                            FieldRecordView(workout: workout)
-                            Spacer()
-                                .frame(height: 100)
-                            FieldMovementView(workout: workout)
-                        }
-                        .padding()
+        ZStack {
+            Image("BackgroundPattern")
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                .clipped()
+                .opacity(0.5)
+            ScrollView(showsIndicators: false) {
+                ZStack {
+                    VStack {
+                        Spacer()
+                            .frame(height: 60)
+                        MatchTimeView(workout: workout)
+                        Spacer()
+                            .frame(height: 48)
+                        ErrorView(workout: workout)
+                        PlayerAbilityView(workout: workout)
+                            .zIndex(-1)
+                        Spacer()
+                            .frame(height: 100)
+                        FieldRecordView(workout: workout)
+                        Spacer()
+                            .frame(height: 100)
+                        FieldMovementView(workout: workout)
                     }
+                    .padding()
                 }
-                .navigationBarBackButtonHidden()
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.backward")
-                                .foregroundStyle(Color.white)
-                        }
-                    }
-                }
-                .scrollIndicators(.hidden)
             }
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .foregroundStyle(Color.white)
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+        }
     }
 }
 
@@ -241,7 +241,7 @@ struct FieldRecordView: View {
                         }
                         Spacer()
                     }
-
+                    
                     HeartRatesView(rates: rates)
                         .frame(height: 200)
                         .padding(.vertical)
@@ -274,28 +274,28 @@ struct FieldMovementView: View {
                 }
             }
             
-            Picker("Pick map type", selection: $mapType) {
-                Text("Heatmap").tag(0)
-                Text("Location").tag(1)
-            }
-            .pickerStyle(.segmented)
-            
             if let workout = workout {
+                Picker("Pick map type", selection: $mapType) {
+                    Text("Heatmap").tag(0)
+                    Text("Location").tag(1)
+                }
+                .pickerStyle(.segmented)
+                
                 if mapType == 0 {
-                        HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
-                            .frame(height: 500)
-                            .cornerRadius(15.0)
-                    } else {
-                        LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
-                            .frame(height: 500)
-                            .cornerRadius(15.0)
-                        
-                        Slider(
-                            value: $slider,
-                            in: 0...1
-                        )
-                        .padding(.vertical)
-                    }
+                    HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                        .frame(height: 500)
+                        .cornerRadius(15.0)
+                } else {
+                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                        .frame(height: 500)
+                        .cornerRadius(15.0)
+                    
+                    Slider(
+                        value: $slider,
+                        in: 0...1
+                    )
+                    .padding(.vertical)
+                }
             } else {
                 if mapType == 0 {
                     HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
@@ -327,7 +327,7 @@ struct FieldRecordDataView: View {
                                 Text(workout.error ? "--" : workout.distance.formatted())
                                     .font(.fieldRecordMeasure)
                             } else {
-                                Text("--")
+                                Text("--")                                    .font(.fieldRecordMeasure)
                             }
                             Text(" km")
                                 .font(.fieldRecordUnit)
@@ -342,7 +342,7 @@ struct FieldRecordDataView: View {
                                 Text(workout.error ? "--" : workout.sprint.formatted())
                                     .font(.fieldRecordMeasure)
                             }  else {
-                                Text("--")
+                                Text("--")                                    .font(.fieldRecordMeasure)
                             }
                             Text(" Times")
                                 .font(.fieldRecordUnit)
@@ -357,29 +357,29 @@ struct FieldRecordDataView: View {
                                 Text(workout.error ? "--" : workout.minHeartRate.formatted())
                                     .font(.fieldRecordMeasure)
                             } else {
-                                Text("--")
+                                Text("--")                                    .font(.fieldRecordMeasure)
                             }
                             Text("Bpm")
                                 .font(.fieldRecordUnit)
                         }
                     }
                     
-//                    if workout?.calories != 0 {
-//                        VStack(alignment: .leading) {
-//                            Text("칼로리")
-//                                .font(.fieldRecordTitle)
-//                            HStack(alignment: .bottom, spacing: 0) {
-//                                if let workout = workout {
-//                                    Text(workout.error ? "--" : workout.calories.formatted())
-//                                        .font(.fieldRecordMeasure)
-//                                } else {
-//                                    Text("--")
-//                                }
-//                                Text(" kcal")
-//                                    .font(.fieldRecordUnit)
-//                            }
-//                        }
-//                    }
+                    //                    if workout?.calories != 0 {
+                    //                        VStack(alignment: .leading) {
+                    //                            Text("칼로리")
+                    //                                .font(.fieldRecordTitle)
+                    //                            HStack(alignment: .bottom, spacing: 0) {
+                    //                                if let workout = workout {
+                    //                                    Text(workout.error ? "--" : workout.calories.formatted())
+                    //                                        .font(.fieldRecordMeasure)
+                    //                                } else {
+                    //                                    Text("--")
+                    //                                }
+                    //                                Text(" kcal")
+                    //                                    .font(.fieldRecordUnit)
+                    //                            }
+                    //                        }
+                    //                    }
                 }
                 
                 VStack(alignment: .leading, spacing: 24) {
@@ -391,7 +391,7 @@ struct FieldRecordDataView: View {
                                 Text(workout.error ? "--" : workout.velocity.formatted())
                                     .font(.fieldRecordMeasure)
                             } else {
-                                Text("--")
+                                Text("--")                                    .font(.fieldRecordMeasure)
                             }
                             Text(" km/h")
                                 .font(.fieldRecordUnit)
@@ -405,7 +405,7 @@ struct FieldRecordDataView: View {
                             if let workout = workout {
                                 Text(workout.error ? "--" : workout.power.rounded(at: 1)).font(.fieldRecordMeasure)
                             }  else {
-                                Text("--")
+                                Text("--")                                    .font(.fieldRecordMeasure)
                             }
                             Text(" w")
                                 .font(.fieldRecordUnit)
@@ -420,28 +420,28 @@ struct FieldRecordDataView: View {
                                 Text(workout.error ? "--" : workout.maxHeartRate.formatted())
                                     .font(.fieldRecordMeasure)
                             } else {
-                                Text("--")
+                                Text("--")                                    .font(.fieldRecordMeasure)
                             }
                             Text(" Bpm")
                                 .font(.fieldRecordUnit)
                         }
                     }
-//                    if workout?.calories != 0 {
-//                        VStack(alignment: .leading) {
-//                            Text("최대 산소 섭취량")
-//                                .font(.fieldRecordTitle)
-//                            HStack(alignment: .bottom, spacing: 0) {
-//                                if let workout = workout {
-//                                    Text(workout.error ? "--" : workout.vo2Max.formatted())
-//                                        .font(.fieldRecordMeasure)
-//                                } else {
-//                                    Text("--")
-//                                }
-//                                Text(" ml/kg/min")
-//                                    .font(.fieldRecordUnit)
-//                            }
-//                        }
-//                    }
+                    //                    if workout?.calories != 0 {
+                    //                        VStack(alignment: .leading) {
+                    //                            Text("최대 산소 섭취량")
+                    //                                .font(.fieldRecordTitle)
+                    //                            HStack(alignment: .bottom, spacing: 0) {
+                    //                                if let workout = workout {
+                    //                                    Text(workout.error ? "--" : workout.vo2Max.formatted())
+                    //                                        .font(.fieldRecordMeasure)
+                    //                                } else {
+                    //                                    Text("--")
+                    //                                }
+                    //                                Text(" ml/kg/min")
+                    //                                    .font(.fieldRecordUnit)
+                    //                            }
+                    //                        }
+                    //                    }
                 }
             }
             .padding(.vertical, 56)

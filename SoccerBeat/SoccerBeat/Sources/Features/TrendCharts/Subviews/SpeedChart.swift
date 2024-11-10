@@ -9,6 +9,8 @@ import Charts
 import SwiftUI
 
 struct SpeedChartView: View {
+    @Environment(\.dismiss) private var dismiss
+
     let workouts: [WorkoutData]
     private var endDate: String {
         workouts.first?.yearMonthDay ?? "2023.10.10"
@@ -32,7 +34,7 @@ struct SpeedChartView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Spacer()
-                                .frame(height: 50)
+                                .frame(height: 60)
                             InformationButton(message: "최근 최고 속도의 변화입니다.")
                             Text("최고 속도")
                                 .font(.navigationSportySubTitle)
@@ -56,6 +58,17 @@ struct SpeedChartView: View {
                     Spacer()
                 }
                 .padding()
+            }
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .foregroundStyle(Color.white)
+                    }
+                }
             }
     }
 }

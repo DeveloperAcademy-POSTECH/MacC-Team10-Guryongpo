@@ -30,7 +30,7 @@ struct ShareView: View {
             }
             VStack {
                 Spacer()
-                    .frame(height: 50)
+                    .frame(height: 60)
                 HStack(alignment: .bottom) {
                     CardFront(degree: $degree, width: 100, height: 140)
                     VStack(alignment: .leading, spacing: 0) {

@@ -20,6 +20,8 @@ struct GuideAuthorizationView: View {
                     .clipped()
                     .opacity(0.5)
                 VStack {
+                    Spacer()
+                        .frame(height: 60)
                     VStack {
                         HStack {
                             if requestingAuth == .health {
@@ -84,7 +86,7 @@ struct GuideAuthorizationView: View {
                                 if requestingAuth == .health {
                                     Text("> 개인 정보 보호 및 보안\n> 건강\n> SoccerBeat > 모두켜기\n 순서로 설정해주세요.")
                                         .font(.noAuthorizationTitleFont)
-                                        .foregroundStyle(.brightmint)
+                                        .foregroundStyle(.white)
                                 } else {
                                     Text("> 개인 정보 보호 및 보안\n> 위치 서비스\n> SoccerBeat > 모두켜기\n 순서로 설정해주세요.")
                                         .font(.noAuthorizationTitleFont)

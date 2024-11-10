@@ -25,16 +25,16 @@ struct MatchRecapView: View {
     }
     
     var body: some View {
+        ZStack {
         Image("BackgroundPattern")
             .resizable()
             .scaledToFill()
             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             .clipped()
             .opacity(0.5)
-            .overlay {
                 VStack(spacing: 0) {
                     Spacer()
-                        .frame(height: 40)
+                        .frame(height: 60)
                     HStack {
                         InformationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
                             .padding(.leading, 16)

@@ -29,7 +29,7 @@ struct ProfileView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         Spacer()
-                            .frame(height: 40)
+                            .frame(height: 60)
                         HStack {
                             VStack {
                                 HStack {

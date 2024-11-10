@@ -9,6 +9,8 @@ import SwiftUI
 import Charts
 
 struct BPMChartView: View {
+    @Environment(\.dismiss) private var dismiss
+
     let workouts: [WorkoutData]
     private var endDate: String {
         workouts.first?.yearMonthDay ?? "2023.10.10"
@@ -31,7 +33,7 @@ struct BPMChartView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Spacer()
-                                .frame(height: 50)
+                                .frame(height: 60)
                             InformationButton(message: "최근 심박수의 변화입니다.")
                             Text("심박수")
                                 .font(.navigationSportySubTitle)
@@ -54,6 +56,17 @@ struct BPMChartView: View {
                     Spacer()
                 }
                 .padding()
+            }
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .foregroundStyle(Color.white)
+                    }
+                }
             }
     }
 }
