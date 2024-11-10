@@ -14,37 +14,46 @@ struct MatchDetailView: View {
     var workout: WorkoutData?
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            ZStack {
-                VStack {
-                    MatchTimeView(workout: workout)
-                    Spacer()
-                        .frame(height: 48)
-                    ErrorView(workout: workout)
-                    PlayerAbilityView(workout: workout)
-                        .zIndex(-1)
-                    Spacer()
-                        .frame(height: 100)
-                    FieldRecordView(workout: workout)
-                    Spacer()
-                        .frame(height: 100)
-                    FieldMovementView(workout: workout)
+        Image("BackgroundPattern")
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .clipped()
+            .overlay {
+                ScrollView(showsIndicators: false) {
+                    ZStack {
+                        VStack {
+                            Spacer()
+                                .frame(height: 40)
+                            MatchTimeView(workout: workout)
+                            Spacer()
+                                .frame(height: 48)
+                            ErrorView(workout: workout)
+                            PlayerAbilityView(workout: workout)
+                                .zIndex(-1)
+                            Spacer()
+                                .frame(height: 100)
+                            FieldRecordView(workout: workout)
+                            Spacer()
+                                .frame(height: 100)
+                            FieldMovementView(workout: workout)
+                        }
+                        .padding()
+                    }
                 }
-                .padding()
-            }
-        }
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.backward")
-                        .foregroundStyle(Color.white)
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                                .foregroundStyle(Color.white)
+                        }
+                    }
                 }
+                .scrollIndicators(.hidden)
             }
-        }
-        .scrollIndicators(.hidden)
     }
 }
 
