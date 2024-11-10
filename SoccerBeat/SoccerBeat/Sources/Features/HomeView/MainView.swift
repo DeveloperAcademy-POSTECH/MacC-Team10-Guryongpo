@@ -24,38 +24,47 @@ struct MainView: View {
     private let alertTitle = "문제가 있으신가요?"
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 0) {
-                headerView
-                contentView
-                Spacer()
-                    .frame(height: 80)
-                AnalyticsView(workouts: $workouts)
+        Image("BackgroundPattern")
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .clipped()
+            .overlay {
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        Spacer()
+                            .frame(height: 50)
+                        headerView
+                        contentView
+                        Spacer()
+                            .frame(height: 80)
+                        AnalyticsView(workouts: $workouts)
+                    }
+                }
+                .sheet(isPresented: $isShowingOnboardingView) {
+                    OnboardingView()
+                        .presentationDetents([.medium])
+                        .presentationDragIndicator(.visible)
+                }
+                .sheet(isPresented: $isShowingSessionView) {
+                    VStack {
+                        RunningModalView()
+                    }
+                    .presentationDetents([.fraction(0.3)])
+                    .presentationDragIndicator(.visible)
+                }
+                .refreshable {
+                    await workoutManager.fetchWorkoutData()
+                }
+                .padding(.horizontal)
+                .onAppear {
+                    // 타이머 시작
+                    startMonitoring()
+                }
+                .onDisappear {
+                    timer?.invalidate()
+                }
             }
-        }
-        .sheet(isPresented: $isShowingOnboardingView) {
-            OnboardingView()
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $isShowingSessionView) {
-            VStack {
-                RunningModalView()
-            }
-            .presentationDetents([.fraction(0.3)])
-            .presentationDragIndicator(.visible)
-        }
-        .refreshable {
-            await workoutManager.fetchWorkoutData()
-        }
-        .padding(.horizontal)
-        .onAppear {
-            // 타이머 시작
-            startMonitoring()
-        }
-        .onDisappear {
-            timer?.invalidate()
-        }
     }
     
     private var headerView: some View {

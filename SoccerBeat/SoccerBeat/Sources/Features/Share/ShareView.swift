@@ -17,12 +17,14 @@ struct ShareView: View {
         ZStack(alignment: .top) {
             Group {
                 Image(.backgroundPattern)
+                    .resizable()
+                    .scaledToFit()
                 Image(.flameEffect)
+                    .resizable()
+                    .scaledToFit()
             }
-            .frame(maxHeight: UIScreen.screenHeight)
+            .frame(maxWidth: UIScreen.screenWidth)
             VStack {
-                Spacer()
-                    .frame(height: 50)
                 HStack(alignment: .bottom) {
                     CardFront(degree: $degree, width: 100, height: 140)
                     VStack(alignment: .leading, spacing: 0) {
