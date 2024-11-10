@@ -274,30 +274,50 @@ struct FieldMovementView: View {
                 }
             }
             
+            Picker("Pick map type", selection: $mapType) {
+                Text("Heatmap").tag(0)
+                Text("Location").tag(1)
+            }
+            .pickerStyle(.segmented)
+            
             if let workout = workout {
-                Picker("Pick map type", selection: $mapType) {
-                    Text("Heatmap").tag(0)
-                    Text("Location").tag(1)
+                if !workout.error {
+                    if mapType == 0 {
+                        HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                            .frame(height: 500)
+                            .cornerRadius(15.0)
+                    } else {
+                        LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                            .frame(height: 500)
+                            .cornerRadius(15.0)
+                        
+                        Slider(
+                            value: $slider,
+                            in: 0...1
+                        )
+                        .padding(.vertical)
+                    }
+                } else {
+                    if mapType == 0 {
+                        HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                            .frame(height: 500)
+                            .cornerRadius(15.0)
+                    } else {
+                        LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                            .frame(height: 500)
+                            .cornerRadius(15.0)
+                    }
                 }
-                .pickerStyle(.segmented)
-                
+            } else {
                 if mapType == 0 {
-                    HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                    HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
                         .frame(height: 500)
                         .cornerRadius(15.0)
                 } else {
-                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
                         .frame(height: 500)
                         .cornerRadius(15.0)
-                    
-                    Slider(
-                        value: $slider,
-                        in: 0...1
-                    )
-                    .padding(.vertical)
                 }
-            } else {
-                EmptyView()
             }
         }
         
