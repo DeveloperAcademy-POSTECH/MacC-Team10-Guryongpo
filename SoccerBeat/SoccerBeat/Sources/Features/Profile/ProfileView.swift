@@ -19,112 +19,121 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    HStack {
+            Image("BackgroundPattern")
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                .clipped()
+                .overlay {
+                    ScrollView(showsIndicators: false) {
                         VStack {
+                            Spacer()
+                                .frame(height: 40)
                             HStack {
-                                InformationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
-                                Spacer()
-                            }
-                            .padding(.vertical, 30)
-                            
-                            VStack(spacing: 0) {
-                                HStack {
-                                    VStack {
+                                VStack {
+                                    HStack {
+                                        InformationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.8)
                                         Spacer()
-                                        
-                                        MyCardView(isFlipped: $isFlipped)
-                                            .frame(width: 95)
-                                        
-                                        PhotoSelectButtonView()
-                                            .opacity(isFlipped ? 1 : 0)
-                                            .padding(.top, 10)
                                     }
+                                    .padding(.vertical, 30)
                                     
-                                    Spacer()
-                                        .frame(width: 24)
-                                    
-                                    VStack(alignment: .leading, spacing: nil) {
-                                        
-                                        Text("SBeat Card")
-                                            .font(.matchDetailSubTitle)
-                                            .foregroundStyle(.shareViewSubTitleTint)
-                                            .offset(y: -10)
-                                        HStack(spacing: nil) {
-                                            Text("How ")
-                                            Text("you")
-                                                .bold()
-                                                .foregroundStyle(.brightmint)
+                                    VStack(spacing: 0) {
+                                        HStack {
+                                            VStack {
+                                                Spacer()
+                                                
+                                                MyCardView(isFlipped: $isFlipped)
+                                                    .frame(width: 95)
+                                                
+                                                PhotoSelectButtonView()
+                                                    .opacity(isFlipped ? 1 : 0)
+                                                    .padding(.top, 10)
+                                            }
+                                            
+                                            Spacer()
+                                                .frame(width: 24)
+                                            
+                                            VStack(alignment: .leading, spacing: nil) {
+                                                
+                                                Text("SBeat Card")
+                                                    .font(.matchDetailSubTitle)
+                                                    .foregroundStyle(.shareViewSubTitleTint)
+                                                    .offset(y: -10)
+                                                HStack(spacing: nil) {
+                                                    Text("How ")
+                                                    Text("you")
+                                                        .bold()
+                                                        .foregroundStyle(.brightmint)
+                                                }
+                                                HStack(spacing: nil) {
+                                                    Text("like")
+                                                    Text("that?")
+                                                        .foregroundStyle(.brightmint)
+                                                        .highlighter(activity: .heartrate, isDefault: true)
+                                                }
+                                                .offset(y: -8)
+                                            }
+                                            Spacer()
                                         }
-                                        HStack(spacing: nil) {
-                                            Text("like")
-                                            Text("that?")
-                                                .foregroundStyle(.brightmint)
-                                                .highlighter(activity: .heartrate, isDefault: true)
-                                        }
-                                        .offset(y: -8)
+                                        NameFieldView()
                                     }
+                                    .font(.mainTitleText)
+                                }
+                            }
+                            
+                            Spacer()
+                                .frame(height: 110)
+                            
+                            VStack(spacing: 6) {
+                                HStack {
+                                    HStack(spacing: 0) {
+                                        Text("파란색")
+                                            .bold()
+                                            .foregroundStyle(
+                                                .raderMaximumColor)
+                                        Text("은 시즌 최고 능력치입니다.")
+                                    }
+                                    .floatingCapsuleStyle()
                                     Spacer()
                                 }
-                                NameFieldView()
+                                
+                                HStack {
+                                    HStack(spacing: 0) {
+                                        Text("빨간색")
+                                            .bold()
+                                            .foregroundStyle(.matchDetailViewTitleColor)
+                                        Text("은 경기 평균 능력치입니다.")
+                                    }
+                                    .floatingCapsuleStyle()
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                    Spacer()
+                                }
                             }
-                            .font(.mainTitleText)
+                            
+                            let average = DataConverter.toLevels(profileModel.averageAbility)
+                            let maximumAbility = DataConverter.toLevels(profileModel.maxAbility)
+                            
+                            ViewControllerContainer(ProfileViewController(radarAverageValue: average,
+                                                                          radarAtypicalValue: maximumAbility))
+                            .fixedSize()
+                            .frame(width: 304, height: 348)
+                            .zIndex(-1)
+                            
+                            Spacer()
+                                .frame(height: 110)
+                            
+                            TrophyCollectionView()
+                            
+                        }
+                        .padding(.horizontal)
+                        .onTapGesture {
+                            hideKeyboard()
                         }
                     }
-                    
-                    Spacer()
-                        .frame(height: 110)
-                    
-                    VStack(spacing: 6) {
-                        HStack {
-                            HStack(spacing: 0) {
-                                Text("파란색")
-                                    .bold()
-                                    .foregroundStyle(
-                                        .raderMaximumColor)
-                                Text("은 시즌 최고 능력치입니다.")
-                            }
-                            .floatingCapsuleStyle()
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            HStack(spacing: 0) {
-                                Text("빨간색")
-                                    .bold()
-                                    .foregroundStyle(.matchDetailViewTitleColor)
-                                Text("은 경기 평균 능력치입니다.")
-                            }
-                            .floatingCapsuleStyle()
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
-                            Spacer()
-                        }
-                    }
-                    
-                    let average = DataConverter.toLevels(profileModel.averageAbility)
-                    let maximumAbility = DataConverter.toLevels(profileModel.maxAbility)
-                    
-                    ViewControllerContainer(ProfileViewController(radarAverageValue: average,
-                                                                  radarAtypicalValue: maximumAbility))
-                    .fixedSize()
-                    .frame(width: 304, height: 348)
-                    .zIndex(-1)
-
-                    Spacer()
-                        .frame(height: 110)
-                    
-                    TrophyCollectionView()
-                    
                 }
-                .padding(.horizontal)
-                .onTapGesture {
-                    hideKeyboard()
-                }
-            }
         }
         .navigationBarBackButtonHidden()
         .toolbar {
