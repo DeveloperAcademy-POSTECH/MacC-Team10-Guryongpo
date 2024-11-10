@@ -17,34 +17,43 @@ struct SprintChartView: View {
         workouts.last?.yearMonthDay ?? "2023.10.10"
     }
     var body: some View {
-        let fastest = maximum(of: workouts)
-        let slowest = minimum(of: workouts)
-        
-        return VStack(alignment: .center) {
-            HStack {
-                VStack(alignment: .leading) {
-                    InformationButton(message: "최근 스프린트 횟수의 변화입니다.")
-                    Text("스프린트")
-                        .font(.navigationSportySubTitle)
-                        .foregroundStyle(.navigationSportyHead)
-                    Text("The trends of")
-                    Text("Sprint")
-                        .foregroundStyle(.navigationSportySprintTitle)
-                        .highlighter(activity: .sprint, isDefault: false)
-                }
-                .font(.navigationSportyTitle)
+        Image("BackgroundPattern")
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .clipped()
+            .overlay {
+                let fastest = maximum(of: workouts)
+                let slowest = minimum(of: workouts)
                 
-                Spacer()
+                return VStack(alignment: .center) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                                .frame(height: 40)
+                            InformationButton(message: "최근 스프린트 횟수의 변화입니다.")
+                            Text("스프린트")
+                                .font(.navigationSportySubTitle)
+                                .foregroundStyle(.navigationSportyHead)
+                            Text("The trends of")
+                            Text("Sprint")
+                                .foregroundStyle(.navigationSportySprintTitle)
+                                .highlighter(activity: .sprint, isDefault: false)
+                        }
+                        .font(.navigationSportyTitle)
+                        
+                        Spacer()
+                    }
+                    
+                    sprintChartView(fastest: fastest, slowest: slowest)
+                    
+                    averageSprintView
+                        .padding(.top, 30)
+                    
+                    Spacer()
+                }
+                .padding()
             }
-            
-            sprintChartView(fastest: fastest, slowest: slowest)
-            
-            averageSprintView
-                .padding(.top, 30)
-            
-            Spacer()
-        }
-        .padding()
     }
 }
 
