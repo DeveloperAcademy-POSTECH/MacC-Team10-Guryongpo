@@ -9,6 +9,7 @@ import SwiftUI
 import StoreKit
 
 struct MatchRecapView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var userName = ""
     @Binding var workouts: [WorkoutData]
@@ -102,6 +103,17 @@ struct MatchRecapView: View {
                     }
                 }
                 Spacer()
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color.white)
+                }
             }
         }
         .alert(isPresented: $requestReview) {
