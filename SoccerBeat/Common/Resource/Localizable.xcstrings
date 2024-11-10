@@ -1026,6 +1026,28 @@
         }
       }
     },
+    "Heatmap" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heatmap"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapa de calor"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "热力图"
+          }
+        }
+      }
+    },
     "Hello" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1245,6 +1267,28 @@
         }
       }
     },
+    "Location" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubicación"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位置"
+          }
+        }
+      }
+    },
     "Maximum Speed" : {
       "localizations" : {
         "en" : {
@@ -1411,6 +1455,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Order"
+          }
+        }
+      }
+    },
+    "Pick map type" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick map type"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir tipo de mapa"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择地图类型"
           }
         }
       }
