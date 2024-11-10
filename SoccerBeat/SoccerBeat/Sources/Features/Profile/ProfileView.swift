@@ -134,7 +134,6 @@ struct ProfileView: View {
                     .foregroundStyle(.shareViewTitleTint)
             }
         }
-        .navigationTitle("")
     }
 }
 

@@ -49,7 +49,6 @@ struct MainView: View {
             await workoutManager.fetchWorkoutData()
         }
         .padding(.horizontal)
-        .navigationTitle("")
         .onAppear {
             // 타이머 시작
             startMonitoring()

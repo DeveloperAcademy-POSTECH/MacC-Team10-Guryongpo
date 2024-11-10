@@ -2,6 +2,7 @@
   "sourceLanguage" : "ko",
   "strings" : {
     "" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

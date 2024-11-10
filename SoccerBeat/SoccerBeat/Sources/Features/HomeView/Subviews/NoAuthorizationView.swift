@@ -34,7 +34,7 @@ struct NoAuthorizationView: View {
                                 VStack(alignment: .leading, spacing: 0.0) {
                                     HStack {
                                         Text("접근 권한 안내")
-                                            .font(.matchDetailSubTitle)
+                                            .font(.mainTitleText)
                                             .foregroundStyle(.shareViewSubTitleTint)
                                         Spacer()
                                     }
@@ -70,7 +70,9 @@ struct NoAuthorizationView: View {
                                     Text("스프린트 및 경기장 위치 조회에 사용")
                                         .font(.noAuthorizationExplainFont)
                                 }
+                                .padding(.leading)
                             }
+                            .padding(.horizontal)
                             HStack {
                                 Image(systemName: "heart.fill")
                                     .font(.system(size: 23))
@@ -81,7 +83,9 @@ struct NoAuthorizationView: View {
                                     Text("뛴거리 및 속도 측정에 사용")
                                         .font(.noAuthorizationExplainFont)
                                 }
+                                .padding(.leading)
                             }
+                            .padding(.horizontal)
                             
                             HStack {
                                 Spacer()
@@ -113,7 +117,6 @@ struct NoAuthorizationView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("")
             }
         }
     }
