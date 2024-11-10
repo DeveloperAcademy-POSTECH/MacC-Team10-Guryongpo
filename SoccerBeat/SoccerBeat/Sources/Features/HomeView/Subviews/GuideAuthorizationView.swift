@@ -14,7 +14,10 @@ struct GuideAuthorizationView: View {
         NavigationView {
             ZStack(alignment: .top) {
                 Image(.backgroundPattern)
-                    .frame(maxHeight: UIScreen.screenHeight)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
                     .opacity(0.5)
                 VStack {
                     VStack {
@@ -33,18 +36,16 @@ struct GuideAuthorizationView: View {
                                 HStack {
                                     if requestingAuth == .health {
                                         Text("건강 권한 설정하기")
-                                            .font(.matchDetailSubTitle)
+                                            .font(.mainTitleText)
                                             .foregroundStyle(.shareViewSubTitleTint)
                                     } else {
                                         Text("위치 권한 설정하기")
-                                            .font(.matchDetailSubTitle)
+                                            .font(.mainTitleText)
                                             .foregroundStyle(.shareViewSubTitleTint)
                                     }
-                                    
                                     Spacer()
                                 }
                             }
-                            .font(.custom("SFProDisplay-HeavyItalic", size: 36))
                         }
                         .padding(.horizontal)
                     }
@@ -89,7 +90,9 @@ struct GuideAuthorizationView: View {
                                         .font(.noAuthorizationTitleFont)
                                         .foregroundStyle(.brightmint)
                                 }
-                            }.offset(y: -10)
+                            }
+                            .padding(.horizontal)
+                            .offset(y: -10)
                             
                             Spacer()
                                 .frame(height: 24)

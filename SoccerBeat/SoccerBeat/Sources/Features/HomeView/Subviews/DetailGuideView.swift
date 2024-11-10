@@ -81,10 +81,10 @@ struct DetailGuideView: View {
                         Capsule(style: .continuous)
                             .stroke()
                             .foregroundStyle(.brightmint)
-                            .frame(width: 74, height: 25)
+                            .frame(width: 102, height: 25)
                         Capsule(style: .continuous)
-                            .foregroundStyle(.clear)
-                            .frame(width: 74, height: 25)
+                            .foregroundStyle(Color(hex: 0x03FFC3, alpha: 0.8))
+                            .frame(width: 102, height: 25)
                         Text("확인")
                             .foregroundStyle(.white)
                     }

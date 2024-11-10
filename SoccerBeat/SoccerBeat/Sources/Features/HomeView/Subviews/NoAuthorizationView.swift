@@ -19,7 +19,10 @@ struct NoAuthorizationView: View {
         NavigationStack {
             ZStack(alignment: .top) {
                 Image(.backgroundPattern)
-                    .frame(maxHeight: UIScreen.screenHeight)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
                     .opacity(0.5)
                 VStack {
                     HStack {
