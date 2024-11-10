@@ -17,34 +17,43 @@ struct BPMChartView: View {
         workouts.last?.yearMonthDay ?? "2023.10.10"
     }
     var body: some View {
-        let fastest = maximum(of: workouts)
-        let slowest = minimum(of: workouts)
-        
-        return VStack(alignment: .center) {
-            HStack {
-                VStack(alignment: .leading) {
-                    InformationButton(message: "최근 심박수의 변화입니다.")
-                    Text("심박수")
-                        .font(.navigationSportySubTitle)
-                        .foregroundStyle(.navigationSportyHead)
-                    Text("The trends of")
-                    Text("Heartbeat")
-                        .foregroundStyle(.navigationSportyBPMTitle)
-                        .highlighter(activity: .heartrate, isDefault: false)
-                }
-                .font(.navigationSportyTitle)
+        Image("BackgroundPattern")
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .clipped()
+            .overlay {
+                let fastest = maximum(of: workouts)
+                let slowest = minimum(of: workouts)
                 
-                Spacer()
+                return VStack(alignment: .center) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                                .frame(height: 40)
+                            InformationButton(message: "최근 심박수의 변화입니다.")
+                            Text("심박수")
+                                .font(.navigationSportySubTitle)
+                                .foregroundStyle(.navigationSportyHead)
+                            Text("The trends of")
+                            Text("Heartbeat")
+                                .foregroundStyle(.navigationSportyBPMTitle)
+                                .highlighter(activity: .heartrate, isDefault: false)
+                        }
+                        .font(.navigationSportyTitle)
+                        
+                        Spacer()
+                    }
+                    
+                    BPMChartView(fastest: fastest, slowest: slowest)
+                    
+                    averageMaximumBpmView
+                        .padding(.top, 30)
+                    
+                    Spacer()
+                }
+                .padding()
             }
-            
-            BPMChartView(fastest: fastest, slowest: slowest)
-            
-            averageMaximumBpmView
-                .padding(.top, 30)
-            
-            Spacer()
-        }
-        .padding()
     }
 }
 
