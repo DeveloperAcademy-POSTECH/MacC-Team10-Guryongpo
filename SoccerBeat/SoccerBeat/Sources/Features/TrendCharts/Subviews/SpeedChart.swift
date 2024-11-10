@@ -23,6 +23,7 @@ struct SpeedChartView: View {
             .scaledToFill()
             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             .clipped()
+            .opacity(0.5)
             .overlay {
                 let fastest = maximum(of: workouts)
                 let slowest = minimum(of: workouts)
@@ -31,7 +32,7 @@ struct SpeedChartView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Spacer()
-                                .frame(height: 40)
+                                .frame(height: 50)
                             InformationButton(message: "최근 최고 속도의 변화입니다.")
                             Text("최고 속도")
                                 .font(.navigationSportySubTitle)

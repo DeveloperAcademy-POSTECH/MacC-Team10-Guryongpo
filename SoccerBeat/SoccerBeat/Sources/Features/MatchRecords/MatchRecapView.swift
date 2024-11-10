@@ -30,6 +30,7 @@ struct MatchRecapView: View {
             .scaledToFill()
             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             .clipped()
+            .opacity(0.5)
             .overlay {
                 VStack(spacing: 0) {
                     Spacer()

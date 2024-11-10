@@ -21,6 +21,7 @@ struct ShareView: View {
                     .scaledToFill()
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .clipped()
+                    .opacity(0.5)
                 Image(.flameEffect)
                     .resizable()
                     .scaledToFill()

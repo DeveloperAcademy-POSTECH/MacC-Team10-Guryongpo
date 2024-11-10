@@ -20,6 +20,7 @@ struct NoAuthorizationView: View {
             ZStack(alignment: .top) {
                 Image(.backgroundPattern)
                     .frame(maxHeight: UIScreen.screenHeight)
+                    .opacity(0.5)
                 VStack {
                     HStack {
                         VStack {

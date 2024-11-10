@@ -29,6 +29,7 @@ struct MainView: View {
             .scaledToFill()
             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             .clipped()
+            .opacity(0.5)
             .overlay {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
