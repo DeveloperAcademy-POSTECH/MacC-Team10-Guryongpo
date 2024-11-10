@@ -18,13 +18,18 @@ struct ShareView: View {
             Group {
                 Image(.backgroundPattern)
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
                 Image(.flameEffect)
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
             }
-            .frame(maxWidth: UIScreen.screenWidth)
             VStack {
+                Spacer()
+                    .frame(height: 50)
                 HStack(alignment: .bottom) {
                     CardFront(degree: $degree, width: 100, height: 140)
                     VStack(alignment: .leading, spacing: 0) {
