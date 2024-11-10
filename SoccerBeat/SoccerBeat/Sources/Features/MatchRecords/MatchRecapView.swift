@@ -31,6 +31,7 @@ struct MatchRecapView: View {
                 
                 Spacer()
             }
+            .padding(.top)
             HStack {
                 Text("경기 기록")
                     .font(.mainSubTitleText)
