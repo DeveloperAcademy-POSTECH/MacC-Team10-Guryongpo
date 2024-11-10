@@ -18,35 +18,44 @@ struct SpeedChartView: View {
     }
     
     var body: some View {
-        let fastest = maximum(of: workouts)
-        let slowest = minimum(of: workouts)
-        
-        return VStack(alignment: .center) {
-            HStack {
-                VStack(alignment: .leading) {
-                    InformationButton(message: "최근 최고 속도의 변화입니다.")
-                    Text("최고 속도")
-                        .font(.navigationSportySubTitle)
-                        .foregroundStyle(.navigationSportyHead)
-                    Text("The trends of")
-                    Text("Maximum Speed")
-                        .foregroundStyle(.navigationSportySpeedTitle)
-                        .highlighter(activity: .speed, isDefault: false)
-                }
-                .font(.navigationSportyTitle)
+        Image("BackgroundPattern")
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .clipped()
+            .overlay {
+                let fastest = maximum(of: workouts)
+                let slowest = minimum(of: workouts)
                 
-                Spacer()
+                return VStack(alignment: .center) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                                .frame(height: 40)
+                            InformationButton(message: "최근 최고 속도의 변화입니다.")
+                            Text("최고 속도")
+                                .font(.navigationSportySubTitle)
+                                .foregroundStyle(.navigationSportyHead)
+                            Text("The trends of")
+                            Text("Maximum Speed")
+                                .foregroundStyle(.navigationSportySpeedTitle)
+                                .highlighter(activity: .speed, isDefault: false)
+                        }
+                        .font(.navigationSportyTitle)
+                        
+                        Spacer()
+                    }
+                    
+                    
+                    speedChartView(fastest: fastest, slowest: slowest)
+                    
+                    averageSpeedView
+                        .padding(.top, 30)
+                    
+                    Spacer()
+                }
+                .padding()
             }
-            
-            
-            speedChartView(fastest: fastest, slowest: slowest)
-            
-            averageSpeedView
-                .padding(.top, 30)
-            
-            Spacer()
-        }
-        .padding()
     }
 }
 
