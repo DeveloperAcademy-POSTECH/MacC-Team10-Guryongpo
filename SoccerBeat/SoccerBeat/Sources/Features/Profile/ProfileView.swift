@@ -10,6 +10,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var isBackButtonHidden = false
     @EnvironmentObject var profileModel: ProfileModel
     @State private var isFlipped = false
@@ -124,14 +125,24 @@ struct ProfileView: View {
                     hideKeyboard()
                 }
             }
-            
         }
+        .navigationBarBackButtonHidden()
         .toolbar {
-            NavigationLink {
-                ShareView(isBackButtonHidden: $isBackButtonHidden)
-            } label: {
-                Text("공유하기")
-                    .foregroundStyle(.shareViewTitleTint)
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color.white)
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    ShareView(isBackButtonHidden: $isBackButtonHidden)
+                } label: {
+                    Text("공유하기")
+                        .foregroundStyle(.shareViewTitleTint)
+                }
             }
         }
     }
