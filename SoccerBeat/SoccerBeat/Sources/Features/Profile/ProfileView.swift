@@ -127,6 +127,9 @@ struct ProfileView: View {
                             
                             TrophyCollectionView()
                             
+                            Spacer()
+                                .frame(height: 100)
+                            
                         }
                         .padding(.horizontal)
                         .onTapGesture {
