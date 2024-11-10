@@ -297,11 +297,7 @@ struct FieldMovementView: View {
                     .padding(.vertical)
                 }
             } else {
-                if mapType == 0 {
-                    HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                } else {
-                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                }
+                EmptyView()
             }
         }
         

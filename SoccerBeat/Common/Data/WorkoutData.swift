@@ -180,7 +180,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
                               center: [41.38104, 2.12280],
                               calories: 0,
                               vo2Max: 0,
-                              error: false)
+                              error: true)
     
     static let blankExample = Self(dataID: 0,
                                    date: "0000-00-00T00:00:00Z",
