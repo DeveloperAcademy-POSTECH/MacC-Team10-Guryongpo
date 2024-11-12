@@ -40,6 +40,8 @@ struct MainView: View {
                     Spacer()
                         .frame(height: 80)
                     AnalyticsView(workouts: $workouts)
+                    Spacer()
+                        .frame(height: 80)
                 }
             }
             .sheet(isPresented: $isShowingOnboardingView) {

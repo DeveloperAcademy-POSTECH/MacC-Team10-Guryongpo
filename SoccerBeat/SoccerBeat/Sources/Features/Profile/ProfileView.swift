@@ -129,7 +129,7 @@ struct ProfileView: View {
                         TrophyCollectionView()
                         
                         Spacer()
-                            .frame(height: 100)
+                            .frame(height: 160)
                         
                     }
                     .padding(.horizontal)

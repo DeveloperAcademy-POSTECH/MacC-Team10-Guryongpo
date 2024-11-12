@@ -92,6 +92,9 @@ struct MatchRecapView: View {
                                     await delete(offset)
                                 }
                             }
+                            
+                            Spacer()
+                                .frame(height: 60)
                         }
                         .listStyle(.plain)
                     } else {

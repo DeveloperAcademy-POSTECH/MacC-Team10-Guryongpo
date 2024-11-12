@@ -41,6 +41,9 @@ struct MatchDetailView: View {
                     }
                     .padding()
                 }
+                
+                Spacer()
+                    .frame(height: 80)
             }
             .navigationBarBackButtonHidden()
             .toolbar {
