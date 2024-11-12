@@ -12,7 +12,9 @@ struct InformationButton: View {
 
     var body: some View {
         Button {
-            isInfoOpen.toggle()
+            withAnimation(.easeInOut(duration: 0.5)) {
+                isInfoOpen.toggle()
+            }
         } label: {
             HStack(spacing: 0) {
                 Image(.infoIcon)
