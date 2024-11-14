@@ -22,83 +22,86 @@ struct SummaryView: View {
     }
     
     var body: some View {
-        if isShowingSummary {
-            GeometryReader { proxy in
-                TabView {
-                    Group {
-                        VStack(spacing: 4) {
-                            
-                            InfoSportsView()
-                                .padding(.top)
-                            Image(systemName: "arrowtriangle.down.fill")
-                                .foregroundStyle(.summaryGradient)
-                                .font(.summaryTraillingTop)
-                                .opacity(isBlinking ? 1 : 0)
-                                .animation(.spring.repeatForever(autoreverses: false).speed(0.8),
-                                           value: isBlinking)
-                                .padding(.bottom)
-                        }
-                        
-                        VStack(spacing: 4) {
-                            
-                            Image(systemName: "arrowtriangle.up.fill")
-                                .foregroundStyle(.summaryGradient)
-                                .font(.summaryTraillingTop)
-                                .opacity(isHeartBlinking ? 1 : 0)
-                                .animation(.spring.repeatForever(autoreverses: false).speed(0.8),
-                                           value: isHeartBlinking)
-                                .padding(.top)
-                            InfoHeartView()
-                            Spacer()
-                            Button {
-                                workoutManager.showingSummaryView = false
-                            } label: {
-                                Capsule()
-                                    .frame(maxWidth: .infinity, maxHeight: 40)
-                                    .foregroundStyle(Color.columnContent)
-                                    .overlay {
-                                        Text("완료")
-                                            .font(.summaryDoneButton)
-                                            .padding(.horizontal, 18)
-                                            .padding(.vertical, 24)
-                                            .foregroundStyle(.summaryGradient)
-                                    }
+        ZStack {
+            PhraseView(saying: workoutManager.saying)
+                .opacity(isShowingSummary ? 0 : 1)
+            
+            if isShowingSummary {
+                GeometryReader { proxy in
+                    TabView {
+                        Group {
+                            VStack(spacing: 4) {
+                                
+                                InfoSportsView()
+                                    .padding(.top)
+                                Image(systemName: "arrowtriangle.down.fill")
+                                    .foregroundStyle(.summaryGradient)
+                                    .font(.summaryTraillingTop)
+                                    .opacity(isBlinking ? 1 : 0)
+                                    .animation(.spring.repeatForever(autoreverses: false).speed(0.8),
+                                               value: isBlinking)
+                                    .padding(.bottom)
                             }
-                            .padding(.bottom, 16)
                             
+                            VStack(spacing: 4) {
+                                
+                                Image(systemName: "arrowtriangle.up.fill")
+                                    .foregroundStyle(.summaryGradient)
+                                    .font(.summaryTraillingTop)
+                                    .opacity(isHeartBlinking ? 1 : 0)
+                                    .animation(.spring.repeatForever(autoreverses: false).speed(0.8),
+                                               value: isHeartBlinking)
+                                    .padding(.top)
+                                InfoHeartView()
+                                Spacer()
+                                Button {
+                                    workoutManager.showingSummaryView = false
+                                } label: {
+                                    Capsule()
+                                        .frame(maxWidth: .infinity, maxHeight: 40)
+                                        .foregroundStyle(Color.columnContent)
+                                        .overlay {
+                                            Text("완료")
+                                                .font(.summaryDoneButton)
+                                                .padding(.horizontal, 18)
+                                                .padding(.vertical, 24)
+                                                .foregroundStyle(.summaryGradient)
+                                        }
+                                }
+                                .padding(.bottom, 16)
+                                
+                            }
+                            .onAppear {
+                                withAnimation {
+                                    isHeartBlinking = true
+                                }
+                            }
                         }
+                        .frame(
+                            width: proxy.size.width - 10.0,
+                            height: proxy.size.height - 10.0
+                        )
+                        .padding()
                         .onAppear {
                             withAnimation {
-                                isHeartBlinking = true
+                                isBlinking = true
                             }
-                         }
-                    }
-                    .frame(
-                        width: proxy.size.width - 10.0,
-                        height: proxy.size.height - 10.0
-                    )
-                    .padding()
-                    .onAppear {
-                        withAnimation {
-                            isBlinking = true
                         }
                     }
+                    .tabViewStyle(.carousel)
+                    .scrollIndicators(.hidden)
+                    
                 }
-                .tabViewStyle(.carousel)
-                .scrollIndicators(.hidden)
-                
+                .edgesIgnoringSafeArea(.all)
             }
-            .edgesIgnoringSafeArea(.all)
-        } else {
-            PhraseView()
-                .navigationBarHidden(true)
-                .task {
-                    try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
-                    withAnimation {
-                        isShowingSummary.toggle()
-                        workoutManager.showingPrecount = false
-                    }
-                }
+        }
+        .navigationBarHidden(true)
+        .task {
+            try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
+            withAnimation {
+                isShowingSummary.toggle()
+                workoutManager.showingPrecount = false
+            }
         }
     }
 }

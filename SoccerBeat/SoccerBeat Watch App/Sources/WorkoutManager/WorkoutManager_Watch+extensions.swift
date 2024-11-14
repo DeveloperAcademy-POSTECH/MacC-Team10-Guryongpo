@@ -49,6 +49,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
     private func startWorkoutSession() {
         
         let startDate = Date()
+        saying = Phrase.randomElement.saying
         session?.startActivity(with: startDate)
         builder?.beginCollection(withStart: startDate) { (_, _) in
             // The workout has started.
