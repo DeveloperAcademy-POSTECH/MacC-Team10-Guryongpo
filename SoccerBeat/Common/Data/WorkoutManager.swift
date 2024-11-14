@@ -49,6 +49,7 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         }
     }
     
+    var saying: String = Phrase.randomElement.saying
     // MARK: - 세션 관리
     @Published var running = false
     

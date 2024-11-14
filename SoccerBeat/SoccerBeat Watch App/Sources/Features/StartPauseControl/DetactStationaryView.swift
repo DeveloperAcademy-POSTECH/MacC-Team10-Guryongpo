@@ -58,7 +58,6 @@ struct DetactStationaryView: View {
                 .buttonStyle(.plain)
                 .padding(.bottom, 10)
 
-                // "Close" button
                 Button {
                     dismiss()
                 } label: {

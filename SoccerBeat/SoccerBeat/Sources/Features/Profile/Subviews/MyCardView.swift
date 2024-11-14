@@ -39,6 +39,7 @@ struct MyCardView: View {
             .task {
                 try? await Task.sleep(nanoseconds: 100_000_000)
                 flipCard()
+                isFlipped ? soundManager.playFrontSoundEffect() : soundManager.playBackSoundEffect()
             }
         }
     }

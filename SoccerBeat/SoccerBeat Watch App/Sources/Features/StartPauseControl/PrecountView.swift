@@ -42,9 +42,7 @@ struct PrecountView: View {
                 
             }.onAppear {
                 // MARK: - 카운트값과 세션 보여주는 여부 초기화
-                // TODO: - onAppear 되면 뷰가 새로 그려져서 항상 count 의 값은 3일 텐데 이 구문이 왜 있는지 궁금합니다.
                 showingSession = false
-                count = 3
                 
                 // MARK: - 시간 경과에 따라서 숫자 변화 애니메이션
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
