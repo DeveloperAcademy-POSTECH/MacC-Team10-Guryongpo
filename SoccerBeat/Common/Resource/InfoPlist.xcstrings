@@ -215,10 +215,28 @@
       "comment" : "Privacy - Motion Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to detect motion and stationary states."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizado para detectar estados de movimiento e inmovilidad."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "축구 경기 중 동작을 감지하기 위해 필요합니다."
+            "value" : "운동중 및 정지 상태를 감지하기 위해 사용합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于检测运动和静止状态。"
           }
         }
       }

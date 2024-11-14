@@ -12,16 +12,19 @@ struct InformationButton: View {
 
     var body: some View {
         Button {
-            isInfoOpen.toggle()
+            withAnimation(.easeInOut(duration: 0.5)) {
+                isInfoOpen.toggle()
+            }
         } label: {
             HStack(spacing: 0) {
                 Image(.infoIcon)
                     .resizable()
-                    .frame(width: 11, height: 15)
+                    .frame(width: 11, height: 16)
                 if isInfoOpen {
                     Text(LocalizedStringKey(message))
                         .foregroundStyle(.white)
                         .padding(.horizontal)
+                        .frame(height:16)
                 }
             }
             .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))
