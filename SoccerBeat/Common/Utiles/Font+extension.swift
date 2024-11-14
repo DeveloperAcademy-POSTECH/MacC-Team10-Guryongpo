@@ -35,13 +35,7 @@ import SwiftUI
 */
 
 extension Font {
-    
-    // MARK: - Game Start
-    
-    public static let gameCountDown = Font.sfProText(size: 68).italic()
-    public static let buttonTitle = Font.notoSans(size: 30).italic()
-    
-    // MARK: - Game Progress
+    // MARK: - (Watch) Game Progress
     
     public static let zoneCapsule = Font.sfCompactText(size: 12, weight: .semiboldItalic)
     public static let beatPerMinute = Font.sfProText(size: 50, weight: .heavyItalic)
@@ -49,23 +43,20 @@ extension Font {
     public static let bpmUnit = Font.sfProText(size: 18, weight: .heavyItalic)
     public static let distanceTimeNumber = Font.sfCompactText(size: 18, weight: .semiboldItalic)
     public static let scaleText = Font.sfCompactText(size: 12, weight: .semiboldItalic)
-    public static let distanceTimeText = Font.sfCompactText(size: 12)
+    public static let distanceTimeText = Font.sfCompactText(size: 12, weight: .medium)
     public static let sprintText = Font.sfProText(size: 14, weight: .semiboldItalic)
-    public static let speedStop = Font.sfCompactText(size: 12, weight: .lightItalic)
-    public static let playTimeText = Font.sfProText(size: 12, weight: .regularItalic)
     public static let playTimeNumber = Font.sfProText(size: 36, weight: .blackItalic)
 
-    // MARK: - Game Stop
+    // MARK: - (Watch) Game Stop
     
     public static let stopEnd = Font.sfCompactText(size: 14, weight: .medium)
-    public static let wiseSaying = Font.notoSans(size: 18, weight: .black).italic()
+    public static let wiseSaying = Font.notoSans(size: 18, weight: .blackItalic)
     
-    // MARK: - After Game Data, Summary View
+    // MARK: - (Watch) After Game Data, Summary View
     
     public static let summaryContent = Font.notoSans(size: 26, weight: .blackItalic)
     public static let summaryUnit = Font.notoSans(size: 11, weight: .blackItalic)
-    public static let summaryTraillingTop = Font.sfCompactText(size: 12.0)
-    public static let summaryLeadingBottom = Font.sfCompactText(size: 13.5)
+    public static let summaryTraillingTop = Font.sfCompactText(size: 12, weight: .medium)
     public static let summaryDoneButton = Font.sfCompactText(size: 15.0, weight: .semiboldItalic)
     
     // MARK: - Onboarding View
@@ -121,7 +112,7 @@ extension Font {
     public static let averageText = Font.sfProText(size: 12, weight: .light)
     public static let averageValue = Font.sfProText(size: 18, weight: .heavyItalic)
     
-    // MARK: - AlertView
+    // MARK: - (Watch) AlertView
     public static let alertSpeed = Font.notoSans(size: 36, weight: .blackItalic)
     public static let lastSprint = Font.notoSans(size: 15, weight: .blackItalic)
     

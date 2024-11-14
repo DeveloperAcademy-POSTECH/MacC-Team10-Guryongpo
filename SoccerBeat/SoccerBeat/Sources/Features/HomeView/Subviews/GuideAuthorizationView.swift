@@ -14,8 +14,14 @@ struct GuideAuthorizationView: View {
         NavigationView {
             ZStack(alignment: .top) {
                 Image(.backgroundPattern)
-                    .frame(maxHeight: UIScreen.screenHeight)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
+                    .opacity(0.5)
                 VStack {
+                    Spacer()
+                        .frame(height: 60)
                     VStack {
                         HStack {
                             if requestingAuth == .health {
@@ -32,18 +38,16 @@ struct GuideAuthorizationView: View {
                                 HStack {
                                     if requestingAuth == .health {
                                         Text("건강 권한 설정하기")
-                                            .font(.matchDetailSubTitle)
+                                            .font(.mainTitleText)
                                             .foregroundStyle(.shareViewSubTitleTint)
                                     } else {
                                         Text("위치 권한 설정하기")
-                                            .font(.matchDetailSubTitle)
+                                            .font(.mainTitleText)
                                             .foregroundStyle(.shareViewSubTitleTint)
                                     }
-                                    
                                     Spacer()
                                 }
                             }
-                            .font(.custom("SFProDisplay-HeavyItalic", size: 36))
                         }
                         .padding(.horizontal)
                     }
@@ -82,13 +86,15 @@ struct GuideAuthorizationView: View {
                                 if requestingAuth == .health {
                                     Text("> 개인 정보 보호 및 보안\n> 건강\n> SoccerBeat > 모두켜기\n 순서로 설정해주세요.")
                                         .font(.noAuthorizationTitleFont)
-                                        .foregroundStyle(.brightmint)
+                                        .foregroundStyle(.white)
                                 } else {
                                     Text("> 개인 정보 보호 및 보안\n> 위치 서비스\n> SoccerBeat > 모두켜기\n 순서로 설정해주세요.")
                                         .font(.noAuthorizationTitleFont)
                                         .foregroundStyle(.brightmint)
                                 }
-                            }.offset(y: -10)
+                            }
+                            .padding(.horizontal)
+                            .offset(y: -10)
                             
                             Spacer()
                                 .frame(height: 24)

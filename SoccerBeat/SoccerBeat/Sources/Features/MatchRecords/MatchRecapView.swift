@@ -9,13 +9,14 @@ import SwiftUI
 import StoreKit
 
 struct MatchRecapView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var workoutManager: WorkoutManager
     @State private var userName = ""
     @Binding var workouts: [WorkoutData]
     @State private var requestReview = false
     @State private var hasDoneReviewBefore = false
     private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
-        
+    
     private var lastName: String {
         guard let lastName = userName
             .split(separator: " ")
@@ -24,116 +25,141 @@ struct MatchRecapView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                InformationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
-                    .padding(.leading, 16)
-                
-                Spacer()
-            }
-            HStack {
-                Text("경기 기록")
-                    .font(.mainSubTitleText)
-                    .foregroundStyle(.mainSubTitleColor)
-                
-                Spacer()
-            }
-            .padding(.top, 14)
-            .padding(.leading, 32)
-            
-            HStack {
-                VStack(alignment: .leading, spacing: 0.0) {
-                    // view
-                    Text("Player \(lastName),")
-                        .lineLimit(1)
-                    Text("Your past games")
-                }
-                .font(.mainTitleText)
-                .foregroundStyle(.white)
-                .kerning(-1.5)
-                Spacer()
-            }
-            .padding(.leading, 32)
-            .padding(.bottom, 45)
-            
-            if !workouts.isEmpty {
-                List {
-                    ForEach(workouts) { workout in
-                        ZStack {
-                            NavigationLink {
-                                MatchDetailView(workout: workout)
-                                    .toolbarRole(.editor)
-                            } label: {
-                                EmptyView()
-                            }
-                            .opacity(0.0)
-                            
-                            MatchListItemView(workoutData: workout)
-                                .buttonStyle(.plain)
-                        }
-                        .offset(y: 4)
-                        .padding(.vertical, 2)
-                        .listRowSeparator(.hidden)
+        ZStack {
+        Image("BackgroundPattern")
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .clipped()
+            .opacity(0.5)
+                VStack(spacing: 0) {
+                    Spacer()
+                        .frame(height: 60)
+                    HStack {
+                        InformationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
+                            .padding(.leading, 16)
+                        
+                        Spacer()
                     }
+                    .padding(.top)
+                    HStack {
+                        Text("경기 기록")
+                            .font(.mainSubTitleText)
+                            .foregroundStyle(.mainSubTitleColor)
+                        
+                        Spacer()
+                    }
+                    .padding(.top, 14)
+                    .padding(.leading, 32)
                     
-                    .onDelete { offset in
-                        Task {
-                            await delete(offset)
+                    HStack {
+                        VStack(alignment: .leading, spacing: 0.0) {
+                            // view
+                            Text("Player \(lastName),")
+                                .lineLimit(1)
+                            Text("Your past games")
+                        }
+                        .font(.mainTitleText)
+                        .foregroundStyle(.white)
+                        .kerning(-1.5)
+                        Spacer()
+                    }
+                    .padding(.leading, 32)
+                    .padding(.bottom, 45)
+                    
+                    if !workouts.isEmpty {
+                        List {
+                            ForEach(workouts) { workout in
+                                ZStack {
+                                    NavigationLink {
+                                        MatchDetailView(workout: workout)
+                                            .toolbarRole(.editor)
+                                    } label: {
+                                        EmptyView()
+                                    }
+                                    .opacity(0.0)
+                                    
+                                    MatchListItemView(workoutData: workout)
+                                        .buttonStyle(.plain)
+                                }
+                                .offset(y: 4)
+                                .padding(.vertical, 2)
+                                .listRowSeparator(.hidden)
+                            }
+                            
+                            .onDelete { offset in
+                                Task {
+                                    await delete(offset)
+                                }
+                            }
+                            
+                            Spacer()
+                                .frame(height: 60)
+                        }
+                        .listStyle(.plain)
+                    } else {
+                        ZStack {
+                            Image("MyCardBack")
+                                .resizable()
+                                .frame(width: 107, height: 140)
+                                .opacity(0.3)
+                            VStack {
+                                Text("저장된 경기 기록이 없습니다.")
+                                    .font(.matchRecapEmptyDataTop)
+                                Group {
+                                    Text("애플워치를 차고 사커비트로")
+                                    Text("당신의 첫 번째 경기를 기록해 보세요!")
+                                }
+                                .font(.matchRecapEmptyDataBottom)
+                                .foregroundStyle(.mainSubTitleColor)
+                            }
+                        }
+                        Spacer()
+                    }
+                }
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                                .foregroundStyle(Color.white)
                         }
                     }
                 }
-                .listStyle(.plain)
-            } else {
-                ZStack {
-                    Image("MyCardBack")
-                        .resizable()
-                        .frame(width: 107, height: 140)
-                        .opacity(0.3)
-                    VStack {
-                        Text("저장된 경기 기록이 없습니다.")
-                            .font(.matchRecapEmptyDataTop)
-                        Group {
-                            Text("애플워치를 차고 사커비트로")
-                            Text("당신의 첫 번째 경기를 기록해 보세요!")
-                        }
-                        .font(.matchRecapEmptyDataBottom)
-                        .foregroundStyle(.mainSubTitleColor)
-                    }
+                .alert(isPresented: $requestReview) {
+                    Alert(title: Text("사커비트 앱이 마음에 드시나요?"),
+                          primaryButton: .default(Text("네")) {
+                        requestAppReview()
+                        UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
+                        requestReview = false
+                        UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
+                    },
+                          secondaryButton: .cancel(Text("아니요")) {
+                        UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
+                        requestReview = false
+                        UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
+                    })
                 }
-                Spacer()
-            }
-        }
-        .alert(isPresented: $requestReview) {
-            Alert(title: Text("사커비트 앱이 마음에 드시나요?"),
-                  primaryButton: .default(Text("네")) {
-                requestAppReview()
-                UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
-                requestReview = false
-                UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
-            },
-                  secondaryButton: .cancel(Text("아니요")) {
-                UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
-                requestReview = false
-                UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
-            })
-        }
-        .onAppear {
-            userName = UserDefaults.standard.string(forKey: "userName") ?? ""
-            hasDoneReviewBefore = UserDefaults.standard.bool(forKey: "hasDoneReviewBefore")
-            
-            if let lastRequestDate = UserDefaults.standard.object(forKey: "lastReviewRequestDate") as? Date {
-                let timeSinceLastRequest = Date().timeIntervalSince(lastRequestDate)
-                
-                if timeSinceLastRequest > reviewRequestThreshold {
-                    if workouts.count > 7 && !hasDoneReviewBefore {
+                .onAppear {
+                    userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+                    hasDoneReviewBefore = UserDefaults.standard.bool(forKey: "hasDoneReviewBefore")
+                    
+                    if let lastRequestDate = UserDefaults.standard.object(forKey: "lastReviewRequestDate") as? Date {
+                        let timeSinceLastRequest = Date().timeIntervalSince(lastRequestDate)
+                        
+                        if timeSinceLastRequest > reviewRequestThreshold {
+                            if workouts.count > 7 && !hasDoneReviewBefore {
+                                requestReview = true
+                            }
+                        }
+                    }
+                    else if workouts.count > 7 && !hasDoneReviewBefore {
                         requestReview = true
                     }
                 }
             }
-            else if workouts.count > 7 && !hasDoneReviewBefore {
-                requestReview = true
-            }
-        }
     }
     private func requestAppReview() {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
