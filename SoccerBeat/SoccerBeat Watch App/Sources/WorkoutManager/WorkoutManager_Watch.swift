@@ -37,6 +37,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         }
         builder = session?.associatedWorkoutBuilder()
         routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: .local())
+        
         // 델리게이트 선언
         session?.delegate = self
         builder?.delegate = self
@@ -62,14 +63,8 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         
         
         // collect motion information
-        motionManager.startActivityUpdates(to: .main) { [weak self] activity in
-            guard let activity = activity else { return }
-            // alert when stationary
-            if activity.stationary {
-                self?.isStationaryDetacted = true
-            }
-        }
-        
+        startMotionDetaction()
+
         // 워치 세션을 원격 세션과 연동
         Task {
             do {
@@ -79,7 +74,20 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             }
         }
     }
-    
+
+    private func startMotionDetaction() {
+        motionManager.startActivityUpdates(to: .main) { [weak self] activity in
+            guard let activity = activity else { return }
+
+            // state change
+            if activity.unknown || activity.running || activity.walking {
+                self?.isStationaryDetacted = false
+            } else if activity.stationary {
+                self?.isStationaryDetacted = true
+            }
+        }
+    }
+
     // 워치 경기 기록 종료
     func endWorkoutSession(_ date: Date) async throws {
         do {
@@ -144,7 +152,12 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
         NSLog("WorkOutSession 변화 감지: \(toState)")
         Task { @MainActor in
             self.running = toState == .running
+            startMotionDetaction()
         }
+        if [HKWorkoutSessionState.paused, .stopped, .ended].contains(toState) {
+            self.motionManager.stopActivityUpdates()
+        }
+
         /// Save Wokrout, Route
         if toState == .ended {
             Task { @MainActor in
