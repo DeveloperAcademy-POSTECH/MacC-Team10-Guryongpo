@@ -2,6 +2,7 @@ import SwiftUI
 import Photos
 
 struct ShareView: View {
+    @Environment(\.dismiss) private var dismiss
     @Binding var isBackButtonHidden: Bool
     @EnvironmentObject var profileModel: ProfileModel
     @EnvironmentObject var workoutManager: WorkoutManager
@@ -16,12 +17,20 @@ struct ShareView: View {
         ZStack(alignment: .top) {
             Group {
                 Image(.backgroundPattern)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
+                    .opacity(0.5)
                 Image(.flameEffect)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
             }
-            .frame(maxHeight: UIScreen.screenHeight)
             VStack {
                 Spacer()
-                    .frame(height: 50)
+                    .frame(height: 60)
                 HStack(alignment: .bottom) {
                     CardFront(degree: $degree, width: 100, height: 140)
                     VStack(alignment: .leading, spacing: 0) {
@@ -57,20 +66,32 @@ struct ShareView: View {
             }
             .padding()
         }
-        .navigationBarBackButtonHidden(isBackButtonHidden)
+        .navigationBarBackButtonHidden()
         .toolbar {
-            Button {
-                isBackButtonHidden = true
-                DispatchQueue.main.async {
-                            share()
-                        }
-                DispatchQueue.main.async {
-                    isBackButtonHidden = false
-                        }
-            } label: {
-                Text("공유하기")
-                    .foregroundStyle(.shareViewTitleTint)
-                    .opacity(isBackButtonHidden ? 0 : 1)
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color.white)
+                        .opacity(isBackButtonHidden ? 0 : 1)
+                }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isBackButtonHidden = true
+                    DispatchQueue.main.async {
+                                share()
+                            }
+                    DispatchQueue.main.async {
+                        isBackButtonHidden = false
+                            }
+                } label: {
+                    Text("공유하기")
+                        .foregroundStyle(.shareViewTitleTint)
+                        .opacity(isBackButtonHidden ? 0 : 1)
+                }
             }
         }
     }
