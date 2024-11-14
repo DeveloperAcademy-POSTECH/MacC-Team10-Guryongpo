@@ -36,9 +36,10 @@ struct DetactStationaryView: View {
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(.mint)
+                        .background(.mint.opacity(0.9))
                         .cornerRadius(12)
                 }
+                .buttonStyle(.plain)
                 .padding(.bottom, 10)
 
                 // "Pause" button
@@ -51,9 +52,10 @@ struct DetactStationaryView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(.regularMaterial)
+                        .background(.gaugeBackground)
                         .cornerRadius(12)
                 }
+                .buttonStyle(.plain)
                 .padding(.bottom, 10)
 
                 // "Close" button
@@ -65,9 +67,10 @@ struct DetactStationaryView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(.regularMaterial)
+                        .background(.gaugeBackground)
                         .cornerRadius(12)
                 }
+                .buttonStyle(.plain)
             }
             .padding(.horizontal)
         }
@@ -75,6 +78,6 @@ struct DetactStationaryView: View {
     }
 }
 
-//#Preview {
-//    DetactStationaryView()
-//}
+#Preview {
+    DetactStationaryView()
+}
