@@ -92,7 +92,7 @@ struct HeatmapView: UIViewRepresentable {
             }
         }
         
-        let totalRouteCount = routes.count
+        let maxCount = gridCount.flatMap { $0 }.max() ?? 1
         
         for row in 0..<gridSize+1 {
             for col in 0..<gridSize+1 {
@@ -105,9 +105,8 @@ struct HeatmapView: UIViewRepresentable {
                 
                 let squareCenter = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 
-                let ratio = Double(gridCount[row][col]) / Double(totalRouteCount)
-                
-                let color = colorForRatio(ratio)
+                let normalizedCount = Double(gridCount[row][col]) / Double(maxCount)
+                let color = colorForNormalizedCount(normalizedCount)
                 
                 let overlay = FixedSizeRectangleOverlay(center: squareCenter, width: squareSize, height: squareSize, count: gridCount[row][col], color: color)
                 
@@ -117,10 +116,9 @@ struct HeatmapView: UIViewRepresentable {
         return overlays
     }
     
-    func colorForRatio(_ ratio: Double) -> UIColor {
+    func colorForNormalizedCount(_ normalizedCount: Double) -> UIColor {
         
-        
-        switch ratio {
+        switch normalizedCount {
         case 0...0.1:
             return UIColor.clear
         case 0.1...0.2:
