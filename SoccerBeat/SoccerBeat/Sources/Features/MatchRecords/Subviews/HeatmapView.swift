@@ -61,30 +61,7 @@ struct HeatmapView: UIViewRepresentable {
                 
                 let renderer = MKPolygonRenderer(polygon: MKPolygon(points: shrunkenPoints, count: shrunkenPoints.count))
                 
-                switch rectangleOverlay.count {
-                case 0...1:
-                    renderer.fillColor = UIColor.clear
-                case 2:
-                    renderer.fillColor = UIColor(Color.heatmap100)
-                case 3:
-                    renderer.fillColor = UIColor(Color.heatmap90)
-                case 4:
-                    renderer.fillColor = UIColor(Color.heatmap80)
-                case 5:
-                    renderer.fillColor = UIColor(Color.heatmap70)
-                case 6:
-                    renderer.fillColor = UIColor(Color.heatmap60)
-                case 7:
-                    renderer.fillColor = UIColor(Color.heatmap50)
-                case 8:
-                    renderer.fillColor = UIColor(Color.heatmap40)
-                case 9:
-                    renderer.fillColor = UIColor(Color.heatmap30)
-                case 10:
-                    renderer.fillColor = UIColor(Color.heatmap20)
-                default:
-                    renderer.fillColor = UIColor(Color.heatmap10)
-                }
+                renderer.fillColor = rectangleOverlay.color
                 
                 return renderer
             }
@@ -115,6 +92,8 @@ struct HeatmapView: UIViewRepresentable {
             }
         }
         
+        let totalRouteCount = routes.count
+        
         for row in 0..<gridSize+1 {
             for col in 0..<gridSize+1 {
                 
@@ -125,13 +104,49 @@ struct HeatmapView: UIViewRepresentable {
                 let coordinate = mapPoint.coordinate
                 
                 let squareCenter = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                let overlay = FixedSizeRectangleOverlay(center: squareCenter, width: squareSize, height: squareSize, count: gridCount[row][col])
+                
+                let ratio = Double(gridCount[row][col]) / Double(totalRouteCount)
+                
+                let color = colorForRatio(ratio)
+                
+                let overlay = FixedSizeRectangleOverlay(center: squareCenter, width: squareSize, height: squareSize, count: gridCount[row][col], color: color)
                 
                 overlays.append(overlay)
             }
         }
         return overlays
     }
+    
+    func colorForRatio(_ ratio: Double) -> UIColor {
+        
+        
+        switch ratio {
+        case 0...0.1:
+            return UIColor.clear
+        case 0.1...0.2:
+            return UIColor(Color.heatmap90)
+        case 0.2...0.3:
+            return UIColor(Color.heatmap80)
+        case 0.3...0.4:
+            return UIColor(Color.heatmap70)
+        case 0.4...0.5:
+            return UIColor(Color.heatmap60)
+        case 0.5...0.6:
+            return UIColor(Color.heatmap50)
+        case 0.6...0.7:
+            return UIColor(Color.heatmap40)
+        case 0.7...0.8:
+            return UIColor(Color.heatmap30)
+        case 0.8...0.9:
+            return UIColor(Color.heatmap20)
+        case 0.9...1.0:
+            return UIColor(Color.heatmap10)
+        default:
+            return UIColor.clear
+        }
+        
+    }
+    
 }
 
 class FixedSizeRectangleOverlay: NSObject, MKOverlay {
@@ -139,9 +154,11 @@ class FixedSizeRectangleOverlay: NSObject, MKOverlay {
     var boundingMapRect: MKMapRect
     var points: [MKMapPoint]
     var count: Int
+    var color: UIColor
     
-    init(center: CLLocationCoordinate2D, width: Double, height: Double, count: Int) {
+    init(center: CLLocationCoordinate2D, width: Double, height: Double, count: Int, color: UIColor) {
         self.count = count
+        self.color = color
         let centerPoint = MKMapPoint(center)
         
         let halfWidth = width / 2
