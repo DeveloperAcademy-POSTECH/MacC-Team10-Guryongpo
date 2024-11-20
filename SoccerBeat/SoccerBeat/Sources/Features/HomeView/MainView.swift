@@ -199,31 +199,33 @@ struct MainView: View {
                             }
                             Spacer()
                             VStack(alignment: .trailing) {
-                                VStack(alignment: .leading) {
-                                    Text(currentLocation)
-                                        .font(.mainDateLocation)
-                                        .foregroundStyle(.mainDateTime)
-                                        .opacity(0.8)
-                                        .task {
-                                            if !workouts.isEmpty {
-                                                currentLocation = await workouts[0].location
-                                            }
-                                        }
-                                    Group {
-                                        Text("경기 시간")
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.5)
-                                        Group {
-                                            if !workouts.isEmpty {
-                                                Text(workouts[0].time)
-                                            } else {
-                                                Text("--:--")
-                                            }
+                                Text(currentLocation)
+                                    .font(.mainDateLocation)
+                                    .multilineTextAlignment(.trailing)
+                                    .foregroundStyle(.mainDateTime)
+                                    .opacity(0.8)
+                                    .task {
+                                        if !workouts.isEmpty {
+                                            currentLocation = await workouts[0].location
                                         }
                                     }
-                                    .font(.mainTime)
-                                    .foregroundStyle(.mainMatchTime)
+
+                                Group {
+                                    Text("경기 시간")
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.5)
+                                        .padding(.top, 4)
+                                    Group {
+                                        if !workouts.isEmpty {
+                                            Text(workouts[0].time)
+                                        } else {
+                                            Text("--:--")
+                                        }
+                                    }
                                 }
+                                .font(.mainTime)
+                                .foregroundStyle(.mainMatchTime)
+
                                 Spacer()
                                 if !workouts.isEmpty && !workouts[0].error {
                                     HStack {
