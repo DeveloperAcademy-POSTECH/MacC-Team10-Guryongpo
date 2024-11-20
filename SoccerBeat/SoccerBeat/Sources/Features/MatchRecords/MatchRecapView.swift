@@ -328,8 +328,7 @@ extension MatchListItemView {
 
 #Preview {
     @StateObject var workoutManager = DIContianer.makeWorkoutManager()
-    return
-    MatchRecapView(workouts: .constant(WorkoutData.exampleWorkouts))
+    return MatchRecapView(workouts: .constant(WorkoutData.exampleWorkouts))
         .environmentObject(ProfileModel(workoutManager: workoutManager))
         .environmentObject(workoutManager)
 }
