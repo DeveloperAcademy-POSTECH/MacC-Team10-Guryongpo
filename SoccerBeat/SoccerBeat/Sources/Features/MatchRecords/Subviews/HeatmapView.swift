@@ -25,6 +25,7 @@ struct HeatmapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.region = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 150, longitudinalMeters: 150)
         
+        // Create heatmap overlay
         let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
                 
         mapView.addOverlays(overlays)
@@ -50,6 +51,7 @@ struct HeatmapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if let rectangleOverlay = overlay as? FixedSizeRectangleOverlay {
                 
+                // Draw smaller sized rectangle inside each grid
                 let shrinkFactor: Double = 0.8
                 let shrunkenPoints = rectangleOverlay.points.map { point -> MKMapPoint in
                     let centerX = rectangleOverlay.boundingMapRect.midX
@@ -92,6 +94,7 @@ struct HeatmapView: UIViewRepresentable {
             }
         }
         
+        // Maximum number of data per grid
         let maxCount = gridCount.flatMap { $0 }.max() ?? 1
         
         for row in 0..<gridSize+1 {
@@ -105,7 +108,9 @@ struct HeatmapView: UIViewRepresentable {
                 
                 let squareCenter = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 
+                //  Calculate ratio of number of data within a grid
                 let normalizedCount = Double(gridCount[row][col]) / Double(maxCount)
+                
                 let color = colorForNormalizedCount(normalizedCount)
                 
                 let overlay = FixedSizeRectangleOverlay(center: squareCenter, width: squareSize, height: squareSize, count: gridCount[row][col], color: color)
