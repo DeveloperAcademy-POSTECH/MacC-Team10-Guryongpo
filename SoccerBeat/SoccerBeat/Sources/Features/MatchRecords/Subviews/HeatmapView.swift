@@ -124,23 +124,23 @@ struct HeatmapView: UIViewRepresentable {
     func colorForNormalizedCount(_ normalizedCount: Double) -> UIColor {
         
         switch normalizedCount {
-        case 0...0.1:
+        case 0..<0.1:
             return UIColor.clear
-        case 0.1...0.2:
+        case 0.1..<0.2:
             return UIColor(Color.heatmap90)
-        case 0.2...0.3:
+        case 0.2..<0.3:
             return UIColor(Color.heatmap80)
-        case 0.3...0.4:
+        case 0.3..<0.4:
             return UIColor(Color.heatmap70)
-        case 0.4...0.5:
+        case 0.4..<0.5:
             return UIColor(Color.heatmap60)
-        case 0.5...0.6:
+        case 0.5..<0.6:
             return UIColor(Color.heatmap50)
-        case 0.6...0.7:
+        case 0.6..<0.7:
             return UIColor(Color.heatmap40)
-        case 0.7...0.8:
+        case 0.7..<0.8:
             return UIColor(Color.heatmap30)
-        case 0.8...0.9:
+        case 0.8..<0.9:
             return UIColor(Color.heatmap20)
         case 0.9...1.0:
             return UIColor(Color.heatmap10)
