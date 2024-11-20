@@ -271,15 +271,19 @@ extension MatchListItemView {
     @ViewBuilder
     var timeAndLocation: some View {
         Group {
-            Text(workoutData.yearMonthDay.description + " - " + currentLocation)
+            HStack(spacing: 0) {
+                Text(workoutData.yearMonthDay.description)
+                Text("경기 시간 ")
+                    .padding(.leading)
+                Text(workoutData.time)
+            }
+
+            Text(currentLocation)
+                .frame(alignment: .trailing)
+                .multilineTextAlignment(.trailing)
                 .task {
                     currentLocation = await workoutData.location
                 }
-            HStack(spacing: 0) {
-                Text("경기 시간 ")
-                Text(workoutData.time)
-            }
-            
         }
         .opacity(0.6)
         .font(.matchDateLocationText)
