@@ -9,15 +9,15 @@ import SwiftUI
 
 struct PhraseView: View {
     @State private var beatAnimation = true
-    let saying: String
+
     var body: some View {
         VStack(spacing: nil) {
-            Text(saying)
+            Text(Phrase.randomElement.saying)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.wiseSaying)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.zone2Bpm)
-                .frame(width: 180, height: 85)
+                .frame(width: .infinity, height: 85)
             
             Spacer()
         
@@ -36,5 +36,5 @@ struct PhraseView: View {
 }
     
 #Preview {
-    PhraseView(saying: "Hello, World!")
+    PhraseView()
 }
