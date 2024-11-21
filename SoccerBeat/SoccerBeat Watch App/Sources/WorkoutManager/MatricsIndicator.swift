@@ -88,7 +88,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
         return [
             "MaxSpeed": Double(maxSpeedMPS.rounded(at: 2)), // m/s
             "SprintCount": sprintCount,
-            "MinHeartRate": saveMinHeartRate == 300 ? 0 : saveHeartRates, // 초기값 삭제
+            "MinHeartRate": saveMinHeartRate,
             "MaxHeartRate": saveMaxHeartRate,
             "HeartRates": saveHeartRates.map {String($0)}.joined(separator: ","),
             "Vo2Max": Double(vo2Max.rounded(at: 1)),
@@ -137,7 +137,6 @@ final class MatricsIndicator: NSObject, ObservableObject {
         speedMPS = 0
         sprintCount = 0
         recentSprintSpeedMPS = 0
-        
     }
     
     private func resetZone5Timer() {
