@@ -12,7 +12,7 @@ import CoreLocation
 struct MatchDetailView: View {
     @Environment(\.dismiss) private var dismiss
     var workout: WorkoutData?
-    
+
     var body: some View {
         ZStack {
             Image("BackgroundPattern")
@@ -52,10 +52,19 @@ struct MatchDetailView: View {
                         dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
-                            .foregroundStyle(Color.white)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        ShareMatchView(matchData: workout ?? .example)
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundStyle(.brightmint)
                     }
                 }
             }
+            .foregroundStyle(Color.white)
+
             .scrollIndicators(.hidden)
         }
     }
@@ -474,7 +483,9 @@ struct FieldRecordDataView: View {
 
 #Preview {
     @StateObject var workoutManager = WorkoutManager.shared
-    return MatchDetailView(workout: WorkoutData.example)
-        .environmentObject(ProfileModel(workoutManager: workoutManager))
-        .environmentObject(workoutManager)
+    return NavigationView {
+        MatchDetailView(workout: WorkoutData.example)
+            .environmentObject(ProfileModel(workoutManager: workoutManager))
+            .environmentObject(workoutManager)
+    }
 }
