@@ -12,6 +12,7 @@ import CoreLocation
 struct MatchDetailView: View {
     @Environment(\.dismiss) private var dismiss
     var workout: WorkoutData?
+    @State private var showShareView = false
 
     var body: some View {
         ZStack {
@@ -56,8 +57,8 @@ struct MatchDetailView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink {
-                        ShareMatchView(matchData: workout ?? .example)
+                    Button {
+                        showShareView.toggle()
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                             .foregroundStyle(.brightmint)
@@ -65,6 +66,9 @@ struct MatchDetailView: View {
                 }
             }
             .foregroundStyle(Color.white)
+            .sheet(isPresented: .constant(false)) {
+                ShareMatchView(matchData: workout ?? .example)
+            }
 
             .scrollIndicators(.hidden)
         }
