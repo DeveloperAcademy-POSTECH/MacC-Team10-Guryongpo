@@ -122,6 +122,9 @@ extension Font {
     // MARK: - NoAuthorization
     public static let noAuthorizationTitleFont = Font.sfProText(size: 20, weight: .medium)
     public static let noAuthorizationExplainFont = Font.sfProText(size: 16, weight: .medium)
+
+    // MARK: - ShareMatch
+    public static let shareButtonFont = Font.sfProText(size: 14, weight: .semibold)
 }
 
 extension Font {
@@ -166,6 +169,7 @@ enum SFProText: String {
     case heavyItalic
     case lightItalic
     case regularItalic
+    case semibold
     case semiboldItalic
     case mediumItalic
     case regular
