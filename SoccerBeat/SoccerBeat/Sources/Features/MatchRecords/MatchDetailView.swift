@@ -26,6 +26,8 @@ struct MatchDetailView: View {
                     VStack {
                         Spacer()
                             .frame(height: 60)
+                        FieldMovementView(workout: workout)
+                        
                         MatchTimeView(workout: workout)
                         Spacer()
                             .frame(height: 48)
@@ -37,7 +39,6 @@ struct MatchDetailView: View {
                         FieldRecordView(workout: workout)
                         Spacer()
                             .frame(height: 100)
-                        FieldMovementView(workout: workout)
                     }
                     .padding()
                 }
