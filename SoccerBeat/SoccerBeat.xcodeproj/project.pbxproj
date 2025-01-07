@@ -113,6 +113,10 @@
 		BE58E6472CB7FC6F005B3E38 /* DetactStationaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE58E6462CB7FC6F005B3E38 /* DetactStationaryView.swift */; };
 		BE7D01302D2BED0500C41019 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE7D012F2D2BED0500C41019 /* SF-Pro-Text-Semibold.otf */; };
 		BE7D01312D2BED0500C41019 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE7D012F2D2BED0500C41019 /* SF-Pro-Text-Semibold.otf */; };
+		BE7D01332D2D39A100C41019 /* SF-Compact-Text-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE7D01322D2D39A100C41019 /* SF-Compact-Text-Thin.otf */; };
+		BE7D01342D2D39A100C41019 /* SF-Compact-Text-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE7D01322D2D39A100C41019 /* SF-Compact-Text-Thin.otf */; };
+		BE7D01362D2D437E00C41019 /* TurretRoad-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE7D01352D2D437E00C41019 /* TurretRoad-ExtraBold.ttf */; };
+		BE7D01372D2D437E00C41019 /* TurretRoad-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE7D01352D2D437E00C41019 /* TurretRoad-ExtraBold.ttf */; };
 		BE87AC0C2C4B1D0700803A25 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = BE87AC0B2C4B1D0700803A25 /* SkeletonUI */; };
 		BE91CF402BBE43BC00F0EB6F /* RadarChartShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */; };
 		BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93F1902B00937000C33756 /* TextBorder+extension.swift */; };
@@ -268,6 +272,8 @@
 		BE58AF1D2D1D5C5C007A7C81 /* ShareMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMatchView.swift; sourceTree = "<group>"; };
 		BE58E6462CB7FC6F005B3E38 /* DetactStationaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetactStationaryView.swift; sourceTree = "<group>"; };
 		BE7D012F2D2BED0500C41019 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		BE7D01322D2D39A100C41019 /* SF-Compact-Text-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Text-Thin.otf"; sourceTree = "<group>"; };
+		BE7D01352D2D437E00C41019 /* TurretRoad-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TurretRoad-ExtraBold.ttf"; sourceTree = "<group>"; };
 		BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartShape.swift; sourceTree = "<group>"; };
 		BE93F1902B00937000C33756 /* TextBorder+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBorder+extension.swift"; sourceTree = "<group>"; };
 		BE93F1932B009FA300C33756 /* ElapsedTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTimeFormatter.swift; sourceTree = "<group>"; };
@@ -869,12 +875,14 @@
 				BE4069C42AF1F80C00FA3030 /* SF-Compact-Text-LightItalic.otf */,
 				BE4069C32AF1F80C00FA3030 /* SF-Compact-Text-Medium.otf */,
 				BE4069C22AF1F80C00FA3030 /* SF-Compact-Text-Regular.otf */,
+				BE7D01322D2D39A100C41019 /* SF-Compact-Text-Thin.otf */,
 				BE4069C52AF1F80D00FA3030 /* SF-Compact-Text-SemiboldItalic.otf */,
 				BE4069C12AF1F80C00FA3030 /* SF-Pro-Text-BlackItalic.otf */,
 				BE4069C62AF1F80D00FA3030 /* SF-Pro-Text-HeavyItalic.otf */,
 				BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */,
 				BED269752AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf */,
 				BEDE52412B04D69400BBFD94 /* SF-Pro-Text-SemiboldItalic.otf */,
+				BE7D01352D2D437E00C41019 /* TurretRoad-ExtraBold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -993,6 +1001,7 @@
 				BA3654CB2CDE88F20059FE9A /* SF-Compact-Text-Regular.otf in Resources */,
 				BA3654CC2CDE88F20059FE9A /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
 				BA3654CD2CDE88F20059FE9A /* NotoSans-Regular.ttf in Resources */,
+				BE7D01362D2D437E00C41019 /* TurretRoad-ExtraBold.ttf in Resources */,
 				BA3654CE2CDE88F20059FE9A /* NotoSans-BlackItalic.ttf in Resources */,
 				BA3654CF2CDE88F20059FE9A /* SF-Pro-Text-BlackItalic.otf in Resources */,
 				BA3654D02CDE88F20059FE9A /* SF-Pro-Text-Light.otf in Resources */,
@@ -1007,6 +1016,7 @@
 				BA3654D92CDE88F20059FE9A /* SF-Pro-Text-LightItalic.otf in Resources */,
 				BEC953A32C75FDE400EFF3C2 /* Localizable.xcstrings in Resources */,
 				D3C5001A2AE36F3F00EFAEFF /* Preview Assets.xcassets in Resources */,
+				BE7D01342D2D39A100C41019 /* SF-Compact-Text-Thin.otf in Resources */,
 				BE0D7D7D2BD14B4800966FF7 /* PrivacyInfo.xcprivacy in Resources */,
 				D3C500172AE36F3F00EFAEFF /* Assets.xcassets in Resources */,
 			);
@@ -1026,10 +1036,12 @@
 				BE0D7D7E2BD14B4800966FF7 /* PrivacyInfo.xcprivacy in Resources */,
 				D3C5002C2AE36F4000EFAEFF /* Preview Assets.xcassets in Resources */,
 				BE9B3AF12C89CE5500DE359D /* InfoPlist.xcstrings in Resources */,
+				BE7D01372D2D437E00C41019 /* TurretRoad-ExtraBold.ttf in Resources */,
 				BA3654EF2CDE9C7F0059FE9A /* SF-Pro-Text-BlackItalic.otf in Resources */,
 				D3C500292AE36F4000EFAEFF /* Assets.xcassets in Resources */,
 				BE7D01302D2BED0500C41019 /* SF-Pro-Text-Semibold.otf in Resources */,
 				BA3654F32CDE9CB60059FE9A /* SF-Compact-Text-SemiboldItalic.otf in Resources */,
+				BE7D01332D2D39A100C41019 /* SF-Compact-Text-Thin.otf in Resources */,
 				BE1B6C732C7A961B0073C7D8 /* Phrase.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

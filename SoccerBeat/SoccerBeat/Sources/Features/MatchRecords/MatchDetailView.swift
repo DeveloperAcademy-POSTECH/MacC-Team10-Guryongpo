@@ -66,7 +66,7 @@ struct MatchDetailView: View {
                 }
             }
             .foregroundStyle(Color.white)
-            .sheet(isPresented: .constant(false)) {
+            .sheet(isPresented: $showShareView) {
                 ShareMatchView(matchData: workout ?? .example)
             }
 

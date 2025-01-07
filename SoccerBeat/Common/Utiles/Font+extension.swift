@@ -129,23 +129,38 @@ extension Font {
 
 extension Font {
     static func sfCompactText(size fontSize: CGFloat, weight: SFCompactText = .regular) -> Font {
-        Font.custom("\(SFCompactText.fontName)-\(weight.capitalized)",
-                               size: fontSize)
+        Font.custom(
+            "\(SFCompactText.fontName)-\(weight.capitalized)",
+            size: fontSize
+        )
     }
     
     static func sfProText(size fontSize: CGFloat, weight: SFProText = .blackItalic) -> Font {
-        Font.custom("\(SFProText.fontName)-\(weight.capitalized)",
-                               size: fontSize)
+        Font.custom(
+            "\(SFProText.fontName)-\(weight.capitalized)",
+            size: fontSize
+        )
     }
     
     static func sfProDisplay(size fontSize: CGFloat, weight: SFProDisplay = .heavyItalic) -> Font {
-        Font.custom("\(SFProText.fontName)-\(weight.capitalized)",
-                               size: fontSize)
+        Font.custom(
+            "\(SFProText.fontName)-\(weight.capitalized)",
+            size: fontSize
+        )
     }
     
     static func notoSans(size fontSize: CGFloat, weight: NotoSans = .regular) -> Font {
-        Font.custom("\(NotoSans.fontName)-\(weight.capitalized)",
-                               size: fontSize)
+        Font.custom(
+            "\(NotoSans.fontName)-\(weight.capitalized)",
+            size: fontSize
+        )
+    }
+
+    static func turretRoad(size fontSize: CGFloat, weight: TurretRoad = .extraBold) -> Font {
+        Font.custom(
+            "\(TurretRoad.fontName)-\(weight.capitalized)",
+            size: fontSize
+        )
     }
 }
 
@@ -156,7 +171,8 @@ enum SFCompactText: String {
     case lightItalic
     case semiboldItalic
     case regular
-    
+    case thin
+
     var capitalized: String {
         self.rawValue.capitalized
     }
@@ -201,6 +217,16 @@ enum NotoSans: String {
     case black
     case blackItalic
     
+    var capitalized: String {
+        self.rawValue.capitalized
+    }
+}
+
+enum TurretRoad: String {
+    static let fontName = String(describing: Self.self)
+
+    case extraBold
+
     var capitalized: String {
         self.rawValue.capitalized
     }
