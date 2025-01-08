@@ -129,9 +129,7 @@ struct ShareMatchView: View {
     private func heatmapShareCard() -> some View {
         ZStack {
             Color(hex: 0x141415)
-                .frame(height: 560)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.top, 16)
                 .padding(.horizontal, 39)
 
             VStack(spacing: 0) {
@@ -143,7 +141,7 @@ struct ShareMatchView: View {
                     routes: matchData.route
                 )
                 .padding(.horizontal, 20)
-                .padding(.top, 40)
+                .padding(.top, 20)
                 .frame(height: 275)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
@@ -154,7 +152,7 @@ struct ShareMatchView: View {
                         .frame(width: 10, height: 10)
 
                     Text(currentLocation)
-                        .font(.sfCompactText(size: 16, weight: .thin))
+                        .font(.sfCompactText(size: 14, weight: .thin))
                         .task {
                             currentLocation = await matchData.location
                         }
@@ -219,6 +217,8 @@ struct ShareMatchView: View {
             }
             .padding(.horizontal, 39)
         }
+        .padding(.top, 16)
+        .padding(.bottom, 21)
     }
 }
 
