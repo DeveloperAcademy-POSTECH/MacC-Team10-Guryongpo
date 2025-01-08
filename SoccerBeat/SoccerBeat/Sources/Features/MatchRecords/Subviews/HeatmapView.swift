@@ -94,9 +94,11 @@ struct HeatmapView: UIViewRepresentable {
             }
         }
         
-        // Maximum number of data per grid
-        let maxCount = gridCount.flatMap { $0 }.max() ?? 1
-        
+        // Calculate maxCount and medianCount
+        let flatGridCount = gridCount.flatMap { $0 }
+        let maxCount = flatGridCount.max() ?? 1
+        let medianCount = flatGridCount.sorted()[flatGridCount.count / 2]
+                
         for row in 0..<gridSize+1 {
             for col in 0..<gridSize+1 {
                 
@@ -108,8 +110,8 @@ struct HeatmapView: UIViewRepresentable {
                 
                 let squareCenter = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 
-                //  Calculate ratio of number of data within a grid
-                let normalizedCount = Double(gridCount[row][col]) / Double(maxCount)
+                //  Calculate ratio of number of data using log function within a grid
+                let normalizedCount = normalizedCount(gridCount[row][col], maxCount: maxCount, medianCount: medianCount)
                 
                 let color = colorForNormalizedCount(normalizedCount)
                 
@@ -121,28 +123,43 @@ struct HeatmapView: UIViewRepresentable {
         return overlays
     }
     
+    // In order to handle unevenly distributed data, multiple scales are used.
+    // Linear scale
+    func normalizedCount(_ count: Int, maxCount: Int, medianCount: Int) -> Double {
+        if count == 0 || count == 1 {
+            return 0
+        }
+        if Double(maxCount) > Double(medianCount) * 5 {
+            // Log scale for skewed data
+            return log(Double(count) + 1) / log(Double(maxCount) + 1)
+        } else {
+            // Linear scale for evenly distributed data
+            return Double(count) / Double(maxCount)
+        }
+    }
+
     func colorForNormalizedCount(_ normalizedCount: Double) -> UIColor {
         
         switch normalizedCount {
-        case 0..<0.1:
+        case 0:
             return UIColor.clear
-        case 0.1..<0.2:
+        case 0..<0.05:
             return UIColor(Color.heatmap90)
-        case 0.2..<0.3:
+        case 0.05..<0.1:
             return UIColor(Color.heatmap80)
-        case 0.3..<0.4:
+        case 0.1..<0.2:
             return UIColor(Color.heatmap70)
-        case 0.4..<0.5:
+        case 0.2..<0.3:
             return UIColor(Color.heatmap60)
-        case 0.5..<0.6:
+        case 0.3..<0.4:
             return UIColor(Color.heatmap50)
-        case 0.6..<0.7:
+        case 0.4..<0.55:
             return UIColor(Color.heatmap40)
-        case 0.7..<0.8:
+        case 0.55..<0.7:
             return UIColor(Color.heatmap30)
-        case 0.8..<0.9:
+        case 0.7..<0.85:
             return UIColor(Color.heatmap20)
-        case 0.9...1.0:
+        case 0.85...1.0:
             return UIColor(Color.heatmap10)
         default:
             return UIColor.clear
