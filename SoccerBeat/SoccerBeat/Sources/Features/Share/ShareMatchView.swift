@@ -27,7 +27,7 @@ struct ShareMatchView: View {
                         .frame(width: 17, height: 17)
                 }
                 .foregroundStyle(.white)
-                .padding([.top, .trailing], 10)
+                .padding([.top, .trailing], 16)
             }
 
             // info button
@@ -48,23 +48,23 @@ struct ShareMatchView: View {
                 // share story action
 
             } label: {
-                HStack {
-                    Image(.instagramLogo)
+                ZStack {
+                    LightRectangleView(
+                        alpha: 0.15,
+                        color: .seeAllMatch,
+                        radius: 22
+                    )
+                    .frame(height: 38)
 
-                    Text("스토리 공유하기")
-                        .font(.shareButtonFont)
-                        .padding(.leading, 32)
+                    HStack {
+                        Image(.instagramLogo)
 
+                        Text("스토리 공유하기")
+                            .font(.shareButtonFont)
+                    }
                 }
-                .frame(maxWidth: .infinity)
-                .padding(10)
-                .foregroundStyle(.white)
-                .background(
-                    Capsule()
-                        .stroke(.grayGradient, lineWidth: 1)  // 그라디언트 포인트 디테일 살릴 필요 있음
-                        .fill(.shareButtonTint)
-                )
                 .padding(.horizontal, 18)
+                .foregroundStyle(.white)
             }
 
             // 이미지 저장
@@ -73,23 +73,25 @@ struct ShareMatchView: View {
                 // store action
 
             } label: {
-                HStack {
-                    Image(systemName: "square.and.arrow.down.fill")
-                        .foregroundStyle(.navigationSportyBPMTitle)
+                ZStack {
+                    LightRectangleView(
+                        alpha: 0.15,
+                        color: .seeAllMatch,
+                        radius: 22
+                    )
+                    .frame(height: 38)
 
-                    Text("이미지 저장하기")
-                        .font(.shareButtonFont)
-                        .padding(.leading, 32)
+                    HStack {
+                        Image(systemName: "square.and.arrow.down.fill")
+                            .foregroundStyle(.navigationSportyBPMTitle)
+
+                        Text("이미지 저장하기")
+                            .font(.shareButtonFont)
+                    }
                 }
-                .frame(maxWidth: .infinity)
-                .padding(10)
-                .foregroundStyle(.white)
-                .background(
-                    Capsule()
-                        .stroke(.grayGradient, lineWidth: 1)
-                        .fill(.shareButtonTint)
-                )
+                .padding(.top, 8)
                 .padding(.horizontal, 18)
+                .foregroundStyle(.white)
             }
         }
     }
@@ -125,6 +127,8 @@ struct ShareMatchView: View {
         .padding(.leading, 8)
     }
 
+    // 이 화면이 공유되는 오브젝트
+    /// 사진, 혹은 인스타에서 활용 가능
     @ViewBuilder
     private func heatmapShareCard() -> some View {
         ZStack {
@@ -152,7 +156,7 @@ struct ShareMatchView: View {
                         .frame(width: 10, height: 10)
 
                     Text(currentLocation)
-                        .font(.sfCompactText(size: 14, weight: .thin))
+                        .font(.sfCompactText(size: 12, weight: .thin))
                         .task {
                             currentLocation = await matchData.location
                         }
