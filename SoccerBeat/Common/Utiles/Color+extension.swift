@@ -135,6 +135,12 @@ extension ShapeStyle where Self == Color {
     static var heatmap80: Self { .init(hex: 0xffdf30, alpha: 0.65)}
     static var heatmap90: Self { .init(hex: 0xfff730, alpha: 0.65)}
     // yellow
+
+
+    // MARK: - Share Match
+    static var shareButtonTint: Self {
+        Color(hex: 0x565656, alpha: 0.3)
+    }
 }
 
 extension ShapeStyle where Self == LinearGradient {
@@ -343,5 +349,11 @@ extension ShapeStyle where Self == LinearGradient {
         let start = Color(hex: 0xFF007A, alpha: 0.0)
         let end = Color(hex: 0xFF007A)
         return .linearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+
+    static var grayGradient: Self {
+        let start = Color(hex: 0xFFFFFF)
+        let middle = Color(hex: 0xFFFFFF, alpha: 0.3)
+        return .linearGradient(colors: [start, middle], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
