@@ -126,7 +126,7 @@ struct HeatmapView: UIViewRepresentable {
     // In order to handle unevenly distributed data, multiple scales are used.
     // Linear scale
     func normalizedCount(_ count: Int, maxCount: Int, medianCount: Int) -> Double {
-        if count == 0 || count == 1 {
+        if count <= 1 {
             return 0
         }
         if Double(maxCount) > Double(medianCount) * 5 {
