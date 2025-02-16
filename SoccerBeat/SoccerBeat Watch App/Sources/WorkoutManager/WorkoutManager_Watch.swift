@@ -98,9 +98,8 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         guard let workout = try await builder?.finishWorkout() else {
             throw SessionError.failureFinishWorkout
         }
-        Task { @MainActor in
-            self.workout = workout
-        }
+
+        self.workout = workout
 
         let metadata = self.matrics.getMetadata()
 
@@ -111,6 +110,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             throw SessionError.failureMakeRoute
             
         }
+
         Task { @MainActor in
             self.route = route
         }
@@ -139,7 +139,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
     
     func endWorkout() {
         session?.end()
-        showingSummaryView.toggle()
+        self.showingSummaryView = true
     }
 }
 
@@ -173,14 +173,10 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
     /// 시기상 아래 함수보다 먼저 불림
     /// `func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,`
     // TODO: - 어떤 일을 해야할까? 비정상 종료를 할 때 어떻게 해야할까? 워치가 절전 모드로 간다던가, 이런 데이터들은...?
-    func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-        
-    }
+    func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
 
-    func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
-        
-    }
-    
+    func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) { }
+
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder,
                         didCollectDataOf collectedTypes: Set<HKSampleType>) {
         for type in collectedTypes {
@@ -188,7 +184,8 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
                 return // Nothing to do.
             }
             
-            guard let statistics = workoutBuilder.statistics(for: quantityType) else { continue
+            guard let statistics = workoutBuilder.statistics(for: quantityType) else {
+                continue
             }
             // Update the published values.
             matrics.updateForStatistics(statistics)

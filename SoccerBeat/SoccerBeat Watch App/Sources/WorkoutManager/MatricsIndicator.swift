@@ -129,7 +129,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
         heartZone = 1
         zone5Count = 0
         saveMaxHeartRate = 0
-        saveMinHeartRate = 300
+        saveMinHeartRate = 0
         saveHeartRates = []
         
         distanceMeter = 0
