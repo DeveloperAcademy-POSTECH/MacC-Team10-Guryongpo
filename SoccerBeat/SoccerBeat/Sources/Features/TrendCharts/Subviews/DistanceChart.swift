@@ -15,7 +15,7 @@ struct DistanceChartView: View {
 
     @State var scrollPositionStart: Date
     var scrollPositionEnd: Date {
-        scrollPositionStart.addingTimeInterval(3600 * 24 * 30)
+        scrollPositionStart.addingTimeInterval(3600 * 24 * Constant.chartVisibleDays)
     }
 
     var scrollPositionString: String {
@@ -29,7 +29,7 @@ struct DistanceChartView: View {
     init(workouts: [WorkoutData]) {
         self.workouts = workouts
         self.scrollPositionStart  =
-        workouts.first?.formattedDate.addingTimeInterval(-1 * 3600 * 24 * 30) ?? Date()
+        workouts.first?.formattedDate.addingTimeInterval(-1 * 3600 * 24 * Constant.chartVisibleDays) ?? Date()
     }
 
     var body: some View {
@@ -149,7 +149,7 @@ struct DistanceChart: View {
             }
         }
         .chartScrollableAxes(.horizontal)
-        .chartXVisibleDomain(length: 3600 * 24 * 30)
+        .chartXVisibleDomain(length: 3600 * 24 * Constant.chartVisibleDays)
         .chartScrollTargetBehavior(
             .valueAligned(
                 matching: .init(hour: 0),
