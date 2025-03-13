@@ -90,6 +90,7 @@
 		BE0D7D7E2BD14B4800966FF7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BE0D7D7C2BD14B4800966FF7 /* PrivacyInfo.xcprivacy */; };
 		BE16B7C32B0B7D0300192C3B /* TrophyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE16B7C22B0B7D0300192C3B /* TrophyCollectionView.swift */; };
 		BE1B6C732C7A961B0073C7D8 /* Phrase.json in Resources */ = {isa = PBXBuildFile; fileRef = BE1B6C712C7A961B0073C7D8 /* Phrase.json */; };
+		BE2067332D82EE0900940BE1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2067322D82EE0900940BE1 /* Constant.swift */; };
 		BE22D6352AE586AA009035C9 /* GameProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6302AE586AA009035C9 /* GameProgressView.swift */; };
 		BE22D6372AE586AA009035C9 /* SprintStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6322AE586AA009035C9 /* SprintStatusView.swift */; };
 		BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22D6342AE586AA009035C9 /* Color+extension.swift */; };
@@ -242,6 +243,7 @@
 		BE0D7D7C2BD14B4800966FF7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BE16B7C22B0B7D0300192C3B /* TrophyCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrophyCollectionView.swift; sourceTree = "<group>"; };
 		BE1B6C712C7A961B0073C7D8 /* Phrase.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phrase.json; sourceTree = "<group>"; };
+		BE2067322D82EE0900940BE1 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		BE22D6302AE586AA009035C9 /* GameProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgressView.swift; sourceTree = "<group>"; };
 		BE22D6322AE586AA009035C9 /* SprintStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SprintStatusView.swift; sourceTree = "<group>"; };
 		BE22D6342AE586AA009035C9 /* Color+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
@@ -441,6 +443,14 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		BE2067312D82EDFC00940BE1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BE2067322D82EE0900940BE1 /* Constant.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		BE22D62F2AE586AA009035C9 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,6 +618,7 @@
 		FB954AF62BB2AE0300A365FB /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BE2067312D82EDFC00940BE1 /* Utils */,
 				FB954AFB2BB2B31000A365FB /* HomeView */,
 				FB954AFE2BB2BA3800A365FB /* MatchRecords */,
 				FB954AFC2BB2B40E00A365FB /* TrendCharts */,
@@ -1109,6 +1120,7 @@
 				68FDD5DA2AE60FAA00B8ACB9 /* Color+extension.swift in Sources */,
 				FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */,
 				BE40699F2AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,
+				BE2067332D82EE0900940BE1 /* Constant.swift in Sources */,
 				FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
 				682A69622BC41BFC00E8EABC /* DetailGuideView.swift in Sources */,
 				D3D174A02B00FE230022F631 /* RadarViewController.swift in Sources */,
