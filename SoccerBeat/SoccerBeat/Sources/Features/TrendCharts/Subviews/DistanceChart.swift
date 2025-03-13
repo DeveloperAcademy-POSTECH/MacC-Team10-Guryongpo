@@ -12,12 +12,26 @@ struct DistanceChartView: View {
     @Environment(\.dismiss) private var dismiss
 
     let workouts: [WorkoutData]
-    private var endDate: String {
-        workouts.first?.yearMonthDay ?? "2023.10.10"
+
+    @State var scrollPositionStart: Date
+    var scrollPositionEnd: Date {
+        scrollPositionStart.addingTimeInterval(3600 * 24 * 30)
     }
-    private var startDate: String {
-        workouts.last?.yearMonthDay ?? "2023.10.10"
+
+    var scrollPositionString: String {
+        scrollPositionStart.formatted(.dateTime.month().day())
     }
+
+    var scrollPositionEndString: String {
+        scrollPositionEnd.formatted(.dateTime.month().day().year())
+    }
+
+    init(workouts: [WorkoutData]) {
+        self.workouts = workouts
+        self.scrollPositionStart  =
+        workouts.first?.formattedDate.addingTimeInterval(-1 * 3600 * 24 * 30) ?? Date()
+    }
+
     var body: some View {
         Image("BackgroundPattern")
             .resizable()
@@ -48,10 +62,9 @@ struct DistanceChartView: View {
                         
                         Spacer()
                     }
-                    
-                    
+
                     distanceChartView(fastest: fastest, slowest: slowest)
-                    
+
                     averageDistanceView
                         .padding(.top, 30)
                     
@@ -73,13 +86,50 @@ struct DistanceChartView: View {
     }
 }
 
+func generateDateRange(startDate: Date, endDate: Date) -> [Date] {
+    var dates: [Date] = []
+    var currentDate = startDate
+
+    while currentDate <= endDate {
+        dates.append(currentDate)
+        currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+    }
+
+    return dates
+}
+
 struct DistanceChart: View {
     let workouts: [WorkoutData]
     let fastestWorkout: WorkoutData
     let slowestWorkout: WorkoutData
     let averageDistance: Double
     let betweenBarSpace = 45.0
-    
+    @Binding var scrollPosition: Date
+
+    private var allDaysAndMatchData: [(day: Date, distance: Double)] {
+        guard let latestWorkout = workouts.first,
+              let oldestWorkout = workouts.last else {
+            return []
+        }
+
+        let calendar = Calendar.current
+        let startDate = calendar.startOfDay(for: oldestWorkout.formattedDate)
+        let endDate = calendar.startOfDay(for: latestWorkout.formattedDate)
+
+        guard startDate <= endDate else { return [] }
+
+        let dates = generateDateRange(startDate: startDate, endDate: endDate)
+
+        let workoutDict: [Date: Double] = workouts.reduce(into: [:]) { dict, workout in
+            let normalizedDate = calendar.startOfDay(for: workout.formattedDate)
+            dict[normalizedDate] = workout.distance
+        }
+
+        return dates.map { date in
+            (day: date, distance: workoutDict[date] ?? 0.0)
+        }
+    }
+
     private func isMax(_ workout: WorkoutData) -> Bool {
         workout == fastestWorkout
     }
@@ -89,48 +139,29 @@ struct DistanceChart: View {
     }
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            Chart {
-                ForEach(0..<workouts.count, id: \.self) { index in
-                    let workout = workouts[index]
-                    
-                    BarMark(
-                        x: .value("Order", workouts.count - index),
-                        yStart: .value("Distance", 0.0),
-                        yEnd: .value("Distance", workout.distance)
-                    )
-                    .foregroundStyle(isMax(workout) ? .distanceMax
-                                     : (isMin(workout) ? .distanceMin : .chartDefault))
-                    .cornerRadius(300, style: .continuous)
-                    // MARK: - Bar Chart Data, value 표시
-                    // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
-                    .annotation(position: .bottom, alignment: .center) {
-                        let isMaxOrMin = isMin(workout) || isMax(workout)
-                        VStack(spacing: 6) {
-                            Text(workout.distance.rounded())
-                                .font(.maxValueUint)
-                                .foregroundStyle(.maxValueStyle)
-                                .opacity(isMaxOrMin ? 1.0 : 0.5)
-                                .padding(.top, 8)
-                            
-                            Text(workout.monthDay)
-                                .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
-                                .foregroundStyle(.defaultDayStyle)
-                        }
-                    }
-                }
+        Chart {
+            ForEach(allDaysAndMatchData, id: \.day) {
+                BarMark(
+                    x: .value("Day", $0.day, unit: .day),
+                    y: .value("Distance", $0.distance)
+                )
+                .cornerRadius(300, style: .continuous)
             }
-            // MARK: - 가장 밑에 일자 표시, 자리잡기용
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day)) { _ in
-                    AxisValueLabel(format: .dateTime.day(), centered: true)
-                        .font(.defaultDayUnit)
-                }
-            }
-            .chartYAxis(.hidden)
-            .frame(width: CGFloat(workouts.count) * betweenBarSpace)
         }
-        .backport.defaultScrollAnchor(.trailing)
+        .chartScrollableAxes(.horizontal)
+        .chartXVisibleDomain(length: 3600 * 24 * 30)
+        .chartScrollTargetBehavior(
+            .valueAligned(
+                matching: .init(hour: 0),
+                majorAlignment: .matching(.init(day: 1))))
+        .chartScrollPosition(x: $scrollPosition)
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .day, count: 7)) {
+                AxisTick()
+                AxisGridLine()
+                AxisValueLabel(format: .dateTime.month().day())
+            }
+        }
     }
 }
 
@@ -180,7 +211,7 @@ extension DistanceChartView {
                 if !workouts.isEmpty {
                     VStack {
                         ZStack {
-                            Text("\(startDate) - \(endDate)")
+                            Text("\(scrollPositionString) - \(scrollPositionEndString)")
                                 .font(.durationStyle)
                                 .foregroundStyle(.durationStyle)
                             
@@ -196,9 +227,9 @@ extension DistanceChartView {
                             workouts: workouts,
                             fastestWorkout: fastest,
                             slowestWorkout: slowest,
-                            averageDistance: average(of: workouts)
+                            averageDistance: average(of: workouts),
+                            scrollPosition: $scrollPositionStart
                         )
-                        .frame(height: 120)
                         .padding(.horizontal)
                     }
                     .padding(.horizontal, 20)
