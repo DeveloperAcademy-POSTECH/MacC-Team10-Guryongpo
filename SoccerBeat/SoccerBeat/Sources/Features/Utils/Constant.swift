@@ -8,7 +8,7 @@
 import Foundation
 
 struct Constant {
-    // 30: 한달 보기
-    // 7: 일주일 보기
+    /// 7일씩 보기
     static let chartVisibleDays = 7.0
+//    static let chartVisibleDays = 30.0
 }

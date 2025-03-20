@@ -98,6 +98,10 @@ func generateDateRange(startDate: Date, endDate: Date) -> [Date] {
     return dates
 }
 
+func date(year: Int, month: Int, day: Int = 1) -> Date {
+    Calendar.current.date(from: DateComponents(year: year, month: month, day: day)) ?? Date()
+}
+
 struct DistanceChart: View {
     let workouts: [WorkoutData]
     let fastestWorkout: WorkoutData
@@ -128,14 +132,20 @@ struct DistanceChart: View {
         return dates.map { date in
             (day: date, distance: workoutDict[date] ?? 0.0)
         }
-    }
 
-    private func isMax(_ workout: WorkoutData) -> Bool {
-        workout == fastestWorkout
-    }
-    
-    private func isMin(_ workout: WorkoutData) -> Bool {
-        workout == slowestWorkout
+        // for test
+        /**
+         return stride(from: 0, to: 200, by: 1).compactMap {
+         let startDay: Date = date(year: 2024, month: 6, day: 17)  // 200 days before WWDC
+         let day: Date = Calendar.current.date(byAdding: .day, value: $0, to: startDay)!
+         let distance = Double.random(in: 1...10)
+         return (
+         day: day,
+         distance: distance
+         )
+         }
+         */
+
     }
     
     var body: some View {
@@ -149,17 +159,20 @@ struct DistanceChart: View {
             }
         }
         .chartScrollableAxes(.horizontal)
+        // 보이는 X 축의 너비: 1 시간 * 24 * 7 => 7일
         .chartXVisibleDomain(length: 3600 * 24 * Constant.chartVisibleDays)
+        // 한번에 땡기는 스크롤의 양의 크기 => 1주일씩 당기기,
         .chartScrollTargetBehavior(
             .valueAligned(
                 matching: .init(hour: 0),
-                majorAlignment: .matching(.init(day: 1))))
+                majorAlignment: .matching(.init(weekday: 1))))
         .chartScrollPosition(x: $scrollPosition)
+        // 보여지는 X 축 좌표의 마크 기준: 1일씩 표기하는데 `Weekday`만 표기
         .chartXAxis {
-            AxisMarks(values: .stride(by: .day, count: 7)) {
+            AxisMarks(values: .stride(by: .day, count: 1)) {
                 AxisTick()
                 AxisGridLine()
-                AxisValueLabel(format: .dateTime.month().day())
+                AxisValueLabel(format: .dateTime.weekday())
             }
         }
     }
