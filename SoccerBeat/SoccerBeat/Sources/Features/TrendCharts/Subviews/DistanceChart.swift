@@ -10,6 +10,7 @@ import Charts
 
 struct DistanceChartView: View {
     @Environment(\.dismiss) private var dismiss
+    @State var rawSelectedDate: Date? = nil
 
     let workouts: [WorkoutData]
 
@@ -109,6 +110,27 @@ struct DistanceChart: View {
     let averageDistance: Double
     let betweenBarSpace = 45.0
     @Binding var scrollPosition: Date
+    @Binding var rawSelectedDate: Date?
+    @Environment(\.calendar) var calendar
+
+    func startOfDay(for date: Date) -> Date {
+        calendar.date(bySettingHour: 0, minute: 0, second: 0, of: date)!
+    }
+
+    func endOfDay(for date: Date) -> Date {
+        calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)!
+    }
+
+    var selectedDate: Date? {
+        if let rawSelectedDate {
+            return workouts.first {
+                let startOfDay = startOfDay(for: $0.formattedDate)
+                let endOfDay = endOfDay(for: $0.formattedDate)
+                return (startOfDay...endOfDay).contains(rawSelectedDate)
+            }?.formattedDate
+        }
+        return nil
+    }
 
     private var allDaysAndMatchData: [(day: Date, distance: Double)] {
         guard let latestWorkout = workouts.first,
@@ -134,17 +156,16 @@ struct DistanceChart: View {
         }
 
         // for test
-        /**
-         return stride(from: 0, to: 200, by: 1).compactMap {
-         let startDay: Date = date(year: 2024, month: 6, day: 17)  // 200 days before WWDC
-         let day: Date = Calendar.current.date(byAdding: .day, value: $0, to: startDay)!
-         let distance = Double.random(in: 1...10)
-         return (
-         day: day,
-         distance: distance
-         )
-         }
-         */
+
+//        return stride(from: 0, to: 200, by: 1).compactMap {
+//            let startDay: Date = date(year: 2024, month: 6, day: 17)
+//            let day: Date = Calendar.current.date(byAdding: .day, value: $0, to: startDay)!
+//            let distance = Double.random(in: 1...10)
+//            return (
+//                day: day,
+//                distance: distance
+//            )
+//        }
 
     }
     
@@ -156,6 +177,24 @@ struct DistanceChart: View {
                     y: .value("Distance", $0.distance)
                 )
                 .cornerRadius(300, style: .continuous)
+            }
+
+            if let selectedDate {
+                RuleMark(
+                    x: .value("Selected", selectedDate, unit: .day)
+                )
+                .foregroundStyle(Color.gray.opacity(0.3))
+                .offset(yStart: -10)
+                .zIndex(-1)
+                .annotation(
+                    position: .top, spacing: 0,
+                    overflowResolution: .init(
+                        x: .fit(to: .chart),
+                        y: .disabled
+                    )
+                ) {
+                    valueSelectionPopover
+                }
             }
         }
         .chartScrollableAxes(.horizontal)
@@ -172,8 +211,26 @@ struct DistanceChart: View {
             AxisMarks(values: .stride(by: .day, count: 1)) {
                 AxisTick()
                 AxisGridLine()
-                AxisValueLabel(format: .dateTime.weekday())
+                AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
             }
+        }
+        .chartYAxis {
+            AxisMarks(position: .leading)
+        }
+        .chartLegend(.hidden)
+        .chartXSelection(value: $rawSelectedDate)
+    }
+
+    @ViewBuilder
+    var valueSelectionPopover: some View {
+        if let selectedDate {
+            Text(selectedDate.description)
+                .foregroundStyle(.white)
+                .onAppear {
+                    print("Hello world")
+                }
+        } else {
+            EmptyView()
         }
     }
 }
@@ -223,7 +280,7 @@ extension DistanceChartView {
             .overlay {
                 if !workouts.isEmpty {
                     VStack {
-                        ZStack {
+                        HStack {
                             Text("\(scrollPositionString) - \(scrollPositionEndString)")
                                 .font(.durationStyle)
                                 .foregroundStyle(.durationStyle)
@@ -235,13 +292,17 @@ extension DistanceChartView {
                             .font(.durationStyle)
                             .foregroundStyle(.defaultDayStyle)
                         }
-                        Spacer()
+                        .opacity(rawSelectedDate == nil ? 1.0 : 0.0)
+
+                        Spacer(minLength: 16)
+                        
                         DistanceChart(
                             workouts: workouts,
                             fastestWorkout: fastest,
                             slowestWorkout: slowest,
                             averageDistance: average(of: workouts),
-                            scrollPosition: $scrollPositionStart
+                            scrollPosition: $scrollPositionStart,
+                            rawSelectedDate: $rawSelectedDate
                         )
                         .padding(.horizontal)
                     }
