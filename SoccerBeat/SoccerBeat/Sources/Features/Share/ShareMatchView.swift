@@ -24,10 +24,11 @@ class ImageSaver: NSObject {
 }
 
 struct ShareMatchView: View {
-    let matchData: WorkoutData
+    let workout: WorkoutData
     @State private var currentLocation = "--:--"
     @State private var showImageSavedAlert = false
     @Environment(\.dismiss) var dismiss
+    @State private var heatmapImage: UIImage? = nil
 
     var body: some View {
         VStack {
@@ -52,10 +53,31 @@ struct ShareMatchView: View {
                 Spacer()
             }
             .padding(.leading, 39)
-
-            // heatmap card, shareing image
-            heatmapShareCard
-
+            
+            VStack {
+                Spacer()
+                    .frame(height: 16)
+                HStack {
+                    Spacer()
+                        .frame(width: 39)
+                    
+                    // heatmap card, shareing image
+                    heatmapShareCard
+                        .onAppear {
+                            HeatmapView(workout: workout).shootSnapshot { image in
+                                if let capturedImage = image {
+                                    heatmapImage = capturedImage
+                                }
+                            }
+                        }
+                    
+                    Spacer()
+                        .frame(width: 39)
+                }
+                Spacer()
+                    .frame(height: 21)
+            }
+            
             Spacer()
 
             // 스토리 공유
@@ -96,7 +118,7 @@ struct ShareMatchView: View {
                  */
 
                 // MARK: - Screen Shot 저장
-                let inputImage = snapshot()
+                let inputImage = heatmapShareCard.snapshot()
                 imageSaver.writeToPhotoAlbum(image: inputImage)
                 showImageSavedAlert = true
             } label: {
@@ -158,13 +180,7 @@ struct ShareMatchView: View {
 
     @ViewBuilder
     private var pureHeatMap: HeatmapView {
-        HeatmapView(
-            centerCoordinate: CLLocationCoordinate2D(
-                latitude: matchData.center[0],
-                longitude: matchData.center[1]
-            ),
-            routes: matchData.route
-        )
+        HeatmapView(workout: workout)
     }
 
     // 이 화면이 공유되는 오브젝트
@@ -174,15 +190,25 @@ struct ShareMatchView: View {
         ZStack {
             Color(hex: 0x141415)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.horizontal, 39)
 
             VStack(spacing: 0) {
-                pureHeatMap
-                .padding(.horizontal, 20)
-                .padding(.top, 20)
-                .frame(height: 275)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-
+                Spacer()
+                    .frame(height: 20)
+                if let heatmapImage = heatmapImage {
+                    Image(uiImage: heatmapImage)
+                        .resizable()
+                        .scaledToFill()
+                        .padding(.horizontal, 20)
+                        .frame(height: 275)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                } else {
+//                    pureHeatMap
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .padding(.horizontal, 20)
+                        .frame(height: 275)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
                 HStack {
                     Spacer()
                     Image(systemName: "location.fill")
@@ -192,7 +218,7 @@ struct ShareMatchView: View {
                     Text(currentLocation)
                         .font(.sfCompactText(size: 12, weight: .thin))
                         .task {
-                            currentLocation = await matchData.location
+                            currentLocation = await workout.location
                         }
                 }
                 .foregroundStyle(Color(hex: 0xD3D3D3, alpha: 0.8))
@@ -203,7 +229,7 @@ struct ShareMatchView: View {
                     Text("GAMETIME")
                         .font(.sfProDisplay(size: 18, weight: .heavyItalic))
                         .foregroundStyle(Color(hex: 0xFFFFFF, alpha: 0.6))
-                    Text(matchData.time)
+                    Text(workout.time)
                         .font(.sfProDisplay(size: 36, weight: .heavyItalic))
                         .foregroundStyle(.bpmMax)
                 }
@@ -214,7 +240,7 @@ struct ShareMatchView: View {
                     verticalDivider()
                     dashboardComponent(
                         section: "뛴거리",
-                        value: matchData.distance.rounded(at: 1),
+                        value: workout.distance.rounded(at: 1),
                         unit: " KM"
                     )
                     Spacer()
@@ -222,7 +248,7 @@ struct ShareMatchView: View {
                     verticalDivider()
                     dashboardComponent(
                         section: "스프린트",
-                        value: "\(matchData.sprint)",
+                        value: "\(workout.sprint)",
                         unit: " TIMES"
                     )
                     Spacer()
@@ -230,7 +256,7 @@ struct ShareMatchView: View {
                     verticalDivider()
                     dashboardComponent(
                         section: "최고속도",
-                        value: matchData.velocity.rounded(at: 1),
+                        value: workout.velocity.rounded(at: 1),
                         unit: " KM/H"
                     )
                     Spacer()
@@ -250,13 +276,9 @@ struct ShareMatchView: View {
                 .frame(maxWidth: .infinity, maxHeight: 35, alignment: .leading)
                 .padding(.horizontal, 20)
                 .padding(.top, 32)
-
-                Spacer()
             }
-            .padding(.horizontal, 39)
         }
-        .padding(.top, 16)
-        .padding(.bottom, 21)
+        .offset(y: -23)
     }
 
     private func openInInstagram() {
@@ -279,7 +301,7 @@ struct ShareMatchView: View {
         */
 
         // MARK: - ScreenShot 저장
-        guard let imageData = snapshot().pngData() else { return }
+        guard let imageData = heatmapShareCard.snapshot().pngData() else { return }
         let instagramAppID = "2438142073191207"
         let instagramURL = URL(string: "instagram-stories://share?source_application=\(instagramAppID)")!
         let pasteboardItems = [
@@ -293,27 +315,27 @@ struct ShareMatchView: View {
         }
     }
 
-    func shootWithMap(completion: @escaping (UIImage) -> Void) {
-        let center = CLLocationCoordinate2D(latitude: matchData.center[0], longitude: matchData.center[1])
-        let options = MKMapSnapshotter.Options()
-        options.size = UIScreen.main.bounds.size
-        options.mapType = .mutedStandard
-        options.showsBuildings = false
-        options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150)
-
-        let snapshotter = MKMapSnapshotter(options: options)
-        snapshotter.start { snapshot, error in
-            guard let snapshot = snapshot?.image else { return }
-            completion(snapshot)
-        }
-    }
+//    func shootWithMap(completion: @escaping (UIImage) -> Void) {
+//        let center = CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1])
+//        let options = MKMapSnapshotter.Options()
+//        options.size = UIScreen.main.bounds.size
+//        options.mapType = .mutedStandard
+//        options.showsBuildings = false
+//        options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150)
+//
+//        let snapshotter = MKMapSnapshotter(options: options)
+//        snapshotter.start { snapshot, error in
+//            guard let snapshot = snapshot?.image else { return }
+//            
+//            completion(snapshot)
+//        }
+//    }
 }
 
 extension View {
-    func snapshot() -> UIImage {
-        let controller = UIHostingController(rootView: self.edgesIgnoringSafeArea([.bottom, .top]))
+    func snapshot(of frame: CGRect? = nil) -> UIImage {
+        let controller = UIHostingController(rootView: self)
         let view = controller.view!
-
         let targetSize = controller.view.intrinsicContentSize
         view.bounds = CGRect(origin: .zero, size: targetSize)
         view.backgroundColor = .clear
@@ -324,10 +346,36 @@ extension View {
         // 렌더러에서 직접 컨트롤러 뷰를 그려서 스냅샷 찍기
         return renderer.image { context in
             // MapView가 있는 UIView 계층을 그리도록 한다.
-            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+            view.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
         }
     }
 }
+
+//extension View {
+//    // 특정 뷰만 캡처하는 메서드
+//    func snapshot() -> UIImage {
+//        let controller = UIHostingController(rootView: self)
+//        let view = controller.view
+//        
+//        // 뷰 설정
+//        view?.backgroundColor = .clear
+//        
+//        // 레이아웃 처리를 위해 사이즈 계산
+//        view?.frame = CGRect(origin: .zero, size: controller.sizeThatFits(in: UIScreen.main.bounds.size))
+//        
+//        // 레이아웃 업데이트
+//        view?.layoutIfNeeded()
+//        
+//        // 실제 크기 확인
+//        let targetSize = view?.bounds.size ?? .zero
+//        
+//        // 렌더러 생성 및 이미지 반환
+//        let renderer = UIGraphicsImageRenderer(size: targetSize)
+//        return renderer.image { _ in
+//            view?.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
+//        }
+//    }
+//}
 
 #Preview {
     @Previewable
@@ -337,6 +385,6 @@ extension View {
         showShareView.toggle()
     }
     .sheet(isPresented: $showShareView) {
-        ShareMatchView(matchData: .example)
+        ShareMatchView(workout: .example)
     }
 }

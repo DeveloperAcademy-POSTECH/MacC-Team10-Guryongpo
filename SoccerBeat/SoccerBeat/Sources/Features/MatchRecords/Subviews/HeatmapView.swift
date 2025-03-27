@@ -16,14 +16,23 @@ import MapKit
 // polylineCoordinates: [CLLocationCoordinate2D(latitude, longitude)])
 
 struct HeatmapView: UIViewRepresentable {
-    let centerCoordinate: CLLocationCoordinate2D
-    let routes: [CLLocationCoordinate2D]
+//    let centerCoordinate: CLLocationCoordinate2D
+//    let routes: [CLLocationCoordinate2D]
     let mapView = MKMapView()
+    let workout: WorkoutData
     
     func makeUIView(context: Context) -> MKMapView {
         
         mapView.delegate = context.coordinator
+        
+        let centerCoordinate = CLLocationCoordinate2D(
+            latitude: workout.center[0],
+            longitude: workout.center[1]
+        )
+        
         mapView.region = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 150, longitudinalMeters: 150)
+        
+        mapView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         
         // Create heatmap overlay
         let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
@@ -83,7 +92,7 @@ struct HeatmapView: UIViewRepresentable {
         
         var gridCount: [[Int]] = Array(repeating: Array(repeating: 0, count: gridSize+1), count: gridSize+1)
         
-        for routePoint in routes {
+        for routePoint in workout.route {
             let mapPoint = MKMapPoint(routePoint)
             
             let col = Int((mapPoint.x - initialx) / squareSize)
@@ -168,6 +177,177 @@ struct HeatmapView: UIViewRepresentable {
     }
     
 }
+
+//extension HeatmapView {
+//    func shootSnapshot(completion: @escaping (UIImage?) -> Void) {
+//        let size = mapView.frame.size == .zero ? UIScreen.main.bounds.size : mapView.frame.size
+//        let center = CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1])
+//
+//        let options = MKMapSnapshotter.Options()
+//        options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150)
+//        options.size = size
+//        options.mapType = .mutedStandard
+//        options.showsBuildings = false
+//        
+//        let snapshotter = MKMapSnapshotter(options: options)
+//        snapshotter.start { snapshot, error in
+//            guard let snapshot = snapshot, error == nil else {
+//                completion(nil)
+//                return
+//            }
+//
+//            let renderer = UIGraphicsImageRenderer(size: options.size)
+//            let image = renderer.image { context in
+//                // Draw the base map image
+//                snapshot.image.draw(at: .zero)
+//
+//                // Draw overlays manually
+//                for overlay in mapView.overlays {
+//                    if let rectangleOverlay = overlay as? FixedSizeRectangleOverlay {
+//                        
+//                        // Convert MKMapPoint to CLLocationCoordinate2D, then to CGPoint
+//                        let points = rectangleOverlay.points.map { mapPoint in
+//                            snapshot.point(for: mapPoint.coordinate)
+//                        }
+//
+//                        guard points.count == 4 else { continue }
+//
+//                        // Create a rectangle path
+//                        let path = UIBezierPath()
+//                        path.move(to: points[0])
+//                        path.addLine(to: points[1])
+//                        path.addLine(to: points[2])
+//                        path.addLine(to: points[3])
+//                        path.close()
+//
+//                        // Apply color and fill
+//                        rectangleOverlay.color.setFill()
+//                        path.fill()
+//                    }
+//                }
+//            }
+//            completion(image)
+//        }
+//    }
+//}
+
+
+//extension HeatmapView {
+//    func shootSnapshot(completion: @escaping (UIImage?) -> Void) {
+//        let center = CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1])
+//        let options = MKMapSnapshotter.Options()
+//        options.size = UIScreen.main.bounds.size
+//        options.mapType = .mutedStandard
+//        options.showsBuildings = false
+//        options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150)
+//
+//        let snapshotter = MKMapSnapshotter(options: options)
+//        snapshotter.start { snapshot, error in
+//            guard let snapshotImage = snapshot?.image, error == nil else {
+//                completion(nil)
+//                return
+//            }
+//            completion(snapshotImage)
+//        }
+//    }
+//}
+
+extension HeatmapView {
+    func shootSnapshot(completion: @escaping (UIImage?) -> Void) {
+        let size = mapView.frame.size == .zero ? UIScreen.main.bounds.size : mapView.frame.size
+        let center = CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1])
+        
+        let options = MKMapSnapshotter.Options()
+        options.size = size
+        options.showsBuildings = false
+        options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150)
+
+        let snapshotter = MKMapSnapshotter(options: options)
+        snapshotter.start { snapshot, error in
+            guard let snapshot = snapshot, error == nil else {
+                print("❌ Failed to create snapshot: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)
+                return
+            }
+
+            // Generate the overlays directly from the route data
+            let centerCoordinate = CLLocationCoordinate2D(latitude: self.workout.center[0], longitude: self.workout.center[1])
+            let overlays = self.createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
+            
+            let renderer = UIGraphicsImageRenderer(size: options.size)
+            let image = renderer.image { context in
+                // Draw the base map image
+                snapshot.image.draw(at: .zero)
+
+                // Draw the generated overlays
+                for overlay in overlays {
+                    // Convert MKMapPoint to CGPoint using snapshot
+                    let points = overlay.points.map { mapPoint in
+                        snapshot.point(for: mapPoint.coordinate)
+                    }
+
+                    guard points.count == 4 else { continue }
+
+                    // Apply the same shrink factor as in the MKPolygonRenderer
+                    let shrinkFactor: CGFloat = 0.8
+                    
+                    // Calculate center point
+                    let centerX = points.reduce(0) { $0 + $1.x } / CGFloat(points.count)
+                    let centerY = points.reduce(0) { $0 + $1.y } / CGFloat(points.count)
+                    
+                    // Calculate shrunken points
+                    let shrunkenPoints = points.map { point -> CGPoint in
+                        let newX = centerX + (point.x - centerX) * shrinkFactor
+                        let newY = centerY + (point.y - centerY) * shrinkFactor
+                        return CGPoint(x: newX, y: newY)
+                    }
+
+                    // Create rectangle path
+                    let path = UIBezierPath()
+                    path.move(to: shrunkenPoints[0])
+                    for i in 1..<shrunkenPoints.count {
+                        path.addLine(to: shrunkenPoints[i])
+                    }
+                    path.close()
+
+                    // Apply color and fill
+                    overlay.color.setFill()
+                    path.fill()
+                }
+            }
+            
+            completion(image)
+        }
+    }
+}
+
+//extension HeatmapView {
+//    func shootSnapshot(completion: @escaping (UIImage?) -> Void) {
+//        DispatchQueue.main.async {
+//            // 레이아웃 강제 업데이트
+//            self.mapView.layoutIfNeeded()
+//
+//            let size = self.mapView.bounds.size
+//            guard size.width > 0, size.height > 0 else {
+//                print("❌ mapView의 크기가 (0,0)입니다. 레이아웃이 업데이트되지 않았을 가능성이 있습니다.")
+//                completion(nil)
+//                return
+//            }
+//
+//            let renderer = UIGraphicsImageRenderer(size: size)
+//            let image = renderer.image { context in
+//                self.mapView.drawHierarchy(in: CGRect(origin: .zero, size: size), afterScreenUpdates: true)
+//            }
+//
+//            print("✅ 스냅샷 생성 성공!")
+//            completion(image)
+//        }
+//    }
+//}
+
+
+
+
 
 class FixedSizeRectangleOverlay: NSObject, MKOverlay {
     var coordinate: CLLocationCoordinate2D
