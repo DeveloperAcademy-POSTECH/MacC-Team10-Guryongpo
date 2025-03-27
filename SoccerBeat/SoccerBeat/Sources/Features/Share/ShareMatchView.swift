@@ -64,6 +64,7 @@ struct ShareMatchView: View {
                     // heatmap card, shareing image
                     heatmapShareCard
                         .onAppear {
+                            //MARK: HeatmapView를 새로 로드해서 MapView 부분을 heatmapImage에 저장
                             HeatmapView(workout: workout).shootSnapshot { image in
                                 if let capturedImage = image {
                                     heatmapImage = capturedImage
@@ -108,16 +109,8 @@ struct ShareMatchView: View {
             // 이미지 저장
             // store image
             Button {
-                // MARK: - MapView 저장
-                let imageSaver = ImageSaver()
-                /**
-                 shootWithMap { image in
-                 imageSaver.writeToPhotoAlbum(image: image)
-                 showImageSavedAlert = true
-                 }
-                 */
-
                 // MARK: - Screen Shot 저장
+                let imageSaver = ImageSaver()
                 let inputImage = heatmapShareCard.snapshot()
                 imageSaver.writeToPhotoAlbum(image: inputImage)
                 showImageSavedAlert = true
@@ -178,11 +171,6 @@ struct ShareMatchView: View {
         .foregroundStyle(.white)
     }
 
-    @ViewBuilder
-    private var pureHeatMap: HeatmapView {
-        HeatmapView(workout: workout)
-    }
-
     // 이 화면이 공유되는 오브젝트
     /// 사진, 혹은 인스타에서 활용 가능
     @ViewBuilder
@@ -202,7 +190,6 @@ struct ShareMatchView: View {
                         .frame(height: 275)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 } else {
-//                    pureHeatMap
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .padding(.horizontal, 20)
@@ -278,27 +265,9 @@ struct ShareMatchView: View {
                 .padding(.top, 32)
             }
         }
-        .offset(y: -23)
     }
 
     private func openInInstagram() {
-        // MARK: - MapView 저장
-        /**
-         shootWithMap { image in
-         guard let imageData = image.pngData() else { return }
-         let instagramAppID = "2438142073191207"
-         let instagramURL = URL(string: "instagram-stories://share?source_application=\(instagramAppID)")!
-         let pasteboardItems = [
-         "com.instagram.sharedSticker.backgroundImage": imageData
-         ]
-
-         UIPasteboard.general.setItems([pasteboardItems])
-
-         if UIApplication.shared.canOpenURL(instagramURL) {
-         UIApplication.shared.open(instagramURL)
-         }
-         }
-        */
 
         // MARK: - ScreenShot 저장
         guard let imageData = heatmapShareCard.snapshot().pngData() else { return }
@@ -314,68 +283,178 @@ struct ShareMatchView: View {
             UIApplication.shared.open(instagramURL)
         }
     }
-
-//    func shootWithMap(completion: @escaping (UIImage) -> Void) {
-//        let center = CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1])
-//        let options = MKMapSnapshotter.Options()
-//        options.size = UIScreen.main.bounds.size
-//        options.mapType = .mutedStandard
-//        options.showsBuildings = false
-//        options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150)
-//
-//        let snapshotter = MKMapSnapshotter(options: options)
-//        snapshotter.start { snapshot, error in
-//            guard let snapshot = snapshot?.image else { return }
-//            
-//            completion(snapshot)
-//        }
-//    }
 }
 
+// MARK: 기존 코드
+//extension View {
+//    func snapshot(of frame: CGRect? = nil) -> UIImage {
+//        let controller = UIHostingController(rootView: self)
+//        let view = controller.view!
+//        let targetSize = controller.view.intrinsicContentSize
+//        view.bounds = CGRect(origin: .zero, size: targetSize)
+//        view.backgroundColor = .clear
+//
+//        // UIGraphicsImageRenderer의 사용
+//        let renderer = UIGraphicsImageRenderer(size: targetSize)
+//
+//        // 렌더러에서 직접 컨트롤러 뷰를 그려서 스냅샷 찍기
+//        return renderer.image { context in
+//            // MapView가 있는 UIView 계층을 그리도록 한다.
+//            view.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
+//        }
+//    }
+//}
+
+// MARK: 성공 1. 하지만 비율 문제.
 extension View {
-    func snapshot(of frame: CGRect? = nil) -> UIImage {
+    func snapshot() -> UIImage {
         let controller = UIHostingController(rootView: self)
         let view = controller.view!
-        let targetSize = controller.view.intrinsicContentSize
-        view.bounds = CGRect(origin: .zero, size: targetSize)
-        view.backgroundColor = .clear
-
-        // UIGraphicsImageRenderer의 사용
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
-
-        // 렌더러에서 직접 컨트롤러 뷰를 그려서 스냅샷 찍기
+        
+        // 뷰의 레이아웃 크기 설정
+        view.frame = UIScreen.main.bounds
+        view.bounds = UIScreen.main.bounds
+        
+        // 뷰의 스케일 설정
+        view.contentScaleFactor = UIScreen.main.scale
+        
+        // 렌더러 초기화
+        let renderer = UIGraphicsImageRenderer(bounds: view.bounds)
+        
+        // 이미지 렌더링
         return renderer.image { context in
-            // MapView가 있는 UIView 계층을 그리도록 한다.
-            view.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
+            // 뷰의 계층 구조를 그리기
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         }
     }
 }
 
+// MARK: 성공 2. 하지만 비율 문제.
 //extension View {
-//    // 특정 뷰만 캡처하는 메서드
+//    func snapshot(scale: CGFloat = UIScreen.main.scale) -> UIImage {
+//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+//        let rootViewController = window?.rootViewController
+//        
+//        // 현재 뷰를 포함하는 호스팅 컨트롤러 생성
+//        let hostingController = UIHostingController(rootView: self)
+//        hostingController.view.frame = rootViewController?.view.bounds ?? .zero
+//        
+//        // 뷰 계층에 추가
+//        rootViewController?.view.addSubview(hostingController.view)
+//        
+//        // 렌더러 생성
+//        let renderer = UIGraphicsImageRenderer(bounds: hostingController.view.bounds)
+//        
+//        // 이미지 캡처
+//        let image = renderer.image { context in
+//            hostingController.view.drawHierarchy(in: hostingController.view.bounds, afterScreenUpdates: true)
+//        }
+//        
+//        // 임시로 추가한 뷰 제거
+//        hostingController.view.removeFromSuperview()
+//        
+//        return image
+//    }
+//}
+
+// MARK: 실패 1. 기존 코드와 같은 현상. 비율은 같으나 heatmapShareCard의 비율이 핸드폰 화면과 맞지 않아 잘리는 듯.
+//extension View {
 //    func snapshot() -> UIImage {
 //        let controller = UIHostingController(rootView: self)
-//        let view = controller.view
 //        
-//        // 뷰 설정
-//        view?.backgroundColor = .clear
+//        // 뷰의 고유 크기를 정확히 계산
+//        let targetSize = controller.view.intrinsicContentSize
 //        
-//        // 레이아웃 처리를 위해 사이즈 계산
-//        view?.frame = CGRect(origin: .zero, size: controller.sizeThatFits(in: UIScreen.main.bounds.size))
+//        // 컨트롤러의 뷰 크기를 정확히 설정
+//        controller.view.frame = CGRect(origin: .zero, size: targetSize)
+//        controller.view.bounds = CGRect(origin: .zero, size: targetSize)
 //        
-//        // 레이아웃 업데이트
-//        view?.layoutIfNeeded()
-//        
-//        // 실제 크기 확인
-//        let targetSize = view?.bounds.size ?? .zero
-//        
-//        // 렌더러 생성 및 이미지 반환
+//        // 렌더러 생성 - 정확한 크기로
 //        let renderer = UIGraphicsImageRenderer(size: targetSize)
-//        return renderer.image { _ in
-//            view?.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
+//        
+//        // 이미지 렌더링
+//        return renderer.image { context in
+//            controller.view.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
 //        }
 //    }
 //}
+// MARK: 실패 2. 기존 코드와 같은 현상. 비율은 같으나 heatmapShareCard의 비율이 핸드폰 화면과 맞지 않아 잘리는 듯.
+
+//extension View {
+//    func snapshot(fixedWidth: CGFloat? = nil) -> UIImage {
+//        let controller = UIHostingController(rootView: self)
+//        
+//        // 사이즈 계산 로직 개선
+//        var targetSize: CGSize
+//        
+//        if let width = fixedWidth {
+//            // 고정 너비가 주어진 경우
+//            targetSize = controller.view.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
+//        } else {
+//            // 기본적으로 뷰의 고유 크기 사용
+//            targetSize = controller.view.intrinsicContentSize
+//        }
+//        
+//        // 렌더러 생성
+//        let renderer = UIGraphicsImageRenderer(size: targetSize)
+//        
+//        // 컨트롤러 뷰 설정
+//        controller.view.frame = CGRect(origin: .zero, size: targetSize)
+//        controller.view.bounds = CGRect(origin: .zero, size: targetSize)
+//        
+//        // 이미지 렌더링
+//        return renderer.image { context in
+//            controller.view.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
+//        }
+//    }
+//}
+
+
+// MARK: 택도 없음
+//extension View {
+//    func snapshotWithGeometry() -> UIImage? {
+//        // GeometryReader를 통해 실제 뷰 크기 캡처
+//        let view = GeometryReader { geometry in
+//            self
+//                .frame(width: geometry.size.width, height: geometry.size.height)
+//        }
+//        
+//        let controller = UIHostingController(rootView: view)
+//        
+//        // 뷰의 정확한 크기 계산
+//        controller.view.sizeToFit()
+//        
+//        let targetSize = controller.view.intrinsicContentSize
+//        
+//        // 렌더러 생성
+//        let renderer = UIGraphicsImageRenderer(size: targetSize)
+//        
+//        // 이미지 렌더링
+//        return renderer.image { context in
+//            controller.view.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
+//        }
+//    }
+//}
+
+// MARK: 여기도 비율 문제로 실패.
+//extension View {
+//    func preciseSnapshot(width: CGFloat? = nil) -> UIImage? {
+//        let controller = UIHostingController(rootView: self)
+//        
+//        // 특정 너비 또는 고유 크기 사용
+//        let targetWidth = width ?? UIScreen.main.bounds.width
+//        let targetSize = controller.view.sizeThatFits(CGSize(width: targetWidth, height: .greatestFiniteMagnitude))
+//        
+//        controller.view.frame = CGRect(origin: .zero, size: targetSize)
+//        
+//        let renderer = UIGraphicsImageRenderer(size: targetSize)
+//        
+//        return renderer.image { context in
+//            controller.view.drawHierarchy(in: CGRect(origin: .zero, size: targetSize), afterScreenUpdates: true)
+//        }
+//    }
+//}
+
 
 #Preview {
     @Previewable
