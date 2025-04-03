@@ -61,11 +61,13 @@ struct MatchDetailView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showShareView.toggle()
-                    } label: {
-                        Image(systemName: "square.and.arrow.up")
-                            .foregroundStyle(.brightmint)
+                    if workout != nil {
+                        Button {
+                            showShareView.toggle()
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                                .foregroundStyle(.brightmint)
+                        }
                     }
                 }
             }
