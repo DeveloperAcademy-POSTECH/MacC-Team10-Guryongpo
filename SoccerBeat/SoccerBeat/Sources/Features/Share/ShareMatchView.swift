@@ -49,7 +49,7 @@ struct ShareMatchView: View {
 
             // info button
             HStack {
-                InformationButton(message: "지도를 움직여 공유할 위치를 선택하세요!")
+                InformationButton(message: "이번 경기의 최고의 퍼포먼스를 친구들에게 자랑하세요!")
                 Spacer()
             }
             .padding(.leading, 39)
