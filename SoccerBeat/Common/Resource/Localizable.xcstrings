@@ -4626,6 +4626,9 @@
         }
       }
     },
+    "처리 중..." : {
+
+    },
     "최고 속도" : {
       "comment" : "최고 속도",
       "extractionState" : "manual",
