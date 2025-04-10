@@ -167,17 +167,17 @@ struct DistanceChart: View {
         }
 
         // for test
-
-        //        return stride(from: 0, to: 200, by: 1).compactMap {
-        //            let startDay: Date = date(year: 2024, month: 6, day: 17)
-        //            let day: Date = Calendar.current.date(byAdding: .day, value: $0, to: startDay)!
-        //            let distance = Double.random(in: 1...10)
-        //            return (
-        //                day: day,
-        //                distance: distance
-        //            )
-        //        }
-
+        /**
+         return stride(from: 0, to: 200, by: 1).compactMap {
+         let startDay: Date = date(year: 2024, month: 6, day: 17)
+         let day: Date = Calendar.current.date(byAdding: .day, value: $0, to: startDay)!
+         let distance = Double.random(in: 1...10)
+         return (
+         day: day,
+         distance: distance
+         )
+         }
+         */
     }
 
     var body: some View {
