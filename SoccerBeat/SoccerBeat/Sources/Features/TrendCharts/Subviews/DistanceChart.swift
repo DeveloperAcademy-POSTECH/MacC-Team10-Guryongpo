@@ -187,6 +187,7 @@ struct DistanceChart: View {
                         x: .value("Day", $0.day, unit: .day),
                         y: .value("Distance", $0.distance)
                     )
+                    .foregroundStyle(.distanceMax)
                     .cornerRadius(300, style: .continuous)
                 }
 
@@ -194,7 +195,7 @@ struct DistanceChart: View {
                     RuleMark(
                         x: .value("Selected", selectedDate, unit: .day)
                     )
-                    .foregroundStyle(Color.gray.opacity(0.3))
+                    .foregroundStyle(.clear)
                     .offset(yStart: -10)
                     .annotation(position: .top,
                                overflowResolution: .init(
