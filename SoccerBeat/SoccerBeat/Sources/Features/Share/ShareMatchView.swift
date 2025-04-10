@@ -277,7 +277,7 @@ struct ShareMatchView: View {
 
                     verticalDivider()
                     dashboardComponent(
-                        section: "최고속도",
+                        section: "최고 속도",
                         value: workout.velocity.rounded(at: 1),
                         unit: " KM/H"
                     )
