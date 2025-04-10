@@ -61,7 +61,7 @@ struct MatchDetailView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    if workout != nil {
+                    if let workout = workout, !workout.error {
                         Button {
                             showShareView.toggle()
                         } label: {
