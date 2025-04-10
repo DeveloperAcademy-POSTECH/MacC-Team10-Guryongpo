@@ -4319,29 +4319,6 @@
         }
       }
     },
-    "이번 경기의 최고의 퍼포먼스를 친구들에게 자랑하세요!" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show off the best performance of this match to your friends!"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¡Presume la mejor actuación de este partido a tus amigos!"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "向朋友们炫耀本场比赛的最佳表现！"
-          }
-        }
-      }
-    },
     "일" : {
       "comment" : "날짜 단위 (2nd, 17th,_",
       "extractionState" : "manual",
@@ -4627,7 +4604,26 @@
       }
     },
     "처리 중..." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Processing…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Procesando…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "处理中…"
+          }
+        }
+      }
     },
     "최고 속도" : {
       "comment" : "최고 속도",
@@ -4805,6 +4801,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最高速度\n超过25km/h"
+          }
+        }
+      }
+    },
+    "최고의 퍼포먼스를 자랑하세요!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show off your best performance!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Presume tu mejor rendimiento!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "展示你的最佳表现！"
           }
         }
       }

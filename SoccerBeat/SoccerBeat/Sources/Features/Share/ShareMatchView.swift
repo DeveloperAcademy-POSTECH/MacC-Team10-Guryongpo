@@ -62,7 +62,7 @@ struct ShareMatchView: View {
 
             // info button
             HStack {
-                InformationButton(message: "이번 경기의 최고의 퍼포먼스를 친구들에게 자랑하세요!")
+                InformationButton(message: "최고의 퍼포먼스를 자랑하세요!")
                 Spacer()
             }
             .padding(.leading, 39)
@@ -194,7 +194,7 @@ struct ShareMatchView: View {
         unit: String
     ) -> some View {
         VStack(alignment: .leading) {
-            Text(section)
+            Text(LocalizedStringKey(section))
                 .font(.notoSans(size: 12))
             Text(value)
                 .font(.sfCompactText(size: 18, weight: .semiboldItalic))
@@ -261,7 +261,7 @@ struct ShareMatchView: View {
                 HStack {
                     verticalDivider()
                     dashboardComponent(
-                        section: "뛴거리",
+                        section: "뛴 거리",
                         value: workout.distance.rounded(at: 1),
                         unit: " KM"
                     )
