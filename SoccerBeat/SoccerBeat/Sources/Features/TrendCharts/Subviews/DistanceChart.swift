@@ -34,56 +34,56 @@ struct DistanceChartView: View {
     }
 
     var body: some View {
-        Image("BackgroundPattern")
-            .resizable()
-            .scaledToFill()
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-            .clipped()
-            .opacity(0.5)
-            .overlay {
-                let fastest = maximum(of: workouts)
-                let slowest = minimum(of: workouts)
-                
-                return VStack(alignment: .center) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Spacer()
-                                .frame(height: 60)
-                            InformationButton(message: "최근 뛴 거리의 변화입니다.")
-                            
-                            Text("뛴 거리")
-                                .font(.navigationSportySubTitle)
-                                .foregroundStyle(.navigationSportyHead)
-                            Text("The trends of")
-                            Text("Distance")
-                                .foregroundStyle(.navigationSportyDistanceTitle)
-                                .highlighter(activity: .distance, isDefault: false)
-                        }
-                        .font(.navigationSportyTitle)
-                        
-                        Spacer()
-                    }
 
-                    distanceChartView(fastest: fastest, slowest: slowest)
+        let fastest = maximum(of: workouts)
+        let slowest = minimum(of: workouts)
 
-                    averageDistanceView
-                        .padding(.top, 30)
-                    
-                    Spacer()
+        return VStack(alignment: .center) {
+            HStack {
+                VStack(alignment: .leading) {
+                    //                    Spacer()
+                    //                        .frame(height: 60)
+                    InformationButton(message: "최근 뛴 거리의 변화입니다.")
+
+                    Text("뛴 거리")
+                        .font(.navigationSportySubTitle)
+                        .foregroundStyle(.navigationSportyHead)
+                    Text("The trends of")
+                    Text("Distance")
+                        .foregroundStyle(.navigationSportyDistanceTitle)
+                        .highlighter(activity: .distance, isDefault: false)
                 }
-                .padding()
+                .font(.navigationSportyTitle)
+
+                Spacer()
             }
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .foregroundStyle(Color.white)
-                    }
+            .padding(.horizontal)
+
+            distanceChartView(fastest: fastest, slowest: slowest)
+
+            averageDistanceView
+                .padding(.top, 30)
+        }
+        .padding(.vertical)
+        .background(
+            Image("BackgroundPattern")
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                .clipped()
+                .opacity(0.5)
+        )
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color.white)
                 }
             }
+        }
     }
 }
 
@@ -132,6 +132,17 @@ struct DistanceChart: View {
         return nil
     }
 
+    var selectedWorkout: WorkoutData? {
+        if let rawSelectedDate {
+            return workouts.first {
+                let startOfDay = startOfDay(for: $0.formattedDate)
+                let endOfDay = endOfDay(for: $0.formattedDate)
+                return (startOfDay...endOfDay).contains(rawSelectedDate)
+            }
+        }
+        return nil
+    }
+
     private var allDaysAndMatchData: [(day: Date, distance: Double)] {
         guard let latestWorkout = workouts.first,
               let oldestWorkout = workouts.last else {
@@ -157,78 +168,82 @@ struct DistanceChart: View {
 
         // for test
 
-//        return stride(from: 0, to: 200, by: 1).compactMap {
-//            let startDay: Date = date(year: 2024, month: 6, day: 17)
-//            let day: Date = Calendar.current.date(byAdding: .day, value: $0, to: startDay)!
-//            let distance = Double.random(in: 1...10)
-//            return (
-//                day: day,
-//                distance: distance
-//            )
-//        }
+        //        return stride(from: 0, to: 200, by: 1).compactMap {
+        //            let startDay: Date = date(year: 2024, month: 6, day: 17)
+        //            let day: Date = Calendar.current.date(byAdding: .day, value: $0, to: startDay)!
+        //            let distance = Double.random(in: 1...10)
+        //            return (
+        //                day: day,
+        //                distance: distance
+        //            )
+        //        }
 
     }
-    
-    var body: some View {
-        Chart {
-            ForEach(allDaysAndMatchData, id: \.day) {
-                BarMark(
-                    x: .value("Day", $0.day, unit: .day),
-                    y: .value("Distance", $0.distance)
-                )
-                .cornerRadius(300, style: .continuous)
-            }
 
-            if let selectedDate {
-                RuleMark(
-                    x: .value("Selected", selectedDate, unit: .day)
-                )
-                .foregroundStyle(Color.gray.opacity(0.3))
-                .offset(yStart: -10)
-                .zIndex(-1)
-                .annotation(
-                    position: .top, spacing: 0,
-                    overflowResolution: .init(
-                        x: .fit(to: .chart),
-                        y: .disabled
+    var body: some View {
+            Chart {
+                ForEach(allDaysAndMatchData, id: \.day) {
+                    BarMark(
+                        x: .value("Day", $0.day, unit: .day),
+                        y: .value("Distance", $0.distance)
                     )
-                ) {
-                    valueSelectionPopover
+                    .cornerRadius(300, style: .continuous)
+                }
+
+                if let selectedDate {
+                    RuleMark(
+                        x: .value("Selected", selectedDate, unit: .day)
+                    )
+                    .foregroundStyle(Color.gray.opacity(0.3))
+                    .offset(yStart: -10)
+                    .annotation(position: .top,
+                               overflowResolution: .init(
+                                   x: .fit(to: .chart),
+                                   y: .fit(to: .chart)
+                               )) { _ in
+                        valueSelectionPopover
+                    }
                 }
             }
-        }
-        .chartScrollableAxes(.horizontal)
-        // 보이는 X 축의 너비: 1 시간 * 24 * 7 => 7일
-        .chartXVisibleDomain(length: 3600 * 24 * Constant.chartVisibleDays)
-        // 한번에 땡기는 스크롤의 양의 크기 => 1주일씩 당기기,
-        .chartScrollTargetBehavior(
-            .valueAligned(
-                matching: .init(hour: 0),
-                majorAlignment: .matching(.init(weekday: 1))))
-        .chartScrollPosition(x: $scrollPosition)
-        // 보여지는 X 축 좌표의 마크 기준: 1일씩 표기하는데 `Weekday`만 표기
-        .chartXAxis {
-            AxisMarks(values: .stride(by: .day, count: 1)) {
-                AxisTick()
-                AxisGridLine()
-                AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
+            .chartScrollableAxes(.horizontal)
+            // 보이는 X 축의 너비: 1 시간 * 24 * 7 => 7일
+            .chartXVisibleDomain(length: 3600 * 24 * Constant.chartVisibleDays)
+            // 한번에 땡기는 스크롤의 양의 크기 => 1주일씩 당기기,
+            .chartScrollTargetBehavior(
+                .valueAligned(
+                    matching: .init(hour: 0),
+                    majorAlignment: .matching(.init(weekday: 1))))
+            .chartScrollPosition(x: $scrollPosition)
+            // 보여지는 X 축 좌표의 마크 기준: 1일씩 표기하는데 `Weekday`만 표기
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: 1)) {
+                    AxisTick()
+                    AxisGridLine()
+                    AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
+                }
             }
-        }
-        .chartYAxis {
-            AxisMarks(position: .leading)
-        }
-        .chartLegend(.hidden)
-        .chartXSelection(value: $rawSelectedDate)
+            .chartYAxis {
+                AxisMarks(position: .trailing)
+            }
+            .chartLegend(.hidden)
+            .chartXSelection(value: $rawSelectedDate)
     }
 
     @ViewBuilder
     var valueSelectionPopover: some View {
-        if let selectedDate {
-            Text(selectedDate.description)
-                .foregroundStyle(.white)
-                .onAppear {
-                    print("Hello world")
-                }
+        if let selectedWorkout {
+            VStack {
+                Text(selectedWorkout.distance, format: .number)
+                Text(selectedWorkout.yearMonthDay)
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+            .background {
+                LightRectangleView(
+                    alpha: 0.2,
+                    color: .seeAllMatch,
+                    radius: 8)
+            }
         } else {
             EmptyView()
         }
@@ -243,7 +258,7 @@ extension DistanceChartView: Analyzable {
         }
         return maximumDistanceWorkout
     }
-    
+
     func minimum(of workouts: [WorkoutData]) -> WorkoutData {
         guard var minimumDistanceWorkout = workouts.first else { return WorkoutData.example }
         for workout in workouts where minimumDistanceWorkout.distance > workout.distance {
@@ -251,7 +266,7 @@ extension DistanceChartView: Analyzable {
         }
         return minimumDistanceWorkout
     }
-    
+
     func average(of workouts: [WorkoutData]) -> Double {
         var distanceSum = 0.0
         var zeroDistanceCounts = 0
@@ -273,67 +288,65 @@ extension DistanceChartView: Analyzable {
 
 // MARK: - UI
 extension DistanceChartView {
-    
-    private func distanceChartView(fastest: WorkoutData, slowest: WorkoutData) -> some View {
-        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
-            .frame(height: 200)
-            .overlay {
-                if !workouts.isEmpty {
-                    VStack {
-                        HStack {
-                            Text("\(scrollPositionString) - \(scrollPositionEndString)")
-                                .font(.durationStyle)
-                                .foregroundStyle(.durationStyle)
-                            
-                            HStack {
-                                Spacer()
-                                Text("단위: km")
-                            }
-                            .font(.durationStyle)
-                            .foregroundStyle(.defaultDayStyle)
-                        }
-                        .opacity(rawSelectedDate == nil ? 1.0 : 0.0)
 
-                        Spacer(minLength: 16)
-                        
-                        DistanceChart(
-                            workouts: workouts,
-                            fastestWorkout: fastest,
-                            slowestWorkout: slowest,
-                            averageDistance: average(of: workouts),
-                            scrollPosition: $scrollPositionStart,
-                            rawSelectedDate: $rawSelectedDate
-                        )
-                        .padding(.horizontal)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 24)
-                }  else {
-                    ZStack {
-                        Image("MyCardBack")
-                            .resizable()
-                            .frame(width: 107, height: 140)
-                            .opacity(0.3)
-                        VStack {
-                            Text("저장된 경기 기록이 없습니다.")
-                                .font(.matchRecapEmptyDataTop)
-                            Group {
-                                Text("애플워치를 차고 사커비트로")
-                                Text("당신의 첫 번째 경기를 기록해 보세요!")
-                            }
-                            .font(.matchRecapEmptyDataBottom)
-                            .foregroundStyle(.mainSubTitleColor)
+    private func distanceChartView(fastest: WorkoutData, slowest: WorkoutData) -> some View {
+        if !workouts.isEmpty {
+            return List {
+                VStack {
+                    HStack {
+                        Text("\(scrollPositionString) - \(scrollPositionEndString)")
+                            .font(.durationStyle)
+                            .foregroundStyle(.durationStyle)
+
+                        HStack {
+                            Spacer()
+                            Text("단위: km")
                         }
+                        .font(.durationStyle)
+                        .foregroundStyle(.defaultDayStyle)
                     }
-                    Spacer()
+                    .opacity(rawSelectedDate == nil ? 1.0 : 0.0)
+                    .padding(.horizontal)
+
+                    Spacer(minLength: 16)
+
+                    DistanceChart(
+                        workouts: workouts,
+                        fastestWorkout: fastest,
+                        slowestWorkout: slowest,
+                        averageDistance: average(of: workouts),
+                        scrollPosition: $scrollPositionStart,
+                        rawSelectedDate: $rawSelectedDate
+                    )
+                    .frame(height: 240)
+                }
+
+            }
+
+        } else {
+            return ZStack {
+                Image("MyCardBack")
+                    .resizable()
+                    .frame(width: 107, height: 140)
+                    .opacity(0.3)
+                VStack {
+                    Text("저장된 경기 기록이 없습니다.")
+                        .font(.matchRecapEmptyDataTop)
+                    Group {
+                        Text("애플워치를 차고 사커비트로")
+                        Text("당신의 첫 번째 경기를 기록해 보세요!")
+                    }
+                    .font(.matchRecapEmptyDataBottom)
+                    .foregroundStyle(.mainSubTitleColor)
                 }
             }
+        }
     }
-    
+
     @ViewBuilder
     private var averageDistanceView: some View {
         let player = FileLoader.distance.randomElement()
-        
+
         let distanceMessage = String(
             format: "%@의 평균 활동량은 %@km입니다.".localized(),
             player?.name ?? "Lionel Messi",
@@ -347,7 +360,7 @@ extension DistanceChartView {
                         .multilineTextAlignment(.center)
                         .font(.playerComapareSaying)
                         .foregroundStyle(.playerCompareStyle)
-                    
+
                     Text("최근 경기 평균")
                         .font(.averageText)
                         .foregroundStyle(.averageTextStyle)
