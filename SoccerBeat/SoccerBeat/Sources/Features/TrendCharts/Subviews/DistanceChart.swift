@@ -316,8 +316,6 @@ extension DistanceChartView {
                     }
                     .padding(.horizontal)
 
-                    Spacer(minLength: 16)
-
                     // 차트
                     DistanceChart(
                         workouts: workouts,
