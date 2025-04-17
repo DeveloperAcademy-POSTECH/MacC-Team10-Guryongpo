@@ -41,8 +41,6 @@ struct DistanceChartView: View {
         return VStack(alignment: .center) {
             HStack {
                 VStack(alignment: .leading) {
-                    //                    Spacer()
-                    //                        .frame(height: 60)
                     InformationButton(message: "최근 뛴 거리의 변화입니다.")
 
                     Text("뛴 거리")
@@ -60,9 +58,6 @@ struct DistanceChartView: View {
             .padding(.horizontal)
 
             distanceChartView(fastest: fastest, slowest: slowest)
-
-            averageDistanceView
-                .padding(.top, 30)
         }
         .padding(.vertical)
         .background(
@@ -294,6 +289,19 @@ extension DistanceChartView {
         if !workouts.isEmpty {
             return List {
                 VStack {
+                    // 평균
+                    if !workouts.isEmpty {
+                        HStack {
+                            Text(average(of: workouts).rounded())
+                            + Text(" km")
+
+                            Spacer()
+                        }
+                        .padding([.top, .horizontal])
+                        .padding(.bottom, 4)
+                    }
+
+                    // 시작일 - 종료일
                     HStack {
                         Text("\(scrollPositionString) - \(scrollPositionEndString)")
                             .font(.durationStyle)
@@ -311,6 +319,7 @@ extension DistanceChartView {
 
                     Spacer(minLength: 16)
 
+                    // 차트
                     DistanceChart(
                         workouts: workouts,
                         fastestWorkout: fastest,
@@ -321,7 +330,6 @@ extension DistanceChartView {
                     )
                     .frame(height: 240)
                 }
-
             }
 
         } else {
@@ -342,42 +350,6 @@ extension DistanceChartView {
                 }
             }
         }
-    }
-
-    @ViewBuilder
-    private var averageDistanceView: some View {
-        let player = FileLoader.distance.randomElement()
-
-        let distanceMessage = String(
-            format: "%@의 평균 활동량은 %@km입니다.".localized(),
-            player?.name ?? "Lionel Messi",
-            player?.distancePer90min ?? "7.2"
-        )
-        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
-            .frame(height: 120)
-            .overlay {
-                VStack(spacing: 16) {
-                    Text(distanceMessage)
-                        .multilineTextAlignment(.center)
-                        .font(.playerComapareSaying)
-                        .foregroundStyle(.playerCompareStyle)
-
-                    Text("최근 경기 평균")
-                        .font(.averageText)
-                        .foregroundStyle(.averageTextStyle)
-                    Group {
-                        if !workouts.isEmpty {
-                            Text(average(of: workouts).rounded())
-                            + Text(" km")
-                        } else {
-                            Text("--")
-                            + Text(" km")
-                        }
-                    }
-                    .font(.averageValue)
-                    .foregroundStyle(.navigationSportyDistanceTitle)
-                }
-            }
     }
 }
 
