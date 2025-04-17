@@ -328,8 +328,8 @@ private struct ValueSelectionPopover: View {
                 .font(.sfProText(size: 9, weight: .light))
         }
         .padding(.vertical, 8)
-        .padding(.horizontal, 18)
-        .background(Color(hex: 0x363636))
+        .padding(.horizontal, 8)
+        .background(Color(hex: 0x363636, alpha: 0.8))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
