@@ -335,6 +335,9 @@ private struct ValueSelectionPopover: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color(hex: 0x5B5555), lineWidth: 1)
         )
+        .shadow(
+            color: Color(hex: 0x7F7F7F, alpha: 0.25),
+            radius: 10, x: 2, y: 3)
     }
 }
 
