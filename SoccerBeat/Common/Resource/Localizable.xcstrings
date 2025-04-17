@@ -2580,6 +2580,7 @@
       }
     },
     "단위: km" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4354,6 +4355,9 @@
           }
         }
       }
+    },
+    "이미지 저장하기" : {
+
     },
     "일시 정지" : {
       "comment" : "일시 정지 버튼",
