@@ -19,13 +19,9 @@ struct DistanceChartView: View {
         scrollPositionStart.addingTimeInterval(3600 * 24 * Constant.chartVisibleDays)
     }
 
-    var scrollPositionString: String {
-        scrollPositionStart.formatted(.dateTime.year().month().day())
-    }
+    var scrollPositionString: String { formatter.string(from: scrollPositionStart) }
 
-    var scrollPositionEndString: String {
-        scrollPositionEnd.formatted(.dateTime.month().day())
-    }
+    var scrollPositionEndString: String { formatter.string(from: scrollPositionEnd) }
 
     init(workouts: [WorkoutData]) {
         self.workouts = workouts
@@ -289,24 +285,28 @@ extension DistanceChartView {
         if !workouts.isEmpty {
             return List {
                 VStack {
-                    // 평균
-                    if !workouts.isEmpty {
-                        HStack {
-                            Text(average(of: workouts).rounded())
-                            + Text(" km")
+                    VStack(alignment: .leading, spacing: 5) {
+                        // 평균
+                        if !workouts.isEmpty {
+                            HStack {
+                                Text("평균 ")
+                                    .font(.sfProText(size: 14, weight: .light))
+                                + Text(average(of: workouts).rounded())
+                                    .font(.sfProText(size: 24, weight: .semiboldItalic))
+                                + Text(" km")
+                                    .font(.sfProText(size: 16, weight: .regularItalic))
 
-                            Spacer()
+                                Spacer()
+                            }
+
                         }
-                        .padding([.top, .horizontal])
-                        .padding(.bottom, 4)
-                    }
 
-                    // 시작일 - 종료일
-                    Text("\(scrollPositionString) - \(scrollPositionEndString)")
-                        .font(.durationStyle)
-                        .foregroundStyle(.durationStyle)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading)
+                        // 시작일 - 종료일
+                        Text("\(scrollPositionString) - \(scrollPositionEndString)")
+                            .font(.sfProText(size: 10, weight: .light))
+                    }
+                    .foregroundStyle(Color(hex: 0xD4D4D4))
+                    .padding([.leading, .top], 20)
 
                     // 차트
                     DistanceChart(
@@ -318,6 +318,7 @@ extension DistanceChartView {
                         rawSelectedDate: $rawSelectedDate
                     )
                     .frame(height: 240)
+                    .padding(.top, 12)
                 }
                 .padding()
                 .background(
@@ -354,3 +355,11 @@ extension DistanceChartView {
         DistanceChartView(workouts: WorkoutData.exampleWorkouts)
     }
 }
+
+private let formatter: DateFormatter = {
+    let result = DateFormatter()
+    result.locale = Locale(identifier: "ko_KR")
+    result.dateFormat = "yyyy.M.d"
+    return result
+}()
+
