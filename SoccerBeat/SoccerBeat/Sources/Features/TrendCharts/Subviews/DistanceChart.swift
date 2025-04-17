@@ -238,7 +238,7 @@ struct DistanceChart: View {
         let dates = generateDateRange(from: start, to: end)
         let dict = workouts.reduce(into: [Date: Double]()) { dict, workout in
             let normalizedDate = calendar.startOfDay(for: workout.formattedDate)
-            dict[normalizedDate] = workout.distance
+            dict[normalizedDate, default: 0.0] += workout.distance
         }
 
         return dates.map { ($0, dict[$0] ?? 0.0) }
@@ -252,13 +252,13 @@ struct DistanceChart: View {
         calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)!
     }
 
-    private var selectedWorkout: WorkoutData? {
+    private var selectedDate: Date? {
         guard let selected = rawSelectedDate else { return nil }
         return workouts.first {
             let start = startOfDay($0.formattedDate)
             let end = endOfDay($0.formattedDate)
             return (start...end).contains(selected)
-        }
+        }?.formattedDate
     }
 
     var body: some View {
@@ -271,14 +271,20 @@ struct DistanceChart: View {
                 .foregroundStyle(.distanceMax)
                 .cornerRadius(300, style: .continuous)
             }
-            if let selected = selectedWorkout {
+            if let selectedDate {
                 RuleMark(
-                    x: .value("Selected", selected.formattedDate, unit: .day)
+                    x: .value("Selected", selectedDate, unit: .day)
                 )
                 .foregroundStyle(.clear)
                 .offset(yStart: -10)
                 .annotation(position: .top, overflowResolution: .init(x: .fit(to: .chart), y: .fit(to: .chart))) { _ in
-                    ValueSelectionPopover(selectedWorkout: selected)
+                    if let distance = allDaysAndMatchData.first { tuple in
+                        tuple.day == calendar.startOfDay(for: selectedDate)
+                    }?.distance {
+                        ValueSelectionPopover(
+                            distance: distance,
+                            selectedDate: selectedDate)
+                    }
                 }
             }
         }
@@ -309,15 +315,16 @@ struct DistanceChart: View {
 // MARK: - Value Selection Popover
 
 private struct ValueSelectionPopover: View {
-    let selectedWorkout: WorkoutData
+    let distance: Double
+    let selectedDate: Date
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(selectedWorkout.distance, format: .number)
+            Text(distance, format: .number)
                 .font(.sfProText(size: 16, weight: .semiboldItalic))
             + Text(" km")
                 .font(.sfProText(size: 14, weight: .regularItalic))
-            Text(selectedWorkout.yearMonthDay)
+            Text(dateFormatter.string(from: selectedDate))
                 .font(.sfProText(size: 9, weight: .light))
         }
         .padding(.vertical, 8)
