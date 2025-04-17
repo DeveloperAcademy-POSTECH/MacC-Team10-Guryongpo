@@ -319,8 +319,15 @@ extension DistanceChartView {
                     )
                     .frame(height: 240)
                 }
+                .padding()
+                .background(
+                    LightRectangleView(
+                        alpha: 0.6,
+                        color: .black,
+                        radius: 15))
             }
-
+            .listStyle(.plain)
+            .scrollDisabled(true)
         } else {
             return ZStack {
                 Image("MyCardBack")
