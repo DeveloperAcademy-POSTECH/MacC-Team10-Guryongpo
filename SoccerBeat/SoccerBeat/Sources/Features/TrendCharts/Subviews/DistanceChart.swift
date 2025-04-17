@@ -224,18 +224,25 @@ struct DistanceChart: View {
     @ViewBuilder
     var valueSelectionPopover: some View {
         if let selectedWorkout {
-            VStack {
+            VStack(alignment: .leading) {
                 Text(selectedWorkout.distance, format: .number)
+                    .font(.sfProText(size: 16, weight: .semiboldItalic))
+                + Text(" km")
+                    .font(.sfProText(size: 14, weight: .regularItalic))
+
                 Text(selectedWorkout.yearMonthDay)
+                    .font(.sfProText(size: 9, weight: .light))
             }
-            .padding(.horizontal)
             .padding(.vertical, 8)
-            .background {
-                LightRectangleView(
-                    alpha: 0.2,
-                    color: .seeAllMatch,
-                    radius: 8)
-            }
+            .padding(.horizontal, 18)
+            .background(Color(hex: 0x363636))
+            .clipShape(
+                RoundedRectangle(cornerRadius: 8)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color(hex: 0x5B5555), lineWidth: 1)
+            )
         } else {
             EmptyView()
         }
