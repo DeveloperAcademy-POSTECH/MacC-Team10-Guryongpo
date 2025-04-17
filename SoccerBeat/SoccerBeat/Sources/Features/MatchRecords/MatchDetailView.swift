@@ -12,7 +12,6 @@ import CoreLocation
 struct MatchDetailView: View {
     @Environment(\.dismiss) private var dismiss
     var workout: WorkoutData?
-    @State private var showShareView = false
 
     var body: some View {
         ZStack {
@@ -22,31 +21,16 @@ struct MatchDetailView: View {
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 .clipped()
                 .opacity(0.5)
-            ScrollView(showsIndicators: false) {
-                ZStack {
-                    VStack {
-                        Spacer()
-                            .frame(height: 60)
-                        FieldMovementView(workout: workout)
-                        
-                        MatchTimeView(workout: workout)
-                        Spacer()
-                            .frame(height: 48)
-                        ErrorView(workout: workout)
-                        PlayerAbilityView(workout: workout)
-                            .zIndex(-1)
-                        Spacer()
-                            .frame(height: 100)
-                        FieldRecordView(workout: workout)
-                        Spacer()
-                            .frame(height: 100)
-                    }
-                    .padding()
-                }
+            TabView {
                 
-                Spacer()
-                    .frame(height: 80)
+                FieldChartView(workout: workout)
+                
+                FieldMovementView(workout: workout)
+            
+                FieldRecordView(workout: workout)
+
             }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -56,21 +40,8 @@ struct MatchDetailView: View {
                         Image(systemName: "chevron.backward")
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showShareView.toggle()
-                    } label: {
-                        Image(systemName: "square.and.arrow.up")
-                            .foregroundStyle(.brightmint)
-                    }
-                }
             }
             .foregroundStyle(Color.white)
-            .sheet(isPresented: $showShareView) {
-                ShareMatchView(matchData: workout ?? .example)
-            }
-
-            .scrollIndicators(.hidden)
         }
     }
 }
@@ -97,7 +68,9 @@ struct ErrorView: View {
                 }
                 .font(.fieldRecordTitle)
                 .foregroundStyle(.mainSubTitleColor)
-                .padding(32)
+                .fixedSize()
+                .frame(width: 304, height: 290)
+                .padding(36)
             }
         } else {
             EmptyView()
@@ -110,12 +83,7 @@ struct MatchTimeView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                InformationButton(message: "경기의 상세 리포트를 만나보세요.")
-                Spacer()
-            }
-            .zIndex(1)
-            
+
             VStack(alignment: .leading, spacing: -8) {
                 HStack(spacing: 0) {
                     Text("경기 시간")
@@ -130,7 +98,6 @@ struct MatchTimeView: View {
             }
             .font(.matchDetailTitle)
         }
-        Spacer()
     }
 }
 
@@ -139,30 +106,10 @@ struct PlayerAbilityView: View {
     var workout: WorkoutData?
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
                     
-                    Spacer()
-                        .frame(minHeight: 30)
-                    
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack(spacing: 0) {
-                            Text("빨간색")
-                                .bold()
-                                .foregroundStyle(.matchDetailViewTitleColor)
-                            Text("은 경기의 평균 능력치입니다.")
-                        }
-                        .floatingCapsuleStyle()
-                        
-                        HStack(spacing: 0) {
-                            Text("민트색")
-                                .bold()
-                                .foregroundStyle(.matchDetailViewAverageStatColor)
-                            Text("은 이번 경기의 능력치입니다.")
-                        }
-                        .floatingCapsuleStyle()
-                    }
                     HStack {
                         Spacer()
                         if let workout = workout {
@@ -173,7 +120,7 @@ struct PlayerAbilityView: View {
                                 .scaleEffect(CGSize(width: 0.9, height: 0.9))
                                 .padding()
                                 .fixedSize()
-                                .frame(width: 304, height: 348)
+                                .frame(width: 304, height: 290)
                                 .zIndex(-1)
                         } else {
                             let blankRecent = DataConverter.toLevels(WorkoutData.blankExample)
@@ -183,7 +130,7 @@ struct PlayerAbilityView: View {
                                 .scaleEffect(CGSize(width: 0.9, height: 0.9))
                                 .padding()
                                 .fixedSize()
-                                .frame(width: 304, height: 348)
+                                .frame(width: 304, height: 290)
                                 .zIndex(-1)
                             
                         }
@@ -191,6 +138,23 @@ struct PlayerAbilityView: View {
                     }
                 }
                 Spacer()
+            }
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 0) {
+                    Text("빨간색")
+                        .bold()
+                        .foregroundStyle(.matchDetailViewTitleColor)
+                    Text("은 경기의 평균 능력치입니다.")
+                }
+                .floatingCapsuleStyle()
+                
+                HStack(spacing: 0) {
+                    Text("민트색")
+                        .bold()
+                        .foregroundStyle(.matchDetailViewAverageStatColor)
+                    Text("은 이번 경기의 능력치입니다.")
+                }
+                .floatingCapsuleStyle()
             }
         }
     }
@@ -205,6 +169,7 @@ struct FieldRecordView: View {
                 InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
                 Spacer()
             }
+            
             HStack {
                 VStack(alignment: .leading) {
                     Spacer()
@@ -215,55 +180,85 @@ struct FieldRecordView: View {
                 }
                 Spacer()
             }
+            .offset(y: -22)
+            
             Spacer()
-                .frame(minHeight: 30)
-            HStack {
-                if let workout = workout {
-                    if !workout.error {
-                        ForEach(workout.matchBadge.indices, id: \.self) { index in
-                            if let badgeName = BadgeImageDictionary[index][workout.matchBadge[index]] {
-                                if badgeName.isEmpty {
-                                    EmptyView()
-                                } else {
-                                    Image(badgeName)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 74, height: 82)
+                .frame(height: 35)
+            
+            ZStack {
+                LightRectangleView(alpha: 0.4, color: .black, radius: 15)
+                VStack {
+                    HStack {
+                        VStack(alignment: .center) {
+                            VStack(alignment: .center, spacing: -8) {
+                                Text("Today's Badge")
+                            }
+                            .font(.matchDetailTitle)
+                            .scaleEffect(0.8)
+                            .opacity(0.5)
+                        }
+                    }
+                    .padding(.top)
+                    
+                    HStack {
+                        if let workout = workout {
+                            if !workout.error {
+                                ForEach(workout.matchBadge.indices, id: \.self) { index in
+                                    if let badgeName = BadgeImageDictionary[index][workout.matchBadge[index]] {
+                                        if badgeName.isEmpty {
+                                            Image(.errormark)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 64, height: 72)
+                                                .padding()
+                                                .padding(.bottom, 10)
+                                                .opacity(0.7)
+                                            
+                                        } else {
+                                            Image(badgeName)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 74, height: 82)
+                                                .padding()
+                                        }
+                                    } else {
+                                        Image(.errormark)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 64, height: 72)
+                                            .padding()
+                                            .padding(.bottom, 10)
+                                            .opacity(0.7)
+                                    }
                                 }
                             } else {
-                                EmptyView()
+                                Image(.errormark)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 64, height: 72)
+                                    .padding()
+                                    .padding(.bottom, 10)
+                                    .opacity(0.7)
                             }
+                        } else {
+                            Image(.errormark)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 64, height: 72)
+                                .padding()
+                                .padding(.bottom, 10)
+                                .opacity(0.7)
                         }
-                    } else {
-                        EmptyView()
                     }
-                } else {
-                    EmptyView()
                 }
             }
+            
             FieldRecordDataView(workout: workout)
             
             Spacer()
                 .frame(minHeight: 30)
             
-            if let rates = workout?.heartRates {
-                if !rates.isEmpty {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Spacer()
-                            VStack(alignment: .leading, spacing: -8) {
-                                Text("Heartbeat")
-                            }
-                            .font(.matchDetailTitle)
-                        }
-                        Spacer()
-                    }
-                    
-                    HeartRatesView(rates: rates)
-                        .frame(height: 200)
-                        .padding(.vertical)
-                }
-            }
+            Spacer()
         }
     }
 }
@@ -272,9 +267,11 @@ struct FieldMovementView: View {
     var workout: WorkoutData?
     @State var isInfoOpen: Bool = false
     @State private var slider = 0.0
+    @State private var showShareView = false
     @State private var mapType = 0
     private let emptyDataRoute: [CLLocationCoordinate2D] = []
     private let emptyDataCenter: [Double] = [0, 0]
+    
     var body: some View {
         VStack {
             HStack {
@@ -285,8 +282,26 @@ struct FieldMovementView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("Field Movement")
-                            .font(.matchDetailTitle)
+                        
+                        HStack(alignment: .bottom) {
+                            Text("Field Movement")
+                                .font(.matchDetailTitle)
+                         Spacer()
+                            
+                            Button {
+                                showShareView.toggle()
+                                } label: {
+                                Image(systemName: "square.and.arrow.up")
+                                    .foregroundStyle(.brightmint)
+                                }
+                                .font(.system(size: 18))
+                                .padding(.horizontal)
+                                .padding(.bottom)
+                                .sheet(isPresented: $showShareView) {
+                                    ShareMatchView(matchData: workout ?? .example)
+                                }
+                                .offset(y: 4)
+                        }
                     }
                 }
             }
@@ -336,10 +351,8 @@ struct FieldMovementView: View {
                         .cornerRadius(15.0)
                 }
             }
+                Spacer()
         }
-        
-        Spacer()
-            .frame(height: 60)
     }
 }
 
@@ -396,23 +409,7 @@ struct FieldRecordDataView: View {
                                 .font(.fieldRecordUnit)
                         }
                     }
-                    
-                    //                    if workout?.calories != 0 {
-                    //                        VStack(alignment: .leading) {
-                    //                            Text("칼로리")
-                    //                                .font(.fieldRecordTitle)
-                    //                            HStack(alignment: .bottom, spacing: 0) {
-                    //                                if let workout = workout {
-                    //                                    Text(workout.error ? "--" : workout.calories.formatted())
-                    //                                        .font(.fieldRecordMeasure)
-                    //                                } else {
-                    //                                    Text("--")
-                    //                                }
-                    //                                Text(" kcal")
-                    //                                    .font(.fieldRecordUnit)
-                    //                            }
-                    //                        }
-                    //                    }
+
                 }
                 
                 VStack(alignment: .leading, spacing: 24) {
@@ -459,22 +456,7 @@ struct FieldRecordDataView: View {
                                 .font(.fieldRecordUnit)
                         }
                     }
-                    //                    if workout?.calories != 0 {
-                    //                        VStack(alignment: .leading) {
-                    //                            Text("최대 산소 섭취량")
-                    //                                .font(.fieldRecordTitle)
-                    //                            HStack(alignment: .bottom, spacing: 0) {
-                    //                                if let workout = workout {
-                    //                                    Text(workout.error ? "--" : workout.vo2Max.formatted())
-                    //                                        .font(.fieldRecordMeasure)
-                    //                                } else {
-                    //                                    Text("--")
-                    //                                }
-                    //                                Text(" ml/kg/min")
-                    //                                    .font(.fieldRecordUnit)
-                    //                            }
-                    //                        }
-                    //                    }
+
                 }
             }
             .padding(.vertical, 56)
@@ -484,13 +466,68 @@ struct FieldRecordDataView: View {
     }
 }
 
-
-
 #Preview {
     @StateObject var workoutManager = WorkoutManager.shared
     return NavigationView {
         MatchDetailView(workout: WorkoutData.example)
             .environmentObject(ProfileModel(workoutManager: workoutManager))
             .environmentObject(workoutManager)
+    }
+}
+
+struct FieldChartView: View {
+    var workout: WorkoutData?
+    
+    var body: some View {
+        VStack {
+            HStack {
+                InformationButton(message: "경기의 상세 리포트를 만나보세요.")
+                Spacer()
+            }
+            
+            HStack(alignment: .center) {
+                VStack(alignment: .leading) {
+                    Spacer()
+                    VStack(alignment: .leading, spacing: -8) {
+                        Text("Field Chart")
+                    }
+                    .font(.matchDetailTitle)
+                }
+                Spacer()
+            }
+            .offset(y: -16)
+            
+            //                    MatchTimeView(workout: workout)
+            
+            if let error = workout?.error {
+                if error {
+                    ErrorView(workout: workout) }
+                else {
+                    PlayerAbilityView(workout: workout)
+                }
+            }
+            
+            if let rates = workout?.heartRates {
+                if !rates.isEmpty {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                            VStack(alignment: .leading, spacing: -8) {
+                                Text("Heartbeat")
+                                    .opacity(0.6)
+                            }
+                            .font(.matchDetailTitle)
+                        }
+                        Spacer()
+                    }
+                    
+                    HeartRatesView(rates: rates)
+                        .frame(height: 150)
+                        .padding()
+                }
+                
+            }
+            Spacer()
+        }
     }
 }
