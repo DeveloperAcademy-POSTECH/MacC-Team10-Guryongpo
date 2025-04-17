@@ -20,11 +20,11 @@ struct DistanceChartView: View {
     }
 
     var scrollPositionString: String {
-        scrollPositionStart.formatted(.dateTime.month().day())
+        scrollPositionStart.formatted(.dateTime.year().month().day())
     }
 
     var scrollPositionEndString: String {
-        scrollPositionEnd.formatted(.dateTime.month().day().year())
+        scrollPositionEnd.formatted(.dateTime.month().day())
     }
 
     init(workouts: [WorkoutData]) {
