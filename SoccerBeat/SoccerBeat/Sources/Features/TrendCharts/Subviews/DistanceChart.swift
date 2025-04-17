@@ -314,7 +314,6 @@ extension DistanceChartView {
                         .font(.durationStyle)
                         .foregroundStyle(.defaultDayStyle)
                     }
-                    .opacity(rawSelectedDate == nil ? 1.0 : 0.0)
                     .padding(.horizontal)
 
                     Spacer(minLength: 16)
