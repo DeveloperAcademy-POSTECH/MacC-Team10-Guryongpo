@@ -302,19 +302,11 @@ extension DistanceChartView {
                     }
 
                     // 시작일 - 종료일
-                    HStack {
-                        Text("\(scrollPositionString) - \(scrollPositionEndString)")
-                            .font(.durationStyle)
-                            .foregroundStyle(.durationStyle)
-
-                        HStack {
-                            Spacer()
-                            Text("단위: km")
-                        }
+                    Text("\(scrollPositionString) - \(scrollPositionEndString)")
                         .font(.durationStyle)
-                        .foregroundStyle(.defaultDayStyle)
-                    }
-                    .padding(.horizontal)
+                        .foregroundStyle(.durationStyle)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading)
 
                     // 차트
                     DistanceChart(
