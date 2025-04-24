@@ -7,10 +7,26 @@
 
 import SwiftUI
 import PhotosUI
+import MapKit
+import UIKit
+
+class ImageSaver: NSObject {
+    func writeToPhotoAlbum(image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
+    }
+
+    @objc func saveCompleted(
+        _ image: UIImage,
+        didFinishSavingWithError error: Error?,
+        contextInfo: UnsafeRawPointer) {
+        print("Save finished!")
+    }
+}
 
 struct ShareMatchView: View {
     let workout: WorkoutData
     @State private var currentLocation = "--:--"
+    @State private var showImageSavedAlert = false
     @Environment(\.dismiss) var dismiss
     @State private var heatmapImage: UIImage? = nil
     @State private var isProcessing = false // 처리 중 상태 표시 (선택 사항)
@@ -50,14 +66,14 @@ struct ShareMatchView: View {
                 Spacer()
             }
             .padding(.leading, 39)
-            
+
             VStack {
                 Spacer()
                     .frame(height: 16)
                 HStack {
                     Spacer()
                         .frame(width: 39)
-                    
+
                     // heatmap card, shareing image
                     heatmapShareCard
                         .onAppear {
@@ -71,7 +87,7 @@ struct ShareMatchView: View {
                                 }
                             }
                         }
-                    
+
                     Spacer()
                         .frame(width: 39)
                 }
@@ -80,7 +96,7 @@ struct ShareMatchView: View {
             }
 
             Spacer()
-            
+
             // 스토리 공유 버튼
             Button {
                 guard !isProcessing, heatmapImage != nil else { return } // 처리 중이거나 이미지 없으면 비활성화
@@ -145,7 +161,7 @@ struct ShareMatchView: View {
             .disabled(isProcessing || heatmapImage == nil)
             .opacity((isProcessing || heatmapImage == nil) ? 0.5 : 1.0)
             .alert("사진이 저장되었습니다.", isPresented: $showImageSavedAlert) { }
-            
+
             // 로딩 인디케이터
             if isProcessing {
                 Color.black.opacity(0.4)
@@ -193,7 +209,7 @@ struct ShareMatchView: View {
     // 이 화면이 공유되는 오브젝트
     /// 사진, 혹은 인스타에서 활용 가능
     @ViewBuilder
-    private func heatmapShareCard() -> some View {
+    private var heatmapShareCard: some View {
         ZStack {
             Color(hex: 0x141415)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -299,15 +315,15 @@ struct ShareMatchView: View {
             print("❌ Invalid Instagram URL.")
             return
         }
-        
+
         let pasteboardItems = [
             "com.instagram.sharedSticker.backgroundImage": imageData
         ]
-        
+
         // 메인 스레드에서 Pasteboard 업데이트 및 URL 열기
         DispatchQueue.main.async {
             UIPasteboard.general.setItems([pasteboardItems], options: [.expirationDate: Date().addingTimeInterval(300)]) // 만료 시간 설정 권장
-            
+
             if UIApplication.shared.canOpenURL(instagramURL) {
                 UIApplication.shared.open(instagramURL) { success in
                     if !success {
