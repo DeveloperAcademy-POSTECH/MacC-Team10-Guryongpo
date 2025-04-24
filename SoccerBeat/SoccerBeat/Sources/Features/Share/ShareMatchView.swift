@@ -7,26 +7,10 @@
 
 import SwiftUI
 import PhotosUI
-import MapKit
-import UIKit
-
-class ImageSaver: NSObject {
-    func writeToPhotoAlbum(image: UIImage) {
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
-    }
-
-    @objc func saveCompleted(
-        _ image: UIImage,
-        didFinishSavingWithError error: Error?,
-        contextInfo: UnsafeRawPointer) {
-        print("Save finished!")
-    }
-}
 
 struct ShareMatchView: View {
     let workout: WorkoutData
     @State private var currentLocation = "--:--"
-    @State private var showImageSavedAlert = false
     @Environment(\.dismiss) var dismiss
     @State private var heatmapImage: UIImage? = nil
     @State private var isProcessing = false // 처리 중 상태 표시 (선택 사항)
@@ -94,7 +78,7 @@ struct ShareMatchView: View {
                 Spacer()
                     .frame(height: 21)
             }
-            
+
             Spacer()
             
             // 스토리 공유 버튼
@@ -209,7 +193,7 @@ struct ShareMatchView: View {
     // 이 화면이 공유되는 오브젝트
     /// 사진, 혹은 인스타에서 활용 가능
     @ViewBuilder
-    private var heatmapShareCard: some View {
+    private func heatmapShareCard() -> some View {
         ZStack {
             Color(hex: 0x141415)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
