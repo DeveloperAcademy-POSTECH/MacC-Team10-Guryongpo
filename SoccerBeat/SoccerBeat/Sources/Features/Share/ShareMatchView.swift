@@ -87,7 +87,6 @@ struct ShareMatchView: View {
             // store image
             Button {
                 // MARK: - MapView 저장
-                let imageSaver = ImageSaver()
                 /**
                  shootWithMap { image in
                  imageSaver.writeToPhotoAlbum(image: image)
@@ -95,6 +94,7 @@ struct ShareMatchView: View {
                  }
                  */
 
+                let imageSaver = ImageSaver()
                 // MARK: - Screen Shot 저장
                 let inputImage = snapshot()
                 imageSaver.writeToPhotoAlbum(image: inputImage)
