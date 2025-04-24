@@ -2587,6 +2587,7 @@
       }
     },
     "단위: 회" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4228,9 +4229,6 @@
         }
       }
     },
-    "이미지 저장하기" : {
-
-    },
     "일" : {
       "comment" : "날짜 단위 (2nd, 17th,_",
       "extractionState" : "manual",
@@ -4260,6 +4258,9 @@
           }
         }
       }
+    },
+    "이미지 저장하기" : {
+
     },
     "일시 정지" : {
       "comment" : "일시 정지 버튼",
