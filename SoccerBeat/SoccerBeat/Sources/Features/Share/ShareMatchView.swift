@@ -7,26 +7,10 @@
 
 import SwiftUI
 import PhotosUI
-import MapKit
-import UIKit
-
-class ImageSaver: NSObject {
-    func writeToPhotoAlbum(image: UIImage) {
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
-    }
-
-    @objc func saveCompleted(
-        _ image: UIImage,
-        didFinishSavingWithError error: Error?,
-        contextInfo: UnsafeRawPointer) {
-        print("Save finished!")
-    }
-}
 
 struct ShareMatchView: View {
     let matchData: WorkoutData
     @State private var currentLocation = "--:--"
-    @State private var showImageSavedAlert = false
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -54,7 +38,7 @@ struct ShareMatchView: View {
             .padding(.leading, 39)
 
             // heatmap card, shareing image
-            heatmapShareCard
+            heatmapShareCard()
 
             Spacer()
 
@@ -62,7 +46,7 @@ struct ShareMatchView: View {
             // share image
             Button {
                 // share story action
-                openInInstagram()
+
             } label: {
                 ZStack {
                     LightRectangleView(
@@ -86,19 +70,8 @@ struct ShareMatchView: View {
             // 이미지 저장
             // store image
             Button {
-                // MARK: - MapView 저장
-                /**
-                 shootWithMap { image in
-                 imageSaver.writeToPhotoAlbum(image: image)
-                 showImageSavedAlert = true
-                 }
-                 */
+                // store action
 
-                let imageSaver = ImageSaver()
-                // MARK: - Screen Shot 저장
-                let inputImage = snapshot()
-                imageSaver.writeToPhotoAlbum(image: inputImage)
-                showImageSavedAlert = true
             } label: {
                 ZStack {
                     LightRectangleView(
@@ -120,7 +93,6 @@ struct ShareMatchView: View {
                 .padding(.horizontal, 18)
                 .foregroundStyle(.white)
             }
-            .alert("사진이 저장되었습니다.", isPresented: $showImageSavedAlert) { }
         }
     }
 
@@ -153,31 +125,25 @@ struct ShareMatchView: View {
 
         }
         .padding(.leading, 8)
-        .foregroundStyle(.white)
-    }
-
-    @ViewBuilder
-    private var pureHeatMap: HeatmapView {
-        HeatmapView(
-            centerCoordinate: CLLocationCoordinate2D(
-                latitude: matchData.center[0],
-                longitude: matchData.center[1]
-            ),
-            routes: matchData.route
-        )
     }
 
     // 이 화면이 공유되는 오브젝트
     /// 사진, 혹은 인스타에서 활용 가능
     @ViewBuilder
-    private var heatmapShareCard: some View {
+    private func heatmapShareCard() -> some View {
         ZStack {
             Color(hex: 0x141415)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.horizontal, 39)
 
             VStack(spacing: 0) {
-                pureHeatMap
+                HeatmapView(
+                    centerCoordinate: CLLocationCoordinate2D(
+                        latitude: matchData.center[0],
+                        longitude: matchData.center[1]
+                    ),
+                    routes: matchData.route
+                )
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 .frame(height: 275)
@@ -257,75 +223,6 @@ struct ShareMatchView: View {
         }
         .padding(.top, 16)
         .padding(.bottom, 21)
-    }
-
-    private func openInInstagram() {
-        // MARK: - MapView 저장
-        /**
-         shootWithMap { image in
-         guard let imageData = image.pngData() else { return }
-         let instagramAppID = "2438142073191207"
-         let instagramURL = URL(string: "instagram-stories://share?source_application=\(instagramAppID)")!
-         let pasteboardItems = [
-         "com.instagram.sharedSticker.backgroundImage": imageData
-         ]
-
-         UIPasteboard.general.setItems([pasteboardItems])
-
-         if UIApplication.shared.canOpenURL(instagramURL) {
-         UIApplication.shared.open(instagramURL)
-         }
-         }
-        */
-
-        // MARK: - ScreenShot 저장
-        guard let imageData = snapshot().pngData() else { return }
-        let instagramAppID = "2438142073191207"
-        let instagramURL = URL(string: "instagram-stories://share?source_application=\(instagramAppID)")!
-        let pasteboardItems = [
-            "com.instagram.sharedSticker.backgroundImage": imageData
-        ]
-
-        UIPasteboard.general.setItems([pasteboardItems])
-
-        if UIApplication.shared.canOpenURL(instagramURL) {
-            UIApplication.shared.open(instagramURL)
-        }
-    }
-
-    func shootWithMap(completion: @escaping (UIImage) -> Void) {
-        let center = CLLocationCoordinate2D(latitude: matchData.center[0], longitude: matchData.center[1])
-        let options = MKMapSnapshotter.Options()
-        options.size = UIScreen.main.bounds.size
-        options.mapType = .mutedStandard
-        options.showsBuildings = false
-        options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150)
-
-        let snapshotter = MKMapSnapshotter(options: options)
-        snapshotter.start { snapshot, error in
-            guard let snapshot = snapshot?.image else { return }
-            completion(snapshot)
-        }
-    }
-}
-
-extension View {
-    func snapshot() -> UIImage {
-        let controller = UIHostingController(rootView: self.edgesIgnoringSafeArea([.bottom, .top]))
-        let view = controller.view!
-
-        let targetSize = controller.view.intrinsicContentSize
-        view.bounds = CGRect(origin: .zero, size: targetSize)
-        view.backgroundColor = .clear
-
-        // UIGraphicsImageRenderer의 사용
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
-
-        // 렌더러에서 직접 컨트롤러 뷰를 그려서 스냅샷 찍기
-        return renderer.image { context in
-            // MapView가 있는 UIView 계층을 그리도록 한다.
-            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
-        }
     }
 }
 
