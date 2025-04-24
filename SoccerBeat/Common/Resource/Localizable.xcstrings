@@ -1596,6 +1596,9 @@
         }
       }
     },
+    "Speed" : {
+
+    },
     "Sprint" : {
       "localizations" : {
         "en" : {
@@ -2565,6 +2568,7 @@
       }
     },
     "단위: km/h" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
