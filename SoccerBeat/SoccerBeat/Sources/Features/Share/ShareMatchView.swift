@@ -66,14 +66,14 @@ struct ShareMatchView: View {
                 Spacer()
             }
             .padding(.leading, 39)
-            
+
             VStack {
                 Spacer()
                     .frame(height: 16)
                 HStack {
                     Spacer()
                         .frame(width: 39)
-                    
+
                     // heatmap card, shareing image
                     heatmapShareCard
                         .onAppear {
@@ -87,16 +87,16 @@ struct ShareMatchView: View {
                                 }
                             }
                         }
-                    
+
                     Spacer()
                         .frame(width: 39)
                 }
                 Spacer()
                     .frame(height: 21)
             }
-            
+
             Spacer()
-            
+
             // 스토리 공유 버튼
             Button {
                 guard !isProcessing, heatmapImage != nil else { return } // 처리 중이거나 이미지 없으면 비활성화
@@ -161,7 +161,7 @@ struct ShareMatchView: View {
             .disabled(isProcessing || heatmapImage == nil)
             .opacity((isProcessing || heatmapImage == nil) ? 0.5 : 1.0)
             .alert("사진이 저장되었습니다.", isPresented: $showImageSavedAlert) { }
-            
+
             // 로딩 인디케이터
             if isProcessing {
                 Color.black.opacity(0.4)
@@ -315,15 +315,15 @@ struct ShareMatchView: View {
             print("❌ Invalid Instagram URL.")
             return
         }
-        
+
         let pasteboardItems = [
             "com.instagram.sharedSticker.backgroundImage": imageData
         ]
-        
+
         // 메인 스레드에서 Pasteboard 업데이트 및 URL 열기
         DispatchQueue.main.async {
             UIPasteboard.general.setItems([pasteboardItems], options: [.expirationDate: Date().addingTimeInterval(300)]) // 만료 시간 설정 권장
-            
+
             if UIApplication.shared.canOpenURL(instagramURL) {
                 UIApplication.shared.open(instagramURL) { success in
                     if !success {

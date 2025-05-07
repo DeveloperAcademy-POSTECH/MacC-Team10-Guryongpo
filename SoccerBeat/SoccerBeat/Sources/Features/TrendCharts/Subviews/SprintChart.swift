@@ -8,265 +8,341 @@
 import SwiftUI
 import Charts
 
+// MARK: - Utilities
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.locale = Locale(identifier: "ko_KR")
+    formatter.dateFormat = "yyyy.M.d"
+    return formatter
+}()
+
+// MARK: - Main View
+
 struct SprintChartView: View {
     @Environment(\.dismiss) private var dismiss
-
+    @State private var rawSelectedDate: Date? = nil
+    @State private var scrollPositionStart: Date
     let workouts: [WorkoutData]
-    private var endDate: String {
-        workouts.first?.yearMonthDay ?? "2023.10.10"
+
+    private var scrollPositionEnd: Date {
+        scrollPositionStart.addingTimeInterval(3600 * 24 * Constant.chartVisibleDays)
     }
-    private var startDate: String {
-        workouts.last?.yearMonthDay ?? "2023.10.10"
+    private var scrollPositionString: String {
+        dateFormatter.string(from: scrollPositionStart)
     }
+    private var scrollPositionEndString: String {
+        dateFormatter.string(from: scrollPositionEnd)
+    }
+
+    init(workouts: [WorkoutData]) {
+        self.workouts = workouts
+        self._scrollPositionStart = State(initialValue:
+            workouts.first?.formattedDate.addingTimeInterval(-1 * 3600 * 24 * Constant.chartVisibleDays) ?? Date()
+        )
+    }
+
     var body: some View {
-        Image("BackgroundPattern")
-            .resizable()
-            .scaledToFill()
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-            .clipped()
-            .opacity(0.5)
-            .overlay {
-                let fastest = maximum(of: workouts)
-                let slowest = minimum(of: workouts)
-                
-                return VStack(alignment: .center) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Spacer()
-                                .frame(height: 60)
-                            InformationButton(message: "최근 스프린트 횟수의 변화입니다.")
-                            Text("스프린트")
-                                .font(.navigationSportySubTitle)
-                                .foregroundStyle(.navigationSportyHead)
-                            Text("The trends of")
-                            Text("Sprint")
-                                .foregroundStyle(.navigationSportySprintTitle)
-                                .highlighter(activity: .sprint, isDefault: false)
-                        }
-                        .font(.navigationSportyTitle)
-                        
-                        Spacer()
-                    }
-                    
-                    sprintChartView(fastest: fastest, slowest: slowest)
-                    
-                    averageSprintView
-                        .padding(.top, 30)
-                    
-                    Spacer()
-                }
-                .padding()
-            }
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .foregroundStyle(Color.white)
-                    }
+        let fastest = maximum(of: workouts)
+        let slowest = minimum(of: workouts)
+
+        VStack(alignment: .center) {
+            HeaderView()
+            SprintChartSection(
+                workouts: workouts,
+                fastest: fastest,
+                slowest: slowest,
+                scrollPosition: $scrollPositionStart,
+                rawSelectedDate: $rawSelectedDate,
+                scrollPositionString: scrollPositionString,
+                scrollPositionEndString: scrollPositionEndString
+            )
+        }
+        .padding(.vertical)
+        .background(
+            Image("BackgroundPattern")
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                .clipped()
+                .opacity(0.5)
+        )
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action: { dismiss() }) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color.white)
                 }
             }
+        }
     }
 }
+
+// MARK: - Header View
+
+private struct HeaderView: View {
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                InformationButton(message: "최근 스프린트 횟수의 변화입니다.")
+                Text("스프린트")
+                    .font(.navigationSportySubTitle)
+                    .foregroundStyle(.navigationSportyHead)
+                Text("The trends of")
+                Text("Sprint")
+                    .foregroundStyle(.navigationSportySprintTitle)
+                    .highlighter(activity: .sprint, isDefault: false)
+            }
+            .font(.navigationSportyTitle)
+            Spacer()
+        }
+        .padding(.horizontal)
+    }
+}
+
+// MARK: - Chart Section
+
+private struct SprintChartSection: View {
+    let workouts: [WorkoutData]
+    let fastest: WorkoutData
+    let slowest: WorkoutData
+    @Binding var scrollPosition: Date
+    @Binding var rawSelectedDate: Date?
+    let scrollPositionString: String
+    let scrollPositionEndString: String
+
+    var body: some View {
+        if !workouts.isEmpty {
+            List {
+                VStack {
+                    ChartInfoView(
+                        average: average(of: workouts),
+                        scrollPositionString: scrollPositionString,
+                        scrollPositionEndString: scrollPositionEndString
+                    )
+                    SprintChart(
+                        workouts: workouts,
+                        fastestWorkout: fastest,
+                        slowestWorkout: slowest,
+                        averageSprint: average(of: workouts),
+                        scrollPosition: $scrollPosition,
+                        rawSelectedDate: $rawSelectedDate
+                    )
+                    .frame(height: 240)
+                    .padding(.top, 12)
+                }
+                .padding()
+                .background(
+                    LightRectangleView(
+                        alpha: 0.6,
+                        color: .black,
+                        radius: 15
+                    )
+                )
+            }
+            .listStyle(.plain)
+            .scrollDisabled(true)
+        } else {
+            EmptyChartView()
+        }
+    }
+
+    func average(of workouts: [WorkoutData]) -> Double {
+        let filtered = workouts.filter { !$0.error }
+        guard !filtered.isEmpty else { return 0 }
+        return filtered.map { Double($0.sprint) }.reduce(0, +) / Double(filtered.count)
+    }
+}
+
+// MARK: - Chart Info View
+
+private struct ChartInfoView: View {
+    let average: Double
+    let scrollPositionString: String
+    let scrollPositionEndString: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            HStack {
+                Text("평균 ")
+                    .font(.sfProText(size: 14, weight: .light))
+                + Text(average.rounded())
+                    .font(.sfProText(size: 24, weight: .semiboldItalic))
+                + Text(" 회")
+                    .font(.sfProText(size: 16, weight: .regularItalic))
+                Spacer()
+            }
+            Text("\(scrollPositionString) - \(scrollPositionEndString)")
+                .font(.sfProText(size: 10, weight: .light))
+        }
+        .foregroundStyle(Color(hex: 0xD4D4D4))
+        .padding([.leading, .top], 20)
+    }
+}
+
+// MARK: - Empty Chart View
+
+private struct EmptyChartView: View {
+    var body: some View {
+        ZStack {
+            Image("MyCardBack")
+                .resizable()
+                .frame(width: 107, height: 140)
+                .opacity(0.3)
+            VStack {
+                Text("저장된 경기 기록이 없습니다.")
+                    .font(.matchRecapEmptyDataTop)
+                Group {
+                    Text("애플워치를 차고 사커비트로")
+                    Text("당신의 첫 번째 경기를 기록해 보세요!")
+                }
+                .font(.matchRecapEmptyDataBottom)
+                .foregroundStyle(.mainSubTitleColor)
+            }
+        }
+    }
+}
+
+// MARK: - Sprint Chart
 
 struct SprintChart: View {
     let workouts: [WorkoutData]
     let fastestWorkout: WorkoutData
     let slowestWorkout: WorkoutData
     let averageSprint: Double
-    let betweenBarSpace = 45.0
-    
-    private func isMax(_ workout: WorkoutData) -> Bool {
-        workout == fastestWorkout
+    @Binding var scrollPosition: Date
+    @Binding var rawSelectedDate: Date?
+    @Environment(\.calendar) private var calendar
+
+    private var allDaysAndSprintData: [(day: Date, sprint: Int)] {
+        guard let latest = workouts.first, let oldest = workouts.last else { return [] }
+        let start = calendar.startOfDay(for: oldest.formattedDate)
+        let end = calendar.startOfDay(for: latest.formattedDate)
+        guard start <= end else { return [] }
+        let dates = generateDateRange(from: start, to: end)
+        let dict = workouts.reduce(into: [Date: Int]()) { dict, workout in
+            let normalizedDate = calendar.startOfDay(for: workout.formattedDate)
+            dict[normalizedDate, default: 0] += workout.sprint
+        }
+
+        return dates.map { ($0, dict[$0] ?? 0) }
     }
-    
-    private func isMin(_ workout: WorkoutData) -> Bool {
-        workout == slowestWorkout
+
+    private func startOfDay(_ date: Date) -> Date {
+        calendar.startOfDay(for: date)
     }
-    
+    private func endOfDay(_ date: Date) -> Date {
+        calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)!
+    }
+
+    private var selectedDate: Date? {
+        guard let selected = rawSelectedDate else { return nil }
+        return workouts.first {
+            let start = startOfDay($0.formattedDate)
+            let end = endOfDay($0.formattedDate)
+            return (start...end).contains(selected)
+        }?.formattedDate
+    }
+
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            Chart {
-                ForEach(0..<workouts.count, id: \.self) { index in
-                    let workout = workouts[index]
-                    
-                    BarMark(
-                        x: .value("Order", workouts.count - index),
-                        yStart: .value("Sprint", 0),
-                        yEnd: .value("Sprint", workout.sprint)
-                    )
-                    .foregroundStyle(isMax(workout) ? .sprintMax
-                                     : (isMin(workout) ? .sprintMin : .chartDefault))
-                    .cornerRadius(300, style: .continuous)
-                    // MARK: - Bar Chart Data, value 표시
-                    // MARK: - 가장 밑에 일자 표시, 실제 보이는 용
-                    .annotation(position: .bottom, alignment: .center) {
-                        let isMaxOrMin = isMin(workout) || isMax(workout)
-                        VStack(spacing: 6) {
-                            HStack(spacing: 0) {
-                                Text(workout.sprint.formatted())
-                            }
-                            .font(.maxValueUint)
-                            .foregroundStyle(.maxValueStyle)
-                            .opacity(isMaxOrMin ? 1.0 : 0.5)
-                            .padding(.top, 8)
-                            
-                            
-                            Text(workout.monthDay)
-                                .font(isMaxOrMin ? .maxDayUnit : .defaultDayUnit)
-                                .foregroundStyle(.defaultDayStyle)
-                        }
+        Chart {
+            ForEach(allDaysAndSprintData, id: \.day) { entry in
+                BarMark(
+                    x: .value("Day", entry.day, unit: .day),
+                    y: .value("Sprint", entry.sprint)
+                )
+                .foregroundStyle(.sprintMax)
+                .cornerRadius(300, style: .continuous)
+            }
+            if let selectedDate {
+                RuleMark(
+                    x: .value("Selected", selectedDate, unit: .day)
+                )
+                .foregroundStyle(.clear)
+                .offset(yStart: -10)
+                .annotation(position: .top, overflowResolution: .init(x: .fit(to: .chart), y: .fit(to: .chart))) { _ in
+                    if let sprint = allDaysAndSprintData.first(where: { $0.day == calendar.startOfDay(for: selectedDate) })?.sprint {
+                        ValueSelectionPopover(
+                            sprint: sprint,
+                            selectedDate: selectedDate
+                        )
                     }
                 }
             }
-            // MARK: - 가장 밑에 일자 표시, 자리잡기용
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day)) { _ in
-                    AxisValueLabel(format: .dateTime.day(), centered: true)
-                        .font(.defaultDayUnit)
-                }
-            }
-            .chartYAxis(.hidden)
-            .frame(width: CGFloat(workouts.count) * betweenBarSpace)
         }
-        .backport.defaultScrollAnchor(.trailing)
+        .chartScrollableAxes(.horizontal)
+        .chartXVisibleDomain(length: 3600 * 24 * Constant.chartVisibleDays)
+        .chartScrollTargetBehavior(
+            .valueAligned(
+                matching: .init(hour: 0),
+                majorAlignment: .matching(.init(weekday: 1))
+            )
+        )
+        .chartScrollPosition(x: $scrollPosition)
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .day, count: 1)) {
+                AxisTick()
+                AxisGridLine()
+                AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
+            }
+        }
+        .chartYAxis {
+            AxisMarks(position: .trailing)
+        }
+        .chartLegend(.hidden)
+        .chartXSelection(value: $rawSelectedDate)
     }
 }
+
+// MARK: - Value Selection Popover
+
+private struct ValueSelectionPopover: View {
+    let sprint: Int
+    let selectedDate: Date
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("\(sprint)")
+                .font(.sfProText(size: 16, weight: .semiboldItalic))
+            + Text(" 회")
+                .font(.sfProText(size: 14, weight: .regularItalic))
+            Text(dateFormatter.string(from: selectedDate))
+                .font(.sfProText(size: 9, weight: .light))
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 8)
+        .background(Color(hex: 0x363636, alpha: 0.8))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color(hex: 0x5B5555), lineWidth: 1)
+        )
+        .shadow(
+            color: Color(hex: 0x7F7F7F, alpha: 0.25),
+            radius: 10, x: 2, y: 3)
+    }
+}
+
+// MARK: - Analyzable Extension
 
 extension SprintChartView: Analyzable {
     func maximum(of workouts: [WorkoutData]) -> WorkoutData {
-        guard var maximumBPMWorkout = workouts.first else { return WorkoutData.example }
-        for workout in workouts
-        where maximumBPMWorkout.sprint < workout.sprint {
-            maximumBPMWorkout = workout
-        }
-        return maximumBPMWorkout
+        workouts.max(by: { $0.sprint < $1.sprint }) ?? WorkoutData.example
     }
-    
+
     func minimum(of workouts: [WorkoutData]) -> WorkoutData {
-        guard var minimumBPMWorkout = workouts.first else { return WorkoutData.example }
-        for workout in workouts
-        where minimumBPMWorkout.sprint  > workout.sprint  {
-            minimumBPMWorkout = workout
-        }
-        return minimumBPMWorkout
+        workouts.min(by: { $0.sprint < $1.sprint }) ?? WorkoutData.example
     }
-    
+
     func average(of workouts: [WorkoutData]) -> Double {
-        var maximumHeartRateSum = 0
-        var errorCount = 0
-        workouts.forEach { workout in
-            // 스프린트는 0번일 수 있으니, 에러가 없는 데이터만을 계산합니다.
-            if !workout.error {
-                maximumHeartRateSum += workout.sprint
-            } else {
-                errorCount += 1
-            }
-        }
-        
-        if workouts.count - errorCount == 0 {
-            return 0
-        } else {
-            return Double(maximumHeartRateSum) / (Double(workouts.count) - Double(errorCount))
-        }
+        let filtered = workouts.filter { !$0.error }
+        guard !filtered.isEmpty else { return 0 }
+        return filtered.map { Double($0.sprint) }.reduce(0, +) / Double(filtered.count)
     }
 }
 
-// MARK: - UI
-extension SprintChartView {
-    
-    private func sprintChartView(fastest: WorkoutData, slowest: WorkoutData) -> some View {
-        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
-            .frame(height: 200)
-            .overlay {
-                if !workouts.isEmpty {
-                    VStack {
-                        ZStack {
-                            Text("\(startDate) - \(endDate)")
-                                .font(.durationStyle)
-                                .foregroundStyle(.durationStyle)
-                            
-                            HStack {
-                                Spacer()
-                                Text("단위: 회")
-                            }
-                            .font(.durationStyle)
-                            .foregroundStyle(.defaultDayStyle)
-                        }
-                        
-                        Spacer()
-                        SprintChart(
-                            workouts: workouts,
-                            fastestWorkout: fastest,
-                            slowestWorkout: slowest,
-                            averageSprint: average(of: workouts)
-                        )
-                        .frame(height: 120)
-                        .padding(.horizontal)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 24)
-                } else {
-                    ZStack {
-                        Image("MyCardBack")
-                            .resizable()
-                            .frame(width: 107, height: 140)
-                            .opacity(0.3)
-                        VStack {
-                            Text("저장된 경기 기록이 없습니다.")
-                                .font(.matchRecapEmptyDataTop)
-                            Group {
-                                Text("애플워치를 차고 사커비트로")
-                                Text("당신의 첫 번째 경기를 기록해 보세요!")
-                            }
-                            .font(.matchRecapEmptyDataBottom)
-                            .foregroundStyle(.mainSubTitleColor)
-                        }
-                    }
-                    Spacer()
-                }
-            }
-    }
-    
-    @ViewBuilder
-    private var averageSprintView: some View {
-        let player = FileLoader.sprints.randomElement()
-        
-        let sprintsMessage = String(
-            format: "%@의 평균 스프린트 횟수는 %@입니다.".localized(),
-            player?.name ?? "Lionel Messi",
-            player?.sprintCount ?? "13"
-        )
-        
-        LightRectangleView(color: .chartBoxBackground.opacity(0.4))
-            .frame(height: 120)
-            .overlay {
-                VStack(alignment: .center, spacing: 16) {
-                    Text(sprintsMessage)
-                        .font(.playerComapareSaying)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(.playerCompareStyle)
-                    
-                    Text("최근 경기 평균")
-                        .font(.averageText)
-                        .foregroundStyle(.averageTextStyle)
-                    Group {
-                        if !workouts.isEmpty {
-                            Text(average(of: workouts).rounded(at: 0))
-                            + Text(" 회")
-                        } else {
-                            Text("--")
-                            + Text(" 회")
-                        }
-                    }
-                    .font(.averageValue)
-                    .foregroundStyle(.navigationSportySprintTitle)
-                }
-            }
-    }
-}
+// MARK: - Preview
 
 #Preview {
     NavigationStack {
