@@ -21,6 +21,7 @@ struct MatchDetailView: View {
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 .clipped()
                 .opacity(0.5)
+            
             TabView {
                 
                 FieldChartView(workout: workout)
@@ -41,7 +42,6 @@ struct MatchDetailView: View {
                         Image(systemName: "chevron.backward")
                     }
                 }
-                
             }
             .foregroundStyle(Color.white)
         }
@@ -277,24 +277,25 @@ struct FieldMovementView: View {
                         HStack(alignment: .bottom) {
                             Text("Field Movement")
                                 .font(.matchDetailTitle)
-                         Spacer()
+                            Spacer()
                             
                             Button {
                                 showShareView.toggle()
-                                } label: {
+                            } label: {
                                 Image(systemName: "square.and.arrow.up")
                                     .foregroundStyle(.brightmint)
-                                }
-                                .font(.system(size: 18))
-                                .padding(.bottom, 10)
-                                .padding(.trailing, 4)
-                                .sheet(isPresented: $showShareView) {
-                                    ShareMatchView(matchData: workout ?? .example)
-                                }
+                            }
+                            .font(.system(size: 18))
+                            .padding(.bottom, 10)
+                            .padding(.trailing, 4)
+                            .sheet(isPresented: $showShareView) {
+                                ShareMatchView(matchData: workout ?? .example)
+                            }
                         }
                     }
                 }
             }
+            
             
             VStack {
                 Picker("Pick map type", selection: $mapType) {
@@ -336,20 +337,9 @@ struct FieldMovementView: View {
                                     .cornerRadius(15.0)
                             }
                         }
-                    } else {
-                        if mapType == 0 {
-                            HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                                .frame(height: proxy.size.height)
-                                .cornerRadius(15.0)
-                        } else {
-                            LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                                .frame(height: proxy.size.height)
-                                .cornerRadius(15.0)
-                        }
                     }
                 }
             }
-                Spacer()
         }
     }
 }
