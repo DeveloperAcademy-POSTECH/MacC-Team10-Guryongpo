@@ -12,7 +12,6 @@ import CoreLocation
 struct MatchDetailView: View {
     @Environment(\.dismiss) private var dismiss
     var workout: WorkoutData?
-    @State private var showShareView = false
 
     var body: some View {
         ZStack {
@@ -22,35 +21,18 @@ struct MatchDetailView: View {
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 .clipped()
                 .opacity(0.5)
-            ScrollView(showsIndicators: false) {
-                ZStack {
-                    VStack {
-                        Spacer()
-                            .frame(height: 60)
-                        
-                        MatchTimeView(workout: workout)
-                        
-                        Spacer()
-                            .frame(height: 40)
-                        ErrorView(workout: workout)
-                        PlayerAbilityView(workout: workout)
-                            .zIndex(-1)
-                        Spacer()
-                            .frame(height: 80)
-                        
-                        
-                        FieldMovementView(workout: workout)
-                        
-                        FieldRecordView(workout: workout)
-                        Spacer()
-                            .frame(height: 100)
-                    }
-                    .padding()
-                }
+            
+            TabView {
                 
-                Spacer()
-                    .frame(height: 80)
+                FieldChartView(workout: workout)
+                
+                FieldMovementView(workout: workout)
+            
+                FieldRecordView(workout: workout)
+
             }
+            .padding()
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -60,23 +42,8 @@ struct MatchDetailView: View {
                         Image(systemName: "chevron.backward")
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    if let workout = workout, !workout.error {
-                        Button {
-                            showShareView.toggle()
-                        } label: {
-                            Image(systemName: "square.and.arrow.up")
-                                .foregroundStyle(.brightmint)
-                        }
-                    }
-                }
             }
             .foregroundStyle(Color.white)
-            .sheet(isPresented: $showShareView) {
-                ShareMatchView(workout: workout ?? .example)
-            }
-
-            .scrollIndicators(.hidden)
         }
     }
 }
@@ -103,7 +70,9 @@ struct ErrorView: View {
                 }
                 .font(.fieldRecordTitle)
                 .foregroundStyle(.mainSubTitleColor)
-                .padding(32)
+                .fixedSize()
+                .frame(width: 304, height: 290)
+                .padding(36)
             }
         } else {
             EmptyView()
@@ -116,12 +85,7 @@ struct MatchTimeView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                InformationButton(message: "경기의 상세 리포트를 만나보세요.")
-                Spacer()
-            }
-            .zIndex(1)
-            
+
             VStack(alignment: .leading, spacing: -8) {
                 HStack(spacing: 0) {
                     Text("경기 시간")
@@ -136,7 +100,6 @@ struct MatchTimeView: View {
             }
             .font(.matchDetailTitle)
         }
-        Spacer()
     }
 }
 
@@ -145,14 +108,29 @@ struct PlayerAbilityView: View {
     var workout: WorkoutData?
     
     var body: some View {
-        VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    
-                    Spacer()
-                        .frame(minHeight: 30)
-                    
-                    VStack(alignment: .leading, spacing: 6) {
+            GeometryReader { proxy in
+                
+                VStack(alignment: .leading, spacing: 16) {
+                            if let workout = workout {
+                                let recent = DataConverter.toLevels(workout)
+                                let average = DataConverter.toLevels(profileModel.averageAbility)
+                                
+                                ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent, error: workout.error))
+                                    .scaleEffect(CGSize(width: 0.9, height: 0.9))
+                                    .fixedSize()
+                                    .frame(width: proxy.size.width, height: proxy.size.height)
+                                    
+                            } else {
+                                let blankRecent = DataConverter.toLevels(WorkoutData.blankExample)
+                                let blankAverage = DataConverter.toLevels(WorkoutAverageData.blankAverage)
+                                
+                                ViewControllerContainer(RadarViewController(radarAverageValue: blankAverage, radarAtypicalValue: blankRecent, error: true))
+                                    .scaleEffect(CGSize(width: 0.9, height: 0.9))
+                                    .fixedSize()
+                                    .frame(width: proxy.size.width, height: proxy.size.height)
+                            }
+                
+                    VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 0) {
                             Text("빨간색")
                                 .bold()
@@ -169,36 +147,9 @@ struct PlayerAbilityView: View {
                         }
                         .floatingCapsuleStyle()
                     }
-                    HStack {
-                        Spacer()
-                        if let workout = workout {
-                            let recent = DataConverter.toLevels(workout)
-                            let average = DataConverter.toLevels(profileModel.averageAbility)
-                            
-                            ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent, error: workout.error))
-                                .scaleEffect(CGSize(width: 0.9, height: 0.9))
-                                .padding()
-                                .fixedSize()
-                                .frame(width: 304, height: 348)
-                                .zIndex(-1)
-                        } else {
-                            let blankRecent = DataConverter.toLevels(WorkoutData.blankExample)
-                            let blankAverage = DataConverter.toLevels(WorkoutAverageData.blankAverage)
-                            
-                            ViewControllerContainer(RadarViewController(radarAverageValue: blankAverage, radarAtypicalValue: blankRecent, error: true))
-                                .scaleEffect(CGSize(width: 0.9, height: 0.9))
-                                .padding()
-                                .fixedSize()
-                                .frame(width: 304, height: 348)
-                                .zIndex(-1)
-                            
-                        }
-                        Spacer()
-                    }
                 }
-                Spacer()
             }
-        }
+        
     }
 }
 
@@ -206,69 +157,98 @@ struct FieldRecordView: View {
     var workout: WorkoutData?
     @State var isInfoOpen: Bool = false
     var body: some View {
-        VStack {
-            HStack {
-                InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
-                Spacer()
-            }
-            HStack {
-                VStack(alignment: .leading) {
+        GeometryReader { proxy in
+            VStack {
+                HStack {
+                    InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
                     Spacer()
+                }
+                .zIndex(4.0)
+                
+                HStack {
                     VStack(alignment: .leading, spacing: -8) {
                         Text("Field Record")
                     }
                     .font(.matchDetailTitle)
+                    Spacer()
                 }
+                
                 Spacer()
-            }
-            Spacer()
-                .frame(minHeight: 30)
-            HStack {
-                if let workout = workout {
-                    if !workout.error {
-                        ForEach(workout.matchBadge.indices, id: \.self) { index in
-                            if let badgeName = BadgeImageDictionary[index][workout.matchBadge[index]] {
-                                if badgeName.isEmpty {
-                                    EmptyView()
+                
+                ZStack {
+                    LightRectangleView(alpha: 0.4, color: .black, radius: 15)
+                    VStack(spacing: 0) {
+                        HStack {
+                            VStack(alignment: .center) {
+                                VStack(alignment: .center, spacing: -8) {
+                                    Text("Today's Badge")
+                                }
+                                .font(.matchDetailTitle)
+                                .scaleEffect(0.8)
+                                .opacity(0.5)
+                            }
+                        }
+                        .padding(.top)
+                        
+                        HStack {
+                            if let workout = workout {
+                                if !workout.error {
+                                    ForEach(workout.matchBadge.indices, id: \.self) { index in
+                                        if let badgeName = BadgeImageDictionary[index][workout.matchBadge[index]] {
+                                            if badgeName.isEmpty {
+                                                Image(.errormark)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 64, height: 72)
+                                                    .padding()
+                                                    .padding(.bottom, 10)
+                                                    .opacity(0.7)
+                                                
+                                            } else {
+                                                Image(badgeName)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 74, height: 82)
+                                                    .padding()
+                                            }
+                                        } else {
+                                            Image(.errormark)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 64, height: 72)
+                                                .padding()
+                                                .padding(.bottom, 10)
+                                                .opacity(0.7)
+                                        }
+                                    }
                                 } else {
-                                    Image(badgeName)
+                                    Image(.errormark)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 74, height: 82)
+                                        .frame(width: 64, height: 72)
+                                        .padding()
+                                        .padding(.bottom, 10)
+                                        .opacity(0.7)
                                 }
                             } else {
-                                EmptyView()
+                                Image(.errormark)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 64, height: 72)
+                                    .padding()
+                                    .padding(.bottom, 10)
+                                    .opacity(0.7)
                             }
                         }
-                    } else {
-                        EmptyView()
                     }
-                } else {
-                    EmptyView()
                 }
-            }
-            FieldRecordDataView(workout: workout)
-            
-            Spacer()
-                .frame(minHeight: 30)
-            
-            if let rates = workout?.heartRates {
-                if !rates.isEmpty {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Spacer()
-                            VStack(alignment: .leading, spacing: -8) {
-                                Text("Heartbeat")
-                            }
-                            .font(.matchDetailTitle)
-                        }
-                        Spacer()
-                    }
-                    
-                    HeartRatesView(rates: rates)
-                        .frame(height: 200)
-                        .padding(.vertical)
-                }
+                .frame(height: proxy.size.height / 3.5)
+                
+                Spacer()
+                
+                FieldRecordDataView(workout: workout)
+                
+                Spacer()
             }
         }
     }
@@ -278,9 +258,11 @@ struct FieldMovementView: View {
     var workout: WorkoutData?
     @State var isInfoOpen: Bool = false
     @State private var slider = 0.0
+    @State private var showShareView = false
     @State private var mapType = 0
     private let emptyDataRoute: [CLLocationCoordinate2D] = []
     private let emptyDataCenter: [Double] = [0, 0]
+    
     var body: some View {
         VStack {
             HStack {
@@ -291,61 +273,74 @@ struct FieldMovementView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("Field Movement")
-                            .font(.matchDetailTitle)
-                    }
-                }
-            }
-            
-            Picker("Pick map type", selection: $mapType) {
-                Text("Heatmap").tag(0)
-                Text("Location").tag(1)
-            }
-            .pickerStyle(.segmented)
-            
-            if let workout = workout {
-                if !workout.error {
-                    if mapType == 0 {
-                        HeatmapView(workout: workout)
-                            .frame(height: 500)
-                            .cornerRadius(15.0)
-                    } else {
-                        LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
-                            .frame(height: 500)
-                            .cornerRadius(15.0)
                         
-                        Slider(
-                            value: $slider,
-                            in: 0...1
-                        )
-                        .padding(.vertical)
-                    }
-                } else {
-                    if mapType == 0 {
-                        HeatmapView(workout: WorkoutData.blankExample)
-                            .frame(height: 500)
-                            .cornerRadius(15.0)
-                    } else {
-                        LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                            .frame(height: 500)
-                            .cornerRadius(15.0)
+                        HStack(alignment: .bottom) {
+                            Text("Field Movement")
+                                .font(.matchDetailTitle)
+                            Spacer()
+                            
+                            Button {
+                                showShareView.toggle()
+                            } label: {
+                                Image(systemName: "square.and.arrow.up")
+                                    .foregroundStyle(.brightmint)
+                            }
+                            .font(.system(size: 18))
+                            .padding(.bottom, 10)
+                            .padding(.trailing, 4)
+                            .sheet(isPresented: $showShareView) {
+                                ShareMatchView(matchData: workout ?? .example)
+                            }
+                        }
                     }
                 }
-            } else {
-                if mapType == 0 {
-                    HeatmapView(workout: WorkoutData.blankExample)
-                        .frame(height: 500)
-                        .cornerRadius(15.0)
-                } else {
-                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                        .frame(height: 500)
-                        .cornerRadius(15.0)
+            }
+            
+            
+            VStack {
+                Picker("Pick map type", selection: $mapType) {
+                    Text("Heatmap").tag(0)
+                    Text("Location").tag(1)
+                }
+                .pickerStyle(.segmented)
+                
+                GeometryReader { proxy in
+                    
+                    if let workout = workout {
+                        if !workout.error {
+                            if mapType == 0 {
+                                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                                    .frame(height: proxy.size.height-40)
+                                    .cornerRadius(15.0)
+                            } else {
+                                VStack(spacing: 0) {
+                                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                                        .frame(height: proxy.size.height - 60)
+                                        .cornerRadius(15.0)
+                                    
+                                    Slider(
+                                        value: $slider,
+                                        in: 0...1
+                                    )
+                                    .padding(.vertical)
+                                    .frame(height: 50)
+                                }
+                            }
+                        } else {
+                            if mapType == 0 {
+                                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                                    .frame(height: proxy.size.height - 40)
+                                    .cornerRadius(15.0)
+                            } else {
+                                LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                                    .frame(height: proxy.size.height - 40)
+                                    .cornerRadius(15.0)
+                            }
+                        }
+                    }
                 }
             }
         }
-        
-        Spacer()
-            .frame(height: 60)
     }
 }
 
@@ -357,7 +352,10 @@ struct FieldRecordDataView: View {
             
             HStack(alignment: .center, spacing: 50) {
                 
-                VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading, spacing: 0) {
+                    
+                    Spacer()
+                    
                     VStack(alignment: .leading) {
                         Text("뛴 거리")
                             .font(.fieldRecordTitle)
@@ -372,6 +370,8 @@ struct FieldRecordDataView: View {
                                 .font(.fieldRecordUnit)
                         }
                     }
+                    
+                    Spacer()
                     
                     VStack(alignment: .leading) {
                         Text("스프린트")
@@ -388,6 +388,8 @@ struct FieldRecordDataView: View {
                         }
                     }
                     
+                    Spacer()
+                    
                     VStack(alignment: .leading) {
                         Text("최소 심박수")
                             .font(.fieldRecordTitle)
@@ -403,25 +405,11 @@ struct FieldRecordDataView: View {
                         }
                     }
                     
-                    //                    if workout?.calories != 0 {
-                    //                        VStack(alignment: .leading) {
-                    //                            Text("칼로리")
-                    //                                .font(.fieldRecordTitle)
-                    //                            HStack(alignment: .bottom, spacing: 0) {
-                    //                                if let workout = workout {
-                    //                                    Text(workout.error ? "--" : workout.calories.formatted())
-                    //                                        .font(.fieldRecordMeasure)
-                    //                                } else {
-                    //                                    Text("--")
-                    //                                }
-                    //                                Text(" kcal")
-                    //                                    .font(.fieldRecordUnit)
-                    //                            }
-                    //                        }
-                    //                    }
+                    Spacer()
                 }
                 
-                VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Spacer()
                     VStack(alignment: .leading) {
                         Text("최고 속도")
                             .font(.fieldRecordTitle)
@@ -437,6 +425,8 @@ struct FieldRecordDataView: View {
                         }
                     }
                     
+                    Spacer()
+                    
                     VStack(alignment: .leading) {
                         Text("파워")
                             .font(.fieldRecordTitle)
@@ -450,6 +440,8 @@ struct FieldRecordDataView: View {
                                 .font(.fieldRecordUnit)
                         }
                     }
+                    
+                    Spacer()
                     
                     VStack(alignment: .leading) {
                         Text("최대 심박수")
@@ -465,32 +457,16 @@ struct FieldRecordDataView: View {
                                 .font(.fieldRecordUnit)
                         }
                     }
-                    //                    if workout?.calories != 0 {
-                    //                        VStack(alignment: .leading) {
-                    //                            Text("최대 산소 섭취량")
-                    //                                .font(.fieldRecordTitle)
-                    //                            HStack(alignment: .bottom, spacing: 0) {
-                    //                                if let workout = workout {
-                    //                                    Text(workout.error ? "--" : workout.vo2Max.formatted())
-                    //                                        .font(.fieldRecordMeasure)
-                    //                                } else {
-                    //                                    Text("--")
-                    //                                }
-                    //                                Text(" ml/kg/min")
-                    //                                    .font(.fieldRecordUnit)
-                    //                            }
-                    //                        }
-                    //                    }
+
+                    Spacer()
                 }
             }
-            .padding(.vertical, 56)
+//            .padding(.vertical, 56)
             .padding(.horizontal, 20)
         }
         .kerning(-0.41)
     }
 }
-
-
 
 #Preview {
     @StateObject var workoutManager = WorkoutManager.shared
@@ -498,5 +474,61 @@ struct FieldRecordDataView: View {
         MatchDetailView(workout: WorkoutData.example)
             .environmentObject(ProfileModel(workoutManager: workoutManager))
             .environmentObject(workoutManager)
+    }
+}
+
+struct FieldChartView: View {
+    var workout: WorkoutData?
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
+                Spacer()
+            }
+            
+            HStack(alignment: .center) {
+                VStack(alignment: .leading, spacing: -8) {
+                    Text("Field Chart")
+                }
+                .font(.matchDetailTitle)
+                Spacer()
+            }
+                        
+            if let error = workout?.error {
+                if error {
+                    ErrorView(workout: workout) }
+                else {
+                    PlayerAbilityView(workout: workout)
+                        .zIndex(-1.0)
+                }
+            }
+            
+            VStack {
+                if let rates = workout?.heartRates {
+                    if !rates.isEmpty {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Spacer()
+                                VStack(alignment: .leading, spacing: -8) {
+                                    Text("Heartbeat")
+                                        .opacity(0.7)
+                                }
+                                .font(.matchDetailSubTitle)
+                            }
+                            Spacer()
+                        }
+                        GeometryReader { proxy in
+                        
+                        HeartRatesView(rates: rates)
+                            .frame(height: proxy.size.height - 30)
+                            .padding()
+                        }
+                    }
+                }
+            }
+            .padding(.bottom)
+            Spacer()
+        }
     }
 }

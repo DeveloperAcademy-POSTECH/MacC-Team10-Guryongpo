@@ -890,6 +890,22 @@
         }
       }
     },
+    "Field Chart" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field Chart"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field Chart"
+          }
+        }
+      }
+    },
     "Field Movement" : {
       "localizations" : {
         "en" : {
@@ -975,7 +991,20 @@
       }
     },
     "GAMETIME" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GAMETIME"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GAMETIME"
+          }
+        }
+      }
     },
     "Heartbeat" : {
       "localizations" : {
@@ -1564,7 +1593,20 @@
 
     },
     "SOCCERBEAT" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SOCCERBEAT"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SOCCERBEAT"
+          }
+        }
+      }
     },
     "SoccerBeat의 경기 데이터 분석을 위해 사용됩니다." : {
       "comment" : "데이터 사용처",
@@ -1781,6 +1823,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "TIMES"
+          }
+        }
+      }
+    },
+    "Today's Badge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's Badge"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's Badge"
           }
         }
       }
@@ -3409,7 +3467,26 @@
       }
     },
     "스토리 공유하기" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share Story"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir una historia"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分享"
+          }
+        }
+      }
     },
     "스프린트" : {
       "comment" : "스프린트",
@@ -4233,6 +4310,7 @@
         }
       }
     },
+
     "일" : {
       "comment" : "날짜 단위 (2nd, 17th,_",
       "extractionState" : "manual",
@@ -4264,7 +4342,26 @@
       }
     },
     "이미지 저장하기" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Image"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar la imagen"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存图片"
+          }
+        }
+      }
     },
     "일시 정지" : {
       "comment" : "일시 정지 버튼",
