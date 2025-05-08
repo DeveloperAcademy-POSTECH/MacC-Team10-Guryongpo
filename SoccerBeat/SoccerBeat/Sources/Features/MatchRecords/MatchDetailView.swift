@@ -289,7 +289,7 @@ struct FieldMovementView: View {
                             .padding(.bottom, 10)
                             .padding(.trailing, 4)
                             .sheet(isPresented: $showShareView) {
-                                ShareMatchView(matchData: workout ?? .example)
+                                ShareMatchView(workout: workout ?? .example)
                             }
                         }
                     }
@@ -309,7 +309,7 @@ struct FieldMovementView: View {
                     if let workout = workout {
                         if !workout.error {
                             if mapType == 0 {
-                                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
+                                HeatmapView(workout: WorkoutData.blankExample)
                                     .frame(height: proxy.size.height-40)
                                     .cornerRadius(15.0)
                             } else {
@@ -328,7 +328,7 @@ struct FieldMovementView: View {
                             }
                         } else {
                             if mapType == 0 {
-                                HeatmapView(centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
+                                HeatmapView(workout: WorkoutData.blankExample)
                                     .frame(height: proxy.size.height - 40)
                                     .cornerRadius(15.0)
                             } else {
