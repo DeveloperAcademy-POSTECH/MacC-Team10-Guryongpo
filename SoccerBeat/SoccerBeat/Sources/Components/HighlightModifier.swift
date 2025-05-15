@@ -24,8 +24,6 @@ struct HighlightModifier: ViewModifier {
             return .navigationSportySprintTitle
         case .speed:
             return .navigationSportySpeedTitle
-        case .heartrate:
-            return .navigationSportyBPMTitle
         }
     }
     

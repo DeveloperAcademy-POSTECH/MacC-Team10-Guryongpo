@@ -2581,6 +2581,7 @@
       }
     },
     "단위: Bpm" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

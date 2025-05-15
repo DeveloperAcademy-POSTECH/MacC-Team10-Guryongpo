@@ -72,7 +72,7 @@ struct ProfileView: View {
                                                 Text("like")
                                                 Text("that?")
                                                     .foregroundStyle(.brightmint)
-                                                    .highlighter(activity: .heartrate, isDefault: true)
+                                                    .highlighter(activity: .sprint, isDefault: true)
                                             }
                                             .offset(y: -8)
                                         }

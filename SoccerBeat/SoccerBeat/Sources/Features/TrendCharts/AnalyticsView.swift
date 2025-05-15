@@ -30,7 +30,6 @@ struct AnalyticsView: View {
                     NavigationLink {
                         switch activityType {
                         case .distance: DistanceChartView(workouts: workouts)
-                        case .heartrate: BPMChartView(workouts: workouts)
                         case .speed: SpeedChartView(workouts: workouts)
                         case .sprint: SprintChartView(workouts: workouts)
                         }
