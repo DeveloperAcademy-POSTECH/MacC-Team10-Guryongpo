@@ -21,8 +21,6 @@ struct AnalyticsComponent: View {
             content = "최근 스프린트"
         case .speed:
             content = "최근 최고 속도"
-        case .heartrate:
-            content = "최근 심박수"
         }
         return content + " 보기"
     }
@@ -46,12 +44,6 @@ struct AnalyticsComponent: View {
                     return "\(workout.velocity.rounded(at: 0))" + " km/h"
                 } }
             return "-- km/h"
-        case .heartrate:
-            if let workout = workouts.last {
-                if !workout.error {
-                    return "\(workout.maxHeartRate.formatted())" + " Bpm"
-                } }
-            return "-- Bpm"
         }
     }
     
@@ -63,8 +55,6 @@ struct AnalyticsComponent: View {
             return .navigationSportySprintTitle
         case .speed:
             return .navigationSportySpeedTitle
-        case .heartrate:
-            return .navigationSportyBPMTitle
         }
     }
     
@@ -77,9 +67,6 @@ struct AnalyticsComponent: View {
             SprintChartOverview(workouts: workouts)
         case .speed:
             SpeedChartOverview(workouts: workouts)
-        case .heartrate:
-            BPMChartOverview(workouts: workouts)
-                .offset(y: 10)
         }
     }
     

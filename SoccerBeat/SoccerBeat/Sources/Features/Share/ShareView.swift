@@ -46,7 +46,7 @@ struct ShareView: View {
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
                                 Text(userName)
-                                    .highlighter(activity: .heartrate, isDefault: false)
+                                    .highlighter(activity: .sprint, isDefault: false)
                                     .foregroundStyle(.shareViewTitleTint)
                             }
                         }

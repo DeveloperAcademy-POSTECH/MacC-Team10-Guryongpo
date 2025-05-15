@@ -106,7 +106,6 @@
 		BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4498262AEFF2AC00252561 /* Font+extension.swift */; };
 		BE4498272AEFF2AC00252561 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4498262AEFF2AC00252561 /* Font+extension.swift */; };
 		BE4A91542B01101E004AAFA3 /* DistanceChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91532B01101E004AAFA3 /* DistanceChart.swift */; };
-		BE4A91562B011A46004AAFA3 /* BPMChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91552B011A46004AAFA3 /* BPMChart.swift */; };
 		BE4A91582B011C8B004AAFA3 /* SprintChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4A91572B011C8B004AAFA3 /* SprintChart.swift */; };
 		BE4B72742BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
 		BE4B72752BAAA87300034C0F /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */; };
@@ -144,7 +143,6 @@
 		BEC953A32C75FDE400EFF3C2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BEC953A22C75FDE400EFF3C2 /* Localizable.xcstrings */; };
 		BECCFAB22B0665D2009F4BE5 /* SpeedChartOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECCFAB12B0665D2009F4BE5 /* SpeedChartOverview.swift */; };
 		BECCFAB42B06698F009F4BE5 /* DistanceChartOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECCFAB32B06698F009F4BE5 /* DistanceChartOverview.swift */; };
-		BECCFAB62B066AC4009F4BE5 /* BPMChartOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECCFAB52B066AC4009F4BE5 /* BPMChartOverview.swift */; };
 		BECCFAB82B066B38009F4BE5 /* SprintChartOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECCFAB72B066B38009F4BE5 /* SprintChartOverview.swift */; };
 		BEDE523E2B03BFF800BBFD94 /* Analyzable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE523D2B03BFF800BBFD94 /* Analyzable.swift */; };
 		BEF479BE2BCA6C1C00C79362 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF479BD2BCA6C1C00C79362 /* LoadingView.swift */; };
@@ -268,7 +266,6 @@
 		BE4069E32AF27ADF00FA3030 /* SF-Pro-Text-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-LightItalic.otf"; sourceTree = "<group>"; };
 		BE4498262AEFF2AC00252561 /* Font+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+extension.swift"; sourceTree = "<group>"; };
 		BE4A91532B01101E004AAFA3 /* DistanceChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceChart.swift; sourceTree = "<group>"; };
-		BE4A91552B011A46004AAFA3 /* BPMChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMChart.swift; sourceTree = "<group>"; };
 		BE4A91572B011C8B004AAFA3 /* SprintChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintChart.swift; sourceTree = "<group>"; };
 		BE4B72732BAAA87300034C0F /* Dictionary+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+extension.swift"; sourceTree = "<group>"; };
 		BE58AF1D2D1D5C5C007A7C81 /* ShareMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMatchView.swift; sourceTree = "<group>"; };
@@ -300,7 +297,6 @@
 		BEC953A22C75FDE400EFF3C2 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BECCFAB12B0665D2009F4BE5 /* SpeedChartOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedChartOverview.swift; sourceTree = "<group>"; };
 		BECCFAB32B06698F009F4BE5 /* DistanceChartOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceChartOverview.swift; sourceTree = "<group>"; };
-		BECCFAB52B066AC4009F4BE5 /* BPMChartOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMChartOverview.swift; sourceTree = "<group>"; };
 		BECCFAB72B066B38009F4BE5 /* SprintChartOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintChartOverview.swift; sourceTree = "<group>"; };
 		BED269752AFC6FB200153DE8 /* SF-Pro-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-RegularItalic.otf"; sourceTree = "<group>"; };
 		BEDE523D2B03BFF800BBFD94 /* Analyzable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analyzable.swift; sourceTree = "<group>"; };
@@ -747,8 +743,6 @@
 				BECCFAB12B0665D2009F4BE5 /* SpeedChartOverview.swift */,
 				BE4A91532B01101E004AAFA3 /* DistanceChart.swift */,
 				BECCFAB32B06698F009F4BE5 /* DistanceChartOverview.swift */,
-				BE4A91552B011A46004AAFA3 /* BPMChart.swift */,
-				BECCFAB52B066AC4009F4BE5 /* BPMChartOverview.swift */,
 				BE4A91572B011C8B004AAFA3 /* SprintChart.swift */,
 				BECCFAB72B066B38009F4BE5 /* SprintChartOverview.swift */,
 			);
@@ -1111,7 +1105,6 @@
 				FB2EC9C32B0B50BB0050B0E8 /* BadgeImageDictionary.swift in Sources */,
 				BE93F1912B00937000C33756 /* TextBorder+extension.swift in Sources */,
 				680567232CCA9D0D00DB0B4F /* ShapeStyle+extension.swift in Sources */,
-				BE4A91562B011A46004AAFA3 /* BPMChart.swift in Sources */,
 				D3D4F18B2AF256AF006C6B8A /* WorkoutManager_Phone+Extensions.swift in Sources */,
 				682D64852AFD1BA000D7F07B /* ProfileImage.swift in Sources */,
 				BEA63A662B0AFDFF000A309D /* ActivityEnum.swift in Sources */,
@@ -1124,7 +1117,6 @@
 				FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */,
 				682A69622BC41BFC00E8EABC /* DetailGuideView.swift in Sources */,
 				D3D174A02B00FE230022F631 /* RadarViewController.swift in Sources */,
-				BECCFAB62B066AC4009F4BE5 /* BPMChartOverview.swift in Sources */,
 				D3C500152AE36F3F00EFAEFF /* ContentView.swift in Sources */,
 				BE16B7C32B0B7D0300192C3B /* TrophyCollectionView.swift in Sources */,
 				BE4B72742BAAA87300034C0F /* Dictionary+extension.swift in Sources */,

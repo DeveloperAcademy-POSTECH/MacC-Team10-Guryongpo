@@ -11,5 +11,4 @@ enum ActivityEnum: CaseIterable {
     case distance
     case sprint
     case speed
-    case heartrate
 }
