@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HeartRatesView: View {
     let symbolSize: CGFloat = 30
-    let rates: [Int]
+    var rates: [Int] = [120, 100, 180, 130, 150, 120, 100, 180, 130, 150, 120, 100, 180, 130, 150]
     
     var body: some View {
             Chart(0..<rates.count, id: \.self) { count in
