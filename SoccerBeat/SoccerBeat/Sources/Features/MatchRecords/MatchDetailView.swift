@@ -249,7 +249,7 @@ struct FieldRecordView: View {
                 Spacer()
                 
                 FieldRecordDataView(workout: workout)
-                    .padding(.bottom)
+                    .padding(.bottom, 40)
                 
                 Spacer()
             }
