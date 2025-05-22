@@ -1035,6 +1035,7 @@
       }
     },
     "HeartRate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4311,7 +4312,28 @@
         }
       }
     },
-
+    "이미지 저장하기" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Image"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar la imagen"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存图片"
+          }
+        }
+      }
+    },
     "일" : {
       "comment" : "날짜 단위 (2nd, 17th,_",
       "extractionState" : "manual",
@@ -4338,28 +4360,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日"
-          }
-        }
-      }
-    },
-    "이미지 저장하기" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save Image"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardar la imagen"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保存图片"
           }
         }
       }
