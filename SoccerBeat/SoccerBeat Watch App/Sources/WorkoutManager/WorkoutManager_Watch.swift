@@ -23,7 +23,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
     private func setupWorkoutConfig() {
         // workout configuration 설정
         let configuration = HKWorkoutConfiguration()
-        configuration.activityType = .running
+        configuration.activityType = .soccer
         configuration.locationType = .outdoor
 
         // 세션, 빌더, 루트 빌더, 로케이션 매니저 초기화
