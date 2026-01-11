@@ -1376,7 +1376,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "watchOS Dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = watchOS_Dev_26;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1419,7 +1419,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "watchOS Appstore";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = watchOS_Adhoc_26;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1453,6 +1453,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "축구 기록을 활용하기 위해 건강 정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "운동중 및 정지 상태를 감지하기 위해 사용합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "선수 프로필 저장 및 공유를 위해 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1469,7 +1470,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "iOS Dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = iOS_Dev_26;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1502,6 +1503,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "축구 기록을 활용하기 위해 건강 정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "운동중 및 정지 상태를 감지하기 위해 사용합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "선수 프로필 저장 및 공유를 위해 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1518,7 +1520,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.SoccerBeat.Guryongpo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "iOS Appstore";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = iOS_Adhoc_26;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
