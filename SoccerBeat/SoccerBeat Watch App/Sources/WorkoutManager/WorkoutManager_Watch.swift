@@ -205,8 +205,6 @@ extension WorkoutManager {
         }
         
         guard !filteredLocations.isEmpty else {
-            routeBuilder?.insertRouteData(locations, completion: { _, _ in
-            })
             return
         }
         

@@ -34,8 +34,8 @@ extension WorkoutManager {
         }
 
         healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
-            guard let error else {
-                NSLog(error.debugDescription)
+            if let error {
+                NSLog(error.localizedDescription)
                 return
             }
             if success && self.hasHealthAuthorization() {
@@ -65,6 +65,9 @@ extension WorkoutManager {
 
         // Fetch from HealthStore
         self.hkWorkouts = await fetchHKWorkouts()
+        if self.hkWorkouts.isEmpty {
+            NSLog("fetchWorkoutData: no workouts found. Check HealthKit read permissions in Settings > Health > SoccerBeat")
+        }
 
         // Convert WorkoutData(Bussiness Model)
         var workoutData = [WorkoutData]()
@@ -91,25 +94,25 @@ extension WorkoutManager {
         var latSum = 0.0
         var lonSum = 0.0
         var routes: [CLLocationCoordinate2D] = []
+        var metadata: [String: Any] = [:]
+        // dataError 제거: 값이 없으면 기본값(0)으로 표시
 
-        guard let (locations, metadata) = try? await convertToRouteAndMetadata(from: workout) else {
-            NSLog("Failure Converting Workout to Route and Metadata")
-            throw HealthKitError.failureConvertingRouteAndMeta
+        // Route와 Metadata 가져오기 (실패해도 계속 진행)
+        if let (locations, meta) = try? await convertToRouteAndMetadata(from: workout) {
+            metadata = meta
+            for location in locations {
+                routes.append(CLLocationCoordinate2D(latitude: location.coordinate.latitude,
+                                                     longitude: location.coordinate.longitude))
+                latSum += location.coordinate.latitude
+                lonSum += location.coordinate.longitude
+            }
         }
 
-        for location in locations {
-            routes.append(CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                 longitude: location.coordinate.longitude))
-            latSum += location.coordinate.latitude
-            lonSum += location.coordinate.longitude
-        }
         let displayedTime = String(Int(workout.duration)/60) + " : " + String(Int(workout.duration) % 60)
         let dotCount = routes.isEmpty ? 1 : routes.count
+        let hasMetadata = !metadata.isEmpty
 
-        // Metadata를 WorkoutData로 변환
-        // 기본으로 데이터 오류 없음 가정
-        var dataError = false
-
+        // Metadata에서 값 추출, 없으면 HKWorkout.statistics(for:)에서 fallback
         var distance = 0.0
         var sprintCount = 0
         var velocity = 0.0
@@ -120,41 +123,85 @@ extension WorkoutManager {
         var calories = 0
         var vo2Max = 0.0
 
-        if let distanceMeta: Double = metadata.getValue(forKey: "Distance") {
+        // Distance: metadata → totalDistance → statistics → 시간 범위 샘플 쿼리
+        if let distanceMeta: Double = metadata.getValue(forKey: "Distance"), distanceMeta > 0 {
             distance = distanceMeta
-        } else { dataError = true }
+        } else if let hkDistance = workout.totalDistance?.doubleValue(for: .meterUnit(with: .kilo)), hkDistance > 0 {
+            distance = Double(Int(hkDistance * 10)) / 10
+        } else if let distanceStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!),
+                  let sum = distanceStat.sumQuantity()?.doubleValue(for: .meterUnit(with: .kilo)), sum > 0 {
+            distance = Double(Int(sum * 10)) / 10
+        } else {
+            // 워크아웃 시간 범위 내 거리 샘플 직접 쿼리
+            let queriedDistance = await queryDistanceSamples(start: workout.startDate, end: workout.endDate)
+            distance = Double(Int(queriedDistance * 10)) / 10
+        }
 
+        // Sprint (HKWorkout에 해당 통계 없음)
         if let sprintCountMeta: Int = metadata.getValue(forKey: "SprintCount") {
             sprintCount = sprintCountMeta
-        } else { dataError = true }
+        } else if !hasMetadata {
+            // metadata 없는 워크아웃은 sprint 0으로 처리
+        }
 
+        // Velocity
         if let velocityMeta: Double = metadata.getValue(forKey: "MaxSpeed") {
             velocity = Double(((velocityMeta) * 3.6).rounded(at: 2)) ?? 0
-        } else { dataError = true }
+        } else if let speedStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningSpeed)!),
+                  let maxSpeed = speedStat.maximumQuantity()?.doubleValue(for: HKUnit(from: "m/s")) {
+            velocity = Double(Int(maxSpeed * 3.6 * 100)) / 100
+        } else if !hasMetadata {
+            // metadata 없는 워크아웃은 velocity 0으로 처리
+        }
 
+        // Power
         if let powerMeta: Double = metadata.getValue(forKey: "Power") ??
             metadata.getValue(forKey: "Acceleration") {
             power = powerMeta
-        } else { dataError = true }
+        } else if let powerStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningPower)!),
+                  let maxPower = powerStat.maximumQuantity()?.doubleValue(for: .watt()) {
+            power = Double(Int(maxPower * 10)) / 10
+        } else if !hasMetadata {
+            // metadata 없는 워크아웃은 power 0으로 처리
+        }
 
+        // Heart Rate
+        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        let hrUnit = HKUnit.count().unitDivided(by: .minute())
         if let maxHeartRateMeta: Int = metadata.getValue(forKey: "MaxHeartRate") {
             maxHeartRate = maxHeartRateMeta
-        } else { dataError = true }
+        } else if let hrStat = workout.statistics(for: hrType),
+                  let maxHR = hrStat.maximumQuantity()?.doubleValue(for: hrUnit) {
+            maxHeartRate = Int(maxHR)
+        }
 
         if let minHeartRateMeta: Int = metadata.getValue(forKey: "MinHeartRate") {
             minHeartRate = minHeartRateMeta
-        } else { dataError = true }
-        
+        } else if let hrStat = workout.statistics(for: hrType),
+                  let minHR = hrStat.minimumQuantity()?.doubleValue(for: hrUnit) {
+            minHeartRate = Int(minHR)
+        }
+
         if let heartRatesMeta: String = metadata.getValue(forKey: "HeartRates") {
             heartRates = heartRatesMeta.split(separator: ",").map { Int($0) ?? 0 }
-        } // if no heartRates, but this is not an error
-        
+        }
+
+        // Calories
         if let caloriesMeta: Int = metadata.getValue(forKey: "Calories") {
             calories = caloriesMeta
+        } else if let hkCalories = workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) {
+            calories = Int(hkCalories)
+        } else if let calStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!),
+                  let sum = calStat.sumQuantity()?.doubleValue(for: .kilocalorie()) {
+            calories = Int(sum)
         }
-        
+
+        // Vo2Max
         if let vo2MaxMeta: Double = metadata.getValue(forKey: "Vo2Max") {
             vo2Max = vo2MaxMeta
+        } else if let vo2Stat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .vo2Max)!),
+                  let maxVo2 = vo2Stat.maximumQuantity()?.doubleValue(for: HKUnit(from: "ml/kg*min")) {
+            vo2Max = Double(Int(maxVo2 * 10)) / 10
         }
 
         return WorkoutData(dataID: index+1,
@@ -172,31 +219,65 @@ extension WorkoutManager {
                                     lonSum / Double(dotCount)],
                            calories: calories,
                            vo2Max: vo2Max,
-                           error: dataError)
+                           error: false)
     }
 
     private func fetchHKWorkouts() async -> [HKWorkout] {
-        let soccerPredicate = HKQuery.predicateForObjects(from: .default())
-        let data = try? await withCheckedThrowingContinuation { (
-            continuation: CheckedContinuation<[HKSample], Error>
-        ) in
-            let query = HKSampleQuery(
-                sampleType: .workoutType(),
-                predicate: soccerPredicate,
-                limit: HKObjectQueryNoLimit,
-                sortDescriptors: [NSSortDescriptor(keyPath: \HKSample.startDate, ascending: false)],
-                resultsHandler: { _, samples, error in
+        let soccerPredicate = HKQuery.predicateForWorkouts(with: .soccer)
+        do {
+            let data = try await withCheckedThrowingContinuation { (
+                continuation: CheckedContinuation<[HKSample], Error>
+            ) in
+                let query = HKSampleQuery(
+                    sampleType: .workoutType(),
+                    predicate: soccerPredicate,
+                    limit: HKObjectQueryNoLimit,
+                    sortDescriptors: [NSSortDescriptor(keyPath: \HKSample.startDate, ascending: false)],
+                    resultsHandler: { _, samples, error in
+                        if let error = error {
+                            continuation.resume(throwing: error)
+                        } else {
+                            continuation.resume(returning: samples ?? [])
+                        }
+                    }
+                )
+                healthStore.execute(query)
+            }
+            guard let workouts = data as? [HKWorkout] else {
+                NSLog("fetchHKWorkouts: failed to cast samples to [HKWorkout]")
+                return []
+            }
+            NSLog("fetchHKWorkouts: fetched \(workouts.count) workouts")
+            return workouts
+        } catch {
+            NSLog("fetchHKWorkouts failed: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    /// 워크아웃 시간 범위 내 Walking+Running Distance 샘플을 직접 쿼리하여 합산 (km 단위)
+    private func queryDistanceSamples(start: Date, end: Date) async -> Double {
+        let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: .strictStartDate)
+
+        do {
+            let sum = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Double, Error>) in
+                let query = HKStatisticsQuery(quantityType: distanceType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, statistics, error in
                     if let error = error {
                         continuation.resume(throwing: error)
-                    } else if let samples = samples {
-                        continuation.resume(returning: samples)
+                    } else if let sum = statistics?.sumQuantity()?.doubleValue(for: .meterUnit(with: .kilo)) {
+                        continuation.resume(returning: sum)
+                    } else {
+                        continuation.resume(returning: 0.0)
                     }
                 }
-            )
-            healthStore.execute(query)
+                healthStore.execute(query)
+            }
+            return sum
+        } catch {
+            NSLog("queryDistanceSamples failed: \(error.localizedDescription)")
+            return 0.0
         }
-        guard let workouts = data as? [HKWorkout] else { return [] }
-        return workouts
     }
 
     // HKWorkout + Metadata
@@ -214,18 +295,21 @@ extension WorkoutManager {
                 resultsHandler: { query, samples, deletedObjects, anchor, error in
                     if let error = error {
                         continuation.resume(throwing: error)
-                    } else if let samples = samples {
-                        continuation.resume(returning: samples)
+                    } else {
+                        continuation.resume(returning: samples ?? [])
                     }
                 }
             )
             healthStore.execute(query)
         }
 
-        guard let route = (samples as? [HKWorkoutRoute])?.first, let metadata = route.metadata else {
+        let routes = samples as? [HKWorkoutRoute]
+        guard let route = routes?.first else {
+            // Route 자체가 없음 → 위치 데이터 없이 빈 값 반환
             return ([], [:])
         }
 
+        // Route에서 위치 데이터 추출
         let locations = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
             var allLocations = [CLLocation]()
             let query = HKWorkoutRouteQuery(route: route) { (query, locationsOrNil, done, errorOrNil) in
@@ -245,7 +329,8 @@ extension WorkoutManager {
             healthStore.execute(query)
         }
 
-        return (locations, metadata)
+        // Metadata는 있으면 반환, 없으면 빈 딕셔너리
+        return (locations, route.metadata ?? [:])
     }
 }
 
@@ -324,5 +409,4 @@ extension WorkoutManager {
             }
         }
     }
-    
 }
