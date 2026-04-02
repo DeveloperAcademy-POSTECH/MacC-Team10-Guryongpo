@@ -103,16 +103,22 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
         let metadata = self.matrics.getMetadata()
 
-        guard let route = try await routeBuilder?.finishRoute(
+        // Route 생성 시도, 실패 시 메타데이터를 HKWorkout에 직접 저장
+        if let route = try? await routeBuilder?.finishRoute(
             with: workout,
             metadata: metadata
-        ) else {
-            throw SessionError.failureMakeRoute
-            
-        }
-
-        Task { @MainActor in
-            self.route = route
+        ) {
+            Task { @MainActor in
+                self.route = route
+            }
+        } else {
+            // Route 실패 시 메타데이터를 workout 자체에 첨부
+            do {
+                try await healthStore.addMetadata(metadata, to: workout)
+                NSLog("endWorkoutSession: route failed, metadata saved to workout directly")
+            } catch {
+                NSLog("endWorkoutSession: failed to save metadata to workout: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -200,8 +206,7 @@ extension WorkoutManager {
         
         // Filter the raw data.
         let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
-            // 필터 조정치 필요, 예시 121, 66등으로 20 미만인 필터 데이터가 존재하지 않음
-            location.horizontalAccuracy <= 20.0
+            location.horizontalAccuracy <= 50.0
         }
         
         guard !filteredLocations.isEmpty else {
@@ -220,6 +225,7 @@ extension WorkoutManager {
     // MARK: - 위치 공유 권한 정보가 업데이트 되면 불리는 메서드
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
+        objectWillChange.send()
     }
 
     func checkLocationAuthorization() {

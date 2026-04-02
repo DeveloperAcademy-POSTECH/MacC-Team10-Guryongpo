@@ -114,6 +114,10 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     var isHealthDataAvailable: Bool {
         HKHealthStore.isHealthDataAvailable()
     }
+
+    var hasAllAuthorization: Bool {
+        hasHealthAuthorization() && hasLocationAuthorization() && isHealthDataAvailable
+    }
     
     func hasLocationAuthorization() -> Bool {
         [

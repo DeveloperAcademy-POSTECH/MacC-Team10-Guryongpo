@@ -107,6 +107,10 @@ extension WorkoutManager {
                 lonSum += location.coordinate.longitude
             }
         }
+        // Route metadata가 비어있으면 workout 자체의 metadata에서 fallback
+        if metadata.isEmpty, let workoutMeta = workout.metadata {
+            metadata = workoutMeta
+        }
 
         let displayedTime = String(Int(workout.duration)/60) + " : " + String(Int(workout.duration) % 60)
         let dotCount = routes.isEmpty ? 1 : routes.count
