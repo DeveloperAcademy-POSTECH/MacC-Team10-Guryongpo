@@ -8,19 +8,19 @@
 import Foundation
 
 let BadgeImageDictionary: [[Int: String]] = [[
-    -1: "",
+    -1: "Distance_Locked_1",
      0: "Distance_Unlocked_1",
      1: "Distance_Unlocked_2",
      2: "Distance_Unlocked_3",
      3: "Distance_Unlocked_4"
 ], [
-    -1: "",
+    -1: "Sprint_Locked_1",
      0: "Sprint_Unlocked_1",
      1: "Sprint_Unlocked_2",
      2: "Sprint_Unlocked_3",
      3: "Sprint_Unlocked_4"
 ], [
-    -1: "",
+    -1: "Velocity_Locked_1",
      0: "Velocity_Unlocked_1",
      1: "Velocity_Unlocked_2",
      2: "Velocity_Unlocked_3",
@@ -29,19 +29,19 @@ let BadgeImageDictionary: [[Int: String]] = [[
 ]
 
 let ShortenedBadgeImageDictionary: [[Int: String]] = [[
-    -1: "",
+    -1: "Distance_Locked_1",
      0: "Distance_Shortened_1",
      1: "Distance_Shortened_2",
      2: "Distance_Shortened_3",
      3: "Distance_Shortened_4"
 ], [
-    -1: "",
+    -1: "Sprint_Locked_1",
      0: "Sprint_Shortened_1",
      1: "Sprint_Shortened_2",
      2: "Sprint_Shortened_3",
      3: "Sprint_Shortened_4"
 ], [
-    -1: "",
+    -1: "Velocity_Locked_1",
      0: "Velocity_Shortened_1",
      1: "Velocity_Shortened_2",
      2: "Velocity_Shortened_3",
