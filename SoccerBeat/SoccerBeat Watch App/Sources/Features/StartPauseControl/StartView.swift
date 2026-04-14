@@ -11,8 +11,7 @@ import SDWebImageSwiftUI
 
 struct StartView: View {
     @EnvironmentObject var workoutManager: WorkoutManager
-    @State private var isShowingHealthAlert = false
-    @State private var isShowingLocationAlert = false
+    @Environment(\.scenePhase) var scenePhase
 
     var body: some View {
         VStack {
@@ -20,66 +19,40 @@ struct StartView: View {
                 SummaryView()
             } else if workoutManager.showingPrecount {
                 PrecountView()
+            } else if workoutManager.hasAllAuthorization {
+                startButtonView
             } else {
-                ZStack {
-                    ZStack {
-                        if let url = Bundle.main.path(forResource: "StartGlow", ofType: "gif") {
-                            WebImage(url: URL(fileURLWithPath: url))
-                                .resizable()
-                                .customLoopCount(1)
-                                .playbackRate(0.9)
-                                .playbackMode(.normal)
-                                .scaledToFill()
-                                .frame(width: 250)
-                                .background(Color.clear)
-                                .opacity(0.3)
-                        }
-                    }.alert(isPresented: $isShowingHealthAlert) {
-                        Alert(title: Text("need_health_authorization"),
-                              message: Text("inform_need_health"),
-                              dismissButton: .default(Text("close")))
-                    }
-
-                    Button(action: handleButtonPress) {
-                        Image(.startButton)
-                    }
-                    .alert(isPresented: $isShowingLocationAlert) {
-                        Alert(title: Text("need_location_authorization"),
-                              message: Text("inform_need_location"),
-                              dismissButton: .default(Text("close")))
-                    }
-                }
-
+                PermissionRequiredView()
             }
         }
         .buttonStyle(.borderless)
-    }
-
-    private func handleButtonPress() {
-        checkLocationAuthorization()
-        checkHealthAuthorization()
-        handleWorkoutStart()
-    }
-
-    private func checkLocationAuthorization() {
-        workoutManager.checkLocationAuthorization()
-        if workoutManager.hasLocationAuthorization() == false {
-            isShowingLocationAlert.toggle()
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                workoutManager.checkLocationAuthorization()
+                workoutManager.objectWillChange.send()
+            }
         }
     }
 
-    private func checkHealthAuthorization() {
-        if workoutManager.hasHealthAuthorization() == false {
-            isShowingHealthAlert.toggle()
-        }
-    }
+    private var startButtonView: some View {
+        ZStack {
+            if let url = Bundle.main.path(forResource: "StartGlow", ofType: "gif") {
+                WebImage(url: URL(fileURLWithPath: url))
+                    .resizable()
+                    .customLoopCount(1)
+                    .playbackRate(0.9)
+                    .playbackMode(.normal)
+                    .scaledToFill()
+                    .frame(width: 250)
+                    .background(Color.clear)
+                    .opacity(0.3)
+            }
 
-    private func handleWorkoutStart() {
-        let hasAllAuthorization = workoutManager.hasHealthAuthorization()
-        && workoutManager.hasLocationAuthorization()
-
-        if hasAllAuthorization && workoutManager.isHealthDataAvailable {
-            workoutManager.showingPrecount.toggle()
+            Button(action: {
+                workoutManager.showingPrecount.toggle()
+            }) {
+                Image(.startButton)
+            }
         }
     }
 }

@@ -89,6 +89,15 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
     // 워치 경기 기록 종료
     func endWorkoutSession(_ date: Date) async throws {
+        let metadata = self.matrics.getMetadata()
+
+        // builder에 메타데이터를 먼저 추가하여 workout에 포함되도록 함
+        do {
+            try await builder?.addMetadata(metadata)
+        } catch {
+            NSLog("endWorkoutSession: failed to add metadata to builder: \(error.localizedDescription)")
+        }
+
         do {
             try await builder?.endCollection(at: date)
         } catch {
@@ -101,18 +110,16 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
         self.workout = workout
 
-        let metadata = self.matrics.getMetadata()
-
-        guard let route = try await routeBuilder?.finishRoute(
+        // Route 생성 시도
+        if let route = try? await routeBuilder?.finishRoute(
             with: workout,
             metadata: metadata
-        ) else {
-            throw SessionError.failureMakeRoute
-            
-        }
-
-        Task { @MainActor in
-            self.route = route
+        ) {
+            Task { @MainActor in
+                self.route = route
+            }
+        } else {
+            NSLog("endWorkoutSession: route creation failed, metadata is already stored in workout via builder")
         }
     }
     
@@ -200,13 +207,10 @@ extension WorkoutManager {
         
         // Filter the raw data.
         let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
-            // 필터 조정치 필요, 예시 121, 66등으로 20 미만인 필터 데이터가 존재하지 않음
-            location.horizontalAccuracy <= 20.0
+            location.horizontalAccuracy <= 50.0
         }
         
         guard !filteredLocations.isEmpty else {
-            routeBuilder?.insertRouteData(locations, completion: { _, _ in
-            })
             return
         }
         
@@ -222,6 +226,7 @@ extension WorkoutManager {
     // MARK: - 위치 공유 권한 정보가 업데이트 되면 불리는 메서드
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
+        objectWillChange.send()
     }
 
     func checkLocationAuthorization() {

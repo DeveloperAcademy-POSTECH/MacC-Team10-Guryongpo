@@ -114,6 +114,10 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     var isHealthDataAvailable: Bool {
         HKHealthStore.isHealthDataAvailable()
     }
+
+    var hasAllAuthorization: Bool {
+        hasHealthAuthorization() && hasLocationAuthorization() && isHealthDataAvailable
+    }
     
     func hasLocationAuthorization() -> Bool {
         [
@@ -136,8 +140,8 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     
     func requestHealthAuthorization() {
         healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
-            guard error != nil else {
-                NSLog(error.debugDescription)
+            if let error {
+                NSLog(error.localizedDescription)
                 return
             }
             if success {

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find . -type f -name \"*.swift\" -exec grep -l \"HK\\\\|healthStore\\\\|workout\" {})",
+      "Bash(find /Users/will/Documents/projects/macro -type f -name *.swift -exec grep -l \"session\\\\|Session\" {})",
+      "Bash(2)",
+      "Bash(xcodebuild -project SoccerBeat/SoccerBeat.xcodeproj -scheme \"SoccerBeat\" -destination 'platform=iOS Simulator,name=iPhone 16' build)",
+      "Bash(ls:*)",
+      "Bash(find /Users/will/Documents/projects/macro -maxdepth 3 -name *.xcodeproj -o -name *.xcworkspace)",
+      "Bash(find:*)",
+      "Bash(xcodebuild -project SoccerBeat/SoccerBeat.xcodeproj -scheme \"SoccerBeat Watch App\" -destination 'platform=watchOS Simulator,name=Apple Watch Series 9 \\(45mm\\)' build)",
+      "Bash(xcodebuild -project SoccerBeat/SoccerBeat.xcodeproj -scheme \"SoccerBeat Watch App\" -destination 'platform=watchOS Simulator,name=Apple Watch Ultra 2 \\(49mm\\),OS=11.2' build)",
+      "Bash(xcodebuild -project SoccerBeat/SoccerBeat.xcodeproj -list)"
+    ]
+  }
+}
