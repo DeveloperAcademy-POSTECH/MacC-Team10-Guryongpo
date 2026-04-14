@@ -151,22 +151,25 @@ extension WorkoutManager {
         // Velocity
         if let velocityMeta: Double = metadata.getValue(forKey: "MaxSpeed") {
             velocity = Double(((velocityMeta) * 3.6).rounded(at: 2)) ?? 0
-        } else if let speedStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningSpeed)!),
-                  let maxSpeed = speedStat.maximumQuantity()?.doubleValue(for: HKUnit(from: "m/s")) {
-            velocity = Double(Int(maxSpeed * 3.6 * 100)) / 100
-        } else if !hasMetadata {
-            // metadata 없는 워크아웃은 velocity 0으로 처리
+        } else if let speedStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningSpeed)!) {
+            let speedUnit = HKUnit(from: "m/s")
+            if let maxSpeed = speedStat.maximumQuantity()?.doubleValue(for: speedUnit) {
+                velocity = Double(Int(maxSpeed * 3.6 * 100)) / 100
+            } else if let avgSpeed = speedStat.averageQuantity()?.doubleValue(for: speedUnit) {
+                velocity = Double(Int(avgSpeed * 3.6 * 100)) / 100
+            }
         }
 
         // Power
         if let powerMeta: Double = metadata.getValue(forKey: "Power") ??
             metadata.getValue(forKey: "Acceleration") {
             power = powerMeta
-        } else if let powerStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningPower)!),
-                  let maxPower = powerStat.maximumQuantity()?.doubleValue(for: .watt()) {
-            power = Double(Int(maxPower * 10)) / 10
-        } else if !hasMetadata {
-            // metadata 없는 워크아웃은 power 0으로 처리
+        } else if let powerStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningPower)!) {
+            if let maxPower = powerStat.maximumQuantity()?.doubleValue(for: .watt()) {
+                power = Double(Int(maxPower * 10)) / 10
+            } else if let avgPower = powerStat.averageQuantity()?.doubleValue(for: .watt()) {
+                power = Double(Int(avgPower * 10)) / 10
+            }
         }
 
         // Heart Rate
@@ -226,15 +229,20 @@ extension WorkoutManager {
                            error: false)
     }
 
+    private static let soccerBeatSourceKeyword = "SoccerBeat"
+
     private func fetchHKWorkouts() async -> [HKWorkout] {
         let soccerPredicate = HKQuery.predicateForWorkouts(with: .soccer)
+        let runningPredicate = HKQuery.predicateForWorkouts(with: .running)
+        let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [soccerPredicate, runningPredicate])
+
         do {
             let data = try await withCheckedThrowingContinuation { (
                 continuation: CheckedContinuation<[HKSample], Error>
             ) in
                 let query = HKSampleQuery(
                     sampleType: .workoutType(),
-                    predicate: soccerPredicate,
+                    predicate: combinedPredicate,
                     limit: HKObjectQueryNoLimit,
                     sortDescriptors: [NSSortDescriptor(keyPath: \HKSample.startDate, ascending: false)],
                     resultsHandler: { _, samples, error in
@@ -251,8 +259,22 @@ extension WorkoutManager {
                 NSLog("fetchHKWorkouts: failed to cast samples to [HKWorkout]")
                 return []
             }
-            NSLog("fetchHKWorkouts: fetched \(workouts.count) workouts")
-            return workouts
+
+            // 디버그: 각 워크아웃의 타입과 소스 확인
+            for workout in workouts {
+                NSLog("fetchHKWorkouts: type=\(workout.workoutActivityType.rawValue) source=\(workout.sourceRevision.source.bundleIdentifier) date=\(workout.startDate)")
+            }
+
+            // .soccer는 전부 포함, .running은 SoccerBeat Watch App에서 기록한 것만 포함
+            let filtered = workouts.filter { workout in
+                if workout.workoutActivityType == .soccer {
+                    return true
+                }
+                return workout.sourceRevision.source.bundleIdentifier.contains(Self.soccerBeatSourceKeyword)
+            }
+
+            NSLog("fetchHKWorkouts: fetched \(workouts.count) workouts, \(filtered.count) after filtering")
+            return filtered
         } catch {
             NSLog("fetchHKWorkouts failed: \(error.localizedDescription)")
             return []
