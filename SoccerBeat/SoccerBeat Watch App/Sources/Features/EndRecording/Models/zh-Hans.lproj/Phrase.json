@@ -1,0 +1,46 @@
+#  Wise Saying in Soccer
+
+{
+  "phrase":[
+     {
+       "name": "Zlatan Ibrahimovic",
+       "saying": "I don’t believe in luck, I only believe in hard work"
+     },
+     {
+       "name": "David Beckham",
+       "saying": "The reason I success is because I’ve never been afraid to fail"
+     },
+     {
+       "name": "George Best",
+       "saying": "The greatest pleasure in life is doing what people say you cannot do"
+     },
+     {
+       "name": "Cristiano Ronaldo",
+       "saying": "Dream. Sacrifice. Work Hard."
+     },
+     {
+       "name": "Pelé",
+       "saying": "The more difficult the victory, the greater the happiness in winning"
+     },
+     {
+       "name": "Lionel Messi",
+       "saying": "The only victory that counts is the one over yourself"
+     },
+     {
+       "name": "Zinedine Zidane",
+       "saying": "If you want to see the best, you have to do the best"
+     },
+     {
+       "name": "Jose Mourinho",
+       "saying": "The most important quality a player can have is not skill, but mentality"
+     },
+     {
+       "name": "Ryan Giggs",
+       "saying": "You can always improve, you can always get better"
+     },
+     {
+       "name": "Rio Ferdinand",
+       "saying": "If you believe in yourself and your team, you can achieve anything"
+     }
+  ]
+}

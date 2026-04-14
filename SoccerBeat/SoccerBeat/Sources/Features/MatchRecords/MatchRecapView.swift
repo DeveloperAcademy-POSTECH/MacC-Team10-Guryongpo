@@ -1,0 +1,338 @@
+//
+//  MatchRecapView.swift
+//  SoccerBeat
+//
+//  Created by Hyungmin Kim on 2023/10/22.
+//
+
+import SwiftUI
+import StoreKit
+
+struct MatchRecapView: View {
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var workoutManager: WorkoutManager
+    @State private var userName = ""
+    @Binding var workouts: [WorkoutData]
+    @State private var requestReview = false
+    @State private var hasDoneReviewBefore = false
+    private let reviewRequestThreshold: TimeInterval = 4 * 30 * 24 * 60 * 60 // 4 months
+    
+    private var lastName: String {
+        guard let lastName = userName
+            .split(separator: " ")
+            .compactMap({ String($0) }).last else { return "" }
+        return lastName
+    }
+    
+    var body: some View {
+        ZStack {
+        Image("BackgroundPattern")
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .clipped()
+            .opacity(0.5)
+                VStack(spacing: 0) {
+                    Spacer()
+                        .frame(height: 60)
+                    HStack {
+                        InformationButton(message: "모든 경기를 한 눈에 확인해 보세요.")
+                            .padding(.leading, 16)
+                        
+                        Spacer()
+                    }
+                    .padding(.top)
+                    HStack {
+                        Text("경기 기록")
+                            .font(.mainSubTitleText)
+                            .foregroundStyle(.mainSubTitleColor)
+                        
+                        Spacer()
+                    }
+                    .padding(.top, 14)
+                    .padding(.leading, 32)
+                    
+                    HStack {
+                        VStack(alignment: .leading, spacing: 0.0) {
+                            // view
+                            Text("Player \(lastName),")
+                                .lineLimit(1)
+                            Text("Your past games")
+                        }
+                        .font(.mainTitleText)
+                        .foregroundStyle(.white)
+                        .kerning(-1.5)
+                        Spacer()
+                    }
+                    .padding(.leading, 32)
+                    .padding(.bottom, 45)
+                    
+                    if !workouts.isEmpty {
+                        List {
+                            ForEach(workouts) { workout in
+                                ZStack {
+                                    NavigationLink {
+                                        MatchDetailView(workout: workout)
+                                            .toolbarRole(.editor)
+                                    } label: {
+                                        EmptyView()
+                                    }
+                                    .opacity(0.0)
+                                    
+                                    MatchListItemView(workoutData: workout)
+                                        .buttonStyle(.plain)
+                                }
+                                .offset(y: 4)
+                                .padding(.vertical, 2)
+                                .listRowSeparator(.hidden)
+                            }
+                            
+                            .onDelete { offset in
+                                Task {
+                                    await delete(offset)
+                                }
+                            }
+                            
+                            Spacer()
+                                .frame(height: 60)
+                        }
+                        .listStyle(.plain)
+                    } else {
+                        ZStack {
+                            Image("MyCardBack")
+                                .resizable()
+                                .frame(width: 107, height: 140)
+                                .opacity(0.3)
+                            VStack {
+                                Text("저장된 경기 기록이 없습니다.")
+                                    .font(.matchRecapEmptyDataTop)
+                                Group {
+                                    Text("애플워치를 차고 사커비트로")
+                                    Text("당신의 첫 번째 경기를 기록해 보세요!")
+                                }
+                                .font(.matchRecapEmptyDataBottom)
+                                .foregroundStyle(.mainSubTitleColor)
+                            }
+                        }
+                        Spacer()
+                    }
+                }
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                                .foregroundStyle(Color.white)
+                        }
+                    }
+                }
+                .alert(isPresented: $requestReview) {
+                    Alert(title: Text("사커비트 앱이 마음에 드시나요?"),
+                          primaryButton: .default(Text("네")) {
+                        requestAppReview()
+                        UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
+                        requestReview = false
+                        UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
+                    },
+                          secondaryButton: .cancel(Text("아니요")) {
+                        UserDefaults.standard.set(Date(), forKey: "lastReviewReuquestDate")
+                        requestReview = false
+                        UserDefaults.standard.set(true, forKey: "hasDoneReviewBefore")
+                    })
+                }
+                .onAppear {
+                    userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+                    hasDoneReviewBefore = UserDefaults.standard.bool(forKey: "hasDoneReviewBefore")
+                    
+                    if let lastRequestDate = UserDefaults.standard.object(forKey: "lastReviewRequestDate") as? Date {
+                        let timeSinceLastRequest = Date().timeIntervalSince(lastRequestDate)
+                        
+                        if timeSinceLastRequest > reviewRequestThreshold {
+                            if workouts.count > 7 && !hasDoneReviewBefore {
+                                requestReview = true
+                            }
+                        }
+                    }
+                    else if workouts.count > 7 && !hasDoneReviewBefore {
+                        requestReview = true
+                    }
+                }
+            }
+    }
+    private func requestAppReview() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
+        } else {
+            SKStoreReviewController.requestReview()
+        }
+    }
+    
+    private func delete(_ offset: IndexSet) async {
+        do {
+            try await workoutManager.delete(at: offset)
+        } catch {
+            NSLog("Deleting HKWorkout failed")
+        }
+    }
+}
+
+struct MatchListItemView: View {
+    @EnvironmentObject var profileModel: ProfileModel
+    @State private var currentLocation = "--'--"
+    let workoutData: WorkoutData
+    
+    var body: some View {
+        ZStack {
+            // 배경뷰
+            LightRectangleView(alpha: 0.2, color: .white, radius: 15)
+            
+            // 좌상단 뱃지뷰
+            VStack {
+                HStack(spacing: 0) {
+                    badges
+                        .offset(y: -12)
+                    Spacer()
+                    errors
+                        .offset(x: -4, y: -8)
+                }
+                Spacer()
+            }
+            
+            HStack(spacing: 0) {
+                // 스파이더 차트
+                radarCharts
+                //                    .frame(width: 60, height: 60)
+                    .padding(.top, 16)
+                    .opacity(workoutData.error ? 0 : 1)
+                
+                // 경기 데이터들
+                VStack(alignment: .leading) {
+                    timeAndLocation
+                        .padding(.top, 3)
+                    
+                    Spacer()
+                    
+                    matchMatrics
+                }
+                .padding(.vertical, 8)
+                .frame(width: 225)
+                .foregroundStyle(.white)
+            }
+        }
+    }
+}
+
+extension MatchListItemView {
+    @ViewBuilder
+    var badges: some View {
+        if !workoutData.error {
+            ForEach(workoutData.matchBadge.indices, id: \.self) { index in
+                if let badgeName = ShortenedBadgeImageDictionary[index][workoutData.matchBadge[index]] {
+                    if badgeName.isEmpty {
+                        EmptyView()
+                    } else {
+                        Image(badgeName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 32, height: 36)
+                    }
+                } else {
+                    EmptyView()
+                }
+            }
+        } else {
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    var errors: some View {
+        if workoutData.error {
+            Image(.errormark)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 32, height: 32)
+        } else {
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    var radarCharts: some View {
+        let recent = DataConverter.toLevels(workoutData)
+        let average = DataConverter.toLevels(profileModel.averageAbility)
+        
+        RadarChartView(averageDataPoints: recent, limitValue: 5.0)
+        
+    }
+    
+    @ViewBuilder
+    var timeAndLocation: some View {
+        Group {
+            HStack(spacing: 0) {
+                Text(workoutData.yearMonthDay.description)
+                Text("경기 시간 ")
+                    .padding(.leading)
+                Text(workoutData.time)
+            }
+
+            Text(currentLocation)
+                .frame(alignment: .trailing)
+                .multilineTextAlignment(.trailing)
+                .task {
+                    currentLocation = await workoutData.location
+                }
+        }
+        .opacity(0.6)
+        .font(.matchDateLocationText)
+    }
+    
+    @ViewBuilder
+    var matchMatrics: some View {
+        HStack(alignment: .lastTextBaseline, spacing: 16) {
+            VStack(alignment: .leading) {
+                Text("뛴 거리")
+                HStack(spacing: 0) {
+                    Text((workoutData.error ? "--" : String(format: "%.1f", workoutData.distance)))
+                    Text(" km")
+                }
+                .bold()
+            }
+            
+            VStack(alignment: .leading) {
+                Text("최고 속도")
+                HStack(spacing: 0) {
+                    Text((workoutData.error ? "--" :  "\(Int(workoutData.velocity).formatted())"))
+                    Text(" km/h")
+                }
+                .bold()
+            }
+            
+            VStack(alignment: .leading) {
+                Text("스프린트")
+                HStack(spacing: 0) {
+                    if workoutData.sprint == 1 {
+                        Text((workoutData.error ? "--" : "\(workoutData.sprint)"))
+                        Text(" time")
+                    } else {
+                        Text((workoutData.error ? "--" : "\(workoutData.sprint)"))
+                        Text(" times")
+                    }
+                }
+                
+                .bold()
+            }
+        }
+        .padding(.vertical, 8)
+        .font(.system(size: 14))
+    }
+}
+
+#Preview {
+    @StateObject var workoutManager = DIContianer.makeWorkoutManager()
+    return MatchRecapView(workouts: .constant(WorkoutData.exampleWorkouts))
+        .environmentObject(ProfileModel(workoutManager: workoutManager))
+        .environmentObject(workoutManager)
+}

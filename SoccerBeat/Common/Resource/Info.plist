@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSMotionUsageDescription</key>
+	<string>운동중 및 정지 상태를 감지하기 위해 사용합니다.</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>선수 프로필 저장 및 공유를 위해 사용합니다.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>instagram-stories</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-Pro-Text-Bold.otf</string>
+		<string>SF-Pro-Text-Regular.otf</string>
+		<string>SF-Pro-Display-RegularItalic.otf</string>
+		<string>SF-Pro-Display-HeavyItalic.otf</string>
+		<string>NotoSansDisplay-BlackItalic.ttf</string>
+		<string>NotoSans-Black.ttf</string>
+		<string>NotoSans-BlackItalic.ttf</string>
+		<string>NotoSans-Regular.ttf</string>
+		<string>SF-Compact-Text-LightItalic.otf</string>
+		<string>SF-Compact-Text-Medium.otf</string>
+		<string>SF-Compact-Text-Regular.otf</string>
+		<string>SF-Compact-Text-SemiboldItalic.otf</string>
+		<string>SF-Pro-Text-BlackItalic.otf</string>
+		<string>SF-Pro-Text-HeavyItalic.otf</string>
+		<string>SF-Pro-Text-LightItalic.otf</string>
+		<string>SF-Pro-Text-RegularItalic.otf</string>
+		<string>SF-Pro-Text-SemiboldItalic.otf</string>
+		<string>SF-Pro-Text-Medium.otf</string>
+		<string>SF-Pro-Text-Light.otf</string>
+		<string>SF-Pro-Text-MediumItalic.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
+		<string>SF-Compact-Text-Thin.otf</string>
+		<string>TurretRoad-ExtraBold.ttf</string>
+	</array>
+</dict>
+</plist>

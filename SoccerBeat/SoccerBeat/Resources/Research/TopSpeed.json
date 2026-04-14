@@ -1,0 +1,48 @@
+{
+  "players": [
+    {
+      "name": "Lionel Messi",
+      "top_speed": "33.8"
+    },
+    {
+      "name": "Jude Bellingham",
+      "top_speed": "34.84"
+    },
+    {
+      "name": "Declan Rice",
+      "top_speed": "33.6"
+    },
+    {
+      "name": "Kai Havertz",
+      "top_speed": "33.1"
+    },
+    {
+      "name": "Josko Gvardiol",
+      "top_speed": "34.8"
+    },
+    {
+      "name": "Rasmus Højlund",
+      "top_speed": "35.7"
+    },
+    {
+      "name": "Dominik Szoboszlai",
+      "top_speed": "33.9"
+    },
+    {
+      "name": "Christopher Nkunku",
+      "top_speed": "34.7"
+    },
+    {
+      "name": "Moussa Diaby",
+      "top_speed": "35.1"
+    },
+    {
+      "name": "Sandro Tonali",
+      "top_speed": "32.9"
+    },
+    {
+      "name": "Mason Mount",
+      "top_speed": "33.2"
+    }
+  ]
+}
