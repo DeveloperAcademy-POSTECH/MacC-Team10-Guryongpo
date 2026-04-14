@@ -89,6 +89,15 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
     // 워치 경기 기록 종료
     func endWorkoutSession(_ date: Date) async throws {
+        let metadata = self.matrics.getMetadata()
+
+        // builder에 메타데이터를 먼저 추가하여 workout에 포함되도록 함
+        do {
+            try await builder?.addMetadata(metadata)
+        } catch {
+            NSLog("endWorkoutSession: failed to add metadata to builder: \(error.localizedDescription)")
+        }
+
         do {
             try await builder?.endCollection(at: date)
         } catch {
@@ -101,9 +110,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
         self.workout = workout
 
-        let metadata = self.matrics.getMetadata()
-
-        // Route 생성 시도, 실패 시 메타데이터를 HKWorkout에 직접 저장
+        // Route 생성 시도
         if let route = try? await routeBuilder?.finishRoute(
             with: workout,
             metadata: metadata
@@ -112,13 +119,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
                 self.route = route
             }
         } else {
-            // Route 실패 시 메타데이터를 workout 자체에 첨부
-            do {
-                try await healthStore.addMetadata(metadata, to: workout)
-                NSLog("endWorkoutSession: route failed, metadata saved to workout directly")
-            } catch {
-                NSLog("endWorkoutSession: failed to save metadata to workout: \(error.localizedDescription)")
-            }
+            NSLog("endWorkoutSession: route creation failed, metadata is already stored in workout via builder")
         }
     }
     
