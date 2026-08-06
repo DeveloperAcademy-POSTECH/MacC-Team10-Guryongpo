@@ -122,6 +122,20 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         HKHealthStore.isHealthDataAvailable()
     }
 
+    #if os(watchOS)
+    var hasPreciseRecentLocation: Bool {
+        guard locationManager.accuracyAuthorization == .fullAccuracy,
+              let location = locationManager.location,
+              location.horizontalAccuracy >= 0 else {
+            return false
+        }
+
+        // 경기 시작 시 오래된 캐시 위치를 사용하지 않도록 CoreLocation 샘플 시각을 직접 검증한다.
+        let sampleAge = Date().timeIntervalSince(location.timestamp)
+        return (0...5).contains(sampleAge)
+    }
+    #endif
+
     var hasAllAuthorization: Bool {
         hasHealthAuthorization() && hasLocationAuthorization() && isHealthDataAvailable
     }
