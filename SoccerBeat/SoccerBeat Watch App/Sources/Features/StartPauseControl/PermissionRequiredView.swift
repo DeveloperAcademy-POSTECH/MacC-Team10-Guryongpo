@@ -31,10 +31,15 @@ struct PermissionRequiredView: View {
                         label: "위치",
                         isGranted: workoutManager.hasLocationAuthorization()
                     )
+                    permissionRow(
+                        icon: "location.circle.fill",
+                        label: "정밀 위치/GPS",
+                        isGranted: workoutManager.hasPreciseRecentLocation
+                    )
                 }
                 .padding(.vertical, 4)
 
-                Text("iPhone 설정에서\n권한을 허용해주세요")
+                Text("iPhone 설정에서 권한을 허용하고\n야외에서 GPS 신호를 확인해주세요")
                     .font(.caption)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)
