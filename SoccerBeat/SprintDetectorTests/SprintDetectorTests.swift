@@ -58,4 +58,31 @@ final class SprintDetectorTests: XCTestCase {
         XCTAssertEqual(detector.sprintCount, 1)
         XCTAssertTrue(detector.isSprint)
     }
+
+    func testExitThenReentryAddsSprint() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 4_000)
+
+        let samples: [(TimeInterval, Double)] = [
+            (0, 6.0),
+            (0.5, 6.0),
+            (0.75, 4.9),
+            (1.25, 4.8),
+            (1.5, 6.0),
+            (2.0, 6.0)
+        ]
+
+        samples.forEach { offset, speed in
+            let timestamp = start.addingTimeInterval(offset)
+            detector.process(
+                timestamp: timestamp,
+                speed: speed,
+                speedAccuracy: 0.2,
+                receivedAt: timestamp
+            )
+        }
+
+        XCTAssertEqual(detector.sprintCount, 2)
+        XCTAssertTrue(detector.isSprint)
+    }
 }
