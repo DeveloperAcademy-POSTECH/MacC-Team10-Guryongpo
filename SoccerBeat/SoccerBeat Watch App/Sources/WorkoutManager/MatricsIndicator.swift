@@ -34,6 +34,10 @@ final class MatricsIndicator: NSObject, ObservableObject {
     @Published var isSprint: Bool = false
     @Published var recentSprintSpeedMPS = 0.0
     @Published var speedMPS: Double = 0.0
+    // Sprint 판정은 CoreLocation 속도를 수집하는 Watch 타깃에서만 수행한다.
+    #if os(watchOS)
+    private var sprintDetector = SprintDetector()
+    #endif
 
 
     // MARK: - Distance
@@ -145,6 +149,36 @@ final class MatricsIndicator: NSObject, ObservableObject {
         self.zone5Count = 0
     }
     
+    #if os(watchOS)
+    func updateSpeed(
+        timestamp: Date,
+        speed: Double,
+        speedAccuracy: Double,
+        receivedAt: Date = .now
+    ) {
+        let previousValidSampleCount = sprintDetector.validSampleCount
+        let previousSpeedMPS = speedMPS
+
+        sprintDetector.process(
+            timestamp: timestamp,
+            speed: speed,
+            speedAccuracy: speedAccuracy,
+            receivedAt: receivedAt
+        )
+
+        guard sprintDetector.validSampleCount > previousValidSampleCount else {
+            return
+        }
+
+        speedMPS = sprintDetector.speedMPS
+        maxSpeedMPS = sprintDetector.maxSpeedMPS
+        isSprint = sprintDetector.isSprint
+        sprintCount = sprintDetector.sprintCount
+        recentSprintSpeedMPS = sprintDetector.recentSprintSpeedMPS
+        acceleration = max(acceleration, speedMPS - previousSpeedMPS)
+    }
+    #endif
+
     /// 이게 한번만 불리는게 아니라, 여러 세트가 있을 수 있음
     /// 예를들어 경기를 1쿼터, 2쿼터 나눠서 할거면, 지금처럼 메트릭스 인디케이터가 여러개가 생길 수도 있는 것임.
     /// 아니면 애초에 heartRate, distanceMeter, SpeedMPS 등을 배열로 선언해서 각 쿼터에 얼마나 했는지를 추정할 수도 있겠음
