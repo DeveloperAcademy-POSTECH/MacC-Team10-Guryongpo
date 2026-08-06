@@ -137,7 +137,14 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     #endif
 
     var hasAllAuthorization: Bool {
+        #if os(watchOS)
+        hasHealthAuthorization()
+            && hasLocationAuthorization()
+            && hasPreciseRecentLocation
+            && isHealthDataAvailable
+        #else
         hasHealthAuthorization() && hasLocationAuthorization() && isHealthDataAvailable
+        #endif
     }
     
     func hasLocationAuthorization() -> Bool {
