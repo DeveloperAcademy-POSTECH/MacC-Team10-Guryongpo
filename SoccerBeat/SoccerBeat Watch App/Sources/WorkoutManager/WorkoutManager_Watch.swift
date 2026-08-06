@@ -15,6 +15,12 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
     
     // MARK: - 데이터 수집 및 경기 시작
     func startWorkout() {
+        // 카운트다운 중 위치가 오래되거나 정밀 권한이 바뀐 경우 실제 세션 시작을 차단한다.
+        guard hasAllAuthorization else {
+            showingPrecount = false
+            return
+        }
+
         setupWorkoutConfig()
         startWorkoutSession()
     }
