@@ -212,6 +212,8 @@ extension WorkoutManager {
     // MARK: - 위치 정보가 수집되면 불리는 메서드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard running else {
+            // 경기 전 최신 위치가 준비되면 StartView의 시작 가능 상태를 다시 평가한다.
+            objectWillChange.send()
             return
         }
 
