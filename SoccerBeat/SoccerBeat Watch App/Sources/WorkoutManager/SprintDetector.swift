@@ -124,4 +124,13 @@ struct SprintDetector {
         // 기본값을 단일 초기화 원천으로 사용해 판정 상태와 진단 카운터를 빠짐없이 초기화한다.
         self = Self()
     }
+
+    mutating func pause() {
+        // 일시정지 전후 샘플이 하나의 Sprint 후보 구간으로 이어지지 않게 시간 상태를 끊는다.
+        state = .idle
+        isSprint = false
+        speedMPS = 0
+        lastTimestamp = nil
+        candidatePeakSpeedMPS = 0
+    }
 }
