@@ -158,6 +158,10 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
         NSLog("WorkOutSession 변화 감지: \(toState)")
         Task { @MainActor in
             self.running = toState == .running
+            if toState == .paused {
+                // 실제 세션 상태 전환을 기준으로 처리해 사용자 요청과 시스템 pause에 동일하게 대응한다.
+                self.matrics.pauseSpeed()
+            }
             startMotionDetaction()
         }
         if [HKWorkoutSessionState.paused, .stopped, .ended].contains(toState) {
