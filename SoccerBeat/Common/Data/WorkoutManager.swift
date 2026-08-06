@@ -26,6 +26,13 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         self.matrics = matrics
         super.init()
         locationManager.delegate = self
+        #if os(watchOS)
+        // 짧은 Sprint 속도 변화를 수집하기 위해 watchOS 기본 100m 정확도보다 높은 정밀도를 요청한다.
+        // Apple: https://developer.apple.com/documentation/corelocation/cllocationmanager/desiredaccuracy
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.activityType = .fitness
+        #endif
         locationManager.requestWhenInUseAuthorization()
         requestHealthAuthorization()
     }
