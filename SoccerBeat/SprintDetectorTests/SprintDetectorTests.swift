@@ -149,4 +149,38 @@ final class SprintDetectorTests: XCTestCase {
         XCTAssertEqual(resetDetector.sprintCount, 0)
         XCTAssertFalse(resetDetector.isSprint)
     }
+
+    func testLongSampleGapCancelsCandidateAndKeepsConfirmedCount() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 7_000)
+
+        detector.process(timestamp: start, speed: 6.0, speedAccuracy: 0.2, receivedAt: start)
+
+        let afterCandidateGap = start.addingTimeInterval(2.1)
+        detector.process(
+            timestamp: afterCandidateGap,
+            speed: 6.0,
+            speedAccuracy: 0.2,
+            receivedAt: afterCandidateGap
+        )
+        XCTAssertEqual(detector.sprintCount, 0)
+
+        let confirmation = afterCandidateGap.addingTimeInterval(0.5)
+        detector.process(
+            timestamp: confirmation,
+            speed: 6.0,
+            speedAccuracy: 0.2,
+            receivedAt: confirmation
+        )
+        XCTAssertEqual(detector.sprintCount, 1)
+
+        let afterConfirmedGap = confirmation.addingTimeInterval(2.1)
+        detector.process(
+            timestamp: afterConfirmedGap,
+            speed: 6.0,
+            speedAccuracy: 0.2,
+            receivedAt: afterConfirmedGap
+        )
+        XCTAssertEqual(detector.sprintCount, 1)
+    }
 }
