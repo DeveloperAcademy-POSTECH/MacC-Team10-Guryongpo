@@ -170,6 +170,9 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
 
         /// Save Wokrout, Route
         if toState == .ended {
+            // 경기 종료 후 불필요한 위치 수집을 막는다.
+            // https://developer.apple.com/documentation/corelocation/cllocationmanager/stopupdatinglocation()
+            locationManager.stopUpdatingLocation()
             Task { @MainActor in
                 do {
                     try await endWorkoutSession(date)
