@@ -120,4 +120,33 @@ final class SprintDetectorTests: XCTestCase {
         XCTAssertEqual(detector.discardedSampleCount, 4)
         XCTAssertEqual(detector.sprintCount, 0)
     }
+
+    func testPauseAndResetRemoveCandidateState() {
+        let start = Date(timeIntervalSinceReferenceDate: 6_000)
+        var pausedDetector = SprintDetector()
+        var resetDetector = SprintDetector()
+
+        pausedDetector.process(timestamp: start, speed: 6.0, speedAccuracy: 0.2, receivedAt: start)
+        pausedDetector.pause()
+        pausedDetector.process(
+            timestamp: start.addingTimeInterval(0.5),
+            speed: 6.0,
+            speedAccuracy: 0.2,
+            receivedAt: start.addingTimeInterval(0.5)
+        )
+
+        resetDetector.process(timestamp: start, speed: 6.0, speedAccuracy: 0.2, receivedAt: start)
+        resetDetector.reset()
+        resetDetector.process(
+            timestamp: start.addingTimeInterval(0.5),
+            speed: 6.0,
+            speedAccuracy: 0.2,
+            receivedAt: start.addingTimeInterval(0.5)
+        )
+
+        XCTAssertEqual(pausedDetector.sprintCount, 0)
+        XCTAssertFalse(pausedDetector.isSprint)
+        XCTAssertEqual(resetDetector.sprintCount, 0)
+        XCTAssertFalse(resetDetector.isSprint)
+    }
 }
