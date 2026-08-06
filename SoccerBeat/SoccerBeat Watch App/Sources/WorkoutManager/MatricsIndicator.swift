@@ -139,8 +139,15 @@ final class MatricsIndicator: NSObject, ObservableObject {
         distanceMeter = 0
         maxSpeedMPS = 0
         speedMPS = 0
+        isSprint = false
         sprintCount = 0
         recentSprintSpeedMPS = 0
+        acceleration = 0
+
+        #if os(watchOS)
+        // 재시작 시 이전 경기의 Sprint 후보 구간이 이어지지 않도록 판정 상태도 함께 초기화한다.
+        sprintDetector.reset()
+        #endif
     }
     
     private func resetZone5Timer() {
