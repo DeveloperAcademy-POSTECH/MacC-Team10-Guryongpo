@@ -184,6 +184,13 @@ final class MatricsIndicator: NSObject, ObservableObject {
         recentSprintSpeedMPS = sprintDetector.recentSprintSpeedMPS
         acceleration = max(acceleration, speedMPS - previousSpeedMPS)
     }
+
+    func pauseSpeed() {
+        // 일시정지 전후의 위치 샘플이 같은 Sprint 구간으로 이어지지 않도록 후보 상태만 끊는다.
+        sprintDetector.pause()
+        speedMPS = sprintDetector.speedMPS
+        isSprint = sprintDetector.isSprint
+    }
     #endif
 
     /// 이게 한번만 불리는게 아니라, 여러 세트가 있을 수 있음
