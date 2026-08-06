@@ -119,4 +119,9 @@ struct SprintDetector {
             }
         }
     }
+
+    mutating func reset() {
+        // 기본값을 단일 초기화 원천으로 사용해 판정 상태와 진단 카운터를 빠짐없이 초기화한다.
+        self = Self()
+    }
 }
