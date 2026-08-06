@@ -38,6 +38,7 @@
 		686E998A2BD0DB4900B9FD56 /* NameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686E99892BD0DB4900B9FD56 /* NameFieldView.swift */; };
 		6876C0BF2B0B7F73005C6872 /* FifaBackground.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6876C0BE2B0B7F73005C6872 /* FifaBackground.mp3 */; };
 		688485992CB7A42C0092A13C /* MatricsIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE360EFF2B9FF4A100071C30 /* MatricsIndicator.swift */; };
+		C05050022F00000100000001 /* SprintDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05050012F00000100000001 /* SprintDetector.swift */; };
 		6884859C2CB7A7370092A13C /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WorkoutManager.swift */; };
 		6884859E2CB7A9180092A13C /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D7B5E2AE3F3D000783433 /* WorkoutManager.swift */; };
 		688485A02CB7AA490092A13C /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6884859F2CB7AA490092A13C /* DIContainer.swift */; };
@@ -253,6 +254,7 @@
 		BE323D442B0CC4A700F289D4 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		BE323D472B0CC5DE00F289D4 /* SF-Pro-Text-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-MediumItalic.otf"; sourceTree = "<group>"; };
 		BE360EFF2B9FF4A100071C30 /* MatricsIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatricsIndicator.swift; sourceTree = "<group>"; };
+		C05050012F00000100000001 /* SprintDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintDetector.swift; sourceTree = "<group>"; };
 		BE360F012BA016EA00071C30 /* WorkoutManager_Watch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager_Watch.swift; sourceTree = "<group>"; };
 		BE40699B2AF0EB7700FA3030 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
 		BE40699E2AF0F2F500FA3030 /* Bundle+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+extension.swift"; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 			children = (
 				BE360F012BA016EA00071C30 /* WorkoutManager_Watch.swift */,
 				BE360EFF2B9FF4A100071C30 /* MatricsIndicator.swift */,
+				C05050012F00000100000001 /* SprintDetector.swift */,
 			);
 			path = WorkoutManager;
 			sourceTree = "<group>";
@@ -1198,6 +1201,7 @@
 				BE22D6382AE586AA009035C9 /* Color+extension.swift in Sources */,
 				BEC1E5CE2AE6A254008B285E /* ElapsedTimeView.swift in Sources */,
 				BE360F002B9FF4A100071C30 /* MatricsIndicator.swift in Sources */,
+				C05050022F00000100000001 /* SprintDetector.swift in Sources */,
 				BE010D3D2B0512680093A5FE /* Double+extension.swift in Sources */,
 				BE4B72752BAAA87300034C0F /* Dictionary+extension.swift in Sources */,
 				BE40699D2AF0EB7700FA3030 /* Phrase.swift in Sources */,
