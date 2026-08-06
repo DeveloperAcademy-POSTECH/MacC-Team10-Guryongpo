@@ -89,7 +89,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
 
     // TODO: - WorkoutData로 반환하도록 설정
     func getMetadata() -> [String: Any] {
-        return [
+        var metadata: [String: Any] = [
             "MaxSpeed": Double(maxSpeedMPS.rounded(at: 2)), // m/s
             "SprintCount": sprintCount,
             "MinHeartRate": saveMinHeartRate == 300 ? 0 : saveMinHeartRate,
@@ -101,6 +101,15 @@ final class MatricsIndicator: NSObject, ObservableObject {
             "Acceleration": Double(acceleration.rounded(at: 1)),
             "Calories": Int(energy)
         ]
+
+        #if os(watchOS)
+        metadata["SprintCriteriaVersion"] = 2
+        metadata["SprintSpeedSource"] = "coreLocation"
+        metadata["SprintValidSampleCount"] = sprintDetector.validSampleCount
+        metadata["SprintDiscardedSampleCount"] = sprintDetector.discardedSampleCount
+        #endif
+
+        return metadata
     }
     
     func computeProperMaxHeartRate(with store: HKHealthStore) {
