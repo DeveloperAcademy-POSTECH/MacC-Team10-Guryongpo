@@ -262,6 +262,18 @@ extension WorkoutManager {
             NSLog("위치 권한 거부")
         case .authorizedAlways, .authorizedWhenInUse:
             NSLog("위치 권한 항상 허용 혹은 사용 중 허용")
+            if locationManager.accuracyAuthorization == .reducedAccuracy {
+                // Sprint 속도 측정 중에만 정밀 위치를 요청하고, 거절 시 권한 안내 화면을 유지한다.
+                // swiftlint:disable:next line_length
+                // https://developer.apple.com/documentation/corelocation/cllocationmanager/requesttemporaryfullaccuracyauthorization(withpurposekey:)
+                locationManager.requestTemporaryFullAccuracyAuthorization(
+                    withPurposeKey: "SprintMeasurement"
+                ) { error in
+                    if let error {
+                        NSLog(error.localizedDescription)
+                    }
+                }
+            }
             locationManager.startUpdatingLocation()
         @unknown default:
             NSLog(locationManager.authorizationStatus.rawValue.description)
