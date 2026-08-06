@@ -204,9 +204,24 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
 extension WorkoutManager {
     // MARK: - 위치 정보가 수집되면 불리는 메서드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+        guard running else {
+            return
+        }
+
+        let receivedAt = Date()
+        let sortedLocations = locations.sorted { $0.timestamp < $1.timestamp }
+
+        sortedLocations.forEach { location in
+            matrics.updateSpeed(
+                timestamp: location.timestamp,
+                speed: location.speed,
+                speedAccuracy: location.speedAccuracy,
+                receivedAt: receivedAt
+            )
+        }
+
         // Filter the raw data.
-        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
+        let filteredLocations = sortedLocations.filter { (location: CLLocation) -> Bool in
             location.horizontalAccuracy <= 50.0
         }
         

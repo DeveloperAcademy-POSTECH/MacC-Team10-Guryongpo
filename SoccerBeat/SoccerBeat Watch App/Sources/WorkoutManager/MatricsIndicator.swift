@@ -191,10 +191,6 @@ final class MatricsIndicator: NSObject, ObservableObject {
             case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
                 let meterUnit = HKUnit.meter()
                 self.distanceMeter = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
-            case HKQuantityType.quantityType(forIdentifier: .runningSpeed), HKQuantityType.quantityType(forIdentifier: .walkingSpeed):
-                let oldSpeedMPS = self.speedMPS
-                self.speedMPS = statistics.mostRecentQuantity()?.doubleValue(for:  HKUnit.init(from: "m/s")) ?? 0
-                self.calculateSpeedMatrics(before: oldSpeedMPS, current: self.speedMPS)
             case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
                 self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0
             case HKQuantityType.quantityType(forIdentifier: .runningPower):
