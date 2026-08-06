@@ -207,25 +207,6 @@ final class MatricsIndicator: NSObject, ObservableObject {
         }
     }
     
-    private func calculateSpeedMatrics(before: Double, current: Double) {
-        acceleration = max(current - before, acceleration)
-        // 최고 속도
-        maxSpeedMPS = max(maxSpeedMPS, current)
-        // 스프린트 카운트
-        if !isSprint && speedMPS >= sprintSpeed {
-            isSprint = true
-            sprintCount += 1
-            recentSprintSpeedMPS = 0.0
-        } else if isSprint && current < sprintSpeed {
-            isSprint = false
-        }
-        
-        // 직전 스프린트 최고 속도
-        if isSprint {
-            recentSprintSpeedMPS = max(recentSprintSpeedMPS, current)
-        }
-    }
-    
     private func calculateMaxPower(before: Double, current: Double) {
         power = max(power, current)
     }
