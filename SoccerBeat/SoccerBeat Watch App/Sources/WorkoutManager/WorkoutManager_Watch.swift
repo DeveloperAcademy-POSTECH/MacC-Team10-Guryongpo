@@ -136,6 +136,8 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         session = nil
         
         matrics.reset()
+        // 종료 때 중단한 위치 수집을 재개해 다음 경기의 최신 정밀 위치를 미리 준비한다.
+        checkLocationAuthorization()
     }
     
     func togglePause() {
