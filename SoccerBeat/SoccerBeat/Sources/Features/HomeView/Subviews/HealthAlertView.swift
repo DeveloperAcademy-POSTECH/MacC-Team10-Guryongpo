@@ -61,16 +61,15 @@ struct AccessPermissionView: View {
             
             
             VStack(alignment: .leading, spacing: 20) {
-                Text("정보 수집을 위해 다음과 같은 접근 권한을 사용하고 있습니다.")
+                Text("저장된 경기 기록을 불러오기 위해 다음 접근 권한을 사용합니다.")
                     .foregroundColor(.white)
                 
                 Spacer()
                     .frame(height: 20)
                 
                 Group {
-                    Text("위치(필수): 사용자의 필드 위 위치를 저장하기 위해 사용합니다.")
-                    Text("백그라운드 위치(필수): 사용자의 필드 위 위치를 저장하기 위해 사용합니다.")
-                    Text("헬스 정보(필수): 사용자의 경기 데이터를 저장하기 위해 사용합니다.")
+                    Text("Apple Health 읽기(선택): 경기 분석과 차트를 표시하는 데 사용합니다.")
+                    Text("허용하지 않아도 프로필과 문의 등 다른 기능을 사용할 수 있습니다.")
                 }
                 .foregroundColor(.white)
             }
