@@ -23,15 +23,12 @@ struct ContentView: View {
         NavigationStack {
             if healthAlert {
                 HealthAlertView(showingAlert: $healthAlert)
-            } else if workoutManager.isLoading {
-                LoadingView()
             } else {
                 MainView(isShowingOnboardingView: $isShowingOnboardingView, isShowingSessionView: $isShowingSessionView, workouts: $workouts)
             }
         }
         .onReceive(workoutManager.fetchWorkoutsSuccess) { workouts in
             self.workouts = workouts
-            isShowingOnboardingView = workouts.isEmpty
         }
         .onReceive(workoutManager.onWorkoutRemoved) { indexSet in
             self.workouts.remove(atOffsets: indexSet)
