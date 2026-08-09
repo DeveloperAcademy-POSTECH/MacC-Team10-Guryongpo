@@ -14,38 +14,18 @@ enum HealthKitError: Error {
 
 extension WorkoutManager {
     @MainActor
-    func requestAuthorization() {
+    func requestAuthorization() async throws {
         NSLog("requestAuthorization: request user authorization..")
 
-        let locationAccessDenied = [
-            CLAuthorizationStatus.notDetermined,
-            .denied,
-            .restricted
-        ]
-            .contains(locationManager.authorizationStatus)
-
-        if locationAccessDenied {
-            self.locationManager.requestAlwaysAuthorization()
-        }
         // 해당 기기가 헬스킷을 사용할 수 있는지 확인 함
         guard HKHealthStore.isHealthDataAvailable() else {
             NSLog("requestAuthorization: health data not available")
             return
         }
 
-        healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
-            if let error {
-                NSLog(error.localizedDescription)
-                return
-            }
-            if success && self.hasHealthAuthorization() {
-                DispatchQueue.main.async {
-                    self.authSuccess.send()
-                }
-            } else {
-                NSLog("Error in getting healthstore reading authorization. ")
-            }
-        }
+        // 요청 완료는 개별 읽기 권한 허용을 뜻하지 않으므로 결과를 권한 상태로 해석하지 않습니다.
+        // https://developer.apple.com/documentation/healthkit/hkhealthstore/requestauthorization(toshare:read:)
+        try await healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead)
     }
 
     func delete(at offset: IndexSet) async throws {
