@@ -22,7 +22,17 @@ struct HealthAlertView: View {
                 }
             
             Button {
-                showingAlert.toggle()
+                // Button 액션은 동기식이므로 Task에서 HealthKit 권한 요청을 수행합니다.
+                Task { @MainActor in
+                    do {
+                        try await WorkoutManager.shared.requestAuthorization()
+                    } catch {
+                        NSLog("Health authorization request failed: \(error.localizedDescription)")
+                    }
+
+                    showingAlert = false
+                    await WorkoutManager.shared.fetchWorkoutData()
+                }
             } label: {
                 Text("확인")
                     .padding(.horizontal)
