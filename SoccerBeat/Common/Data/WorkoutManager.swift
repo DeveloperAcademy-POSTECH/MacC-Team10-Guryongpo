@@ -142,15 +142,19 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     }
 
     func hasHealthAuthorization() -> Bool {
-        for type in typesToShare
-        where healthStore.authorizationStatus(for: type) == .sharingDenied {
-            NSLog(
-                type.debugDescription,
-                healthStore.authorizationStatus(for: type).rawValue
-            )
-            return false
+        // authorizationStatus(for:)는 읽기 권한이 아닌
+        // Health 데이터 쓰기 권한만 반환합니다.
+        // https://developer.apple.com/documentation/healthkit/hkhealthstore/authorizationstatus(for:)
+        return typesToShare.allSatisfy { type in
+            let status = healthStore.authorizationStatus(for: type)
+            if status != .sharingAuthorized {
+                NSLog(
+                    "Health sharing authorization missing: \(type.debugDescription), "
+                    + "status: \(status.rawValue)"
+                )
+            }
+            return status == .sharingAuthorized
         }
-        return true
     }
     
     func requestHealthAuthorization() {
