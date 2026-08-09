@@ -40,33 +40,68 @@ extension WorkoutManager {
     }
 
     func fetchWorkoutData() async {
-        await MainActor.run {
-            isLoading = true
-        }
-
-        // Fetch from HealthStore
-        self.hkWorkouts = await fetchHKWorkouts()
-        if self.hkWorkouts.isEmpty {
-            NSLog("fetchWorkoutData: no workouts found. Check HealthKit read permissions in Settings > Health > SoccerBeat")
-        }
-
-        // Convert WorkoutData(Bussiness Model)
-        var workoutData = [WorkoutData]()
-        for (index, workout) in self.hkWorkouts.enumerated() {
-            do {
-                let workoutDatum = try await convert(from: workout, at: index)
-                workoutData.append(workoutDatum)
-            } catch {
-                NSLog(error.localizedDescription)
-                continue
+        let shouldFetch = await MainActor.run { () -> Bool in
+            if case .loading = workoutFetchState {
+                return false
             }
-        }
-        await settingForChartView(workoutData)
-        monthly = divideWorkoutsByMonthly(workoutData)
 
-        await MainActor.run { [workoutData] in
-            isLoading = false
-            self.fetchWorkoutsSuccess.send(workoutData)
+            workoutFetchState = .loading
+            isLoading = true
+            return true
+        }
+        guard shouldFetch else { return }
+
+        do {
+            let fetchedWorkouts = try await fetchHKWorkouts()
+            guard !fetchedWorkouts.isEmpty else {
+                await settingForChartView([])
+                await MainActor.run {
+                    hkWorkouts = []
+                    monthly = [:]
+                    isLoading = false
+                    workoutFetchState = .empty
+                    fetchWorkoutsSuccess.send([])
+                }
+                return
+            }
+
+            // 변환에 성공한 원본만 함께 보존해 화면 배열과 삭제 인덱스를 일치시킵니다.
+            var convertedHKWorkouts = [HKWorkout]()
+            var workoutData = [WorkoutData]()
+            for workout in fetchedWorkouts {
+                do {
+                    let workoutDatum = try await convert(from: workout, at: workoutData.count)
+                    convertedHKWorkouts.append(workout)
+                    workoutData.append(workoutDatum)
+                } catch {
+                    NSLog("fetchWorkoutData conversion failed: \(error.localizedDescription)")
+                }
+            }
+
+            guard !workoutData.isEmpty else {
+                await MainActor.run {
+                    isLoading = false
+                    workoutFetchState = .failed
+                }
+                return
+            }
+
+            await settingForChartView(workoutData)
+            let monthlyWorkouts = divideWorkoutsByMonthly(workoutData)
+
+            await MainActor.run {
+                hkWorkouts = convertedHKWorkouts
+                monthly = monthlyWorkouts
+                isLoading = false
+                workoutFetchState = .loaded
+                fetchWorkoutsSuccess.send(workoutData)
+            }
+        } catch {
+            NSLog("fetchWorkoutData failed: \(error.localizedDescription)")
+            await MainActor.run {
+                isLoading = false
+                workoutFetchState = .failed
+            }
         }
     }
 
