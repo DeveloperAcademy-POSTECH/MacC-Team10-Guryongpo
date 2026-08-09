@@ -9,20 +9,12 @@ import SwiftUI
 
 @main
 struct SoccerBeatApp: App {
-    @State var isShowingOnboardingView : Bool
+    @State var isShowingOnboardingView : Bool = false
     @StateObject var soundManager = SoundManager()
     @StateObject var workoutManager = WorkoutManager.shared
     @StateObject var profileModel = ProfileModel(workoutManager: WorkoutManager.shared)
-    @State private var hasHealthAuthorization: Bool
-    @State private var hasLocationAuthorization: Bool
     @State private var showUpdate: Bool = false
-    
-    init() {
-        self.hasHealthAuthorization = WorkoutManager.shared.hasHealthAuthorization()
-        self.hasLocationAuthorization = WorkoutManager.shared.hasLocationAuthorization()
-        self.isShowingOnboardingView = false
-        
-    }
+
     var body: some Scene {
         WindowGroup {
             ContentView(isShowingOnboardingView: $isShowingOnboardingView)
