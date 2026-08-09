@@ -11,6 +11,16 @@ import CoreLocation
 import HealthKit
 import SwiftUI
 
+#if os(iOS)
+enum WorkoutFetchState {
+    case idle
+    case loading
+    case loaded
+    case empty
+    case failed
+}
+#endif
+
 final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     static let shared: WorkoutManager = WorkoutManager(matrics: DIContianer.makeMatricsIndicator())
@@ -26,8 +36,12 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         self.matrics = matrics
         super.init()
         locationManager.delegate = self
+
+        #if os(watchOS)
+        // Watch는 경기 시작 전 권한 검증을 위해 기존 초기 요청 흐름을 유지합니다.
         locationManager.requestWhenInUseAuthorization()
         requestHealthAuthorization()
+        #endif
     }
     
     #if os(watchOS)
@@ -87,6 +101,7 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
 
     var monthly = [String: [WorkoutData]]()
     @Published var isLoading = false
+    @Published var workoutFetchState: WorkoutFetchState = .idle
     @Published var formerSession = false
     #endif
     
