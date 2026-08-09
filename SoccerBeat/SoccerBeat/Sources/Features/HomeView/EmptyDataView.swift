@@ -92,31 +92,19 @@ struct EmptyDataView: View {
                     .frame(maxWidth: .infinity)
                     .overlay {
                         VStack(alignment: .center) {
-                            Text("저장된 경기 기록이 없습니다.")
+                            Text("읽을 수 있는 경기 기록이 없습니다.")
                                 .font(.mainSubTitleText)
                                 .foregroundStyle(.linearGradient(colors: [.brightmint, .white], startPoint: .topLeading, endPoint: .bottomTrailing))
                                 .padding()
                             
-                            Text("앱 사용을 위해 헬스 정보 접근 권한이 필요합니다.")
+                            Text("Apple Health에서 기록과 접근 권한을 확인해 주세요.")
                                 .font(.custom("NotoSans-Regular", size: 14))
-                            HStack {
-                                Button("위치 권한 설정하기") {
-                                    if let BUNDLE_IDENTIFIER = Bundle.main.bundleIdentifier,
-                                        let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(BUNDLE_IDENTIFIER)") {
-                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                    }
-                                    
-                                }
-                                .buttonStyle(BorderedButtonStyle())
-                                
-                                Button("건강 권한 설정하기") {
-                                    if let BUNDLE_IDENTIFIER = Bundle.main.bundleIdentifier,
-                                        let url = URL(string: "\(UIApplication.openSettingsURLString)&path=HEALTH/\(BUNDLE_IDENTIFIER)") {
-                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                    }
-                                }
-                                .buttonStyle(BorderedButtonStyle())
-                            }                            
+                            // 앱 전용 설정 화면만 여는 Apple의 공개 URL을 사용합니다.
+                            // https://developer.apple.com/documentation/uikit/uiapplication/opensettingsurlstring
+                            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                                Link("설정 열기", destination: settingsURL)
+                                    .buttonStyle(BorderedButtonStyle())
+                            }
                         }
                     }
                 
