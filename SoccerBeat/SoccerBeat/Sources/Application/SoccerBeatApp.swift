@@ -25,15 +25,7 @@ struct SoccerBeatApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            Group {
-                if hasHealthAuthorization && hasLocationAuthorization {
-                    ContentView(isShowingOnboardingView: $isShowingOnboardingView)
-                } else if !hasHealthAuthorization {
-                    NoAuthorizationView(requestingAuth: .health)
-                } else if !hasLocationAuthorization {
-                    NoAuthorizationView(requestingAuth: .location)
-                }
-            }
+            ContentView(isShowingOnboardingView: $isShowingOnboardingView)
             .environmentObject(soundManager)
             .environmentObject(workoutManager)
             .environmentObject(profileModel)
@@ -44,16 +36,9 @@ struct SoccerBeatApp: App {
                         for: UIApplication.didBecomeActiveNotification
                     )
             ) { _ in
-                hasHealthAuthorization = workoutManager.hasHealthAuthorization()
-                hasLocationAuthorization = workoutManager.hasLocationAuthorization()
                 Task {
-                    if hasHealthAuthorization && hasLocationAuthorization {
-                        await self.workoutManager.fetchWorkoutData()
-                    }
+                    await self.workoutManager.fetchWorkoutData()
                 }
-            }
-            .task {
-                workoutManager.requestAuthorization()
             }
             .onReceive(workoutManager.authSuccess) {
                 Task { await workoutManager.fetchWorkoutData() }
