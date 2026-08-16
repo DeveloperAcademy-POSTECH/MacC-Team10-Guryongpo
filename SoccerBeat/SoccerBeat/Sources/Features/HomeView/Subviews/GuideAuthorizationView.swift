@@ -102,9 +102,12 @@ struct GuideAuthorizationView: View {
                             HStack {
                                 Spacer()
                                 Button {
-                                    if let bundleIdentifier = Bundle.main.bundleIdentifier,
-                                       let url = requestingAuth == .health ? URL(string: "App-Prefs:HEALTH&path=SOURCES")! : URL(string: "\(UIApplication.openSettingsURLString)\(bundleIdentifier)") {
-                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    // 앱 전용 설정 화면만 여는 Apple의 공개 URL을 사용합니다.
+                                    // https://developer.apple.com/documentation/uikit/uiapplication/opensettingsurlstring
+                                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                                        Task { @MainActor in
+                                            await UIApplication.shared.open(settingsURL)
+                                        }
                                     }
                                 } label: {
                                     ZStack {

@@ -11,6 +11,16 @@ import CoreLocation
 import HealthKit
 import SwiftUI
 
+#if os(iOS)
+enum WorkoutFetchState {
+    case idle
+    case loading
+    case loaded
+    case empty
+    case failed
+}
+#endif
+
 final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     static let shared: WorkoutManager = WorkoutManager(matrics: DIContianer.makeMatricsIndicator())
@@ -26,8 +36,12 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         self.matrics = matrics
         super.init()
         locationManager.delegate = self
+
+        #if os(watchOS)
+        // Watch는 경기 시작 전 권한 검증을 위해 기존 초기 요청 흐름을 유지합니다.
         locationManager.requestWhenInUseAuthorization()
         requestHealthAuthorization()
+        #endif
     }
     
     #if os(watchOS)
@@ -87,6 +101,7 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
 
     var monthly = [String: [WorkoutData]]()
     @Published var isLoading = false
+    @Published var workoutFetchState: WorkoutFetchState = .idle
     @Published var formerSession = false
     #endif
     
@@ -127,15 +142,19 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     }
 
     func hasHealthAuthorization() -> Bool {
-        for type in typesToShare
-        where healthStore.authorizationStatus(for: type) == .sharingDenied {
-            NSLog(
-                type.debugDescription,
-                healthStore.authorizationStatus(for: type).rawValue
-            )
-            return false
+        // authorizationStatus(for:)는 읽기 권한이 아닌
+        // Health 데이터 쓰기 권한만 반환합니다.
+        // https://developer.apple.com/documentation/healthkit/hkhealthstore/authorizationstatus(for:)
+        return typesToShare.allSatisfy { type in
+            let status = healthStore.authorizationStatus(for: type)
+            if status != .sharingAuthorized {
+                NSLog(
+                    "Health sharing authorization missing: \(type.debugDescription), "
+                    + "status: \(status.rawValue)"
+                )
+            }
+            return status == .sharingAuthorized
         }
-        return true
     }
     
     func requestHealthAuthorization() {
