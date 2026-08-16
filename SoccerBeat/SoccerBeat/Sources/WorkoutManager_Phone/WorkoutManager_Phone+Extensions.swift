@@ -10,42 +10,23 @@ import SwiftUI
 
 enum HealthKitError: Error {
     case failureConvertingRouteAndMeta
+    case failureCastingWorkoutSamples
 }
 
 extension WorkoutManager {
     @MainActor
-    func requestAuthorization() {
+    func requestAuthorization() async throws {
         NSLog("requestAuthorization: request user authorization..")
 
-        let locationAccessDenied = [
-            CLAuthorizationStatus.notDetermined,
-            .denied,
-            .restricted
-        ]
-            .contains(locationManager.authorizationStatus)
-
-        if locationAccessDenied {
-            self.locationManager.requestAlwaysAuthorization()
-        }
         // 해당 기기가 헬스킷을 사용할 수 있는지 확인 함
         guard HKHealthStore.isHealthDataAvailable() else {
             NSLog("requestAuthorization: health data not available")
             return
         }
 
-        healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
-            if let error {
-                NSLog(error.localizedDescription)
-                return
-            }
-            if success && self.hasHealthAuthorization() {
-                DispatchQueue.main.async {
-                    self.authSuccess.send()
-                }
-            } else {
-                NSLog("Error in getting healthstore reading authorization. ")
-            }
-        }
+        // 요청 완료는 개별 읽기 권한 허용을 뜻하지 않으므로 결과를 권한 상태로 해석하지 않습니다.
+        // https://developer.apple.com/documentation/healthkit/hkhealthstore/requestauthorization(toshare:read:)
+        try await healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead)
     }
 
     func delete(at offset: IndexSet) async throws {
@@ -59,33 +40,68 @@ extension WorkoutManager {
     }
 
     func fetchWorkoutData() async {
-        await MainActor.run {
-            isLoading = true
-        }
-
-        // Fetch from HealthStore
-        self.hkWorkouts = await fetchHKWorkouts()
-        if self.hkWorkouts.isEmpty {
-            NSLog("fetchWorkoutData: no workouts found. Check HealthKit read permissions in Settings > Health > SoccerBeat")
-        }
-
-        // Convert WorkoutData(Bussiness Model)
-        var workoutData = [WorkoutData]()
-        for (index, workout) in self.hkWorkouts.enumerated() {
-            do {
-                let workoutDatum = try await convert(from: workout, at: index)
-                workoutData.append(workoutDatum)
-            } catch {
-                NSLog(error.localizedDescription)
-                continue
+        let shouldFetch = await MainActor.run { () -> Bool in
+            if case .loading = workoutFetchState {
+                return false
             }
-        }
-        await settingForChartView(workoutData)
-        monthly = divideWorkoutsByMonthly(workoutData)
 
-        await MainActor.run { [workoutData] in
-            isLoading = false
-            self.fetchWorkoutsSuccess.send(workoutData)
+            workoutFetchState = .loading
+            isLoading = true
+            return true
+        }
+        guard shouldFetch else { return }
+
+        do {
+            let fetchedWorkouts = try await fetchHKWorkouts()
+            guard !fetchedWorkouts.isEmpty else {
+                await settingForChartView([])
+                await MainActor.run {
+                    hkWorkouts = []
+                    monthly = [:]
+                    isLoading = false
+                    workoutFetchState = .empty
+                    fetchWorkoutsSuccess.send([])
+                }
+                return
+            }
+
+            // 변환에 성공한 원본만 함께 보존해 화면 배열과 삭제 인덱스를 일치시킵니다.
+            var convertedHKWorkouts = [HKWorkout]()
+            var workoutData = [WorkoutData]()
+            for workout in fetchedWorkouts {
+                do {
+                    let workoutDatum = try await convert(from: workout, at: workoutData.count)
+                    convertedHKWorkouts.append(workout)
+                    workoutData.append(workoutDatum)
+                } catch {
+                    NSLog("fetchWorkoutData conversion failed: \(error.localizedDescription)")
+                }
+            }
+
+            guard !workoutData.isEmpty else {
+                await MainActor.run {
+                    isLoading = false
+                    workoutFetchState = .failed
+                }
+                return
+            }
+
+            await settingForChartView(workoutData)
+            let monthlyWorkouts = divideWorkoutsByMonthly(workoutData)
+
+            await MainActor.run {
+                hkWorkouts = convertedHKWorkouts
+                monthly = monthlyWorkouts
+                isLoading = false
+                workoutFetchState = .loaded
+                fetchWorkoutsSuccess.send(workoutData)
+            }
+        } catch {
+            NSLog("fetchWorkoutData failed: \(error.localizedDescription)")
+            await MainActor.run {
+                isLoading = false
+                workoutFetchState = .failed
+            }
         }
     }
 
@@ -231,54 +247,49 @@ extension WorkoutManager {
 
     private static let soccerBeatSourceKeyword = "SoccerBeat"
 
-    private func fetchHKWorkouts() async -> [HKWorkout] {
+    private func fetchHKWorkouts() async throws -> [HKWorkout] {
         let soccerPredicate = HKQuery.predicateForWorkouts(with: .soccer)
         let runningPredicate = HKQuery.predicateForWorkouts(with: .running)
         let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [soccerPredicate, runningPredicate])
 
-        do {
-            let data = try await withCheckedThrowingContinuation { (
-                continuation: CheckedContinuation<[HKSample], Error>
-            ) in
-                let query = HKSampleQuery(
-                    sampleType: .workoutType(),
-                    predicate: combinedPredicate,
-                    limit: HKObjectQueryNoLimit,
-                    sortDescriptors: [NSSortDescriptor(keyPath: \HKSample.startDate, ascending: false)],
-                    resultsHandler: { _, samples, error in
-                        if let error = error {
-                            continuation.resume(throwing: error)
-                        } else {
-                            continuation.resume(returning: samples ?? [])
-                        }
+        let data = try await withCheckedThrowingContinuation { (
+            continuation: CheckedContinuation<[HKSample], Error>
+        ) in
+            let query = HKSampleQuery(
+                sampleType: .workoutType(),
+                predicate: combinedPredicate,
+                limit: HKObjectQueryNoLimit,
+                sortDescriptors: [NSSortDescriptor(keyPath: \HKSample.startDate, ascending: false)],
+                resultsHandler: { _, samples, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: samples ?? [])
                     }
-                )
-                healthStore.execute(query)
-            }
-            guard let workouts = data as? [HKWorkout] else {
-                NSLog("fetchHKWorkouts: failed to cast samples to [HKWorkout]")
-                return []
-            }
-
-            // 디버그: 각 워크아웃의 타입과 소스 확인
-            for workout in workouts {
-                NSLog("fetchHKWorkouts: type=\(workout.workoutActivityType.rawValue) source=\(workout.sourceRevision.source.bundleIdentifier) date=\(workout.startDate)")
-            }
-
-            // .soccer는 전부 포함, .running은 SoccerBeat Watch App에서 기록한 것만 포함
-            let filtered = workouts.filter { workout in
-                if workout.workoutActivityType == .soccer {
-                    return true
                 }
-                return workout.sourceRevision.source.bundleIdentifier.contains(Self.soccerBeatSourceKeyword)
-            }
-
-            NSLog("fetchHKWorkouts: fetched \(workouts.count) workouts, \(filtered.count) after filtering")
-            return filtered
-        } catch {
-            NSLog("fetchHKWorkouts failed: \(error.localizedDescription)")
-            return []
+            )
+            healthStore.execute(query)
         }
+        guard let workouts = data as? [HKWorkout] else {
+            NSLog("fetchHKWorkouts: failed to cast samples to [HKWorkout]")
+            throw HealthKitError.failureCastingWorkoutSamples
+        }
+
+        // 디버그: 각 워크아웃의 타입과 소스 확인
+        for workout in workouts {
+            NSLog("fetchHKWorkouts: type=\(workout.workoutActivityType.rawValue) source=\(workout.sourceRevision.source.bundleIdentifier) date=\(workout.startDate)")
+        }
+
+        // .soccer는 전부 포함, .running은 SoccerBeat Watch App에서 기록한 것만 포함
+        let filtered = workouts.filter { workout in
+            if workout.workoutActivityType == .soccer {
+                return true
+            }
+            return workout.sourceRevision.source.bundleIdentifier.contains(Self.soccerBeatSourceKeyword)
+        }
+
+        NSLog("fetchHKWorkouts: fetched \(workouts.count) workouts, \(filtered.count) after filtering")
+        return filtered
     }
 
     /// 워크아웃 시간 범위 내 Walking+Running Distance 샘플을 직접 쿼리하여 합산 (km 단위)

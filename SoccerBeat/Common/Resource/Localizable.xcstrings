@@ -5599,6 +5599,226 @@
         }
       }
     },
+    "Apple Health 읽기(선택): 경기 분석과 차트를 표시하는 데 사용합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Health Read Access (Optional): Used to display match analysis and charts."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lectura de Apple Health (opcional): se utiliza para mostrar análisis y gráficos de los partidos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取 Apple 健康（可选）：用于显示比赛分析和图表。"
+          }
+        }
+      }
+    },
+    "Apple Health에서 기록과 접근 권한을 확인해 주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your records and access permissions in Apple Health."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprueba tus registros y los permisos de acceso en Apple Health."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在 Apple 健康中检查记录和访问权限。"
+          }
+        }
+      }
+    },
+    "건강 앱 > 요약 > 프로필 > 개인정보 보호 > 앱 > SoccerBeat에서 권한을 확인해 주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the Health app, go to Summary > Profile > Privacy > Apps > SoccerBeat to check access."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En la app Salud, ve a Resumen > Perfil > Privacidad > Apps > SoccerBeat para comprobar el acceso."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在“健康”App 中前往“摘要”>“个人资料”>“隐私”>“App”> SoccerBeat 检查访问权限。"
+          }
+        }
+      }
+    },
+    "경기 기록을 불러오는 중입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading match records…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando los partidos…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在载入比赛记录…"
+          }
+        }
+      }
+    },
+    "다시 시도" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintentar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
+    },
+    "설정 열기" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Ajustes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置"
+          }
+        }
+      }
+    },
+    "저장된 경기 기록을 불러오기 위해 다음 접근 권한을 사용합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat uses the following permission to load your saved match records."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat utiliza el siguiente permiso para cargar tus partidos guardados."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SoccerBeat 使用以下权限来载入你已保存的比赛记录。"
+          }
+        }
+      }
+    },
+    "읽을 수 있는 경기 기록이 없습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No readable match records are available."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay partidos disponibles que se puedan leer."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有可读取的比赛记录。"
+          }
+        }
+      }
+    },
+    "읽을 수 있는 기록이 없거나 Apple Health 접근이 제한되었을 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There may be no readable records, or access to Apple Health may be restricted."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puede que no haya registros disponibles o que el acceso a Apple Health esté restringido."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可能没有可读取的记录，或对 Apple 健康的访问受到限制。"
+          }
+        }
+      }
+    },
+    "허용하지 않아도 프로필과 문의 등 다른 기능을 사용할 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can still use other features, such as your profile and support, without granting access."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aunque no concedas acceso, podrás seguir usando otras funciones, como el perfil y el soporte."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即使不允许访问，你仍可使用个人资料和联系客服等其他功能。"
+          }
+        }
+      }
+    },
     "확인" : {
       "localizations" : {
         "en" : {

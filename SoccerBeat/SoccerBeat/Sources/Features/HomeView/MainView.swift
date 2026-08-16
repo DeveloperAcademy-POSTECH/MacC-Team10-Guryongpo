@@ -166,7 +166,70 @@ struct MainView: View {
     }
     
     private var recentMatchPreview: some View {
-        NavigationLink {
+        let showsLoading: Bool
+        let showsRecovery: Bool
+
+        switch workoutManager.workoutFetchState {
+        case .loading:
+            showsLoading = true
+            showsRecovery = false
+        case .empty, .failed:
+            showsLoading = false
+            showsRecovery = true
+        case .idle, .loaded:
+            showsLoading = false
+            showsRecovery = false
+        }
+
+        return VStack(spacing: 12) {
+            if showsLoading {
+                HStack(spacing: 12) {
+                    ProgressView()
+                        .tint(.white)
+                    Text("경기 기록을 불러오는 중입니다.")
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 15))
+            }
+
+            if showsRecovery {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("읽을 수 있는 기록이 없거나 Apple Health 접근이 제한되었을 수 있습니다.")
+                        .font(.headline)
+                    Text("건강 앱 > 요약 > 프로필 > 개인정보 보호 > 앱 > SoccerBeat에서 권한을 확인해 주세요.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+
+                    HStack {
+                        // 앱 전용 설정 화면만 여는 Apple의 공개 URL을 사용합니다.
+                        // https://developer.apple.com/documentation/uikit/uiapplication/opensettingsurlstring
+                        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                            Link(destination: settingsURL) {
+                                Label("설정 열기", systemImage: "gearshape")
+                            }
+                            .buttonStyle(.bordered)
+                        }
+
+                        Spacer()
+
+                        Button {
+                            Task {
+                                await workoutManager.fetchWorkoutData()
+                            }
+                        } label: {
+                            Label("다시 시도", systemImage: "arrow.clockwise")
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 15))
+            }
+
+            if !workouts.isEmpty || (!showsLoading && !showsRecovery) {
+                NavigationLink {
             if workouts.isEmpty {
                 MatchDetailView(workout: nil)
             } else {
@@ -255,6 +318,8 @@ struct MainView: View {
                     Spacer()
                 }
                 .padding()
+            }
+        }
             }
         }
     }

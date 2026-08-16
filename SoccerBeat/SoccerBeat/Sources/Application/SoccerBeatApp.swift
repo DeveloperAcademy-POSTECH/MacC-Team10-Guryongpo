@@ -9,31 +9,15 @@ import SwiftUI
 
 @main
 struct SoccerBeatApp: App {
-    @State var isShowingOnboardingView : Bool
+    @State var isShowingOnboardingView : Bool = false
     @StateObject var soundManager = SoundManager()
     @StateObject var workoutManager = WorkoutManager.shared
     @StateObject var profileModel = ProfileModel(workoutManager: WorkoutManager.shared)
-    @State private var hasHealthAuthorization: Bool
-    @State private var hasLocationAuthorization: Bool
     @State private var showUpdate: Bool = false
-    
-    init() {
-        self.hasHealthAuthorization = WorkoutManager.shared.hasHealthAuthorization()
-        self.hasLocationAuthorization = WorkoutManager.shared.hasLocationAuthorization()
-        self.isShowingOnboardingView = false
-        
-    }
+
     var body: some Scene {
         WindowGroup {
-            Group {
-                if hasHealthAuthorization && hasLocationAuthorization {
-                    ContentView(isShowingOnboardingView: $isShowingOnboardingView)
-                } else if !hasHealthAuthorization {
-                    NoAuthorizationView(requestingAuth: .health)
-                } else if !hasLocationAuthorization {
-                    NoAuthorizationView(requestingAuth: .location)
-                }
-            }
+            ContentView(isShowingOnboardingView: $isShowingOnboardingView)
             .environmentObject(soundManager)
             .environmentObject(workoutManager)
             .environmentObject(profileModel)
@@ -44,16 +28,9 @@ struct SoccerBeatApp: App {
                         for: UIApplication.didBecomeActiveNotification
                     )
             ) { _ in
-                hasHealthAuthorization = workoutManager.hasHealthAuthorization()
-                hasLocationAuthorization = workoutManager.hasLocationAuthorization()
                 Task {
-                    if hasHealthAuthorization && hasLocationAuthorization {
-                        await self.workoutManager.fetchWorkoutData()
-                    }
+                    await self.workoutManager.fetchWorkoutData()
                 }
-            }
-            .task {
-                workoutManager.requestAuthorization()
             }
             .onReceive(workoutManager.authSuccess) {
                 Task { await workoutManager.fetchWorkoutData() }
