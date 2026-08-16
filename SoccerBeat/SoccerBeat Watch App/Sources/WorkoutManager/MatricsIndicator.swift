@@ -34,6 +34,10 @@ final class MatricsIndicator: NSObject, ObservableObject {
     @Published var isSprint: Bool = false
     @Published var recentSprintSpeedMPS = 0.0
     @Published var speedMPS: Double = 0.0
+    // Sprint 판정은 CoreLocation 속도를 수집하는 Watch 타깃에서만 수행한다.
+    #if os(watchOS)
+    private var sprintDetector = SprintDetector()
+    #endif
 
 
     // MARK: - Distance
@@ -85,7 +89,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
 
     // TODO: - WorkoutData로 반환하도록 설정
     func getMetadata() -> [String: Any] {
-        return [
+        var metadata: [String: Any] = [
             "MaxSpeed": Double(maxSpeedMPS.rounded(at: 2)), // m/s
             "SprintCount": sprintCount,
             "MinHeartRate": saveMinHeartRate == 300 ? 0 : saveMinHeartRate,
@@ -97,6 +101,15 @@ final class MatricsIndicator: NSObject, ObservableObject {
             "Acceleration": Double(acceleration.rounded(at: 1)),
             "Calories": Int(energy)
         ]
+
+        #if os(watchOS)
+        metadata["SprintCriteriaVersion"] = 2
+        metadata["SprintSpeedSource"] = "coreLocation"
+        metadata["SprintValidSampleCount"] = sprintDetector.validSampleCount
+        metadata["SprintDiscardedSampleCount"] = sprintDetector.discardedSampleCount
+        #endif
+
+        return metadata
     }
     
     func computeProperMaxHeartRate(with store: HKHealthStore) {
@@ -135,8 +148,15 @@ final class MatricsIndicator: NSObject, ObservableObject {
         distanceMeter = 0
         maxSpeedMPS = 0
         speedMPS = 0
+        isSprint = false
         sprintCount = 0
         recentSprintSpeedMPS = 0
+        acceleration = 0
+
+        #if os(watchOS)
+        // 재시작 시 이전 경기의 Sprint 후보 구간이 이어지지 않도록 판정 상태도 함께 초기화한다.
+        sprintDetector.reset()
+        #endif
     }
     
     private func resetZone5Timer() {
@@ -145,6 +165,43 @@ final class MatricsIndicator: NSObject, ObservableObject {
         self.zone5Count = 0
     }
     
+    #if os(watchOS)
+    func updateSpeed(
+        timestamp: Date,
+        speed: Double,
+        speedAccuracy: Double,
+        receivedAt: Date = .now
+    ) {
+        let previousValidSampleCount = sprintDetector.validSampleCount
+        let previousSpeedMPS = speedMPS
+
+        sprintDetector.process(
+            timestamp: timestamp,
+            speed: speed,
+            speedAccuracy: speedAccuracy,
+            receivedAt: receivedAt
+        )
+
+        guard sprintDetector.validSampleCount > previousValidSampleCount else {
+            return
+        }
+
+        speedMPS = sprintDetector.speedMPS
+        maxSpeedMPS = sprintDetector.maxSpeedMPS
+        isSprint = sprintDetector.isSprint
+        sprintCount = sprintDetector.sprintCount
+        recentSprintSpeedMPS = sprintDetector.recentSprintSpeedMPS
+        acceleration = max(acceleration, speedMPS - previousSpeedMPS)
+    }
+
+    func pauseSpeed() {
+        // 일시정지 전후의 위치 샘플이 같은 Sprint 구간으로 이어지지 않도록 후보 상태만 끊는다.
+        sprintDetector.pause()
+        speedMPS = sprintDetector.speedMPS
+        isSprint = sprintDetector.isSprint
+    }
+    #endif
+
     /// 이게 한번만 불리는게 아니라, 여러 세트가 있을 수 있음
     /// 예를들어 경기를 1쿼터, 2쿼터 나눠서 할거면, 지금처럼 메트릭스 인디케이터가 여러개가 생길 수도 있는 것임.
     /// 아니면 애초에 heartRate, distanceMeter, SpeedMPS 등을 배열로 선언해서 각 쿼터에 얼마나 했는지를 추정할 수도 있겠음
@@ -157,10 +214,6 @@ final class MatricsIndicator: NSObject, ObservableObject {
             case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
                 let meterUnit = HKUnit.meter()
                 self.distanceMeter = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
-            case HKQuantityType.quantityType(forIdentifier: .runningSpeed), HKQuantityType.quantityType(forIdentifier: .walkingSpeed):
-                let oldSpeedMPS = self.speedMPS
-                self.speedMPS = statistics.mostRecentQuantity()?.doubleValue(for:  HKUnit.init(from: "m/s")) ?? 0
-                self.calculateSpeedMatrics(before: oldSpeedMPS, current: self.speedMPS)
             case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
                 self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0
             case HKQuantityType.quantityType(forIdentifier: .runningPower):
@@ -174,25 +227,6 @@ final class MatricsIndicator: NSObject, ObservableObject {
             default:
                 return
             }
-        }
-    }
-    
-    private func calculateSpeedMatrics(before: Double, current: Double) {
-        acceleration = max(current - before, acceleration)
-        // 최고 속도
-        maxSpeedMPS = max(maxSpeedMPS, current)
-        // 스프린트 카운트
-        if !isSprint && speedMPS >= sprintSpeed {
-            isSprint = true
-            sprintCount += 1
-            recentSprintSpeedMPS = 0.0
-        } else if isSprint && current < sprintSpeed {
-            isSprint = false
-        }
-        
-        // 직전 스프린트 최고 속도
-        if isSprint {
-            recentSprintSpeedMPS = max(recentSprintSpeedMPS, current)
         }
     }
     

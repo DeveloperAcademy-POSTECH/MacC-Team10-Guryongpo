@@ -15,6 +15,12 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
     
     // MARK: - 데이터 수집 및 경기 시작
     func startWorkout() {
+        // 카운트다운 중 위치가 오래되거나 정밀 권한이 바뀐 경우 실제 세션 시작을 차단한다.
+        guard hasAllAuthorization else {
+            showingPrecount = false
+            return
+        }
+
         setupWorkoutConfig()
         startWorkoutSession()
     }
@@ -130,6 +136,8 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         session = nil
         
         matrics.reset()
+        // 종료 때 중단한 위치 수집을 재개해 다음 경기의 최신 정밀 위치를 미리 준비한다.
+        checkLocationAuthorization()
     }
     
     func togglePause() {
@@ -158,6 +166,10 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
         NSLog("WorkOutSession 변화 감지: \(toState)")
         Task { @MainActor in
             self.running = toState == .running
+            if toState == .paused {
+                // 실제 세션 상태 전환을 기준으로 처리해 사용자 요청과 시스템 pause에 동일하게 대응한다.
+                self.matrics.pauseSpeed()
+            }
             startMotionDetaction()
         }
         if [HKWorkoutSessionState.paused, .stopped, .ended].contains(toState) {
@@ -166,6 +178,9 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
 
         /// Save Wokrout, Route
         if toState == .ended {
+            // 경기 종료 후 불필요한 위치 수집을 막는다.
+            // https://developer.apple.com/documentation/corelocation/cllocationmanager/stopupdatinglocation()
+            locationManager.stopUpdatingLocation()
             Task { @MainActor in
                 do {
                     try await endWorkoutSession(date)
@@ -204,9 +219,26 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
 extension WorkoutManager {
     // MARK: - 위치 정보가 수집되면 불리는 메서드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+        guard running else {
+            // 경기 전 최신 위치가 준비되면 StartView의 시작 가능 상태를 다시 평가한다.
+            objectWillChange.send()
+            return
+        }
+
+        let receivedAt = Date()
+        let sortedLocations = locations.sorted { $0.timestamp < $1.timestamp }
+
+        sortedLocations.forEach { location in
+            matrics.updateSpeed(
+                timestamp: location.timestamp,
+                speed: location.speed,
+                speedAccuracy: location.speedAccuracy,
+                receivedAt: receivedAt
+            )
+        }
+
         // Filter the raw data.
-        let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
+        let filteredLocations = sortedLocations.filter { (location: CLLocation) -> Bool in
             location.horizontalAccuracy <= 50.0
         }
         
@@ -240,6 +272,18 @@ extension WorkoutManager {
             NSLog("위치 권한 거부")
         case .authorizedAlways, .authorizedWhenInUse:
             NSLog("위치 권한 항상 허용 혹은 사용 중 허용")
+            if locationManager.accuracyAuthorization == .reducedAccuracy {
+                // Sprint 속도 측정 중에만 정밀 위치를 요청하고, 거절 시 권한 안내 화면을 유지한다.
+                // swiftlint:disable:next line_length
+                // https://developer.apple.com/documentation/corelocation/cllocationmanager/requesttemporaryfullaccuracyauthorization(withpurposekey:)
+                locationManager.requestTemporaryFullAccuracyAuthorization(
+                    withPurposeKey: "SprintMeasurement"
+                ) { error in
+                    if let error {
+                        NSLog(error.localizedDescription)
+                    }
+                }
+            }
             locationManager.startUpdatingLocation()
         @unknown default:
             NSLog(locationManager.authorizationStatus.rawValue.description)

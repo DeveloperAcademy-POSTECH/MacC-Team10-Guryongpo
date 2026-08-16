@@ -36,8 +36,13 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         self.matrics = matrics
         super.init()
         locationManager.delegate = self
-
         #if os(watchOS)
+        // 짧은 Sprint 속도 변화를 수집하기 위해 watchOS 기본 100m 정확도보다 높은 정밀도를 요청한다.
+        // Apple: https://developer.apple.com/documentation/corelocation/cllocationmanager/desiredaccuracy
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.activityType = .fitness
+      
         // Watch는 경기 시작 전 권한 검증을 위해 기존 초기 요청 흐름을 유지합니다.
         locationManager.requestWhenInUseAuthorization()
         requestHealthAuthorization()
@@ -130,8 +135,29 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         HKHealthStore.isHealthDataAvailable()
     }
 
+    #if os(watchOS)
+    var hasPreciseRecentLocation: Bool {
+        guard locationManager.accuracyAuthorization == .fullAccuracy,
+              let location = locationManager.location,
+              location.horizontalAccuracy >= 0 else {
+            return false
+        }
+
+        // 경기 시작 시 오래된 캐시 위치를 사용하지 않도록 CoreLocation 샘플 시각을 직접 검증한다.
+        let sampleAge = Date().timeIntervalSince(location.timestamp)
+        return (0...5).contains(sampleAge)
+    }
+    #endif
+
     var hasAllAuthorization: Bool {
+        #if os(watchOS)
+        hasHealthAuthorization()
+            && hasLocationAuthorization()
+            && hasPreciseRecentLocation
+            && isHealthDataAvailable
+        #else
         hasHealthAuthorization() && hasLocationAuthorization() && isHealthDataAvailable
+        #endif
     }
     
     func hasLocationAuthorization() -> Bool {

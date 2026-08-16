@@ -8,6 +8,11 @@
 	<string>축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>축구 경기 중 위치를 표시하기 위해 내 위치 권한을 요청합니다.</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>SprintMeasurement</key>
+		<string>경기 중 Sprint 속도를 정확하게 측정하려면 정밀 위치가 필요합니다.</string>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NotoSans-Black.ttf</string>
