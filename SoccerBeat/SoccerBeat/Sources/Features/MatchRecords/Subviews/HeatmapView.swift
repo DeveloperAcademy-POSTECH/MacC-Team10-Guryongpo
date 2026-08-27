@@ -31,10 +31,11 @@ struct HeatmapView: UIViewRepresentable {
             latitude: workout.center[0],
             longitude: workout.center[1]
         )
-        
+
+        mapView.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
         mapView.region = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 150, longitudinalMeters: 150)
-        
-        mapView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        // Rotate the existing camera so the established 150 m region remains unchanged.
+        mapView.camera.heading = heatmapHeading(center: centerCoordinate)
         
         // Create heatmap overlay
         let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
@@ -181,6 +182,50 @@ struct HeatmapView: UIViewRepresentable {
 }
 
 extension HeatmapView {
+    func heatmapHeading(center: CLLocationCoordinate2D) -> CLLocationDirection {
+        let centerMapPoint = MKMapPoint(center)
+        let nearbyPoints = workout.route.compactMap { coordinate -> MKMapPoint? in
+            guard CLLocationCoordinate2DIsValid(coordinate) else { return nil }
+
+            let mapPoint = MKMapPoint(coordinate)
+            return centerMapPoint.distance(to: mapPoint) <= 75 ? mapPoint : nil
+        }
+        let distinctPoints = nearbyPoints.reduce(into: [MKMapPoint]()) { points, point in
+            guard points.count < 3,
+                  !points.contains(where: { $0.x == point.x && $0.y == point.y }) else { return }
+            points.append(point)
+        }
+
+        // Sparse or isotropic routes have no stable orientation, so keep the map north-up.
+        guard distinctPoints.count >= 3 else { return 0 }
+
+        let pointCount = Double(nearbyPoints.count)
+        let meanX = nearbyPoints.reduce(0) { $0 + $1.x } / pointCount
+        let meanY = nearbyPoints.reduce(0) { $0 + $1.y } / pointCount
+        let covariance = nearbyPoints.reduce(into: (xx: 0.0, xy: 0.0, yy: 0.0)) { result, point in
+            let deltaX = point.x - meanX
+            let deltaY = point.y - meanY
+            result.xx += deltaX * deltaX
+            result.xy += deltaX * deltaY
+            result.yy += deltaY * deltaY
+        }
+        let covarianceXX = covariance.xx / pointCount
+        let covarianceXY = covariance.xy / pointCount
+        let covarianceYY = covariance.yy / pointCount
+        let trace = covarianceXX + covarianceYY
+        let discriminant = hypot(covarianceXX - covarianceYY, 2 * covarianceXY)
+        let principalVariance = (trace + discriminant) / 2
+        let secondaryVariance = max((trace - discriminant) / 2, .ulpOfOne)
+
+        guard principalVariance / secondaryVariance >= 1.2 else { return 0 }
+
+        // PCA finds the route's undirected dominant axis without depending on its start or end.
+        let axisAngle = 0.5 * atan2(2 * covarianceXY, covarianceXX - covarianceYY)
+        var heading = axisAngle * 180 / .pi
+        heading.formTruncatingRemainder(dividingBy: 180)
+        return heading < 0 ? heading + 180 : heading
+    }
+
     // targetSize 파라미터 추가
     func shootSnapshot(targetSize: CGSize, completion: @escaping (UIImage?) -> Void) {
         // let size = mapView.frame.size == .zero ? UIScreen.main.bounds.size : mapView.frame.size // 기존 size 계산 제거
@@ -191,6 +236,8 @@ extension HeatmapView {
         options.size = targetSize
         options.showsBuildings = false // 빌딩 표시는 필요 없으므로 false
         options.region = MKCoordinateRegion(center: center, latitudinalMeters: 150, longitudinalMeters: 150) // 기존 region 사용
+        // Match the live heatmap orientation without replacing the established 150 m region.
+        options.camera.heading = heatmapHeading(center: center)
         options.mapType = .mutedStandard // 스크린샷과 유사한 스타일
 
         let snapshotter = MKMapSnapshotter(options: options)

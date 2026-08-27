@@ -317,7 +317,7 @@ struct FieldMovementView: View {
                         if !workout.error {
                             if mapType == 0 {
                                 HeatmapView(workout: workout)
-                                    .frame(height: proxy.size.height - 50)
+                                    .frame(width: proxy.size.width, height: proxy.size.width * 2 / 3)
                                     .cornerRadius(15.0)
                             } else {
                                 VStack {
@@ -335,7 +335,7 @@ struct FieldMovementView: View {
                         } else {
                             if mapType == 0 {
                                 HeatmapView(workout: WorkoutData.blankExample)
-                                    .frame(height: proxy.size.height - 50)
+                                    .frame(width: proxy.size.width, height: proxy.size.width * 2 / 3)
                                     .cornerRadius(15.0)
                             } else {
                                 VStack {
@@ -354,7 +354,7 @@ struct FieldMovementView: View {
                     } else {
                         if mapType == 0 {
                             HeatmapView(workout: WorkoutData.blankExample)
-                                .frame(height: proxy.size.height - 50)
+                                .frame(width: proxy.size.width, height: proxy.size.width * 2 / 3)
                                 .cornerRadius(15.0)
                         } else {
                             VStack {
