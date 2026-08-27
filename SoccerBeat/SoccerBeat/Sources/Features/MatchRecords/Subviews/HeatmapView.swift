@@ -24,6 +24,8 @@ struct HeatmapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         
         mapView.delegate = context.coordinator
+        // Keep the heatmap as a fixed visualization and let the parent TabView handle gestures.
+        mapView.isUserInteractionEnabled = false
         
         let centerCoordinate = CLLocationCoordinate2D(
             latitude: workout.center[0],
