@@ -39,7 +39,7 @@ struct ShareMatchView: View {
     // 맵 이미지 크기를 계산하는 helper 프로퍼티
     private var mapImageSize: CGSize {
         let width = cardWidth - (20 * 2) // 카드 내부 패딩 20pt 제외
-        let height: CGFloat = 275 // 고정 높이
+        let height = width * 2 / 3
         return CGSize(width: width, height: height)
     }
 
