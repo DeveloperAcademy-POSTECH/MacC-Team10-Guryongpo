@@ -3174,6 +3174,7 @@
       }
     },
     "백그라운드 위치(필수): 사용자의 필드 위 위치를 저장하기 위해 사용합니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4090,6 +4091,7 @@
       }
     },
     "위치(필수): 사용자의 필드 위 위치를 저장하기 위해 사용합니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4546,6 +4548,7 @@
       }
     },
     "정보 수집을 위해 다음과 같은 접근 권한을 사용하고 있습니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5578,6 +5581,7 @@
       }
     },
     "헬스 정보(필수): 사용자의 경기 데이터를 저장하기 위해 사용합니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5622,6 +5626,7 @@
       }
     },
     "Apple Health에서 기록과 접근 권한을 확인해 주세요." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5754,6 +5759,7 @@
       }
     },
     "읽을 수 있는 경기 기록이 없습니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
