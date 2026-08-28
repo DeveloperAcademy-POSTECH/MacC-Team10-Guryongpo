@@ -33,6 +33,50 @@ final class SprintDetectorTests: XCTestCase {
         XCTAssertTrue(detector.isSprint)
     }
 
+    func testSingleSpeedSpikeDoesNotRaiseConfirmedPeaks() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 2_500)
+
+        detector.process(timestamp: start, speed: 6.0, speedAccuracy: 0.2, receivedAt: start)
+
+        let spikeTimestamp = start.addingTimeInterval(0.5)
+        detector.process(
+            timestamp: spikeTimestamp,
+            speed: 15.42,
+            speedAccuracy: 0.2,
+            receivedAt: spikeTimestamp
+        )
+        XCTAssertEqual(detector.speedMPS, 15.42, accuracy: 0.001)
+        XCTAssertEqual(detector.maxSpeedMPS, 6.0, accuracy: 0.001)
+
+        let recoveryTimestamp = start.addingTimeInterval(1.0)
+        detector.process(
+            timestamp: recoveryTimestamp,
+            speed: 6.0,
+            speedAccuracy: 0.2,
+            receivedAt: recoveryTimestamp
+        )
+
+        XCTAssertEqual(detector.maxSpeedMPS, 6.0, accuracy: 0.001)
+        XCTAssertEqual(detector.recentSprintSpeedMPS, 6.0, accuracy: 0.001)
+    }
+
+    func testRepeatedHighSpeedPreservesConfirmedPeak() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 2_750)
+
+        detector.process(timestamp: start, speed: 9.33, speedAccuracy: 0.2, receivedAt: start)
+        detector.process(
+            timestamp: start.addingTimeInterval(0.5),
+            speed: 9.33,
+            speedAccuracy: 0.2,
+            receivedAt: start.addingTimeInterval(0.5)
+        )
+
+        XCTAssertEqual(detector.maxSpeedMPS, 9.33, accuracy: 0.001)
+        XCTAssertEqual(detector.recentSprintSpeedMPS, 9.33, accuracy: 0.001)
+    }
+
     func testBoundaryOscillationDoesNotDuplicateSprint() {
         var detector = SprintDetector()
         let start = Date(timeIntervalSinceReferenceDate: 3_000)
@@ -146,8 +190,10 @@ final class SprintDetectorTests: XCTestCase {
 
         XCTAssertEqual(pausedDetector.sprintCount, 0)
         XCTAssertFalse(pausedDetector.isSprint)
+        XCTAssertEqual(pausedDetector.maxSpeedMPS, 0)
         XCTAssertEqual(resetDetector.sprintCount, 0)
         XCTAssertFalse(resetDetector.isSprint)
+        XCTAssertEqual(resetDetector.maxSpeedMPS, 0)
     }
 
     func testLongSampleGapCancelsCandidateAndKeepsConfirmedCount() {
@@ -164,6 +210,7 @@ final class SprintDetectorTests: XCTestCase {
             receivedAt: afterCandidateGap
         )
         XCTAssertEqual(detector.sprintCount, 0)
+        XCTAssertEqual(detector.maxSpeedMPS, 0)
 
         let confirmation = afterCandidateGap.addingTimeInterval(0.5)
         detector.process(
@@ -173,6 +220,7 @@ final class SprintDetectorTests: XCTestCase {
             receivedAt: confirmation
         )
         XCTAssertEqual(detector.sprintCount, 1)
+        XCTAssertEqual(detector.maxSpeedMPS, 6.0, accuracy: 0.001)
 
         let afterConfirmedGap = confirmation.addingTimeInterval(2.1)
         detector.process(
