@@ -30,6 +30,7 @@ struct SprintDetector {
 
     private var state = State.idle
     private var lastTimestamp: Date?
+    private var previousValidSpeedMPS: Double?
     private var candidatePeakSpeedMPS = 0.0
 
     // Apple: https://developer.apple.com/documentation/corelocation/cllocation/speed
@@ -56,6 +57,7 @@ struct SprintDetector {
             }
 
             if timestamp.timeIntervalSince(lastTimestamp) > Self.maximumSampleGap {
+                previousValidSpeedMPS = nil
                 switch state {
                 case .entering:
                     state = .idle
@@ -68,10 +70,15 @@ struct SprintDetector {
             }
         }
 
+        // The lower of adjacent valid samples rejects one-off GPS spikes without imposing a speed cap.
+        let confirmedPeakSpeedMPS = previousValidSpeedMPS.map { min($0, speed) }
         lastTimestamp = timestamp
+        previousValidSpeedMPS = speed
         validSampleCount += 1
         speedMPS = speed
-        maxSpeedMPS = max(maxSpeedMPS, speed)
+        if let confirmedPeakSpeedMPS {
+            maxSpeedMPS = max(maxSpeedMPS, confirmedPeakSpeedMPS)
+        }
 
         let qualifiesForEntry = speed >= Self.entrySpeedMPS
             && speed - speedAccuracy >= Self.entryConfidenceFloorMPS
@@ -81,7 +88,7 @@ struct SprintDetector {
             isSprint = false
             if qualifiesForEntry {
                 state = .entering(timestamp)
-                candidatePeakSpeedMPS = speed
+                candidatePeakSpeedMPS = confirmedPeakSpeedMPS ?? 0
             }
 
         case let .entering(startedAt):
@@ -91,7 +98,9 @@ struct SprintDetector {
                 return
             }
 
-            candidatePeakSpeedMPS = max(candidatePeakSpeedMPS, speed)
+            if let confirmedPeakSpeedMPS {
+                candidatePeakSpeedMPS = max(candidatePeakSpeedMPS, confirmedPeakSpeedMPS)
+            }
             if timestamp.timeIntervalSince(startedAt) >= Self.requiredDuration {
                 state = .sprinting
                 isSprint = true
@@ -101,13 +110,17 @@ struct SprintDetector {
             }
 
         case .sprinting:
-            recentSprintSpeedMPS = max(recentSprintSpeedMPS, speed)
+            if let confirmedPeakSpeedMPS {
+                recentSprintSpeedMPS = max(recentSprintSpeedMPS, confirmedPeakSpeedMPS)
+            }
             if speed < Self.exitSpeedMPS {
                 state = .exiting(timestamp)
             }
 
         case let .exiting(startedAt):
-            recentSprintSpeedMPS = max(recentSprintSpeedMPS, speed)
+            if let confirmedPeakSpeedMPS {
+                recentSprintSpeedMPS = max(recentSprintSpeedMPS, confirmedPeakSpeedMPS)
+            }
             if speed < Self.exitSpeedMPS {
                 if timestamp.timeIntervalSince(startedAt) >= Self.requiredDuration {
                     state = .idle
@@ -131,6 +144,7 @@ struct SprintDetector {
         isSprint = false
         speedMPS = 0
         lastTimestamp = nil
+        previousValidSpeedMPS = nil
         candidatePeakSpeedMPS = 0
     }
 }
