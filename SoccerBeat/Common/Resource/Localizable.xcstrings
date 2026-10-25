@@ -291,7 +291,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " 회"
+            "value" : " veces"
           }
         },
         "zh-Hans" : {
@@ -5518,7 +5518,27 @@
       }
     },
     "평균 " : {
-
+      "comment" : "추세 차트의 평균값 접두어. 뒤 공백은 값과 구분하기 위해 유지합니다.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average "
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promedio "
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均 "
+          }
+        }
+      }
     },
     "폭발력" : {
       "comment" : "폭발력",
