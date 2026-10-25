@@ -261,8 +261,6 @@ struct FieldMovementView: View {
     @State private var slider = 0.0
     @State private var showShareView = false
     @State private var mapType = 0
-    private let emptyDataRoute: [CLLocationCoordinate2D] = []
-    private let emptyDataCenter: [Double] = [0, 0]
     
     var body: some View {
         VStack {
@@ -309,66 +307,25 @@ struct FieldMovementView: View {
                 }
                 .pickerStyle(.segmented)
                 
-                GeometryReader { proxy in
-                    
-                    if let workout = workout {
-                        if !workout.error {
-                            if mapType == 0 {
-                                HeatmapView(workout: workout)
-                                    .frame(width: proxy.size.width, height: proxy.size.width * 2 / 3)
-                                    .cornerRadius(15.0)
-                            } else {
-                                VStack {
-                                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: workout.center[0], longitude: workout.center[1]), routes: workout.route)
-                                        .frame(height: proxy.size.height - 100)
-                                        .cornerRadius(15.0)
-                                    
-                                    Slider(
-                                        value: $slider,
-                                        in: 0...1
-                                    )
-                                    .padding(.vertical)
-                                }
-                            }
-                        } else {
-                            if mapType == 0 {
-                                HeatmapView(workout: WorkoutData.blankExample)
-                                    .frame(width: proxy.size.width, height: proxy.size.width * 2 / 3)
-                                    .cornerRadius(15.0)
-                            } else {
-                                VStack {
-                                    LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                                        .frame(height: proxy.size.height - 100)
-                                        .cornerRadius(15.0)
-                                    
-                                    Slider(
-                                        value: $slider,
-                                        in: 0...1
-                                    )
-                                    .padding(.vertical)
-                                }
-                            }
-                        }
-                    } else {
+                let mapWorkout = workout.flatMap { $0.error ? nil : $0 } ?? .blankExample
+
+                VStack(spacing: 16) {
+                    Group {
                         if mapType == 0 {
-                            HeatmapView(workout: WorkoutData.blankExample)
-                                .frame(width: proxy.size.width, height: proxy.size.width * 2 / 3)
-                                .cornerRadius(15.0)
+                            HeatmapView(workout: mapWorkout)
                         } else {
-                            VStack {
-                                LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: emptyDataCenter[0], longitude: emptyDataCenter[1]), routes: emptyDataRoute)
-                                    .frame(height: proxy.size.height - 100)
-                                    .cornerRadius(15.0)
-                                
-                                Slider(
-                                    value: $slider,
-                                    in: 0...1
-                                )
-                                .padding(.vertical)
-                            }
+                            LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: mapWorkout.center[0], longitude: mapWorkout.center[1]), routes: mapWorkout.route)
                         }
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .cornerRadius(15.0)
+
+                    if mapType == 1 {
+                        Slider(value: $slider, in: 0...1)
+                    }
                 }
+                .padding(.horizontal, 8)
+                .padding(.bottom, 40)
             }
         }
     }

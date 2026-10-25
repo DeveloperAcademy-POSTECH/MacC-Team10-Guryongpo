@@ -24,15 +24,13 @@ struct HeatmapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         
         mapView.delegate = context.coordinator
-        // Keep the heatmap as a fixed visualization and let the parent TabView handle gestures.
-        mapView.isUserInteractionEnabled = false
+        mapView.isUserInteractionEnabled = true
         
         let centerCoordinate = CLLocationCoordinate2D(
             latitude: workout.center[0],
             longitude: workout.center[1]
         )
 
-        mapView.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
         mapView.region = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 150, longitudinalMeters: 150)
         // Rotate the existing camera so the established 150 m region remains unchanged.
         mapView.camera.heading = heatmapHeading(center: centerCoordinate)
