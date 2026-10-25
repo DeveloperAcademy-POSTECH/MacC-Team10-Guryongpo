@@ -14,38 +14,36 @@ struct MatchDetailView: View {
     var workout: WorkoutData?
 
     var body: some View {
-        ZStack {
-            Image("BackgroundPattern")
-                .resizable()
-                .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                .clipped()
-                .opacity(0.5)
-            
-            TabView {
-                
-                FieldChartView(workout: workout)
-                
-                FieldMovementView(workout: workout)
-            
-                FieldRecordView(workout: workout)
-
-            }
-            .padding()
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                    }
+        TabView {
+            FieldChartView(workout: workout)
+            FieldMovementView(workout: workout)
+            FieldRecordView(workout: workout)
+        }
+        .padding()
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
                 }
             }
-            .padding(.bottom, 32)
-            .foregroundStyle(Color.white)
-            
+        }
+        .padding(.bottom, 32)
+        .foregroundStyle(Color.white)
+        .background {
+            // Keep the full-screen background from expanding content into the navigation bar.
+            GeometryReader { proxy in
+                Image("BackgroundPattern")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .clipped()
+                    .opacity(0.5)
+            }
+            .ignoresSafeArea()
         }
     }
 }
