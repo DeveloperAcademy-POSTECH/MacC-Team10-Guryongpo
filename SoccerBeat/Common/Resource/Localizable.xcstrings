@@ -5429,18 +5429,19 @@
       }
     },
     "칼로리" : {
-      "extractionState" : "stale",
+      "comment" : "운동 중 활동 칼로리. 단위는 kcal입니다.",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calorie"
+            "value" : "Calories"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Caloría"
+            "value" : "Calorías"
           }
         },
         "ko" : {
