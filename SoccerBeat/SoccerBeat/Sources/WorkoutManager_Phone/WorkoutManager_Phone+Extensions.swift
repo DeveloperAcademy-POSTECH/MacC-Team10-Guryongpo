@@ -110,6 +110,7 @@ extension WorkoutManager {
         var latSum = 0.0
         var lonSum = 0.0
         var routes: [CLLocationCoordinate2D] = []
+        var heatmapSamples: [HeatmapSample] = []
         var metadata: [String: Any] = [:]
         // dataError 제거: 값이 없으면 기본값(0)으로 표시
 
@@ -117,6 +118,10 @@ extension WorkoutManager {
         if let (locations, meta) = try? await convertToRouteAndMetadata(from: workout) {
             metadata = meta
             for location in locations {
+                heatmapSamples.append(HeatmapSample(latitude: location.coordinate.latitude,
+                                                    longitude: location.coordinate.longitude,
+                                                    timestamp: location.timestamp,
+                                                    horizontalAccuracy: location.horizontalAccuracy))
                 routes.append(CLLocationCoordinate2D(latitude: location.coordinate.latitude,
                                                      longitude: location.coordinate.longitude))
                 latSum += location.coordinate.latitude
@@ -227,6 +232,25 @@ extension WorkoutManager {
             vo2Max = Double(Int(maxVo2 * 10)) / 10
         }
 
+        var pausedIntervals: [DateInterval] = []
+        var pauseStart: Date?
+        for event in (workout.workoutEvents ?? []).sorted(by: { $0.dateInterval.start < $1.dateInterval.start }) {
+            switch event.type {
+            case .pause, .motionPaused:
+                if pauseStart == nil { pauseStart = event.dateInterval.start }
+            case .resume, .motionResumed:
+                if let start = pauseStart, event.dateInterval.start > start {
+                    pausedIntervals.append(DateInterval(start: start, end: event.dateInterval.start))
+                }
+                pauseStart = nil
+            default:
+                break
+            }
+        }
+        if let start = pauseStart, workout.endDate > start {
+            pausedIntervals.append(DateInterval(start: start, end: workout.endDate))
+        }
+
         return WorkoutData(dataID: index+1,
                            date: dateFormatter.string(from: workout.startDate),
                            time: displayedTime,
@@ -242,7 +266,9 @@ extension WorkoutManager {
                                     lonSum / Double(dotCount)],
                            calories: calories,
                            vo2Max: vo2Max,
-                           error: false)
+                           error: false,
+                           heatmapSamples: heatmapSamples,
+                           heatmapPausedIntervals: pausedIntervals)
     }
 
     private static let soccerBeatSourceKeyword = "SoccerBeat"

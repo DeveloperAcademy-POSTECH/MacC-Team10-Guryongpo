@@ -36,9 +36,9 @@ struct HeatmapView: UIViewRepresentable {
         mapView.camera.heading = heatmapHeading(center: centerCoordinate)
         
         // Create heatmap overlay
-        let overlays = createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
-                
-        mapView.addOverlays(overlays)
+        if let overlay = createHeatmapOverlay(center: centerCoordinate) {
+            mapView.addOverlay(overlay)
+        }
                     
         return mapView
     }
@@ -59,124 +59,37 @@ struct HeatmapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            if let rectangleOverlay = overlay as? FixedSizeRectangleOverlay {
-                
-                // Draw smaller sized rectangle inside each grid
-                let shrinkFactor: Double = 0.8
-                let shrunkenPoints = rectangleOverlay.points.map { point -> MKMapPoint in
-                    let centerX = rectangleOverlay.boundingMapRect.midX
-                    let centerY = rectangleOverlay.boundingMapRect.midY
-                    let newX = centerX + (point.x - centerX) * shrinkFactor
-                    let newY = centerY + (point.y - centerY) * shrinkFactor
-                    return MKMapPoint(x: newX, y: newY)
-                }
-                
-                let renderer = MKPolygonRenderer(polygon: MKPolygon(points: shrunkenPoints, count: shrunkenPoints.count))
-                
-                renderer.fillColor = rectangleOverlay.color
-                
-                return renderer
+            if let heatmap = overlay as? HeatmapOverlay {
+                return HeatmapRenderer(overlay: heatmap)
             }
             return MKOverlayRenderer()
         }
     }
-    
-    func createHeatmapOverlays(center: CLLocationCoordinate2D, gridSize: Int, squareSize: Double) -> [FixedSizeRectangleOverlay] {
-        var overlays: [FixedSizeRectangleOverlay] = []
-        
-        let centerMapPoint = MKMapPoint(center)
-        
-        let halfGrid = Double(gridSize) / 2.0
-        
-        let initialx = centerMapPoint.x - (squareSize * halfGrid)
-        let initialy = centerMapPoint.y - (squareSize * halfGrid)
-        
-        var gridCount: [[Int]] = Array(repeating: Array(repeating: 0, count: gridSize+1), count: gridSize+1)
-        
-        for routePoint in workout.route {
-            let mapPoint = MKMapPoint(routePoint)
-            
-            let col = Int((mapPoint.x - initialx) / squareSize)
-            let row = Int((mapPoint.y - initialy) / squareSize)
-            
-            if row >= 0 && row < gridSize && col >= 0 && col < gridSize {
-                gridCount[row][col] += 1
-            }
-        }
-        
-        // Calculate maxCount and medianCount
-        let flatGridCount = gridCount.flatMap { $0 }
-        let maxCount = flatGridCount.max() ?? 1
-        let medianCount = flatGridCount.sorted()[flatGridCount.count / 2]
-                
-        for row in 0..<gridSize+1 {
-            for col in 0..<gridSize+1 {
-                
-                let mapPointx = initialx + (squareSize * Double(col))
-                let mapPointy = initialy + (squareSize * Double(row))
-                
-                let mapPoint = MKMapPoint(x: mapPointx, y: mapPointy)
-                let coordinate = mapPoint.coordinate
-                
-                let squareCenter = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                
-                //  Calculate ratio of number of data using log function within a grid
-                let normalizedCount = normalizedCount(gridCount[row][col], maxCount: maxCount, medianCount: medianCount)
-                
-                let color = colorForNormalizedCount(normalizedCount)
-                
-                let overlay = FixedSizeRectangleOverlay(center: squareCenter, width: squareSize, height: squareSize, count: gridCount[row][col], color: color)
-                
-                overlays.append(overlay)
-            }
-        }
-        return overlays
-    }
-    
-    // In order to handle unevenly distributed data, multiple scales are used.
-    // Linear scale
-    func normalizedCount(_ count: Int, maxCount: Int, medianCount: Int) -> Double {
-        if count <= 1 {
-            return 0
-        }
-        if Double(maxCount) > Double(medianCount) * 5 {
-            // Log scale for skewed data
-            return log(Double(count) + 1) / log(Double(maxCount) + 1)
-        } else {
-            // Linear scale for evenly distributed data
-            return Double(count) / Double(maxCount)
-        }
-    }
 
-    func colorForNormalizedCount(_ normalizedCount: Double) -> UIColor {
-        
-        switch normalizedCount {
-        case 0:
-            return UIColor.clear
-        case 0..<0.05:
-            return UIColor(Color.heatmap90)
-        case 0.05..<0.1:
-            return UIColor(Color.heatmap80)
-        case 0.1..<0.2:
-            return UIColor(Color.heatmap70)
-        case 0.2..<0.3:
-            return UIColor(Color.heatmap60)
-        case 0.3..<0.4:
-            return UIColor(Color.heatmap50)
-        case 0.4..<0.55:
-            return UIColor(Color.heatmap40)
-        case 0.55..<0.7:
-            return UIColor(Color.heatmap30)
-        case 0.7..<0.85:
-            return UIColor(Color.heatmap20)
-        case 0.85...1.0:
-            return UIColor(Color.heatmap10)
-        default:
-            return UIColor.clear
+    func createHeatmapOverlay(center: CLLocationCoordinate2D) -> HeatmapOverlay? {
+        let density = HeatmapDensity(samples: workout.heatmapSamples,
+                                     centerLatitude: center.latitude,
+                                     centerLongitude: center.longitude,
+                                     pausedIntervals: workout.heatmapPausedIntervals)
+        let intensities = density.intensities
+        guard intensities.contains(where: { $0 > 0 }) else { return nil }
+        var pixels: [UInt8] = []
+        pixels.reserveCapacity(intensities.count * 4)
+        for intensity in intensities {
+            // Premultiplied RGBA: continuous yellow -> orange -> red, with faint tails.
+            let alpha = intensity > 0 ? 0.65 * min(intensity / 0.1, 1) : 0
+            pixels += [UInt8(255 * alpha), UInt8((247 - 188 * intensity) * alpha),
+                       UInt8(48 * alpha), UInt8(255 * alpha)]
         }
-        
+        let side = HeatmapDensity.side
+        guard let provider = CGDataProvider(data: Data(pixels) as CFData),
+              let image = CGImage(width: side, height: side, bitsPerComponent: 8, bitsPerPixel: 32,
+                                  bytesPerRow: side * 4, space: CGColorSpaceCreateDeviceRGB(),
+                                  bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
+                                  provider: provider, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+        else { return nil }
+        return HeatmapOverlay(image: image, center: center)
     }
-    
 }
 
 extension HeatmapView {
@@ -248,38 +161,26 @@ extension HeatmapView {
 
             let centerCoordinate = CLLocationCoordinate2D(latitude: self.workout.center[0], longitude: self.workout.center[1])
             // 오버레이는 스냅샷 크기와 무관하게 데이터 기반으로 생성됨
-            let overlays = self.createHeatmapOverlays(center: centerCoordinate, gridSize: 30, squareSize: 50)
+            let overlay = self.createHeatmapOverlay(center: centerCoordinate)
 
             let renderer = UIGraphicsImageRenderer(size: options.size) // options.size 사용
             let image = renderer.image { context in
                 snapshot.image.draw(at: .zero)
 
-                for overlay in overlays {
-                    let points = overlay.points.map { mapPoint in
-                        snapshot.point(for: mapPoint.coordinate)
-                    }
-
-                    guard points.count == 4 else { continue }
-
-                    let shrinkFactor: CGFloat = 0.8
-                    let centerX = points.reduce(0) { $0 + $1.x } / CGFloat(points.count)
-                    let centerY = points.reduce(0) { $0 + $1.y } / CGFloat(points.count)
-
-                    let shrunkenPoints = points.map { point -> CGPoint in
-                        let newX = centerX + (point.x - centerX) * shrinkFactor
-                        let newY = centerY + (point.y - centerY) * shrinkFactor
-                        return CGPoint(x: newX, y: newY)
-                    }
-
-                    let path = UIBezierPath()
-                    path.move(to: shrunkenPoints[0])
-                    for i in 1..<shrunkenPoints.count {
-                        path.addLine(to: shrunkenPoints[i])
-                    }
-                    path.close()
-
-                    overlay.color.setFill()
-                    path.fill()
+                if let overlay = overlay {
+                    let rect = overlay.boundingMapRect
+                    let topLeft = snapshot.point(for: MKMapPoint(x: rect.minX, y: rect.minY).coordinate)
+                    let topRight = snapshot.point(for: MKMapPoint(x: rect.maxX, y: rect.minY).coordinate)
+                    let bottomLeft = snapshot.point(for: MKMapPoint(x: rect.minX, y: rect.maxY).coordinate)
+                    let side = CGFloat(HeatmapDensity.side)
+                    let transform = CGAffineTransform(a: (topRight.x - topLeft.x) / side,
+                                                      b: (topRight.y - topLeft.y) / side,
+                                                      c: (bottomLeft.x - topLeft.x) / side,
+                                                      d: (bottomLeft.y - topLeft.y) / side,
+                                                      tx: topLeft.x, ty: topLeft.y)
+                    context.cgContext.concatenate(transform)
+                    HeatmapRenderer.drawImage(overlay.image, in: CGRect(x: 0, y: 0, width: side, height: side),
+                                              context: context.cgContext)
                 }
             }
             print("✅ HeatmapView.shootSnapshot: 맵 스냅샷 생성 완료 (Size: \(options.size))")
@@ -288,30 +189,34 @@ extension HeatmapView {
     }
 }
 
-class FixedSizeRectangleOverlay: NSObject, MKOverlay {
-    var coordinate: CLLocationCoordinate2D
-    var boundingMapRect: MKMapRect
-    var points: [MKMapPoint]
-    var count: Int
-    var color: UIColor
-    
-    init(center: CLLocationCoordinate2D, width: Double, height: Double, count: Int, color: UIColor) {
-        self.count = count
-        self.color = color
-        let centerPoint = MKMapPoint(center)
-        
-        let halfWidth = width / 2
-        let halfHeight = height / 2
-        
-        let topLeft = MKMapPoint(x: centerPoint.x - halfWidth, y: centerPoint.y - halfHeight)
-        let topRight = MKMapPoint(x: centerPoint.x + halfWidth, y: centerPoint.y - halfHeight)
-        let bottomLeft = MKMapPoint(x: centerPoint.x - halfWidth, y: centerPoint.y + halfHeight)
-        let bottomRight = MKMapPoint(x: centerPoint.x + halfWidth, y: centerPoint.y + halfHeight)
-        
-        self.points = [topLeft, topRight, bottomRight, bottomLeft]
-        
-        let rect = MKMapRect(x: topLeft.x, y: topLeft.y, width: width, height: height)
-        self.boundingMapRect = rect
+// A single interpolated texture avoids cell seams and thousands of map renderers.
+class HeatmapOverlay: NSObject, MKOverlay {
+    let image: CGImage
+    let coordinate: CLLocationCoordinate2D
+    let boundingMapRect: MKMapRect
+
+    init(image: CGImage, center: CLLocationCoordinate2D) {
+        self.image = image
         self.coordinate = center
+        let centerPoint = MKMapPoint(center)
+        let width = Double(HeatmapDensity.side) * HeatmapDensity.cellSize * MKMapPointsPerMeterAtLatitude(center.latitude)
+        self.boundingMapRect = MKMapRect(x: centerPoint.x - width / 2, y: centerPoint.y - width / 2,
+                                        width: width, height: width)
+    }
+}
+
+class HeatmapRenderer: MKOverlayRenderer {
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        guard let heatmap = overlay as? HeatmapOverlay else { return }
+        Self.drawImage(heatmap.image, in: rect(for: heatmap.boundingMapRect), context: context)
+    }
+
+    static func drawImage(_ image: CGImage, in rect: CGRect, context: CGContext) {
+        context.saveGState()
+        context.interpolationQuality = .high
+        context.translateBy(x: rect.minX, y: rect.maxY)
+        context.scaleBy(x: 1, y: -1)
+        context.draw(image, in: CGRect(origin: .zero, size: rect.size))
+        context.restoreGState()
     }
 }

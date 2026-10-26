@@ -34,6 +34,8 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var vo2Max: Double
     
     var error = false
+    var heatmapSamples: [HeatmapSample] = []
+    var heatmapPausedIntervals: [DateInterval] = []
     
     var matchBadge: [Int] {
         // MARK: Badge 기준
