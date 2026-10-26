@@ -180,6 +180,7 @@
 		FBCED9202AE3D38900C57BF9 /* MyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED91F2AE3D38900C57BF9 /* MyCardView.swift */; };
 		FBCED9322AE4218E00C57BF9 /* MatchRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */; };
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
+		C05054012F00000100000001 /* RouteTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05054002F00000100000001 /* RouteTimeline.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -350,6 +351,7 @@
 		FBCED9312AE4218E00C57BF9 /* MatchRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRecapView.swift; sourceTree = "<group>"; };
 		FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailView.swift; sourceTree = "<group>"; };
 		FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansDisplay-BlackItalic.ttf"; sourceTree = "<group>"; };
+		C05054002F00000100000001 /* RouteTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTimeline.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -755,6 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				D30F0B4B2AF0F19D002965D6 /* HeatmapView.swift */,
+				C05054002F00000100000001 /* RouteTimeline.swift */,
 				BA3654F62CE01E9E0059FE9A /* LocationView.swift */,
 				D3D1749D2B00F92C0022F631 /* TKRadarChart.swift */,
 				BE91CF3F2BBE43BC00F0EB6F /* RadarChartShape.swift */,
@@ -1220,6 +1223,7 @@
 				682D64872AFD1D8500D7F07B /* Profile.swift in Sources */,
 				BE4069E22AF279F600FA3030 /* Font+extension.swift in Sources */,
 				D30F0B4C2AF0F19D002965D6 /* HeatmapView.swift in Sources */,
+				C05054012F00000100000001 /* RouteTimeline.swift in Sources */,
 				682A69602BC406AB00E8EABC /* NoAuthorizationView.swift in Sources */,
 				688485A12CB7AA4E0092A13C /* DIContainer.swift in Sources */,
 				685D7B752AE53DC400783433 /* SpeedChart.swift in Sources */,

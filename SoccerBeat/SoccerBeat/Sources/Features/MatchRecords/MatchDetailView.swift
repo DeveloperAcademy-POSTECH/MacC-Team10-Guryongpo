@@ -313,16 +313,13 @@ struct FieldMovementView: View {
                     Group {
                         if mapType == 0 {
                             HeatmapView(workout: mapWorkout)
+                                .cornerRadius(15.0)
                         } else {
-                            LocationView(slider: $slider, centerCoordinate: CLLocationCoordinate2D(latitude: mapWorkout.center[0], longitude: mapWorkout.center[1]), routes: mapWorkout.route)
+                            LocationView(slider: $slider, workout: mapWorkout)
+                                .id(mapWorkout.id)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .cornerRadius(15.0)
-
-                    if mapType == 1 {
-                        Slider(value: $slider, in: 0...1)
-                    }
                 }
                 .padding(.horizontal, 8)
                 .padding(.bottom, 40)
