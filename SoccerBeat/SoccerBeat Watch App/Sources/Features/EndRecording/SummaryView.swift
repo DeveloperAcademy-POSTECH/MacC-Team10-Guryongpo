@@ -114,7 +114,7 @@ struct InfoSportsView: View {
             }
             HStack(spacing: 4) {
                 SummaryComponent(title: "스프린트", content:  matricsIndicator.sprintCount.formatted(), unit: "Times")
-                SummaryComponent(title: "파워", content:  matricsIndicator.hasPowerData ? matricsIndicator.power.rounded(at: 0) : "--", unit: "w")
+                SummaryComponent(title: "칼로리", content: matricsIndicator.energy.rounded(at: 0), unit: "kcal")
             }
         }
     }

@@ -81,7 +81,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
     var saveHeartRates: [Int] = []
 
     // 데이터 표기 변수
-    var energy: Double = 0 // 칼로리
+    @Published var energy: Double = 0 // 활동 칼로리 (kcal)
     @Published private var peakPower = PeakPower()
     var power: Double { peakPower.watts ?? 0 }
     var hasPowerData: Bool { peakPower.watts != nil }
@@ -100,7 +100,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
             "Vo2Max": Double(vo2Max.rounded(at: 1)),
             "Distance": Double((distanceMeter / 1000).rounded(at: 1)), // km
             "Acceleration": Double(acceleration.rounded(at: 1)),
-            "Calories": Int(energy)
+            "Calories": Int(energy.rounded())
         ]
 
         metadata["HasPowerData"] = hasPowerData
@@ -151,6 +151,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
         saveMinHeartRate = 0
         saveHeartRates = []
         
+        energy = 0
         distanceMeter = 0
         maxSpeedMPS = 0
         speedMPS = 0

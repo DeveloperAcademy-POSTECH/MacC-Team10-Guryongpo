@@ -250,14 +250,15 @@ extension WorkoutManager {
             heartRates = heartRatesMeta.split(separator: ",").map { Int($0) ?? 0 }
         }
 
-        // Calories
-        if let caloriesMeta: Int = metadata.getValue(forKey: "Calories") {
+        // Use the finalized active-energy sum; older zero metadata must not hide measured calories.
+        if let calStat = workout.statistics(for: HKQuantityType(.activeEnergyBurned)),
+           let sum = calStat.sumQuantity()?.doubleValue(for: .kilocalorie()), sum.isFinite, sum >= 0 {
+            calories = Int(sum.rounded())
+        } else if let caloriesMeta: Int = metadata.getValue(forKey: "Calories"), caloriesMeta > 0 {
             calories = caloriesMeta
-        } else if let hkCalories = workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) {
-            calories = Int(hkCalories)
-        } else if let calStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!),
-                  let sum = calStat.sumQuantity()?.doubleValue(for: .kilocalorie()) {
-            calories = Int(sum)
+        } else if let hkCalories = workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()),
+                  hkCalories.isFinite, hkCalories >= 0 {
+            calories = Int(hkCalories.rounded())
         }
 
         // Vo2Max

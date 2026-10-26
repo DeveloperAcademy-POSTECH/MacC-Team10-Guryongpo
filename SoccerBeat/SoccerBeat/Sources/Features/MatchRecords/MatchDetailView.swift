@@ -415,15 +415,15 @@ struct FieldRecordDataView: View {
                     Spacer()
                     
                     VStack(alignment: .leading) {
-                        Text("파워")
+                        Text("칼로리")
                             .font(.fieldRecordTitle)
                         HStack(alignment: .bottom,spacing: 0) {
                             if let workout = workout {
-                                Text(workout.error || !workout.hasPowerData ? "--" : workout.power.rounded(at: 1)).font(.fieldRecordMeasure)
+                                Text(workout.error ? "--" : workout.calories.formatted()).font(.fieldRecordMeasure)
                             }  else {
                                 Text("--")                                    .font(.fieldRecordMeasure)
                             }
-                            Text(" w")
+                            Text(verbatim: " kcal")
                                 .font(.fieldRecordUnit)
                         }
                     }

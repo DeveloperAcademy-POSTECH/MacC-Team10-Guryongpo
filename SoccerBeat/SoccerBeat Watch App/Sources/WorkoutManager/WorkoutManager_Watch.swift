@@ -109,6 +109,10 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
         // Read the finalized maximum before saving metadata; queued UI updates may lag the builder.
         let metadata = await MainActor.run {
+            if let calories = builder?.statistics(for: HKQuantityType(.activeEnergyBurned))?
+                .sumQuantity()?.doubleValue(for: .kilocalorie()) {
+                matrics.energy = calories
+            }
             if let statistics = builder?.statistics(for: HKQuantityType(.runningPower)) {
                 matrics.updatePower(statistics.maximumQuantity()?.doubleValue(for: .watt()))
             }
