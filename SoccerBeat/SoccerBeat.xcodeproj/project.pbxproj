@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C05053012F00000100000001 /* PeakPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05053002F00000100000001 /* PeakPower.swift */; };
+		C05053022F00000100000001 /* PeakPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05053002F00000100000001 /* PeakPower.swift */; };
+		C05053032F00000100000001 /* SprintDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05050012F00000100000001 /* SprintDetector.swift */; };
+		C05053042F00000100000001 /* PeakPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05053002F00000100000001 /* PeakPower.swift */; };
 		68001C142C7F82130042C36B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BEC953A22C75FDE400EFF3C2 /* Localizable.xcstrings */; };
 		6805671D2CCA9A4700DB0B4F /* RunningModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6805671C2CCA9A4700DB0B4F /* RunningModalView.swift */; };
 		6805671E2CCA9A4700DB0B4F /* RunningModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6805671C2CCA9A4700DB0B4F /* RunningModalView.swift */; };
@@ -203,6 +207,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C05053002F00000100000001 /* PeakPower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakPower.swift; sourceTree = "<group>"; };
 		6805671C2CCA9A4700DB0B4F /* RunningModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningModalView.swift; sourceTree = "<group>"; };
 		6805671F2CCA9CBF00DB0B4F /* CapsuleAnimateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleAnimateView.swift; sourceTree = "<group>"; };
 		680567222CCA9D0D00DB0B4F /* ShapeStyle+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShapeStyle+extension.swift"; sourceTree = "<group>"; };
@@ -725,6 +730,7 @@
 				685D7B5E2AE3F3D000783433 /* WorkoutManager.swift */,
 				D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */,
 				C05052002F00000100000001 /* HeatmapDensity.swift */,
+				C05053002F00000100000001 /* PeakPower.swift */,
 				6884859F2CB7AA490092A13C /* DIContainer.swift */,
 			);
 			path = Data;
@@ -1219,6 +1225,8 @@
 				685D7B752AE53DC400783433 /* SpeedChart.swift in Sources */,
 				D3D4F18D2AF26662006C6B8A /* WorkoutData.swift in Sources */,
 				C05052012F00000100000001 /* HeatmapDensity.swift in Sources */,
+				C05053012F00000100000001 /* PeakPower.swift in Sources */,
+				C05053032F00000100000001 /* SprintDetector.swift in Sources */,
 				68C47FAD2C746A0700019099 /* HeartRatesView.swift in Sources */,
 				D3A1F10F2B067E8F00EB2049 /* MainView.swift in Sources */,
 				682D64832AFD1B6B00D7F07B /* ProfileModel.swift in Sources */,
@@ -1269,6 +1277,7 @@
 				BEB666C22AE4E16D0090195A /* StartView.swift in Sources */,
 				BE360EFE2B9703A700071C30 /* WorkoutData.swift in Sources */,
 				C05052022F00000100000001 /* HeatmapDensity.swift in Sources */,
+				C05053022F00000100000001 /* PeakPower.swift in Sources */,
 				BE4069A02AF0F2F500FA3030 /* Bundle+extension.swift in Sources */,
 				688485A02CB7AA490092A13C /* DIContainer.swift in Sources */,
 				68FDD5DD2AE61D6B00B8ACB9 /* SummaryView.swift in Sources */,
@@ -1283,6 +1292,7 @@
 			files = (
 				C05051022F00000100000001 /* SprintDetector.swift in Sources */,
 				C05051012F00000100000001 /* SprintDetectorTests.swift in Sources */,
+				C05053042F00000100000001 /* PeakPower.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

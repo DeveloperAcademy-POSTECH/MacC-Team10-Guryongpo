@@ -13,6 +13,11 @@ struct SprintDetector {
         case exiting(Date)
     }
 
+    // Soccer-only validity limits, not a general vehicle speedometer. Reject; never clamp.
+    static let maximumSpeedMPS = 12.5 // 45 km/h; deliberately above normal football peaks.
+    private static let maximumSpeedAccuracy = 1.5
+    private static let maximumHorizontalAccuracy = 20.0
+    private static let maximumAccelerationMPS2 = 6.0
     private static let entrySpeedMPS = 5.56
     private static let entryConfidenceFloorMPS = 5.0
     private static let exitSpeedMPS = 5.0
@@ -25,6 +30,7 @@ struct SprintDetector {
     private(set) var speedMPS = 0.0
     private(set) var maxSpeedMPS = 0.0
     private(set) var recentSprintSpeedMPS = 0.0
+    private(set) var maxAccelerationMPS2 = 0.0
     private(set) var validSampleCount = 0
     private(set) var discardedSampleCount = 0
 
@@ -39,34 +45,39 @@ struct SprintDetector {
         timestamp: Date,
         speed: Double,
         speedAccuracy: Double,
+        horizontalAccuracy: Double = 0,
+        isAutomotive: Bool = false,
         receivedAt: Date = .now
     ) {
         let sampleAge = receivedAt.timeIntervalSince(timestamp)
-        guard speed >= 0,
-              speedAccuracy >= 0,
-              sampleAge >= 0,
-              sampleAge <= Self.maximumSampleAge else {
+        if let lastTimestamp, timestamp <= lastTimestamp {
             discardedSampleCount += 1
+            return
+        }
+        guard Self.isPlausibleSpeed(speed),
+              speedAccuracy.isFinite, (0...Self.maximumSpeedAccuracy).contains(speedAccuracy),
+              horizontalAccuracy.isFinite, (0...Self.maximumHorizontalAccuracy).contains(horizontalAccuracy),
+              sampleAge >= 0, sampleAge <= Self.maximumSampleAge, !isAutomotive else {
+            discardedSampleCount += 1
+            pause()
             return
         }
 
         if let lastTimestamp {
-            guard timestamp > lastTimestamp else {
+            let interval = timestamp.timeIntervalSince(lastTimestamp)
+            if interval > Self.maximumSampleGap {
+                pause()
+            } else if let previousValidSpeedMPS,
+                      abs(speed - previousValidSpeedMPS) / interval > Self.maximumAccelerationMPS2 {
                 discardedSampleCount += 1
+                // Keep the last valid anchor so consecutive jumps cannot validate each other.
+                state = .idle
+                isSprint = false
+                speedMPS = 0
+                candidatePeakSpeedMPS = 0
                 return
-            }
-
-            if timestamp.timeIntervalSince(lastTimestamp) > Self.maximumSampleGap {
-                previousValidSpeedMPS = nil
-                switch state {
-                case .entering:
-                    state = .idle
-                    candidatePeakSpeedMPS = 0
-                case .exiting:
-                    state = .sprinting
-                case .idle, .sprinting:
-                    break
-                }
+            } else if let previousValidSpeedMPS {
+                maxAccelerationMPS2 = max(maxAccelerationMPS2, (speed - previousValidSpeedMPS) / interval)
             }
         }
 
@@ -131,6 +142,10 @@ struct SprintDetector {
                 state = .sprinting
             }
         }
+    }
+
+    static func isPlausibleSpeed(_ speed: Double) -> Bool {
+        speed.isFinite && (0...maximumSpeedMPS).contains(speed)
     }
 
     mutating func reset() {

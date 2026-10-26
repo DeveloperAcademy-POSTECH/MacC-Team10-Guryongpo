@@ -82,7 +82,9 @@ final class MatricsIndicator: NSObject, ObservableObject {
 
     // 데이터 표기 변수
     var energy: Double = 0 // 칼로리
-    var power: Double = 0.0
+    @Published private var peakPower = PeakPower()
+    var power: Double { peakPower.watts ?? 0 }
+    var hasPowerData: Bool { peakPower.watts != nil }
     var maxSpeedMPS: Double = 0.0
     var acceleration: Double = 0.0
     var vo2Max: Double = 0.0
@@ -97,13 +99,17 @@ final class MatricsIndicator: NSObject, ObservableObject {
             "HeartRates": saveHeartRates.map {String($0)}.joined(separator: ","),
             "Vo2Max": Double(vo2Max.rounded(at: 1)),
             "Distance": Double((distanceMeter / 1000).rounded(at: 1)), // km
-            "Power": Double(power.rounded(at: 1)), // w
             "Acceleration": Double(acceleration.rounded(at: 1)),
             "Calories": Int(energy)
         ]
 
+        metadata["HasPowerData"] = hasPowerData
+        if hasPowerData { metadata["Power"] = Double(power.rounded(at: 1)) }
+        metadata["PowerSource"] = hasPowerData ? "healthKitRunningPower" : "unavailable"
+
         #if os(watchOS)
-        metadata["SprintCriteriaVersion"] = 2
+        metadata["SprintCriteriaVersion"] = 3
+        metadata["SoccerMaximumSpeedMPS"] = SprintDetector.maximumSpeedMPS
         metadata["SprintSpeedSource"] = "coreLocation"
         metadata["SprintValidSampleCount"] = sprintDetector.validSampleCount
         metadata["SprintDiscardedSampleCount"] = sprintDetector.discardedSampleCount
@@ -152,6 +158,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
         sprintCount = 0
         recentSprintSpeedMPS = 0
         acceleration = 0
+        peakPower = PeakPower()
 
         #if os(watchOS)
         // 재시작 시 이전 경기의 Sprint 후보 구간이 이어지지 않도록 판정 상태도 함께 초기화한다.
@@ -170,28 +177,25 @@ final class MatricsIndicator: NSObject, ObservableObject {
         timestamp: Date,
         speed: Double,
         speedAccuracy: Double,
+        horizontalAccuracy: Double,
+        isAutomotive: Bool,
         receivedAt: Date = .now
     ) {
-        let previousValidSampleCount = sprintDetector.validSampleCount
-        let previousSpeedMPS = speedMPS
-
         sprintDetector.process(
             timestamp: timestamp,
             speed: speed,
             speedAccuracy: speedAccuracy,
+            horizontalAccuracy: horizontalAccuracy,
+            isAutomotive: isAutomotive,
             receivedAt: receivedAt
         )
-
-        guard sprintDetector.validSampleCount > previousValidSampleCount else {
-            return
-        }
 
         speedMPS = sprintDetector.speedMPS
         maxSpeedMPS = sprintDetector.maxSpeedMPS
         isSprint = sprintDetector.isSprint
         sprintCount = sprintDetector.sprintCount
         recentSprintSpeedMPS = sprintDetector.recentSprintSpeedMPS
-        acceleration = max(acceleration, speedMPS - previousSpeedMPS)
+        acceleration = sprintDetector.maxAccelerationMPS2
     }
 
     func pauseSpeed() {
@@ -217,9 +221,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
             case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
                 self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0
             case HKQuantityType.quantityType(forIdentifier: .runningPower):
-                let oldPower = self.power
-                self.power = statistics.mostRecentQuantity()?.doubleValue(for: HKUnit.watt()) ?? 0
-                self.calculateMaxPower(before: oldPower, current: self.power)
+                self.updatePower(statistics.maximumQuantity()?.doubleValue(for: .watt()))
             case HKQuantityType.quantityType(forIdentifier: .vo2Max):
                 let oldvo2Max = self.vo2Max
                 self.vo2Max = statistics.mostRecentQuantity()?.doubleValue(for: HKUnit(from: "ml/kg*min")) ?? 0
@@ -230,10 +232,10 @@ final class MatricsIndicator: NSObject, ObservableObject {
         }
     }
     
-    private func calculateMaxPower(before: Double, current: Double) {
-        power = max(power, current)
+    func updatePower(_ measurement: Double?) {
+        peakPower.observe(measurement)
     }
-    
+
     private func calculateMaxVo2Max(before: Double, current: Double) {
         vo2Max = max(vo2Max, current)
     }

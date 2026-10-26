@@ -54,6 +54,7 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     /**
             워치에서만 경기를 종료 / 재설정함.
      */
+    var isAutomotiveMotion = false
     var builder: HKLiveWorkoutBuilder?
     // 헬스킷 세션 기록용 빌더 선언
     var routeBuilder: HKWorkoutRouteBuilder?
@@ -126,6 +127,7 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     ]
     
     let typesToShare: Set = [HKQuantityType.workoutType(),
+                                     HKQuantityType.quantityType(forIdentifier: .runningPower)!,
                                      HKSeriesType.workoutRoute(),
                                      HKQuantityType.quantityType(forIdentifier: .runningSpeed)!,
                                      HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
@@ -172,6 +174,8 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         // Health 데이터 쓰기 권한만 반환합니다.
         // https://developer.apple.com/documentation/healthkit/hkhealthstore/authorizationstatus(for:)
         return typesToShare.allSatisfy { type in
+            // Power is optional: denying it must not block soccer recording.
+            if type.identifier == HKQuantityTypeIdentifier.runningPower.rawValue { return true }
             let status = healthStore.authorizationStatus(for: type)
             if status != .sharingAuthorized {
                 NSLog(

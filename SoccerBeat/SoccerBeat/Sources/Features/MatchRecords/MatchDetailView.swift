@@ -419,7 +419,7 @@ struct FieldRecordDataView: View {
                             .font(.fieldRecordTitle)
                         HStack(alignment: .bottom,spacing: 0) {
                             if let workout = workout {
-                                Text(workout.error ? "--" : workout.power.rounded(at: 1)).font(.fieldRecordMeasure)
+                                Text(workout.error || !workout.hasPowerData ? "--" : workout.power.rounded(at: 1)).font(.fieldRecordMeasure)
                             }  else {
                                 Text("--")                                    .font(.fieldRecordMeasure)
                             }

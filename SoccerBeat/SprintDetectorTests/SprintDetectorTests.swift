@@ -36,6 +36,8 @@ final class SprintDetectorTests: XCTestCase {
     func testSingleSpeedSpikeDoesNotRaiseConfirmedPeaks() {
         var detector = SprintDetector()
         let start = Date(timeIntervalSinceReferenceDate: 2_500)
+        detector.process(timestamp: start.addingTimeInterval(-0.5), speed: 6.0,
+                         speedAccuracy: 0.2, receivedAt: start.addingTimeInterval(-0.5))
 
         detector.process(timestamp: start, speed: 6.0, speedAccuracy: 0.2, receivedAt: start)
 
@@ -46,7 +48,7 @@ final class SprintDetectorTests: XCTestCase {
             speedAccuracy: 0.2,
             receivedAt: spikeTimestamp
         )
-        XCTAssertEqual(detector.speedMPS, 15.42, accuracy: 0.001)
+        XCTAssertEqual(detector.speedMPS, 0, accuracy: 0.001)
         XCTAssertEqual(detector.maxSpeedMPS, 6.0, accuracy: 0.001)
 
         let recoveryTimestamp = start.addingTimeInterval(1.0)
@@ -230,5 +232,119 @@ final class SprintDetectorTests: XCTestCase {
             receivedAt: afterConfirmedGap
         )
         XCTAssertEqual(detector.sprintCount, 1)
+    }
+    func testWalkingWithRepeatedImpossibleSpeedsDoesNotInflateMaximum() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 8_000)
+        for (index, speed) in [1.4, 1.5, 93.1 / 3.6, 102.0 / 3.6, 102.0 / 3.6, 1.4, 1.5].enumerated() {
+            let time = start.addingTimeInterval(Double(index))
+            detector.process(timestamp: time, speed: speed, speedAccuracy: 0.2, receivedAt: time)
+        }
+        XCTAssertLessThanOrEqual(detector.maxSpeedMPS, 1.5)
+        XCTAssertEqual(detector.sprintCount, 0)
+        XCTAssertEqual(detector.discardedSampleCount, 3)
+    }
+
+    func testSustainedVehicleSpeedIsRejectedRatherThanClamped() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 9_000)
+        for index in 0..<10 {
+            let time = start.addingTimeInterval(Double(index))
+            detector.process(timestamp: time, speed: 131.15 / 3.6, speedAccuracy: 0.2, receivedAt: time)
+        }
+        XCTAssertEqual(detector.maxSpeedMPS, 0)
+        XCTAssertEqual(detector.sprintCount, 0)
+        XCTAssertEqual(detector.validSampleCount, 0)
+    }
+
+    func testAutomotiveMotionExcludesEvenHumanRangeVehicleSpeed() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 10_000)
+        for index in 0..<5 {
+            let time = start.addingTimeInterval(Double(index))
+            detector.process(timestamp: time, speed: 8, speedAccuracy: 0.2,
+                             isAutomotive: true, receivedAt: time)
+        }
+        XCTAssertEqual(detector.maxSpeedMPS, 0)
+        XCTAssertEqual(detector.sprintCount, 0)
+    }
+
+    func testPoorAccuracyAndNonFiniteValuesAreRejected() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 11_000)
+        detector.process(timestamp: start, speed: .infinity, speedAccuracy: 0.2, receivedAt: start)
+        detector.process(timestamp: start, speed: .nan, speedAccuracy: 0.2, receivedAt: start)
+        detector.process(timestamp: start, speed: 6, speedAccuracy: .infinity, receivedAt: start)
+        detector.process(timestamp: start, speed: 6, speedAccuracy: 4, receivedAt: start)
+        detector.process(timestamp: start, speed: 6, speedAccuracy: 0.2, horizontalAccuracy: 50, receivedAt: start)
+        XCTAssertEqual(detector.validSampleCount, 0)
+        XCTAssertEqual(detector.discardedSampleCount, 5)
+    }
+
+    func testConsecutiveSubCapJumpsCannotConfirmEachOther() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 12_000)
+        for (offset, speed) in [(0.0, 1.5), (0.5, 10.0), (1.0, 10.0), (1.5, 1.5)] {
+            let time = start.addingTimeInterval(offset)
+            detector.process(timestamp: time, speed: speed, speedAccuracy: 0.2, receivedAt: time)
+        }
+        XCTAssertEqual(detector.maxSpeedMPS, 1.5, accuracy: 0.001)
+        XCTAssertEqual(detector.sprintCount, 0)
+    }
+
+    func testRejectedFixCannotBridgeSprintEntry() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 12_500)
+        detector.process(timestamp: start, speed: 6, speedAccuracy: 0.2, receivedAt: start)
+        let bad = start.addingTimeInterval(0.25)
+        detector.process(timestamp: bad, speed: 6, speedAccuracy: 4, receivedAt: bad)
+        let next = start.addingTimeInterval(0.5)
+        detector.process(timestamp: next, speed: 6, speedAccuracy: 0.2, receivedAt: next)
+        XCTAssertEqual(detector.sprintCount, 0)
+        XCTAssertEqual(detector.maxSpeedMPS, 0)
+    }
+
+    func testAccelerationUsesElapsedSeconds() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 13_000)
+        detector.process(timestamp: start, speed: 2, speedAccuracy: 0.2, receivedAt: start)
+        let end = start.addingTimeInterval(0.5)
+        detector.process(timestamp: end, speed: 4, speedAccuracy: 0.2, receivedAt: end)
+        XCTAssertEqual(detector.maxAccelerationMPS2, 4, accuracy: 0.001)
+    }
+
+}
+
+
+final class PeakPowerTests: XCTestCase {
+    func testMissingMeasurementIsNotZeroWatts() {
+        var power = PeakPower()
+        power.observe(nil)
+        power.observe(.nan)
+        power.observe(.infinity)
+        power.observe(-1)
+        XCTAssertNil(power.watts)
+    }
+
+    func testMaximumSurvivesLowerAndMissingSamples() {
+        var power = PeakPower()
+        for value in [120.0, 300.0, 150.0, 0.0] { power.observe(value) }
+        power.observe(nil)
+        XCTAssertEqual(power.watts, 300)
+    }
+
+    func testResetDoesNotCarryPowerToNextMatch() {
+        var power = PeakPower()
+        power.observe(300)
+        power = PeakPower()
+        XCTAssertNil(power.watts)
+        power.observe(100)
+        XCTAssertEqual(power.watts, 100)
+    }
+
+    func testActualZeroIsAValidMeasurement() {
+        var power = PeakPower()
+        power.observe(0)
+        XCTAssertEqual(power.watts, 0)
     }
 }

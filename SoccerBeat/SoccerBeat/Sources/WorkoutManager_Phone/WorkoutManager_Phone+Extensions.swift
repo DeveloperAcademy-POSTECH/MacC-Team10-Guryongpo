@@ -111,13 +111,45 @@ extension WorkoutManager {
         var lonSum = 0.0
         var routes: [CLLocationCoordinate2D] = []
         var heatmapSamples: [HeatmapSample] = []
+        var routeSpeed = SprintDetector()
+        var previousRouteTimestamp: Date?
+        var pausedIntervals: [DateInterval] = []
+        var pauseStart: Date?
+        for event in (workout.workoutEvents ?? []).sorted(by: { $0.dateInterval.start < $1.dateInterval.start }) {
+            switch event.type {
+            case .pause, .motionPaused:
+                if pauseStart == nil { pauseStart = event.dateInterval.start }
+            case .resume, .motionResumed:
+                if let start = pauseStart, event.dateInterval.start > start {
+                    pausedIntervals.append(DateInterval(start: start, end: event.dateInterval.start))
+                }
+                pauseStart = nil
+            default:
+                break
+            }
+        }
+        if let start = pauseStart, workout.endDate > start {
+            pausedIntervals.append(DateInterval(start: start, end: workout.endDate))
+        }
+
         var metadata: [String: Any] = [:]
         // dataError 제거: 값이 없으면 기본값(0)으로 표시
 
         // Route와 Metadata 가져오기 (실패해도 계속 진행)
         if let (locations, meta) = try? await convertToRouteAndMetadata(from: workout) {
             metadata = meta
-            for location in locations {
+            for location in locations.sorted(by: { $0.timestamp < $1.timestamp }) {
+                if let previous = previousRouteTimestamp, pausedIntervals.contains(where: {
+                    max(previous, $0.start) < min(location.timestamp, $0.end)
+                }) { routeSpeed.pause() }
+                previousRouteTimestamp = location.timestamp
+                let isPaused = pausedIntervals.contains { $0.start <= location.timestamp && location.timestamp < $0.end }
+                if !isPaused, location.timestamp >= workout.startDate, location.timestamp <= workout.endDate {
+                    // Historical samples use their own timestamp; delivery age is not meaningful on replay.
+                    routeSpeed.process(timestamp: location.timestamp, speed: location.speed,
+                                       speedAccuracy: location.speedAccuracy, horizontalAccuracy: location.horizontalAccuracy,
+                                       receivedAt: location.timestamp)
+                }
                 heatmapSamples.append(HeatmapSample(latitude: location.coordinate.latitude,
                                                     longitude: location.coordinate.longitude,
                                                     timestamp: location.timestamp,
@@ -169,29 +201,33 @@ extension WorkoutManager {
             // metadata 없는 워크아웃은 sprint 0으로 처리
         }
 
-        // Velocity
-        if let velocityMeta: Double = metadata.getValue(forKey: "MaxSpeed") {
-            velocity = Double(((velocityMeta) * 3.6).rounded(at: 2)) ?? 0
-        } else if let speedStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningSpeed)!) {
-            let speedUnit = HKUnit(from: "m/s")
-            if let maxSpeed = speedStat.maximumQuantity()?.doubleValue(for: speedUnit) {
-                velocity = Double(Int(maxSpeed * 3.6 * 100)) / 100
-            } else if let avgSpeed = speedStat.averageQuantity()?.doubleValue(for: speedUnit) {
-                velocity = Double(Int(avgSpeed * 3.6 * 100)) / 100
-            }
+        // New metadata includes live vehicle exclusion. Older records are recomputed from raw GPS when available.
+        let criteriaVersion: Int = metadata.getValue(forKey: "SprintCriteriaVersion") ?? 0
+        let speedMeta: Double? = metadata.getValue(forKey: "MaxSpeed")
+        if criteriaVersion >= 3, let speedMeta, SprintDetector.isPlausibleSpeed(speedMeta) {
+            velocity = (speedMeta * 3.6 * 100).rounded() / 100
+        } else if routeSpeed.validSampleCount >= 2 {
+            velocity = (routeSpeed.maxSpeedMPS * 3.6 * 100).rounded() / 100
+        } else if let speedMeta, SprintDetector.isPlausibleSpeed(speedMeta) {
+            velocity = (speedMeta * 3.6 * 100).rounded() / 100
+        } else if let speedStat = workout.statistics(for: HKQuantityType(.runningSpeed)),
+                  let maxSpeed = speedStat.maximumQuantity()?.doubleValue(for: HKUnit(from: "m/s")),
+                  SprintDetector.isPlausibleSpeed(maxSpeed) {
+            velocity = (maxSpeed * 3.6 * 100).rounded() / 100
         }
 
-        // Power
-        if let powerMeta: Double = metadata.getValue(forKey: "Power") ??
-            metadata.getValue(forKey: "Acceleration") {
-            power = powerMeta
-        } else if let powerStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .runningPower)!) {
-            if let maxPower = powerStat.maximumQuantity()?.doubleValue(for: .watt()) {
-                power = Double(Int(maxPower * 10)) / 10
-            } else if let avgPower = powerStat.averageQuantity()?.doubleValue(for: .watt()) {
-                power = Double(Int(avgPower * 10)) / 10
-            }
+        // Acceleration is m/s², never watts. Legacy zero metadata must not hide real HealthKit samples.
+        var recordedPower = PeakPower()
+        let hasPowerMetadata: Bool = metadata.getValue(forKey: "HasPowerData") ?? false
+        if let powerMeta: Double = metadata.getValue(forKey: "Power"),
+           powerMeta > 0 || hasPowerMetadata {
+            recordedPower.observe(powerMeta)
         }
+        if let powerStat = workout.statistics(for: HKQuantityType(.runningPower)) {
+            recordedPower.observe(powerStat.maximumQuantity()?.doubleValue(for: .watt())
+                                  ?? powerStat.averageQuantity()?.doubleValue(for: .watt()))
+        }
+        power = recordedPower.watts ?? 0
 
         // Heart Rate
         let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
@@ -232,24 +268,6 @@ extension WorkoutManager {
             vo2Max = Double(Int(maxVo2 * 10)) / 10
         }
 
-        var pausedIntervals: [DateInterval] = []
-        var pauseStart: Date?
-        for event in (workout.workoutEvents ?? []).sorted(by: { $0.dateInterval.start < $1.dateInterval.start }) {
-            switch event.type {
-            case .pause, .motionPaused:
-                if pauseStart == nil { pauseStart = event.dateInterval.start }
-            case .resume, .motionResumed:
-                if let start = pauseStart, event.dateInterval.start > start {
-                    pausedIntervals.append(DateInterval(start: start, end: event.dateInterval.start))
-                }
-                pauseStart = nil
-            default:
-                break
-            }
-        }
-        if let start = pauseStart, workout.endDate > start {
-            pausedIntervals.append(DateInterval(start: start, end: workout.endDate))
-        }
 
         return WorkoutData(dataID: index+1,
                            date: dateFormatter.string(from: workout.startDate),
@@ -268,7 +286,8 @@ extension WorkoutManager {
                            vo2Max: vo2Max,
                            error: false,
                            heatmapSamples: heatmapSamples,
-                           heatmapPausedIntervals: pausedIntervals)
+                           heatmapPausedIntervals: pausedIntervals,
+                           hasPowerData: recordedPower.watts != nil)
     }
 
     private static let soccerBeatSourceKeyword = "SoccerBeat"

@@ -36,6 +36,7 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var error = false
     var heatmapSamples: [HeatmapSample] = []
     var heatmapPausedIntervals: [DateInterval] = []
+    var hasPowerData = false
     
     var matchBadge: [Int] {
         // MARK: Badge 기준

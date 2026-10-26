@@ -47,8 +47,11 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         // 델리게이트 선언
         session?.delegate = self
         builder?.delegate = self
-        builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
-                                                      workoutConfiguration: configuration)
+        let dataSource = HKLiveWorkoutDataSource(healthStore: healthStore, workoutConfiguration: configuration)
+        // Collect real running-power samples when the device/source supplies them.
+        // This does not make soccer sessions generate Apple's Outdoor Run power estimates.
+        dataSource.enableCollection(for: HKQuantityType(.runningPower), predicate: nil)
+        builder?.dataSource = dataSource
 
     }
     
@@ -84,6 +87,9 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         motionManager.startActivityUpdates(to: .main) { [weak self] activity in
             guard let activity = activity else { return }
 
+            self?.isAutomotiveMotion = activity.automotive && activity.confidence != .low
+            if self?.isAutomotiveMotion == true { self?.matrics.pauseSpeed() }
+
             // state change
             if activity.unknown || activity.running || activity.walking {
                 self?.isStationaryDetacted = false
@@ -95,19 +101,23 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 
     // 워치 경기 기록 종료
     func endWorkoutSession(_ date: Date) async throws {
-        let metadata = self.matrics.getMetadata()
-
-        // builder에 메타데이터를 먼저 추가하여 workout에 포함되도록 함
-        do {
-            try await builder?.addMetadata(metadata)
-        } catch {
-            NSLog("endWorkoutSession: failed to add metadata to builder: \(error.localizedDescription)")
-        }
-
         do {
             try await builder?.endCollection(at: date)
         } catch {
             throw SessionError.failureBuilderEnd
+        }
+
+        // Read the finalized maximum before saving metadata; queued UI updates may lag the builder.
+        let metadata = await MainActor.run {
+            if let statistics = builder?.statistics(for: HKQuantityType(.runningPower)) {
+                matrics.updatePower(statistics.maximumQuantity()?.doubleValue(for: .watt()))
+            }
+            return matrics.getMetadata()
+        }
+        do {
+            try await builder?.addMetadata(metadata)
+        } catch {
+            NSLog("endWorkoutSession: failed to add metadata to builder: \(error.localizedDescription)")
         }
 
         guard let workout = try await builder?.finishWorkout() else {
@@ -136,6 +146,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         session = nil
         
         matrics.reset()
+        isAutomotiveMotion = false
         // 종료 때 중단한 위치 수집을 재개해 다음 경기의 최신 정밀 위치를 미리 준비한다.
         checkLocationAuthorization()
     }
@@ -233,13 +244,15 @@ extension WorkoutManager {
                 timestamp: location.timestamp,
                 speed: location.speed,
                 speedAccuracy: location.speedAccuracy,
+                horizontalAccuracy: location.horizontalAccuracy,
+                isAutomotive: isAutomotiveMotion,
                 receivedAt: receivedAt
             )
         }
 
         // Filter the raw data.
         let filteredLocations = sortedLocations.filter { (location: CLLocation) -> Bool in
-            location.horizontalAccuracy <= 50.0
+            location.horizontalAccuracy >= 0 && location.horizontalAccuracy <= 50.0
         }
         
         guard !filteredLocations.isEmpty else {
