@@ -31,11 +31,11 @@ struct HeartRatesView: View {
                     .strokeBorder(lineWidth: 20)
             ])
             .chartXAxis {
-                AxisMarks(values: .automatic(desiredCount: 3)) { _ in
+                AxisMarks(values: .automatic(desiredCount: 2)) { _ in
                     AxisTick()
                     AxisGridLine()
                     if dates.count == rates.count {
-                        AxisValueLabel(format: .dateTime.hour().minute())
+                        AxisValueLabel(format: .dateTime.hour(.twoDigits(amPM: .omitted)).minute())
                     } else {
                         AxisValueLabel()
                     }

@@ -127,3 +127,15 @@
 - `Workout metadata save failed`, `Route insertion failed`, `Workout saved, route/details pending`, `Workout route discovery failed`, `Workout heart-rate query failed`를 개발 로그에서 구분한다.
 - 자동 테스트는 순수 속도 필터, 실제 메타데이터 구성, 복구 파일/claim, 데이터 병합과 집계를 검증한다. HealthKit 서버/장치의 실 저장, 시스템 동기화, OS에 의한 프로세스 종료까지 모킹해 검증한 것은 아니다.
 - 재개 후 새 WatchConnectivity 동기화 시스템을 추가하지 않았다. 센서 저장·운동/경로 조회는 HealthKit이 담당하며 세션 미러링을 데이터 저장 완료로 간주하지 않는다.
+
+## 추가 수정: Field Chart 레이아웃 (2026-10-27)
+
+- Field Chart에서 상단 부분 데이터/Reload 배너를 제거했다. 다른 상세 페이지의 안내는 유지한다.
+- 차트의 로딩 표시는 콘텐츠 높이를 차지하지 않는 overlay spinner로 변경했다. 로딩 전후 그래프 영역이 압축되지 않는다.
+- `PlayerAbilityView`의 그래프가 부모 전체 높이를 차지한 뒤 범례를 추가하던 구조를 수정했다. `RadarViewController.viewDidLayoutSubviews`에서 실제 배정 크기에 맞춰 반경을 계산한다.
+- Field Chart의 능력치 영역을 축소하고 심박 그래프에 최소 180pt 높이를 부여했다. 불필요한 하단 여백을 줄이고 페이지 점 영역은 별도로 확보한다. 작은 화면에서는 세로 스크롤로 전체 콘텐츠를 확인한다.
+- 심박 시간축은 약 두 개의 눈금과 24시간제 시·분 표기로 간소화했다. 실제 샘플 시각은 변경하지 않는다.
+- 빌드 성공: `/tmp/soccerbeat-chart-layout-build.log`, 최종 레이아웃을 포함한 임시 UI 사본 빌드 `/tmp/soccerbeat-chart-layout-ui-final-build.log`.
+- iPhone 17 Pro/iOS 26.5: 모의 심박 데이터로 능력치·범례·심박 시간축·페이지 점이 분리됨과 로딩 표시 전후 레이아웃 유지 확인.
+- iPhone SE 3세대/iOS 18.2: 범례와 그래프가 겹치지 않음을 확인. 임시 사본의 테스트 전용 스크롤 호출로 하단 시간축/BPM이 페이지 점 위에 표시됨을 확인했다. 자동화 도구의 스와이프 입력으로는 스크롤 동작을 확인하지 못했으므로 실제 터치 스크롤은 수동 검증 항목이다. 테스트용 진입점·스크롤 호출은 작업 소스에 포함하지 않았다.
+- 지도 질문에 대한 코드 확인: 지도/경로 부재 안내는 원본 `route.isEmpty`를 기준으로 하지만, 축구공 활성화는 필터를 통과한 `RouteTimeline.points.count > 1`을 기준으로 한다. 원본 좌표가 있어도 정확도 20m 초과·일시정지·중복 시각 등의 필터 후 0~1개면 지도는 보이고 재생은 비활성화된다. 이 두 표시 조건의 차이를 이번에 설명했으며 지도 로직은 변경하지 않았다.

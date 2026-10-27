@@ -14,6 +14,7 @@ struct MatchDetailView: View {
     var workout: WorkoutData?
     @EnvironmentObject private var workoutManager: WorkoutManager
     @State private var refreshedWorkout: WorkoutData?
+    @State private var selectedPage = 0
 
     private var currentWorkout: WorkoutData? {
         refreshedWorkout?.id == workout?.id ? (refreshedWorkout ?? workout) : workout
@@ -21,10 +22,10 @@ struct MatchDetailView: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            if workoutManager.isLoading {
+            if workoutManager.isLoading && selectedPage != 0 {
                 ProgressView("경기 기록을 불러오는 중입니다.")
                     .tint(.white)
-            } else if currentWorkout?.hasPartialData == true || currentWorkout?.hasRetrievalFailure == true {
+            } else if selectedPage != 0 && (currentWorkout?.hasPartialData == true || currentWorkout?.hasRetrievalFailure == true) {
                 HStack {
                     Text(LocalizedStringKey(currentWorkout?.hasRetrievalFailure == true
                          ? "일부 데이터를 다시 불러오지 못했습니다. 확인된 기록은 유지됩니다."
@@ -37,10 +38,22 @@ struct MatchDetailView: View {
                     .font(.caption)
                 }
             }
-            TabView {
+            TabView(selection: $selectedPage) {
                 FieldChartView(workout: currentWorkout)
+                    .tag(0)
                 FieldMovementView(workout: currentWorkout)
+                    .tag(1)
                 FieldRecordView(workout: currentWorkout)
+                    .tag(2)
+            }
+            .overlay(alignment: .topTrailing) {
+                if workoutManager.isLoading && selectedPage == 0 {
+                    ProgressView()
+                        .tint(.white)
+                        .accessibilityLabel("경기 기록을 불러오는 중입니다.")
+                        .padding(4)
+                        .allowsHitTesting(false)
+                }
             }
         }
         .onReceive(workoutManager.fetchWorkoutsSuccess) { records in
@@ -61,7 +74,7 @@ struct MatchDetailView: View {
                 }
             }
         }
-        .padding(.bottom, 32)
+        .padding(.bottom, selectedPage == 0 ? 0 : 32)
         .foregroundStyle(Color.white)
         .background {
             // Keep the full-screen background from expanding content into the navigation bar.
@@ -138,48 +151,35 @@ struct PlayerAbilityView: View {
     var workout: WorkoutData?
     
     var body: some View {
-            GeometryReader { proxy in
-                
-                VStack(alignment: .leading, spacing: 16) {
-                            if let workout = workout {
-                                let recent = DataConverter.toLevels(workout)
-                                let average = DataConverter.toLevels(profileModel.averageAbility)
-                                
-                                ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent, error: workout.error))
-                                    .scaleEffect(CGSize(width: 0.9, height: 0.9))
-                                    .fixedSize()
-                                    .frame(width: proxy.size.width, height: proxy.size.height)
-                                    
-                            } else {
-                                let blankRecent = DataConverter.toLevels(WorkoutData.blankExample)
-                                let blankAverage = DataConverter.toLevels(WorkoutAverageData.blankAverage)
-                                
-                                ViewControllerContainer(RadarViewController(radarAverageValue: blankAverage, radarAtypicalValue: blankRecent, error: true))
-                                    .scaleEffect(CGSize(width: 0.9, height: 0.9))
-                                    .fixedSize()
-                                    .frame(width: proxy.size.width, height: proxy.size.height)
-                            }
-                
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 0) {
-                            Text("빨간색")
-                                .bold()
-                                .foregroundStyle(.matchDetailViewTitleColor)
-                            Text("은 경기의 평균 능력치입니다.")
-                        }
-                        .floatingCapsuleStyle()
-                        
-                        HStack(spacing: 0) {
-                            Text("민트색")
-                                .bold()
-                                .foregroundStyle(.matchDetailViewAverageStatColor)
-                            Text("은 이번 경기의 능력치입니다.")
-                        }
-                        .floatingCapsuleStyle()
-                    }
+        VStack(alignment: .leading, spacing: 12) {
+            let recent = DataConverter.toLevels(workout ?? WorkoutData.blankExample)
+            let average = DataConverter.toLevels(workout == nil ? WorkoutAverageData.blankAverage : profileModel.averageAbility)
+
+            ViewControllerContainer(RadarViewController(radarAverageValue: average,
+                                                       radarAtypicalValue: recent,
+                                                       error: workout?.error ?? true))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 0) {
+                    Text("빨간색")
+                        .bold()
+                        .foregroundStyle(.matchDetailViewTitleColor)
+                    Text("은 경기의 평균 능력치입니다.")
                 }
+                .floatingCapsuleStyle()
+
+                HStack(spacing: 0) {
+                    Text("민트색")
+                        .bold()
+                        .foregroundStyle(.matchDetailViewAverageStatColor)
+                    Text("은 이번 경기의 능력치입니다.")
+                }
+                .floatingCapsuleStyle()
             }
-        
+            .font(.caption)
+            .fixedSize(horizontal: false, vertical: true)
+        }
     }
 }
 
@@ -492,66 +492,48 @@ struct FieldChartView: View {
     var workout: WorkoutData?
     
     var body: some View {
-        VStack(alignment: .center) {
-            HStack {
-                InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
-                Spacer()
-            }
-            
-            HStack(alignment: .center) {
-                VStack(alignment: .leading, spacing: -8) {
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
+                        Spacer()
+                    }
+
                     Text("Field Chart")
-                }
-                .font(.matchDetailTitle)
-                Spacer()
-            }
-            
-                if let error = workout?.error {
-                    if error {
-                        ErrorView(workout: workout) }
-                    else {
-                        if workout?.unavailableMetrics.isEmpty == false {
+                        .font(.matchDetailTitle)
+
+                    Group {
+                        if workout?.error == true {
+                            ErrorView(workout: workout)
+                        } else if workout?.unavailableMetrics.isEmpty == false {
                             WorkoutDataNotice(title: "능력치를 표시할 데이터가 부족합니다.", availability: .unavailable)
                         } else {
                             PlayerAbilityView(workout: workout)
-                                .zIndex(-1.0)
                         }
                     }
-                } else {
-                    PlayerAbilityView(workout: workout)
-                       .zIndex(-1)
-                   Spacer()
-                       .frame(height: 80)
-                }
-            
-            VStack {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        VStack(alignment: .leading, spacing: -8) {
-                            Text("Heartbeat")
-                                .opacity(0.7)
-                        }
-                        .font(.matchDetailSubTitle)
-                    }
-                    Spacer()
-                }
+                    .frame(height: min(proxy.size.width + 48, max(260, proxy.size.height * 0.48)))
 
-                        GeometryReader { proxy in
-                            
-                    if let workout, !workout.heartRates.isEmpty {
-                        HeartRatesView(rates: workout.heartRates, dates: workout.heartRateDates)
-                            .frame(height: max(proxy.size.height - 30, 1))
-                            .padding()
-                    } else {
-                        WorkoutDataNotice(title: "심박 기록을 표시할 수 없습니다.",
-                                          availability: workout?.heartRateAvailability ?? .unavailable)
+                    Text("Heartbeat")
+                        .font(.matchDetailSubTitle)
+                        .opacity(0.7)
+
+                    Group {
+                        if let workout, !workout.heartRates.isEmpty {
+                            HeartRatesView(rates: workout.heartRates, dates: workout.heartRateDates)
+                                .padding(.horizontal, 8)
+                                .padding(.top, 8)
+                        } else {
+                            WorkoutDataNotice(title: "심박 기록을 표시할 수 없습니다.",
+                                              availability: workout?.heartRateAvailability ?? .unavailable)
+                        }
                     }
+                    .frame(height: max(180, min(260, proxy.size.height * 0.30)))
                 }
+                .padding(.bottom, 12)
             }
-            .padding(.bottom, 32)
-            Spacer()
         }
+        .padding(.bottom, 28)
     }
 }
 
