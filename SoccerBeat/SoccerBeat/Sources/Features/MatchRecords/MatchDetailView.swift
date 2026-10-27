@@ -22,22 +22,6 @@ struct MatchDetailView: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            if workoutManager.isLoading && selectedPage != 0 {
-                ProgressView("경기 기록을 불러오는 중입니다.")
-                    .tint(.white)
-            } else if selectedPage != 0 && (currentWorkout?.hasPartialData == true || currentWorkout?.hasRetrievalFailure == true) {
-                HStack {
-                    Text(LocalizedStringKey(currentWorkout?.hasRetrievalFailure == true
-                         ? "일부 데이터를 다시 불러오지 못했습니다. 확인된 기록은 유지됩니다."
-                         : "일부 데이터가 아직 없거나 동기화되지 않았습니다."))
-                        .font(.caption)
-                    Spacer()
-                    Button("다시 불러오기") {
-                        Task { await workoutManager.fetchWorkoutData() }
-                    }
-                    .font(.caption)
-                }
-            }
             TabView(selection: $selectedPage) {
                 FieldChartView(workout: currentWorkout)
                     .tag(0)
@@ -47,7 +31,7 @@ struct MatchDetailView: View {
                     .tag(2)
             }
             .overlay(alignment: .topTrailing) {
-                if workoutManager.isLoading && selectedPage == 0 {
+                if workoutManager.isLoading {
                     ProgressView()
                         .tint(.white)
                         .accessibilityLabel("경기 기록을 불러오는 중입니다.")

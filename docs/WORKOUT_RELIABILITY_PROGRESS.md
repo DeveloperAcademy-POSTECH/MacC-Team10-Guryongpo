@@ -145,3 +145,10 @@
 - 사용자 요청에 따라 Field Chart의 `ScrollView`와 최소 높이 제한을 제거했다. 제목 아래 실제 남은 높이를 능력치 영역과 심박 영역에 배분해 한 화면에 표시한다. 작은 화면의 심박 그래프는 이전보다 낮아진다.
 - 빌드 성공: `/tmp/soccerbeat-chart-no-scroll-build.log`.
 - iPhone SE 3세대/iOS 18.2에서 스크롤 없이 능력치·범례·심박 그래프·시간축이 모두 표시되고, 로딩 표시 전후 크기가 유지됨을 모의 데이터로 확인했다. 앞 절의 세로 스크롤 관련 구현·검증 항목은 이 변경으로 대체된다.
+
+### 후속 조정: 모든 상세 페이지의 상단 배너 제거
+
+- Field Movement·Field Record에서도 부분 데이터/Reload 상단 배너와 공간을 차지하는 로딩 문구를 제거했다. 세 상세 페이지 모두 작은 overlay spinner를 사용한다. 데이터 조회·자동 갱신은 유지한다.
+- 빌드 성공: `/tmp/soccerbeat-detail-banner-removal-build.log`.
+- Recent Game 확인: `MainView`는 `unavailableMetrics`를 확인하지 않고 `DataConverter.toLevels`를 호출한다. 누락값의 0/기본 점수가 차트에 들어갈 수 있다. 계산식에는 예전 Power 입력도 남아 있다.
+- 사용자에게 필수 계산 데이터가 없을 때 차트 대신 안내와 확인된 수치를 표시하고, 계산에 무관한 누락으로 차트를 숨기지 않는 정책을 제안했다. Recent Game 표시·능력치 계산 정책은 이번 변경에 포함하지 않았다.
