@@ -492,17 +492,17 @@ struct FieldChartView: View {
     var workout: WorkoutData?
     
     var body: some View {
-        GeometryReader { proxy in
-            ScrollView {
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
-                        Spacer()
-                    }
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
+                Spacer()
+            }
 
-                    Text("Field Chart")
-                        .font(.matchDetailTitle)
+            Text("Field Chart")
+                .font(.matchDetailTitle)
 
+            GeometryReader { proxy in
+                VStack(alignment: .leading, spacing: 8) {
                     Group {
                         if workout?.error == true {
                             ErrorView(workout: workout)
@@ -512,7 +512,7 @@ struct FieldChartView: View {
                             PlayerAbilityView(workout: workout)
                         }
                     }
-                    .frame(height: min(proxy.size.width + 48, max(260, proxy.size.height * 0.48)))
+                    .frame(height: proxy.size.height * 0.60)
 
                     Text("Heartbeat")
                         .font(.matchDetailSubTitle)
@@ -522,15 +522,14 @@ struct FieldChartView: View {
                         if let workout, !workout.heartRates.isEmpty {
                             HeartRatesView(rates: workout.heartRates, dates: workout.heartRateDates)
                                 .padding(.horizontal, 8)
-                                .padding(.top, 8)
+                                .padding(.top, 6)
                         } else {
                             WorkoutDataNotice(title: "심박 기록을 표시할 수 없습니다.",
                                               availability: workout?.heartRateAvailability ?? .unavailable)
                         }
                     }
-                    .frame(height: max(180, min(260, proxy.size.height * 0.30)))
+                    .frame(maxHeight: .infinity)
                 }
-                .padding(.bottom, 12)
             }
         }
         .padding(.bottom, 28)
