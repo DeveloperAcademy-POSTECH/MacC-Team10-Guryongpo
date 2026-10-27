@@ -205,7 +205,7 @@ struct MatchListItemView: View {
                 radarCharts
                 //                    .frame(width: 60, height: 60)
                     .padding(.top, 16)
-                    .opacity(workoutData.error || !workoutData.unavailableMetrics.isEmpty ? 0 : 1)
+                    .opacity(workoutData.error ? 0 : 1)
                 
                 // 경기 데이터들
                 VStack(alignment: .leading) {
