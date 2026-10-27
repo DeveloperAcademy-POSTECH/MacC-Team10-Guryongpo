@@ -9,6 +9,10 @@ enum WorkoutRecordReconciliation {
             return values.isEmpty ? 0 : values.reduce(0, +) / Double(values.count)
         }
         var result = WorkoutAverageData()
+        let metrics: [WorkoutMetric] = [.distance, .sprint, .maxSpeed, .calories, .heartRate, .minHeartRate, .maxHeartRate]
+        result.unavailableMetrics = Set(metrics.filter { metric in
+            !records.contains { !$0.unavailableMetrics.contains(metric) }
+        })
         result.totalDistance = mean(.distance) { $0.distance }
         result.maxVelocity = mean(.maxSpeed) { $0.velocity }
         result.sprintCount = Int(mean(.sprint) { Double($0.sprint) })

@@ -246,6 +246,7 @@ struct MainView: View {
                                 let average = DataConverter.toLevels(profileModel.averageAbility)
                                 
                                 ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent, error: workouts[0].error))
+                                    .id([recent, average])
                                     .scaleEffect(CGSize(width: 0.6, height: 0.6))
                                     .padding()
                                     .fixedSize()

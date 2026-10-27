@@ -12,11 +12,11 @@ final class DataConverter {
     static private func toLevelDictionary(totalDistance: Double,
                                       maxHeartRate: Int,
                                       maxVelocity: Double,
-                                      maxPower: Double,
                                       sprintCount: Int,
                                       minHeartRate: Int,
                                       rangeHeartRate: Int,
-                                      totalMatchTime: Int) -> [String: Double] {
+                                      totalMatchTime: Int,
+                                      unavailable: Set<WorkoutMetric>) -> [String: Double] {
         var levels: [String: Double] = [:]
         
         if totalDistance <= 1.0 {
@@ -53,18 +53,6 @@ final class DataConverter {
             levels["maxVelocity"] = 4.0
         } else if maxVelocity > 24 {
             levels["maxVelocity"] = 5.0
-        }
-        
-        if maxPower <= 50.0 {
-            levels["maxPower"] = 1.0
-        } else if maxPower > 50.0 && maxPower <= 100.0 {
-            levels["maxPower"] = 2.0
-        } else if maxPower > 100.0 && maxPower <= 150.0 {
-            levels["maxPower"] = 3.0
-        } else if maxPower > 150.0 && maxPower <= 200.0 {
-            levels["maxPower"] = 4.0
-        } else if maxPower > 200.0 {
-            levels["maxPower"] = 5.0
         }
         
         if sprintCount <= 1 {
@@ -115,6 +103,20 @@ final class DataConverter {
             levels["totalMatchTime"] = 5.0
         }
         
+        // Missing measurements must not become minimum levels (or a maximum level for zero minimum HR).
+        if unavailable.contains(.distance) || !totalDistance.isFinite || totalDistance < 0 {
+            levels["totalDistance"] = nil
+        }
+        if unavailable.contains(.maxSpeed) || !maxVelocity.isFinite || maxVelocity < 0 {
+            levels["maxVelocity"] = nil
+        }
+        if unavailable.contains(.sprint) || sprintCount < 0 { levels["sprintCount"] = nil }
+        if unavailable.contains(.minHeartRate) || minHeartRate <= 0 { levels["minHeartRate"] = nil }
+        if unavailable.contains(.maxHeartRate) || maxHeartRate <= 0 { levels["maxHeartRate"] = nil }
+        if levels["minHeartRate"] == nil || levels["maxHeartRate"] == nil || maxHeartRate < minHeartRate {
+            levels["rangeHeartRate"] = nil
+        }
+        if totalMatchTime <= 0 { levels["totalMatchTime"] = nil }
         return levels
     }
     
@@ -122,11 +124,11 @@ final class DataConverter {
         let recentLevel = toLevelDictionary(totalDistance: workout.distance,
                                        maxHeartRate: workout.maxHeartRate,
                                        maxVelocity: workout.velocity,
-                                       maxPower: workout.power,
                                        sprintCount: workout.sprint,
                                        minHeartRate: workout.minHeartRate,
                                        rangeHeartRate: workout.maxHeartRate-workout.minHeartRate,
-                                       totalMatchTime: workout.playtimeSec)
+                                       totalMatchTime: workout.playtimeSec,
+                                       unavailable: workout.unavailableMetrics)
         
         
         return Amplify(recentLevel)
@@ -136,24 +138,37 @@ final class DataConverter {
         let averageLevel = toLevelDictionary(totalDistance: averageWorkout.totalDistance,
                                              maxHeartRate: averageWorkout.maxHeartRate,
                                              maxVelocity: averageWorkout.maxVelocity,
-                                             maxPower: averageWorkout.maxPower,
                                              sprintCount: averageWorkout.sprintCount,
                                              minHeartRate: averageWorkout.minHeartRate,
                                              rangeHeartRate: averageWorkout.maxHeartRate-averageWorkout.minHeartRate,
-                                             totalMatchTime: averageWorkout.totalMatchTime)
+                                             totalMatchTime: averageWorkout.totalMatchTime,
+                                             unavailable: averageWorkout.unavailableMetrics)
         return Amplify(averageLevel)
     }
     
     static private func Amplify(_ level: [String: Double]) -> [Double] {
-        return [
-            (level["totalDistance"] ?? 1.0) * 0.15 + (level["maxHeartRate"] ?? 1.0) * 0.35,
-            (level["maxVelocity"] ?? 1.0) * 0.3 + (level["maxPower"] ?? 1.0) * 0.2,
-            (level["maxVelocity"] ?? 1.0) * 0.25 + (level["sprintCount"] ?? 1.0) * 0.125 + (level["maxHeartRate"] ?? 1.0) * 0.125,
-            (level["maxPower"] ?? 1.0) * 0.4 + (level["minHeartRate"] ?? 1.0) * 0.1,
-            (level["totalDistance"] ?? 1.0) * 0.15 + (level["rangeHeartRate"] ?? 1.0) * 0.15 + (level["totalMatchTime"] ?? 1.0) * 0.2,
-            (level["totalDistance"] ?? 1.0) * 0.3 + (level["sprintCount"] ?? 1.0) * 0.1 + (level["maxHeartRate"] ?? 1.0) * 0.1
-        ].map { value in
-            value * 1.5
+        // Temporary partial-data policy: redistribute each axis's weights among known inputs.
+        // If an entire axis is unavailable, use the mean of the other observed input levels.
+        let fallback = level.isEmpty ? 0 : level.values.reduce(0, +) / Double(level.count)
+        func score(_ inputs: [(String, Double)]) -> Double {
+            var weighted = 0.0
+            var weight = 0.0
+            for (key, contribution) in inputs {
+                if let value = level[key] {
+                    weighted += value * contribution
+                    weight += contribution
+                }
+            }
+            // The previous formula used a total axis weight of 0.5, amplified by 1.5.
+            return (weight > 0 ? weighted / weight : fallback) * 0.75
         }
+        return [
+            score([("totalDistance", 0.15), ("maxHeartRate", 0.35)]),
+            score([("maxVelocity", 0.3)]),
+            score([("maxVelocity", 0.25), ("sprintCount", 0.125), ("maxHeartRate", 0.125)]),
+            score([("minHeartRate", 0.1)]),
+            score([("totalDistance", 0.15), ("rangeHeartRate", 0.15), ("totalMatchTime", 0.2)]),
+            score([("totalDistance", 0.3), ("sprintCount", 0.1), ("maxHeartRate", 0.1)])
+        ]
     }
 }

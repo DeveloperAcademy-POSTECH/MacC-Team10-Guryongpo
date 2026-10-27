@@ -142,6 +142,7 @@ struct PlayerAbilityView: View {
             ViewControllerContainer(RadarViewController(radarAverageValue: average,
                                                        radarAtypicalValue: recent,
                                                        error: workout?.error ?? true))
+                .id([recent, average])
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             VStack(alignment: .leading, spacing: 4) {
@@ -490,8 +491,6 @@ struct FieldChartView: View {
                     Group {
                         if workout?.error == true {
                             ErrorView(workout: workout)
-                        } else if workout?.unavailableMetrics.isEmpty == false {
-                            WorkoutDataNotice(title: "능력치를 표시할 데이터가 부족합니다.", availability: .unavailable)
                         } else {
                             PlayerAbilityView(workout: workout)
                         }

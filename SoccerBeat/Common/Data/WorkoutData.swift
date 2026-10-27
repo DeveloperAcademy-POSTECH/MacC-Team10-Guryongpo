@@ -254,6 +254,7 @@ struct WorkoutAverageData: Hashable, Equatable, Identifiable {
     var sprintCount: Int // Number of sprints during the match.
     var calories: Int
     var totalMatchTime: Int // Total play time in the match.
+    var unavailableMetrics: Set<WorkoutMetric> = []
     
     static let exampleAverage: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 180,
                                                              minHeartRate: 50,

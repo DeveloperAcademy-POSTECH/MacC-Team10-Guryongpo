@@ -6,9 +6,9 @@ final class WorkoutRecordReconciliationTests: XCTestCase {
 
     private func record(distance: Double = 3, sprint: Int = 2, speed: Double = 20,
                         calories: Int = 100, rates: [Int] = [90, 150],
-                        locations: Int = 2) -> WorkoutData {
-        var result = WorkoutData(dataID: 1, date: "2026-10-27T12:00:00Z", time: "10 : 0",
-                                 distance: distance, sprint: sprint, velocity: speed, power: 0,
+                        locations: Int = 2, time: String = "10 : 0", power: Double = 0) -> WorkoutData {
+        var result = WorkoutData(dataID: 1, date: "2026-10-27T12:00:00Z", time: time,
+                                 distance: distance, sprint: sprint, velocity: speed, power: power,
                                  heartRate: ["min": 90, "max": 150], heartRates: rates,
                                  route: (0..<locations).map { CLLocationCoordinate2D(latitude: 41, longitude: 2 + Double($0) * 0.00001) },
                                  center: locations > 0 ? [41, 2] : [], calories: calories, vo2Max: 0)
@@ -245,13 +245,94 @@ final class WorkoutRecordReconciliationTests: XCTestCase {
         XCTAssertEqual(WorkoutRecordReconciliation.average(of: [record(distance: 2), failed]).totalDistance, 2)
     }
 
+    @objc func testAbilityKeepsExistingThresholdsAndScaleWithoutPower() {
+        let levels = DataConverter.toLevels(record())
+        let expected = [1.2, 2.25, 1.6875, 0.75, 1.2, 1.8]
+        for (actual, value) in zip(levels, expected) { XCTAssertEqual(actual, value, accuracy: 0.000001) }
+    }
+
+    @objc func testPowerDoesNotAffectWorkoutOrAverageAbilities() {
+        let original = record()
+        var powered = record(power: 10000)
+        powered.hasPowerData = true
+        XCTAssertEqual(DataConverter.toLevels(original), DataConverter.toLevels(powered))
+        var average = WorkoutRecordReconciliation.average(of: [original])
+        let before = DataConverter.toLevels(average)
+        average.maxPower = 10000
+        XCTAssertEqual(before, DataConverter.toLevels(average))
+    }
+
+    @objc func testPartialAbilityUsesKnownInputsAndRedistributesWeights() {
+        var partial = record(sprint: 999, speed: 999)
+        partial.unavailableMetrics = [.sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
+        let levels = DataConverter.toLevels(partial)
+        XCTAssertEqual(levels[0], 2.25, accuracy: 0.000001)
+        XCTAssertEqual(levels[1], 1.5, accuracy: 0.000001)
+        XCTAssertEqual(levels[2], 1.5, accuracy: 0.000001)
+        XCTAssertEqual(levels[3], 1.5, accuracy: 0.000001)
+        XCTAssertEqual(levels[4], (3 * 0.15 + 0.2) / 0.35 * 0.75, accuracy: 0.000001)
+        XCTAssertEqual(levels[5], 2.25, accuracy: 0.000001)
+    }
+
+    @objc func testMeasuredZeroSprintIsDifferentFromUnavailableSprintInAbility() {
+        let zero = record(sprint: 0, speed: 25)
+        var unknown = zero
+        unknown.unavailableMetrics.insert(.sprint)
+        XCTAssertLessThan(DataConverter.toLevels(zero)[2], DataConverter.toLevels(unknown)[2])
+    }
+
+    @objc func testZeroMinimumHeartRateNeverProducesTopMentalityLevel() {
+        var zero = record()
+        zero.heartRate["min"] = 0
+        var unknown = record()
+        unknown.unavailableMetrics.insert(.minHeartRate)
+        XCTAssertEqual(DataConverter.toLevels(zero), DataConverter.toLevels(unknown))
+    }
+
+    @objc func testNoKnownInputReturnsCenterInsteadOfInventedLevels() {
+        var missing = record(time: "0 : 0")
+        missing.unavailableMetrics = [.distance, .sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
+        XCTAssertEqual(DataConverter.toLevels(missing), Array(repeating: 0, count: 6))
+    }
+
+    @objc func testThreeMinutesAloneCanProducePartialAbilityChart() {
+        var partial = record(time: "3 : 0")
+        partial.unavailableMetrics = [.distance, .sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
+        XCTAssertEqual(DataConverter.toLevels(partial), Array(repeating: 0.75, count: 6))
+    }
+
+    @objc func testAverageRetainsMissingInputsForSamePartialAbilityPolicy() {
+        var partial = record()
+        partial.unavailableMetrics = [.sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
+        let average = WorkoutRecordReconciliation.average(of: [partial])
+        XCTAssertTrue(average.unavailableMetrics.contains(.maxSpeed))
+        XCTAssertFalse(average.unavailableMetrics.contains(.distance))
+        XCTAssertEqual(DataConverter.toLevels(average), DataConverter.toLevels(partial))
+    }
+
+    @objc func testMissingCaloriesOrRouteDoesNotChangeAbility() {
+        let original = record()
+        var missing = original
+        missing.unavailableMetrics = [.calories, .heartRate]
+        missing.route = []
+        missing.routeAvailability = .unavailable
+        XCTAssertEqual(DataConverter.toLevels(original), DataConverter.toLevels(missing))
+    }
+
+    @objc func testNonfiniteInputsCannotMakeNonfiniteOrOutOfRangeChart() {
+        let invalid = record(distance: .nan, speed: .infinity)
+        let levels = DataConverter.toLevels(invalid)
+        XCTAssertEqual(levels.count, 6)
+        XCTAssertTrue(levels.allSatisfy { $0.isFinite && (0...3.75).contains($0) })
+    }
+
 }
 
 @main
 struct WorkoutRecordReconciliationTestRunner {
     static func main() {
         let suite = WorkoutRecordReconciliationTests.defaultTestSuite
-        precondition(suite.testCaseCount == 26)
+        precondition(suite.testCaseCount == 36)
         suite.run()
         exit(suite.testRun?.hasSucceeded == true ? 0 : 1)
     }
