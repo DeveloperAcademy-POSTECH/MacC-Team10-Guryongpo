@@ -93,29 +93,7 @@ final class ProfileModel: ObservableObject {
     }
     
     private func calculateAverageAbility(_ workouts: [WorkoutData]) {
-        guard !workouts.isEmpty else { return }
-        
-        for workout in workouts {
-            averageAbility.maxHeartRate += workout.maxHeartRate
-            averageAbility.minHeartRate += workout.minHeartRate
-            averageAbility.rangeHeartRate += workout.maxHeartRate - workout.minHeartRate
-            averageAbility.totalDistance += workout.distance
-            averageAbility.maxPower += workout.power
-            averageAbility.maxVelocity += workout.velocity
-            averageAbility.sprintCount += workout.sprint
-            averageAbility.totalMatchTime += workout.playtimeSec
-        }
-        
-        // Calculating average value..
-        let workoutCount = workouts.count
-        averageAbility.maxHeartRate /= workoutCount
-        averageAbility.minHeartRate /= workoutCount
-        averageAbility.rangeHeartRate /= workoutCount
-        averageAbility.totalDistance /= Double(workoutCount)
-        averageAbility.maxPower /= Double(workoutCount)
-        averageAbility.maxVelocity /= Double(workoutCount)
-        averageAbility.sprintCount /= workoutCount
-        averageAbility.totalMatchTime /= workoutCount
+        averageAbility = WorkoutRecordReconciliation.average(of: workouts)
     }
     
     // MARK: - Profile Image

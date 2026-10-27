@@ -182,6 +182,7 @@
 		FBCED9352AE4A83900C57BF9 /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCED9342AE4A83900C57BF9 /* MatchDetailView.swift */; };
 		C05054012F00000100000001 /* RouteTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05054002F00000100000001 /* RouteTimeline.swift */; };
 		C05056012F00000100000001 /* WorkoutRecoveryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05056002F00000100000001 /* WorkoutRecoveryStore.swift */; };
+		C05055012F00000100000001 /* WorkoutData+Reconciliation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05055002F00000100000001 /* WorkoutData+Reconciliation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,6 +355,7 @@
 		FBE203932AF1ED7B000E47FE /* NotoSansDisplay-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansDisplay-BlackItalic.ttf"; sourceTree = "<group>"; };
 		C05054002F00000100000001 /* RouteTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTimeline.swift; sourceTree = "<group>"; };
 		C05056002F00000100000001 /* WorkoutRecoveryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutRecoveryStore.swift"; sourceTree = "<group>"; };
+		C05055002F00000100000001 /* WorkoutData+Reconciliation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutData+Reconciliation.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -734,6 +736,7 @@
 				685D7B5E2AE3F3D000783433 /* WorkoutManager.swift */,
 				D3D4F18C2AF26662006C6B8A /* WorkoutData.swift */,
 				C05052002F00000100000001 /* HeatmapDensity.swift */,
+				C05055002F00000100000001 /* WorkoutData+Reconciliation.swift */,
 				C05056002F00000100000001 /* WorkoutRecoveryStore.swift */,
 				C05053002F00000100000001 /* PeakPower.swift */,
 				6884859F2CB7AA490092A13C /* DIContainer.swift */,
@@ -1232,6 +1235,7 @@
 				685D7B752AE53DC400783433 /* SpeedChart.swift in Sources */,
 				D3D4F18D2AF26662006C6B8A /* WorkoutData.swift in Sources */,
 				C05052012F00000100000001 /* HeatmapDensity.swift in Sources */,
+				C05055012F00000100000001 /* WorkoutData+Reconciliation.swift in Sources */,
 				C05053012F00000100000001 /* PeakPower.swift in Sources */,
 				C05053032F00000100000001 /* SprintDetector.swift in Sources */,
 				68C47FAD2C746A0700019099 /* HeartRatesView.swift in Sources */,

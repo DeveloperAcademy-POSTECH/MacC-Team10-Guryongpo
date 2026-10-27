@@ -262,7 +262,7 @@ struct ShareMatchView: View {
                     verticalDivider()
                     dashboardComponent(
                         section: "뛴 거리",
-                        value: workout.distance.rounded(at: 1),
+                        value: workout.unavailableMetrics.contains(.distance) ? "--" : workout.distance.rounded(at: 1),
                         unit: " KM"
                     )
                     Spacer()
@@ -270,7 +270,7 @@ struct ShareMatchView: View {
                     verticalDivider()
                     dashboardComponent(
                         section: "스프린트",
-                        value: "\(workout.sprint)",
+                        value: workout.unavailableMetrics.contains(.sprint) ? "--" : "\(workout.sprint)",
                         unit: " TIMES"
                     )
                     Spacer()
@@ -278,7 +278,7 @@ struct ShareMatchView: View {
                     verticalDivider()
                     dashboardComponent(
                         section: "최고 속도",
-                        value: workout.velocity.rounded(at: 1),
+                        value: workout.unavailableMetrics.contains(.maxSpeed) ? "--" : workout.velocity.rounded(at: 1),
                         unit: " KM/H"
                     )
                     Spacer()

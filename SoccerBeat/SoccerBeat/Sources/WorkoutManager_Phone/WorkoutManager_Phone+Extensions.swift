@@ -27,92 +27,77 @@ extension WorkoutManager {
         // 요청 완료는 개별 읽기 권한 허용을 뜻하지 않으므로 결과를 권한 상태로 해석하지 않습니다.
         // https://developer.apple.com/documentation/healthkit/hkhealthstore/requestauthorization(toshare:read:)
         try await healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead)
+        workoutObserverQueries.forEach { healthStore.stop($0) }
+        workoutObserverQueries.removeAll()
+        startObservingWorkoutChanges()
     }
 
+    @MainActor
     func delete(at offset: IndexSet) async throws {
-        for index in offset {
-            try await healthStore.delete(hkWorkouts[index])
-        }
-        hkWorkouts.remove(atOffsets: offset)
-        Task { @MainActor in
-            self.onWorkoutRemoved.send(offset)
+        let targets = offset.compactMap { hkWorkouts.indices.contains($0) ? hkWorkouts[$0] : nil }
+        for workout in targets {
+            try await healthStore.delete(workout)
+            deletedWorkoutIDs.insert(workout.uuid)
+            workoutCache.removeValue(forKey: workout.uuid)
+            hkWorkouts.removeAll { $0.uuid == workout.uuid }
+            await publishWorkouts(hkWorkouts, state: hkWorkouts.isEmpty ? .empty : .loaded)
         }
     }
 
+    @MainActor
     func fetchWorkoutData() async {
-        let shouldFetch = await MainActor.run { () -> Bool in
-            if case .loading = workoutFetchState {
-                return false
-            }
-
+        if workoutRefreshInProgress {
+            workoutRefreshQueued = true
+            return
+        }
+        workoutRefreshInProgress = true
+        defer { workoutRefreshInProgress = false }
+        repeat {
+            workoutRefreshQueued = false
             workoutFetchState = .loading
             isLoading = true
-            return true
-        }
-        guard shouldFetch else { return }
-
-        do {
-            let fetchedWorkouts = try await fetchHKWorkouts()
-            guard !fetchedWorkouts.isEmpty else {
-                await settingForChartView([])
-                await MainActor.run {
-                    hkWorkouts = []
-                    monthly = [:]
-                    isLoading = false
-                    workoutFetchState = .empty
-                    fetchWorkoutsSuccess.send([])
+            do {
+                let fetchedWorkouts = try await fetchHKWorkouts()
+                // An empty read can also mean that HealthKit data is not accessible yet.
+                // Only an explicit delete/deletion update removes a previously loaded workout.
+                if fetchedWorkouts.isEmpty && !workoutCache.isEmpty {
+                    for id in workoutCache.keys {
+                        workoutCache[id]?.hasRetrievalFailure = true
+                    }
+                    await publishWorkouts(hkWorkouts, state: .failed)
+                } else {
+                    var originals = Dictionary(uniqueKeysWithValues: hkWorkouts.map { ($0.uuid, $0) })
+                    for (index, workout) in fetchedWorkouts.enumerated() {
+                        let incoming = await convert(from: workout, at: index)
+                        guard !deletedWorkoutIDs.contains(workout.uuid) else { continue }
+                        workoutCache[workout.uuid] = incoming.preservingAvailableData(from: workoutCache[workout.uuid])
+                        originals[workout.uuid] = workout
+                    }
+                    let retained = originals.values.filter { workoutCache[$0.uuid] != nil && !deletedWorkoutIDs.contains($0.uuid) }
+                        .sorted { $0.startDate > $1.startDate }
+                    await publishWorkouts(retained, state: retained.isEmpty ? .empty : .loaded)
                 }
-                return
+            } catch {
+                NSLog("fetchWorkoutData failed: \(error.localizedDescription)")
+                for id in workoutCache.keys { workoutCache[id]?.hasRetrievalFailure = true }
+                await publishWorkouts(hkWorkouts, state: .failed)
             }
-
-            // 변환에 성공한 원본만 함께 보존해 화면 배열과 삭제 인덱스를 일치시킵니다.
-            var convertedHKWorkouts = [HKWorkout]()
-            var workoutData = [WorkoutData]()
-            for workout in fetchedWorkouts {
-                do {
-                    let workoutDatum = try await convert(from: workout, at: workoutData.count)
-                    convertedHKWorkouts.append(workout)
-                    workoutData.append(workoutDatum)
-                } catch {
-                    NSLog("fetchWorkoutData conversion failed: \(error.localizedDescription)")
-                }
-            }
-
-            guard !workoutData.isEmpty else {
-                await MainActor.run {
-                    isLoading = false
-                    workoutFetchState = .failed
-                }
-                return
-            }
-
-            await settingForChartView(workoutData)
-            let monthlyWorkouts = divideWorkoutsByMonthly(workoutData)
-
-            await MainActor.run {
-                hkWorkouts = convertedHKWorkouts
-                monthly = monthlyWorkouts
-                isLoading = false
-                workoutFetchState = .loaded
-                fetchWorkoutsSuccess.send(workoutData)
-            }
-        } catch {
-            NSLog("fetchWorkoutData failed: \(error.localizedDescription)")
-            await MainActor.run {
-                isLoading = false
-                workoutFetchState = .failed
-            }
-        }
+        } while workoutRefreshQueued
     }
 
-    private func convert(from workout: HKWorkout, at index: Int) async throws -> WorkoutData {
+    @MainActor
+    private func publishWorkouts(_ originals: [HKWorkout], state: WorkoutFetchState) async {
+        let originals = originals.filter { !deletedWorkoutIDs.contains($0.uuid) && workoutCache[$0.uuid] != nil }
+        let records = originals.compactMap { workoutCache[$0.uuid] }
+        settingForChartView(records)
+        hkWorkouts = originals
+        monthly = divideWorkoutsByMonthly(records)
+        isLoading = false
+        workoutFetchState = state
+        fetchWorkoutsSuccess.send(records)
+    }
 
-        var latSum = 0.0
-        var lonSum = 0.0
-        var routes: [CLLocationCoordinate2D] = []
-        var heatmapSamples: [HeatmapSample] = []
-        var routeSpeed = SprintDetector()
-        var previousRouteTimestamp: Date?
+    private func convert(from workout: HKWorkout, at index: Int) async -> WorkoutData {
         var pausedIntervals: [DateInterval] = []
         var pauseStart: Date?
         for event in (workout.workoutEvents ?? []).sorted(by: { $0.dateInterval.start < $1.dateInterval.start }) {
@@ -124,171 +109,181 @@ extension WorkoutManager {
                     pausedIntervals.append(DateInterval(start: start, end: event.dateInterval.start))
                 }
                 pauseStart = nil
-            default:
-                break
+            default: break
             }
         }
         if let start = pauseStart, workout.endDate > start {
             pausedIntervals.append(DateInterval(start: start, end: workout.endDate))
         }
 
-        var metadata: [String: Any] = [:]
-        // dataError 제거: 값이 없으면 기본값(0)으로 표시
-
-        // Route와 Metadata 가져오기 (실패해도 계속 진행)
-        if let (locations, meta) = try? await convertToRouteAndMetadata(from: workout) {
-            metadata = meta
-            for location in locations.sorted(by: { $0.timestamp < $1.timestamp }) {
-                if let previous = previousRouteTimestamp, pausedIntervals.contains(where: {
-                    max(previous, $0.start) < min(location.timestamp, $0.end)
-                }) { routeSpeed.pause() }
-                previousRouteTimestamp = location.timestamp
-                let isPaused = pausedIntervals.contains { $0.start <= location.timestamp && location.timestamp < $0.end }
-                if !isPaused, location.timestamp >= workout.startDate, location.timestamp <= workout.endDate {
-                    // Historical samples use their own timestamp; delivery age is not meaningful on replay.
-                    routeSpeed.process(timestamp: location.timestamp, speed: location.speed,
-                                       speedAccuracy: location.speedAccuracy, horizontalAccuracy: location.horizontalAccuracy,
-                                       receivedAt: location.timestamp)
-                }
-                heatmapSamples.append(HeatmapSample(latitude: location.coordinate.latitude,
-                                                    longitude: location.coordinate.longitude,
-                                                    timestamp: location.timestamp,
-                                                    horizontalAccuracy: location.horizontalAccuracy))
-                routes.append(CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                     longitude: location.coordinate.longitude))
-                latSum += location.coordinate.latitude
-                lonSum += location.coordinate.longitude
+        var routeResult = await convertToRouteAndMetadata(from: workout)
+        let expectedRoutePoints: Int = workout.metadata?.getValue(forKey: "SoccerBeatRoutePointCount") ?? 0
+        if routeResult.locations.isEmpty, routeResult.availability == .unavailable, expectedRoutePoints > 0 {
+            routeResult.availability = .pending
+        }
+        let locations = routeResult.locations
+        let metadata = WorkoutRecordReconciliation.metadata(workout: workout.metadata ?? [:], routes: routeResult.metadata)
+        var retrievalFailed = routeResult.hasFailure
+        var routeSpeed = SprintDetector()
+        var previousRouteTimestamp: Date?
+        for location in locations {
+            if let previous = previousRouteTimestamp, pausedIntervals.contains(where: {
+                max(previous, $0.start) < min(location.timestamp, $0.end)
+            }) { routeSpeed.pause() }
+            previousRouteTimestamp = location.timestamp
+            let isPaused = pausedIntervals.contains { $0.start <= location.timestamp && location.timestamp < $0.end }
+            if !isPaused {
+                routeSpeed.process(timestamp: location.timestamp, speed: location.speed,
+                                   speedAccuracy: location.speedAccuracy, horizontalAccuracy: location.horizontalAccuracy,
+                                   receivedAt: location.timestamp)
             }
         }
-        // Route metadata가 비어있으면 workout 자체의 metadata에서 fallback
-        if metadata.isEmpty, let workoutMeta = workout.metadata {
-            metadata = workoutMeta
+
+        func valid(_ value: Double?) -> Double? {
+            guard let value, value.isFinite, value >= 0 else { return nil }
+            return value
+        }
+        func positive(_ value: Double?) -> Double? {
+            guard let value = valid(value), value > 0 else { return nil }
+            return value
+        }
+        let hasDistance: Bool? = metadata.getValue(forKey: "HasDistanceData")
+        let distanceMetadata: Double? = metadata.getValue(forKey: "Distance")
+        var distance = WorkoutRecordReconciliation.distance(
+            statistics: workout.statistics(for: HKQuantityType(.distanceWalkingRunning))?
+                .sumQuantity()?.doubleValue(for: .meterUnit(with: .kilo)),
+            total: workout.totalDistance?.doubleValue(for: .meterUnit(with: .kilo)),
+            metadata: distanceMetadata, metadataObserved: hasDistance)
+        if distance == nil {
+            do { distance = try await queryDistanceSamples(for: workout) }
+            catch {
+                retrievalFailed = true
+                NSLog("Workout distance query failed: \(error.localizedDescription)")
+            }
         }
 
-        let displayedTime = String(Int(workout.duration)/60) + " : " + String(Int(workout.duration) % 60)
-        let dotCount = routes.isEmpty ? 1 : routes.count
-        let hasMetadata = !metadata.isEmpty
-
-        // Metadata에서 값 추출, 없으면 HKWorkout.statistics(for:)에서 fallback
-        var distance = 0.0
-        var sprintCount = 0
-        var velocity = 0.0
-        var maxHeartRate = 0
-        var minHeartRate = 0
-        var heartRates:[Int] = []
-        var power = 0.0
-        var calories = 0
-        var vo2Max = 0.0
-
-        // Distance: metadata → totalDistance → statistics → 시간 범위 샘플 쿼리
-        if let distanceMeta: Double = metadata.getValue(forKey: "Distance"), distanceMeta > 0 {
-            distance = distanceMeta
-        } else if let hkDistance = workout.totalDistance?.doubleValue(for: .meterUnit(with: .kilo)), hkDistance > 0 {
-            distance = Double(Int(hkDistance * 10)) / 10
-        } else if let distanceStat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!),
-                  let sum = distanceStat.sumQuantity()?.doubleValue(for: .meterUnit(with: .kilo)), sum > 0 {
-            distance = Double(Int(sum * 10)) / 10
-        } else {
-            // 워크아웃 시간 범위 내 거리 샘플 직접 쿼리
-            let queriedDistance = await queryDistanceSamples(start: workout.startDate, end: workout.endDate)
-            distance = Double(Int(queriedDistance * 10)) / 10
-        }
-
-        // Sprint (HKWorkout에 해당 통계 없음)
-        if let sprintCountMeta: Int = metadata.getValue(forKey: "SprintCount") {
-            sprintCount = sprintCountMeta
-        } else if !hasMetadata {
-            // metadata 없는 워크아웃은 sprint 0으로 처리
-        }
-
-        // New metadata includes live vehicle exclusion. Older records are recomputed from raw GPS when available.
-        let criteriaVersion: Int = metadata.getValue(forKey: "SprintCriteriaVersion") ?? 0
+        let hasSpeed: Bool? = metadata.getValue(forKey: "HasSpeedData")
         let speedMeta: Double? = metadata.getValue(forKey: "MaxSpeed")
-        if criteriaVersion >= 3, let speedMeta, SprintDetector.isPlausibleSpeed(speedMeta) {
-            velocity = (speedMeta * 3.6 * 100).rounded() / 100
-        } else if routeSpeed.validSampleCount >= 2 {
-            velocity = (routeSpeed.maxSpeedMPS * 3.6 * 100).rounded() / 100
-        } else if let speedMeta, SprintDetector.isPlausibleSpeed(speedMeta) {
-            velocity = (speedMeta * 3.6 * 100).rounded() / 100
-        } else if let speedStat = workout.statistics(for: HKQuantityType(.runningSpeed)),
-                  let maxSpeed = speedStat.maximumQuantity()?.doubleValue(for: HKUnit(from: "m/s")),
-                  SprintDetector.isPlausibleSpeed(maxSpeed) {
-            velocity = (maxSpeed * 3.6 * 100).rounded() / 100
+        let criteriaVersion: Int = metadata.getValue(forKey: "SprintCriteriaVersion") ?? 0
+        var velocity: Double?
+        if hasSpeed != false, let speedMeta, SprintDetector.isPlausibleSpeed(speedMeta),
+           (speedMeta > 0 || hasSpeed == true), criteriaVersion >= 3 {
+            velocity = speedMeta * 3.6
+        } else if routeSpeed.hasConfirmedSpeed {
+            velocity = routeSpeed.maxSpeedMPS * 3.6
+        } else if hasSpeed != false, let speedMeta, SprintDetector.isPlausibleSpeed(speedMeta),
+                  speedMeta > 0 || hasSpeed == true {
+            velocity = speedMeta * 3.6
+        } else if let measured = workout.statistics(for: HKQuantityType(.runningSpeed))?
+            .maximumQuantity()?.doubleValue(for: HKUnit(from: "m/s")), SprintDetector.isPlausibleSpeed(measured) {
+            velocity = measured * 3.6
+        }
+        let sprintMeta: Int? = metadata.getValue(forKey: "SprintCount")
+        var sprintCount: Int?
+        if hasSpeed != false, let sprintMeta, sprintMeta >= 0,
+           sprintMeta > 0 || hasSpeed == true || routeSpeed.hasConfirmedSpeed {
+            sprintCount = sprintMeta
+        } else if routeSpeed.hasConfirmedSpeed {
+            sprintCount = routeSpeed.sprintCount
         }
 
-        // Acceleration is m/s², never watts. Legacy zero metadata must not hide real HealthKit samples.
         var recordedPower = PeakPower()
         let hasPowerMetadata: Bool = metadata.getValue(forKey: "HasPowerData") ?? false
-        if let powerMeta: Double = metadata.getValue(forKey: "Power"),
-           powerMeta > 0 || hasPowerMetadata {
+        if let powerMeta: Double = metadata.getValue(forKey: "Power"), powerMeta > 0 || hasPowerMetadata {
             recordedPower.observe(powerMeta)
         }
         if let powerStat = workout.statistics(for: HKQuantityType(.runningPower)) {
             recordedPower.observe(powerStat.maximumQuantity()?.doubleValue(for: .watt())
                                   ?? powerStat.averageQuantity()?.doubleValue(for: .watt()))
         }
-        power = recordedPower.watts ?? 0
 
-        // Heart Rate
-        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
         let hrUnit = HKUnit.count().unitDivided(by: .minute())
-        if let maxHeartRateMeta: Int = metadata.getValue(forKey: "MaxHeartRate") {
-            maxHeartRate = maxHeartRateMeta
-        } else if let hrStat = workout.statistics(for: hrType),
-                  let maxHR = hrStat.maximumQuantity()?.doubleValue(for: hrUnit) {
-            maxHeartRate = Int(maxHR)
+        let hrStatistics = workout.statistics(for: HKQuantityType(.heartRate))
+        let hasHeartRate: Bool? = metadata.getValue(forKey: "HasHeartRateData")
+        var maximum = positive(hrStatistics?.maximumQuantity()?.doubleValue(for: hrUnit))
+            ?? (hasHeartRate == false ? nil : positive(metadata.getValue(forKey: "MaxHeartRate")))
+        var minimum = positive(hrStatistics?.minimumQuantity()?.doubleValue(for: hrUnit))
+            ?? (hasHeartRate == false ? nil : positive(metadata.getValue(forKey: "MinHeartRate")))
+        var heartRates = hasHeartRate == false ? [] : WorkoutRecordReconciliation.heartRates(metadata: metadata.getValue(forKey: "HeartRates") ?? "")
+        var heartRateDates: [Date] = []
+        var heartRateFailure: WorkoutDataAvailability?
+        do {
+            let samples = try await queryHeartRateSamples(for: workout)
+            let measured = samples.compactMap { sample -> (Date, Double)? in
+                guard let value = positive(sample.quantity.doubleValue(for: hrUnit)) else { return nil }
+                return (sample.startDate, value)
+            }
+            if !measured.isEmpty {
+                heartRates = measured.map { Int($0.1.rounded(.toNearestOrAwayFromZero)) }
+                heartRateDates = measured.map { $0.0 }
+                if let measuredMaximum = measured.map({ $0.1 }).max() {
+                    maximum = max(maximum ?? measuredMaximum, measuredMaximum)
+                }
+                if let measuredMinimum = measured.map({ $0.1 }).min() {
+                    minimum = min(minimum ?? measuredMinimum, measuredMinimum)
+                }
+            }
+        } catch {
+            heartRateFailure = availability(for: error)
+            retrievalFailed = true
+            NSLog("Workout heart-rate query failed: \(error.localizedDescription)")
         }
 
-        if let minHeartRateMeta: Int = metadata.getValue(forKey: "MinHeartRate") {
-            minHeartRate = minHeartRateMeta
-        } else if let hrStat = workout.statistics(for: hrType),
-                  let minHR = hrStat.minimumQuantity()?.doubleValue(for: hrUnit) {
-            minHeartRate = Int(minHR)
+        // Historical array metadata can survive even when separate extrema are absent.
+        if let recordedMinimum = heartRates.min() {
+            minimum = min(minimum ?? Double(recordedMinimum), Double(recordedMinimum))
+        }
+        if let recordedMaximum = heartRates.max() {
+            maximum = max(maximum ?? Double(recordedMaximum), Double(recordedMaximum))
         }
 
-        if let heartRatesMeta: String = metadata.getValue(forKey: "HeartRates") {
-            heartRates = heartRatesMeta.split(separator: ",").map { Int($0) ?? 0 }
-        }
+        let calorieStatistic = valid(workout.statistics(for: HKQuantityType(.activeEnergyBurned))?
+            .sumQuantity()?.doubleValue(for: .kilocalorie()))
+        let calorieMetadata: Int? = metadata.getValue(forKey: "Calories")
+        let hasCalories: Bool? = metadata.getValue(forKey: "HasCaloriesData")
+        let calories = calorieStatistic
+            ?? calorieMetadata.flatMap { value in
+                guard hasCalories != false, value >= 0, value > 0 || hasCalories == true else { return nil }
+                return Double(value)
+            }
+            ?? valid(workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()))
+        let vo2Max = positive(metadata.getValue(forKey: "Vo2Max"))
+            ?? positive(workout.statistics(for: HKQuantityType(.vo2Max))?.maximumQuantity()?
+                .doubleValue(for: HKUnit(from: "ml/kg*min")))
 
-        // Use the finalized active-energy sum; older zero metadata must not hide measured calories.
-        if let calStat = workout.statistics(for: HKQuantityType(.activeEnergyBurned)),
-           let sum = calStat.sumQuantity()?.doubleValue(for: .kilocalorie()), sum.isFinite, sum >= 0 {
-            calories = Int(sum.rounded())
-        } else if let caloriesMeta: Int = metadata.getValue(forKey: "Calories"), caloriesMeta > 0 {
-            calories = caloriesMeta
-        } else if let hkCalories = workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()),
-                  hkCalories.isFinite, hkCalories >= 0 {
-            calories = Int(hkCalories.rounded())
-        }
-
-        // Vo2Max
-        if let vo2MaxMeta: Double = metadata.getValue(forKey: "Vo2Max") {
-            vo2Max = vo2MaxMeta
-        } else if let vo2Stat = workout.statistics(for: HKQuantityType.quantityType(forIdentifier: .vo2Max)!),
-                  let maxVo2 = vo2Stat.maximumQuantity()?.doubleValue(for: HKUnit(from: "ml/kg*min")) {
-            vo2Max = Double(Int(maxVo2 * 10)) / 10
-        }
-
-
-        return WorkoutData(dataID: index+1,
-                           date: dateFormatter.string(from: workout.startDate),
-                           time: displayedTime,
-                           distance: distance,
-                           sprint: sprintCount,
-                           velocity: velocity, // km/h
-                           power: power,
-                           heartRate: ["max": maxHeartRate,
-                                       "min": minHeartRate],
-                           heartRates: heartRates,
-                           route: routes,
-                           center: [latSum / Double(dotCount),
-                                    lonSum / Double(dotCount)],
-                           calories: calories,
-                           vo2Max: vo2Max,
-                           error: false,
-                           heatmapSamples: heatmapSamples,
-                           heatmapPausedIntervals: pausedIntervals,
-                           hasPowerData: recordedPower.watts != nil)
+        var unavailable: Set<WorkoutMetric> = []
+        if distance == nil { unavailable.insert(.distance) }
+        if sprintCount == nil { unavailable.insert(.sprint) }
+        if velocity == nil { unavailable.insert(.maxSpeed) }
+        if calories == nil { unavailable.insert(.calories) }
+        if minimum == nil { unavailable.insert(.minHeartRate) }
+        if maximum == nil { unavailable.insert(.maxHeartRate) }
+        if heartRates.isEmpty { unavailable.insert(.heartRate) }
+        let center = locations.isEmpty ? [] : [
+            locations.reduce(0) { $0 + $1.coordinate.latitude } / Double(locations.count),
+            locations.reduce(0) { $0 + $1.coordinate.longitude } / Double(locations.count)
+        ]
+        var result = WorkoutData(dataID: index + 1, date: dateFormatter.string(from: workout.startDate),
+                                 time: "\(Int(workout.duration) / 60) : \(Int(workout.duration) % 60)",
+                                 distance: distance ?? 0, sprint: sprintCount ?? 0,
+                                 velocity: velocity.map { ($0 * 100).rounded(.toNearestOrAwayFromZero) / 100 } ?? 0,
+                                 power: recordedPower.watts ?? 0,
+                                 heartRate: ["max": maximum.map { Int($0.rounded(.toNearestOrAwayFromZero)) } ?? 0,
+                                             "min": minimum.map { Int($0.rounded(.toNearestOrAwayFromZero)) } ?? 0],
+                                 heartRates: heartRates, route: locations.map(\.coordinate), center: center,
+                                 calories: calories.map { Int($0.rounded(.toNearestOrAwayFromZero)) } ?? 0, vo2Max: vo2Max ?? 0,
+                                 error: false,
+                                 heatmapSamples: locations.map {
+                                     HeatmapSample(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude,
+                                                   timestamp: $0.timestamp, horizontalAccuracy: $0.horizontalAccuracy)
+                                 }, heatmapPausedIntervals: pausedIntervals, hasPowerData: recordedPower.watts != nil)
+        result.id = workout.uuid
+        result.unavailableMetrics = unavailable
+        result.routeAvailability = routeResult.availability
+        result.heartRateAvailability = heartRates.isEmpty ? (heartRateFailure ?? .unavailable) : .available
+        result.heartRateDates = heartRateDates
+        result.hasRetrievalFailure = retrievalFailed
+        return result
     }
 
     private static let soccerBeatSourceKeyword = "SoccerBeat"
@@ -321,11 +316,6 @@ extension WorkoutManager {
             throw HealthKitError.failureCastingWorkoutSamples
         }
 
-        // 디버그: 각 워크아웃의 타입과 소스 확인
-        for workout in workouts {
-            NSLog("fetchHKWorkouts: type=\(workout.workoutActivityType.rawValue) source=\(workout.sourceRevision.source.bundleIdentifier) date=\(workout.startDate)")
-        }
-
         // .soccer는 전부 포함, .running은 SoccerBeat Watch App에서 기록한 것만 포함
         let filtered = workouts.filter { workout in
             if workout.workoutActivityType == .soccer {
@@ -338,99 +328,146 @@ extension WorkoutManager {
         return filtered
     }
 
-    /// 워크아웃 시간 범위 내 Walking+Running Distance 샘플을 직접 쿼리하여 합산 (km 단위)
-    private func queryDistanceSamples(start: Date, end: Date) async -> Double {
-        let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-        let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: .strictStartDate)
+    private func availability(for error: Error) -> WorkoutDataAvailability {
+        let error = error as NSError
+        return error.domain == HKErrorDomain && error.code == HKError.Code.errorAuthorizationDenied.rawValue
+            ? .permissionDenied : .failed
+    }
 
-        do {
-            let sum = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Double, Error>) in
-                let query = HKStatisticsQuery(quantityType: distanceType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, statistics, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let sum = statistics?.sumQuantity()?.doubleValue(for: .meterUnit(with: .kilo)) {
-                        continuation.resume(returning: sum)
-                    } else {
-                        continuation.resume(returning: 0.0)
+    private func samplePredicate(for workout: HKWorkout, associated: Bool) -> NSPredicate {
+        let interval = HKQuery.predicateForSamples(withStart: workout.startDate, end: workout.endDate,
+                                                  options: [.strictStartDate, .strictEndDate])
+        let owner = associated ? HKQuery.predicateForObjects(from: workout)
+            : HKQuery.predicateForObjects(from: workout.sourceRevision.source)
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [interval, owner])
+    }
+
+    private func queryDistanceSamples(for workout: HKWorkout) async throws -> Double? {
+        let type = HKQuantityType(.distanceWalkingRunning)
+        // Prefer the workout relationship. Legacy records may have samples saved by the
+        // same app without the relationship; never sum unrelated phone/watch sources.
+        for associated in [true, false] {
+            let predicate = samplePredicate(for: workout, associated: associated)
+            let value = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Double?, Error>) in
+                let query = HKStatisticsQuery(quantityType: type, quantitySamplePredicate: predicate,
+                                              options: .cumulativeSum) { _, statistics, error in
+                    if let error { continuation.resume(throwing: error) }
+                    else {
+                        continuation.resume(returning: statistics?.sumQuantity()?.doubleValue(for: .meterUnit(with: .kilo)))
                     }
                 }
                 healthStore.execute(query)
             }
-            return sum
-        } catch {
-            NSLog("queryDistanceSamples failed: \(error.localizedDescription)")
-            return 0.0
+            if let value, value.isFinite, value >= 0 { return value }
         }
+        return nil
     }
 
-    // HKWorkout + Metadata
-    func convertToRouteAndMetadata(from workout: HKWorkout) async throws -> ([CLLocation], [String: Any]) {
-        let byWorkoutPredicate = HKQuery.predicateForObjects(from: workout)
-
-        let samples = try await withCheckedThrowingContinuation { (
-            continuation: CheckedContinuation<[HKSample], Error>
-        ) in
-            let query = HKAnchoredObjectQuery(
-                type: HKSeriesType.workoutRoute(),
-                predicate: byWorkoutPredicate,
-                anchor: nil,
-                limit: HKObjectQueryNoLimit,
-                resultsHandler: { query, samples, deletedObjects, anchor, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume(returning: samples ?? [])
-                    }
+    private func queryHeartRateSamples(for workout: HKWorkout) async throws -> [HKQuantitySample] {
+        for associated in [true, false] {
+            let predicate = samplePredicate(for: workout, associated: associated)
+            let samples = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKQuantitySample], Error>) in
+                let query = HKSampleQuery(sampleType: HKQuantityType(.heartRate), predicate: predicate,
+                                          limit: HKObjectQueryNoLimit,
+                                          sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)]) {
+                    _, samples, error in
+                    if let error { continuation.resume(throwing: error) }
+                    else { continuation.resume(returning: samples as? [HKQuantitySample] ?? []) }
                 }
-            )
-            healthStore.execute(query)
+                healthStore.execute(query)
+            }
+            if !samples.isEmpty { return samples }
         }
+        return []
+    }
 
-        let routes = samples as? [HKWorkoutRoute]
-        guard let route = routes?.first else {
-            // Route 자체가 없음 → 위치 데이터 없이 빈 값 반환
-            return ([], [:])
+    private struct RouteReadResult {
+        var locations: [CLLocation] = []
+        var metadata: [[String: Any]] = []
+        var availability: WorkoutDataAvailability = .unavailable
+        var hasFailure = false
+    }
+
+    private struct RouteLocationIdentity: Hashable {
+        let timestamp: Date
+        let latitude: Double
+        let longitude: Double
+    }
+
+    private func convertToRouteAndMetadata(from workout: HKWorkout) async -> RouteReadResult {
+        var result = RouteReadResult()
+        do {
+            let routes = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKWorkoutRoute], Error>) in
+                let query = HKSampleQuery(sampleType: HKSeriesType.workoutRoute(),
+                                          predicate: HKQuery.predicateForObjects(from: workout),
+                                          limit: HKObjectQueryNoLimit,
+                                          sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)]) {
+                    _, samples, error in
+                    if let error { continuation.resume(throwing: error) }
+                    else { continuation.resume(returning: samples as? [HKWorkoutRoute] ?? []) }
+                }
+                healthStore.execute(query)
+            }
+            for route in routes {
+                result.metadata.append(route.metadata ?? [:])
+                let read = await readLocations(from: route)
+                result.locations.append(contentsOf: read.locations)
+                if let error = read.error {
+                    result.hasFailure = true
+                    result.availability = availability(for: error)
+                    NSLog("Workout route query failed: \(error.localizedDescription)")
+                }
+            }
+            var seen = Set<RouteLocationIdentity>()
+            result.locations = result.locations.sorted { $0.timestamp < $1.timestamp }.filter { location in
+                guard CLLocationCoordinate2DIsValid(location.coordinate),
+                      location.timestamp >= workout.startDate, location.timestamp <= workout.endDate,
+                      location.horizontalAccuracy.isFinite, location.horizontalAccuracy >= 0 else { return false }
+                return seen.insert(RouteLocationIdentity(timestamp: location.timestamp,
+                                                         latitude: location.coordinate.latitude,
+                                                         longitude: location.coordinate.longitude)).inserted
+            }
+            if !result.locations.isEmpty { result.availability = .available }
+        } catch {
+            result.availability = availability(for: error)
+            result.hasFailure = true
+            NSLog("Workout route discovery failed: \(error.localizedDescription)")
         }
+        return result
+    }
 
-        // Route에서 위치 데이터 추출
-        let locations = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
-            var allLocations = [CLLocation]()
-            let query = HKWorkoutRouteQuery(route: route) { (query, locationsOrNil, done, errorOrNil) in
-                if let error = errorOrNil {
-                    continuation.resume(throwing: error)
-                    return
-                }
-
-                if let locations = locationsOrNil {
-                    allLocations += locations
-                }
-
-                if done {
-                    continuation.resume(returning: allLocations)
-                }
+    private func readLocations(from route: HKWorkoutRoute) async -> (locations: [CLLocation], error: Error?) {
+        await withCheckedContinuation { continuation in
+            var locations: [CLLocation] = []
+            var finished = false
+            let lock = NSLock()
+            let query = HKWorkoutRouteQuery(route: route) { _, batch, done, error in
+                lock.lock()
+                guard !finished else { lock.unlock(); return }
+                locations.append(contentsOf: batch ?? [])
+                if error != nil || done {
+                    finished = true
+                    let result = (locations: locations, error: error)
+                    lock.unlock()
+                    continuation.resume(returning: result)
+                } else { lock.unlock() }
             }
             healthStore.execute(query)
         }
-
-        // Metadata는 있으면 반환, 없으면 빈 딕셔너리
-        return (locations, route.metadata ?? [:])
     }
+
 }
 
 // MARK: - Chart Methods
 
 extension WorkoutManager {
 
-    private func settingForChartView(_ workouts: [WorkoutData]) async {
-        let fourGames = await MainActor.run {
-            readRecentMatches(from: workouts, count: 4)
-                .sorted(by: { $0.formattedDate < $1.formattedDate })
-                .appendingBlanks(upTo: 4, with: .blankExample)
-        }
-        await MainActor.run {
-            recent4Games = fourGames
-            recentGames = workouts.sorted(by: { $0.formattedDate < $1.formattedDate })
-        }
+    @MainActor
+    private func settingForChartView(_ workouts: [WorkoutData]) {
+        recent4Games = readRecentMatches(from: workouts, count: 4)
+            .sorted(by: { $0.formattedDate < $1.formattedDate })
+            .appendingBlanks(upTo: 4, with: .blankExample)
+        recentGames = workouts.sorted(by: { $0.formattedDate < $1.formattedDate })
     }
 
     private func readRecentMatches(from workouts: [WorkoutData], count: Int) -> [WorkoutData] {
@@ -481,8 +518,55 @@ extension WorkoutManager {
 
 // MARK: - 워치 세션 연동 핸들러
 extension WorkoutManager {
+    @MainActor
+    func startObservingWorkoutChanges() {
+        guard workoutObserverQueries.isEmpty else { return }
+        // HealthKit sync may deliver the workout, route and quantity samples separately.
+        // The deleted UUIDs are authoritative; an ordinary empty query is not.
+        let onWorkouts: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
+            [weak self] _, _, deleted, _, error in
+            guard let self else { return }
+            if let error {
+                NSLog("Workout observation failed: \(error.localizedDescription)")
+                return
+            }
+            Task { @MainActor in
+                for object in deleted ?? [] {
+                    self.deletedWorkoutIDs.insert(object.uuid)
+                    self.workoutCache.removeValue(forKey: object.uuid)
+                    self.hkWorkouts.removeAll { $0.uuid == object.uuid }
+                }
+                await self.fetchWorkoutData()
+            }
+        }
+        let workouts = HKAnchoredObjectQuery(type: HKObjectType.workoutType(), predicate: nil,
+                                            anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: onWorkouts)
+        workouts.updateHandler = onWorkouts
+        workoutObserverQueries.append(workouts)
+        healthStore.execute(workouts)
+
+        let types: [HKSampleType] = [HKSeriesType.workoutRoute(), HKQuantityType(.heartRate),
+                                     HKQuantityType(.distanceWalkingRunning), HKQuantityType(.activeEnergyBurned)]
+        for type in types {
+            let query = HKObserverQuery(sampleType: type, predicate: nil) { [weak self] _, completion, error in
+                guard let self, error == nil else {
+                    if let error { NSLog("Workout sample observation failed: \(error.localizedDescription)") }
+                    completion()
+                    return
+                }
+                Task {
+                    await self.fetchWorkoutData()
+                    completion()
+                }
+            }
+            workoutObserverQueries.append(query)
+            healthStore.execute(query)
+        }
+    }
+
     // 폰에서 앱 실행 시 워치의 원격 세션과 연동함
     func retrieveRemoteSession() {
+        Task { @MainActor in self.startObservingWorkoutChanges() }
         /**
          HealthKit calls this handler when a session starts mirroring.
          */

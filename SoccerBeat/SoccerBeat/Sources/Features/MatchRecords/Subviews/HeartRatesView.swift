@@ -10,26 +10,35 @@ import SwiftUI
 
 struct HeartRatesView: View {
     let symbolSize: CGFloat = 30
-    var rates: [Int] = [120, 100, 180, 130, 150, 120, 100, 180, 130, 150, 120, 100, 180, 130, 150]
+    var rates: [Int]
+    var dates: [Date] = []
     
     var body: some View {
             Chart(0..<rates.count, id: \.self) { count in
-                PointMark(
-                    x: .value("Time", count),
-                    y: .value("BPM", rates[count])
-                )
-                .foregroundStyle(.zone2Bpm)
-                .symbolSize(symbolSize)
+                if dates.count == rates.count {
+                    PointMark(x: .value("Time", dates[count]), y: .value("BPM", rates[count]))
+                        .foregroundStyle(.zone2Bpm)
+                        .symbolSize(symbolSize)
+                } else {
+                    // Legacy metadata has values but no sample timestamps.
+                    PointMark(x: .value("Sample", count), y: .value("BPM", rates[count]))
+                        .foregroundStyle(.zone2Bpm)
+                        .symbolSize(symbolSize)
+                }
             }
             .chartSymbolScale([
                 "BPM": Circle()
                     .strokeBorder(lineWidth: 20)
             ])
             .chartXAxis {
-                AxisMarks(values: .stride(by: .day)) { _ in
+                AxisMarks(values: .automatic(desiredCount: 3)) { _ in
                     AxisTick()
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.weekday(.narrow), centered: true)
+                    if dates.count == rates.count {
+                        AxisValueLabel(format: .dateTime.hour().minute())
+                    } else {
+                        AxisValueLabel()
+                    }
                 }
             }
             .chartYScale(domain: ((rates.min() ?? 50) - 10)...((rates.max() ?? 200) + 10))
