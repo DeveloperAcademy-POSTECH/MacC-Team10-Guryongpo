@@ -165,3 +165,18 @@
 - 관련 회귀 테스트 36개 통과(기존 26개 + 능력치 10개): `/tmp/soccerbeat-partial-ability-tests.log`. Power 무영향, 부분 가중치, 실제 0/누락 구분, 최소 심박 0의 최고 점수 방지, 시간만 있는 3분 기록, 평균 누락 보존, 비유한 입력을 검증했다.
 - iOS·watchOS 전체 빌드 성공: `/tmp/soccerbeat-partial-ability-build.log`. 사용자 미커밋 설정을 제외한 임시 사본에서 변경 소스를 빌드했다.
 - iPhone SE/iOS 18.2 모의 UI: 거리·시간만 있는 기록의 민트색 육각형이 표시됨을 확인. 실제 publisher로 추가 데이터를 두 번 전달하자 열린 화면에서 능력치 및 심박 차트가 갱신됨을 확인했다. 실기기 HealthKit 동기화를 시험한 것은 아니다.
+
+### 후속 조정: Watch Finish 재시작·거리·속도 게이지
+
+- 원인: 요약 화면을 닫아도 `showingPrecount`가 true로 남았다. `StartView`가 다시 `PrecountView`를 표시했고, `onAppear`의 취소되지 않는 예약 작업이 새 운동을 시작할 수 있었다. 기존 reset은 다음 MainActor task로 미뤄져 화면 전환보다 늦었고, 카운트다운 플래그도 지우지 않았다.
+- `dismissWorkoutSummary`: 저장 상태를 검사한 뒤 요약 화면이 표시된 상태에서 reset을 완료하고 마지막에 요약을 닫는다. reset은 카운트다운·running·정지 감지 상태도 초기화한다. 부분/실패 저장의 닫기 제한과 데이터 보존 조건은 유지한다.
+- `PrecountView`: 취소 가능한 SwiftUI `.task`에서 카운트다운을 실행하고 각 대기 후 시작 의도/요약 표시 상태를 검사한다. 화면이 사라지면 미완료 대기가 취소된다. Start는 toggle 대신 명시적으로 true를 설정한다.
+- 측정 중 `GameProgressView` 거리만 소수점 두 자리로 변경했다. 종료 리포트는 기존 표시를 유지한다.
+- 추가 속도 표시 버그: `SprintView`는 마지막 TimelineView tick 시각으로 신선도를 검사했다. tick 이후 새 GPS 샘플이 publish되어 다시 그려지면 그 시각은 새 샘플보다 이전이므로 정상 샘플도 nil이 될 수 있었다. 실제 렌더 시각 `.now`로 검사하도록 수정했다. 1초 주기의 무응답 감지 갱신은 유지한다.
+- 첨부 메타데이터: 경로 138개, 유효 속도 62개/제외 73개, 최고속도 1.236886m/s(약 4.45km/h). 위치 경로 저장(hAccuracy 50m 이내)과 속도 판정(hAccuracy 20m, speedAccuracy 1.5m/s 이내)은 서로 다르다. 제외 개수는 제외 시간 비율이나 세부 원인을 알려주지 않는다.
+- `--`가 계속 필요한 경우: 최초 유효 속도 전, 5초 넘은 샘플, 유효하지 않은 속도/정확도, 축구 상한 12.5m/s 초과, 비현실적 가속도, 차량 판정, 일시정지. 중복·역순 샘플은 제외되더라도 이전 값이 신선하면 반드시 `--`가 되는 것은 아니다. GPS 이상값 차단 기준은 완화하지 않았다.
+- 공식 문서 확인: https://developer.apple.com/documentation/corelocation/cllocation/speedaccuracy (음수는 속도 무효, 단위 m/s), https://developer.apple.com/documentation/corelocation/cllocation/speed (음수 속도 무효).
+- native 속도/PeakPower 테스트 28개 통과: `/tmp/soccerbeat-watch-timeline-speed-tests.log`. 새 회귀 테스트는 tick 뒤 도착한 샘플이 실제 렌더 시각에서는 유효하고 5초 후에는 만료됨을 검증한다.
+- Watch Series 11 42mm/watchOS 26.5 모의 UI: 카운트다운 플래그 true·저장 성공 상태에서 실제 Finish 버튼을 실행해 Start 화면으로 복귀, 카운트다운 시간 이상 기다려도 Start 유지, 새 Start 탭 뒤에만 진행 화면 진입 확인. 테스트 사본에서는 권한·센서 시작을 대체하고 Summary의 실제 저장 컨트롤만 노출했다. 실제 운동 저장을 검증한 것은 아니다.
+- 같은 시뮬레이터에서 140.865m가 `0.14 KM`로 표시됨과 0.25초마다 도착하는 정상 모의 속도가 `4.3 km/h`로 표시됨을 확인했다. 테스트용 앱/상태/센서 대체 코드는 작업 소스에 포함하지 않았다.
+- 최종 센서 대체 없는 iOS·watchOS 전체 빌드 성공: `/tmp/soccerbeat-watch-finish-final-build.log`. 실제 Watch에서 Finish 전체 흐름과 실외 GPS 품질 검증은 남아 있다.

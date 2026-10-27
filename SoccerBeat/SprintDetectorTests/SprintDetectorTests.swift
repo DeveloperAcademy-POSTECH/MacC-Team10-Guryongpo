@@ -401,6 +401,17 @@ final class SprintDetectorTests: XCTestCase {
         XCTAssertFalse(detector.hasConfirmedSpeed)
     }
 
+    func testNewSampleAfterTimelineTickIsAvailableAtRenderTime() {
+        var detector = SprintDetector()
+        let tick = Date(timeIntervalSinceReferenceDate: 21_000)
+        let sample = tick.addingTimeInterval(0.4)
+        detector.process(timestamp: sample, speed: 1.2, speedAccuracy: 0.2, receivedAt: sample)
+        // SwiftUI may redraw for this sample while TimelineView still supplies the older tick.
+        XCTAssertNil(detector.currentSpeed(at: tick))
+        XCTAssertEqual(detector.currentSpeed(at: sample.addingTimeInterval(0.01)), 1.2)
+        XCTAssertNil(detector.currentSpeed(at: sample.addingTimeInterval(5.01)))
+    }
+
 }
 
 

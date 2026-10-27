@@ -98,7 +98,7 @@ struct SummaryView: View {
             }
             if workoutManager.canDismissWorkoutSummary {
                 Button {
-                    workoutManager.showingSummaryView = false
+                    workoutManager.dismissWorkoutSummary()
                 } label: {
                     Capsule()
                         .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)

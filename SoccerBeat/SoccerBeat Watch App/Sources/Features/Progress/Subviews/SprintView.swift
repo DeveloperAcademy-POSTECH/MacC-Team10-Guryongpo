@@ -13,8 +13,9 @@ struct SprintView: View {
     
     var body: some View {
         
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            let speed = matricsIndicator.currentSpeed(at: context.date)
+        TimelineView(.periodic(from: .now, by: 1)) { _ in
+            // A newly published GPS sample can be newer than the last timeline tick.
+            let speed = matricsIndicator.currentSpeed(at: .now)
             HStack {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15.0)

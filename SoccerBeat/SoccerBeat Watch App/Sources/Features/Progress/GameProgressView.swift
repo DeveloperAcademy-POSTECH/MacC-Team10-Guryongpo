@@ -15,7 +15,7 @@ struct GameProgressView: View {
     private var whenTheGameStarted: Date { workoutManager.builder?.startDate ?? Date() }
     private var distanceKM: String {
         matricsIndicator.isDistanceActive
-        ? (matricsIndicator.distanceMeter / 1000).rounded(at: 1)
+        ? (matricsIndicator.distanceMeter / 1000).rounded(at: 2)
         : "--'--"
     }
     

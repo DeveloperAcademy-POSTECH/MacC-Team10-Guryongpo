@@ -283,8 +283,19 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
     }
 
     @MainActor
+    func dismissWorkoutSummary() {
+        guard showingSummaryView, canDismissWorkoutSummary else { return }
+        // Reset the start flow while the summary still covers it.
+        resetWorkout()
+        showingSummaryView = false
+    }
+
+    @MainActor
     func resetWorkout() {
         guard canDismissWorkoutSummary else { return }
+        showingPrecount = false
+        running = false
+        isStationaryDetacted = false
         builder = nil
         routeBuilder = nil
         workout = nil

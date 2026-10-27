@@ -64,20 +64,7 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
 
     // 세션 시작과 종료 시에 뷰 관리 변수
     @Published var showingPrecount = false
-    @Published var showingSummaryView = false {
-        didSet {
-            if showingSummaryView == false {
-                Task { @MainActor in
-                    guard !showingSummaryView else { return }
-                    guard canDismissWorkoutSummary else {
-                        showingSummaryView = true
-                        return
-                    }
-                    resetWorkout()
-                }
-            }
-        }
-    }
+    @Published var showingSummaryView = false
     
     // MARK: - 세션 관리
     @Published var running = false
