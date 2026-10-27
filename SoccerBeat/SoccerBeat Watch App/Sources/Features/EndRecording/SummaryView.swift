@@ -12,7 +12,6 @@ struct SummaryView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var workoutManager: WorkoutManager
     @EnvironmentObject var matricsIndicator: MatricsIndicator
-    @State private var isShowingSummary = false
     @State private var selection: SummarySort = .sportsInfo
     @State var isBlinking = false
     @State var isHeartBlinking = false
@@ -22,8 +21,7 @@ struct SummaryView: View {
     }
     
     var body: some View {
-        if isShowingSummary {
-            GeometryReader { proxy in
+        GeometryReader { proxy in
                 TabView {
                     Group {
                         VStack(spacing: 4) {
@@ -50,21 +48,7 @@ struct SummaryView: View {
                                 .padding(.top)
                             InfoHeartView()
                             Spacer()
-                            Button {
-                                workoutManager.showingSummaryView = false
-                            } label: {
-                                Capsule()
-                                    .frame(maxWidth: .infinity, maxHeight: 40)
-                                    .foregroundStyle(Color.columnContent)
-                                    .overlay {
-                                        Text("완료")
-                                            .font(.summaryDoneButton)
-                                            .padding(.horizontal, 18)
-                                            .padding(.vertical, 24)
-                                            .foregroundStyle(.summaryGradient)
-                                    }
-                            }
-                            .padding(.bottom, 16)
+                            saveControls
                             
                         }
                         .onAppear {
@@ -89,18 +73,48 @@ struct SummaryView: View {
                 
             }
             .edgesIgnoringSafeArea(.all)
-        } else {
-            PhraseView()
-                .navigationBarHidden(true)
-                .task {
-                    try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
-                    withAnimation {
-                        isShowingSummary.toggle()
-                        workoutManager.showingPrecount = false
-                    }
-                }
-        }
     }
+
+    @ViewBuilder
+    private var saveControls: some View {
+        VStack(spacing: 4) {
+            switch workoutManager.workoutSaveState {
+            case .saving:
+                ProgressView("경기 기록을 저장하고 있어요.")
+                    .font(.caption2)
+            case .partial:
+                Text("운동은 저장됐지만 일부 데이터의 저장 확인이 필요해요.")
+                    .font(.caption2)
+            case .failed:
+                Text("운동 저장을 확인하지 못했어요. 다시 확인해 주세요.")
+                    .font(.caption2)
+            default:
+                EmptyView()
+            }
+            if workoutManager.watchRecording != nil &&
+                (workoutManager.workoutSaveState == .partial || workoutManager.workoutSaveState == .failed) {
+                Button("저장 상태 다시 확인") { workoutManager.retryWorkoutSave() }
+                    .font(.caption2)
+            }
+            if workoutManager.canDismissWorkoutSummary {
+                Button {
+                    workoutManager.showingSummaryView = false
+                } label: {
+                    Capsule()
+                        .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
+                        .foregroundStyle(Color.columnContent)
+                        .overlay {
+                            Text(LocalizedStringKey(workoutManager.workoutSaveState == .failed ? "닫기" : "완료"))
+                                .font(.summaryDoneButton)
+                                .foregroundStyle(.summaryGradient)
+                        }
+                }
+            }
+        }
+        .multilineTextAlignment(.center)
+        .padding(.bottom, 16)
+    }
+
 }
 
 struct InfoSportsView: View {
@@ -109,12 +123,12 @@ struct InfoSportsView: View {
         VStack(spacing: 4) {
             HStack(spacing: 4) {
                 SummaryComponent(title: "뛴 거리_",
-                                 content: (matricsIndicator.distanceMeter / 1000).rounded(at: 0), unit: "km")
-                SummaryComponent(title: "최고 속도", content: (matricsIndicator.maxSpeedMPS * 3.6).rounded(at: 0), unit: "km/h")
+                                 content: matricsIndicator.hasDistanceData ? (matricsIndicator.distanceMeter / 1000).rounded(at: 1) : "--", unit: "km")
+                SummaryComponent(title: "최고 속도", content: matricsIndicator.hasSpeedData ? (matricsIndicator.maxSpeedMPS * 3.6).rounded(at: 0) : "--", unit: "km/h")
             }
             HStack(spacing: 4) {
-                SummaryComponent(title: "스프린트", content:  matricsIndicator.sprintCount.formatted(), unit: "Times")
-                SummaryComponent(title: "칼로리", content: matricsIndicator.energy.rounded(at: 0), unit: "kcal")
+                SummaryComponent(title: "스프린트", content: matricsIndicator.hasSpeedData ? matricsIndicator.sprintCount.formatted() : "--", unit: "Times")
+                SummaryComponent(title: "칼로리", content: matricsIndicator.hasCaloriesData ? matricsIndicator.energy.rounded(at: 0) : "--", unit: "kcal")
             }
         }
     }
@@ -125,8 +139,8 @@ struct InfoHeartView: View {
     var body: some View {
         HStack(spacing: 4) {
             SummaryComponent(title: "최소심박",
-                             content: (matricsIndicator.saveMinHeartRate).formatted(), unit: "Bpm")
-            SummaryComponent(title: "최대심박", content: (matricsIndicator.saveMaxHeartRate).formatted(), unit: "Bpm")
+                             content: matricsIndicator.hasHeartRateData ? matricsIndicator.saveMinHeartRate.formatted() : "--", unit: "Bpm")
+            SummaryComponent(title: "최대심박", content: matricsIndicator.hasHeartRateData ? matricsIndicator.saveMaxHeartRate.formatted() : "--", unit: "Bpm")
         }
     }
 }

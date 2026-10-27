@@ -10,10 +10,43 @@ import Foundation
 import HealthKit
 import OSLog
 
+/// Retains the exact session/builders across asynchronous save and UI transitions.
+final class WatchWorkoutRecording {
+    let session: HKWorkoutSession
+    let builder: HKLiveWorkoutBuilder
+    var routeBuilder: HKWorkoutRouteBuilder
+    let store = WorkoutRecoveryStore()
+    var journal: WorkoutRecoveryRecord
+    var beginTask: Task<Void, Error>?
+    var insertionTask: Task<Void, Never>?
+    var finalizationTask: Task<Void, Never>?
+    var locations: [CLLocation] = []
+    var insertionFailed = false
+    var collectionBegan = false
+    var recoveryWriteFailed = false
+    var routeBackupFailed = false
+    var collectionEnded = false
+    var acceptingLocations = true
+    var metadata: [String: Any] = [:]
+    var savedWorkout: HKWorkout?
+
+    init(session: HKWorkoutSession, builder: HKLiveWorkoutBuilder, routeBuilder: HKWorkoutRouteBuilder, start: Date) {
+        self.session = session
+        self.builder = builder
+        self.routeBuilder = routeBuilder
+        journal = WorkoutRecoveryRecord(sessionID: UUID(), startDate: start)
+    }
+}
+
+private enum WorkoutPersistenceError: Error {
+    case missingRecording, unconfirmedWorkout, unconfirmedRoute
+}
+
 // MARK: - 세션 pause, resume, end 시에 작동하는 델리게이트
 extension WorkoutManager: HKWorkoutSessionDelegate {
     
     // MARK: - 데이터 수집 및 경기 시작
+    @MainActor
     func startWorkout() {
         // 카운트다운 중 위치가 오래되거나 정밀 권한이 바뀐 경우 실제 세션 시작을 차단한다.
         guard hasAllAuthorization else {
@@ -21,69 +54,75 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
             return
         }
 
-        setupWorkoutConfig()
-        startWorkoutSession()
+        guard watchRecording == nil else { return }
+        do {
+            try setupWorkoutConfig()
+            startWorkoutSession()
+        } catch {
+            NSLog("Workout setup failed: %@", error.localizedDescription)
+            workoutSaveState = .failed
+            showingPrecount = false
+            showingSummaryView = true
+        }
     }
     
     // 워치 경기 기록 설정
-    private func setupWorkoutConfig() {
-        // workout configuration 설정
+    @MainActor
+    private func setupWorkoutConfig() throws {
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = .soccer
         configuration.locationType = .outdoor
-
-        // 세션, 빌더, 루트 빌더, 로케이션 매니저 초기화
-        do {
-            session = try HKWorkoutSession(
-                healthStore: healthStore,
-                configuration: configuration
-            )
-        } catch {
-            NSLog(error.localizedDescription)
-        }
-        builder = session?.associatedWorkoutBuilder()
-        routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: .local())
-        
-        // 델리게이트 선언
-        session?.delegate = self
-        builder?.delegate = self
-        let dataSource = HKLiveWorkoutDataSource(healthStore: healthStore, workoutConfiguration: configuration)
-        // Collect real running-power samples when the device/source supplies them.
-        // This does not make soccer sessions generate Apple's Outdoor Run power estimates.
-        dataSource.enableCollection(for: HKQuantityType(.runningPower), predicate: nil)
-        builder?.dataSource = dataSource
-
+        let session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
+        let builder = session.associatedWorkoutBuilder()
+        let routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: .local())
+        let recording = WatchWorkoutRecording(session: session, builder: builder, routeBuilder: routeBuilder, start: Date())
+        try recording.store.save(recording.journal)
+        self.session = session
+        self.builder = builder
+        self.routeBuilder = routeBuilder
+        watchRecording = recording
+        workoutSaveState = .idle
+        session.delegate = self
+        builder.delegate = self
+        let source = HKLiveWorkoutDataSource(healthStore: healthStore, workoutConfiguration: configuration)
+        source.enableCollection(for: HKQuantityType(.runningPower), predicate: nil)
+        builder.dataSource = source
     }
-    
-    // 워치 경기 기록 시작
+
+    @MainActor
     private func startWorkoutSession() {
-        
-        let startDate = Date()
-        session?.startActivity(with: startDate)
-        builder?.beginCollection(withStart: startDate) { (_, _) in
-            // The workout has started.
-        }
-        // 위치 정보 수집
-        locationManager.startUpdatingLocation()
-
-        // 헬스킷에서 나이 정보를 통해 적절한 최대심박수 찾기
-        matrics.computeProperMaxHeartRate(with: healthStore)
-        
-        
-        // collect motion information
-        startMotionDetaction()
-
-        // 워치 세션을 원격 세션과 연동
-        Task {
+        guard let recording = watchRecording else { return }
+        recording.session.startActivity(with: recording.journal.startDate)
+        recording.beginTask = Task { @MainActor in
             do {
-                try await session?.startMirroringToCompanionDevice()
+                try await recording.builder.beginCollection(at: recording.journal.startDate)
+                recording.collectionBegan = true
             } catch {
-                NSLog("Error in mirroring", error.localizedDescription)
+                NSLog("Workout collection could not start: %@", error.localizedDescription)
+                workoutSaveState = .failed
+                showingSummaryView = true
+                let failedAt = Date()
+                recording.journal.endDate = failedAt
+                recording.session.stopActivity(with: failedAt)
+                throw error
             }
+            do {
+                try await recording.builder.addMetadata(["SoccerBeatSessionID": recording.journal.sessionID.uuidString])
+            } catch {
+                NSLog("Workout initial metadata failed: %@", error.localizedDescription)
+            }
+        }
+        locationManager.startUpdatingLocation()
+        matrics.computeProperMaxHeartRate(with: healthStore)
+        startMotionDetaction()
+        Task {
+            do { try await recording.session.startMirroringToCompanionDevice() }
+            catch { NSLog("Workout mirroring failed: %@", error.localizedDescription) }
         }
     }
 
     private func startMotionDetaction() {
+        isAutomotiveMotion = false
         motionManager.startActivityUpdates(to: .main) { [weak self] activity in
             guard let activity = activity else { return }
 
@@ -99,62 +138,165 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         }
     }
 
-    // 워치 경기 기록 종료
+    // A workout and its route are separate saves. Keep the journal until both are verified.
+    @MainActor
     func endWorkoutSession(_ date: Date) async throws {
+        guard let recording = watchRecording else { throw WorkoutPersistenceError.missingRecording }
+        recording.journal.endDate = recording.journal.endDate ?? date
+        if recording.metadata.isEmpty { try captureMetadata(for: recording) }
+        persistJournal(for: recording)
+        try await recording.beginTask?.value
+        if !recording.collectionEnded {
+            try await recording.builder.endCollection(at: recording.journal.endDate!)
+            recording.collectionEnded = true
+        }
+        recording.acceptingLocations = false
+        await recording.insertionTask?.value
+        if !recording.journal.finishAttempted { try captureMetadata(for: recording) }
+        if !recording.journal.finishAttempted {
+            do {
+                try await recording.builder.addMetadata(recording.metadata)
+                recording.journal.metadataStored = true
+            } catch {
+                NSLog("Workout metadata save failed; retaining recovery copy: %@", error.localizedDescription)
+            }
+            // Persist BEFORE the call: an interrupted or nil result must not create a duplicate on retry.
+            let shouldFinish: Bool
+            do { shouldFinish = try recording.store.claimWorkoutFinish(&recording.journal) }
+            catch {
+                // Prefer preserving the real HealthKit workout if the auxiliary recovery store is full.
+                // Keep the in-memory once-only marker; recovery never creates a replacement workout.
+                recording.journal.finishAttempted = true
+                recording.recoveryWriteFailed = true
+                NSLog("Recovery intent could not be written; attempting HealthKit save once: %@", error.localizedDescription)
+                shouldFinish = true
+            }
+            if shouldFinish {
+                do { recording.savedWorkout = try await recording.builder.finishWorkout() }
+                catch { NSLog("Workout finish could not be confirmed: %@", error.localizedDescription) }
+            }
+        }
+        if recording.savedWorkout == nil {
+            recording.savedWorkout = try await recoveryWorkout(for: recording.journal)
+        }
+        guard let saved = recording.savedWorkout else { throw WorkoutPersistenceError.unconfirmedWorkout }
+        workout = saved
+        recording.journal.workoutID = saved.uuid
+        persistJournal(for: recording)
+        await recording.insertionTask?.value
         do {
-            try await builder?.endCollection(at: date)
+            if !recording.locations.isEmpty {
+                if !recording.journal.routeFinishAttempted {
+                    if recording.insertionFailed {
+                        // insertRouteData failure invalidates that route builder. Rebuild from actual collected fixes.
+                        recording.routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: .local())
+                        try await recording.routeBuilder.insertRouteData(recording.locations)
+                    }
+                    if try recording.store.claimRouteFinish(&recording.journal) {
+                        route = try await recording.routeBuilder.finishRoute(with: saved, metadata: recording.metadata)
+                    }
+                }
+                if route == nil { route = try await recoveryRoute(for: saved) }
+                guard let route, route.count >= recording.locations.count else { throw WorkoutPersistenceError.unconfirmedRoute }
+            } else if !recording.journal.metadataStored {
+                throw WorkoutPersistenceError.unconfirmedRoute
+            }
+            try? recording.store.complete(recording.journal.sessionID)
+            workoutSaveState = .saved
         } catch {
-            throw SessionError.failureBuilderEnd
-        }
-
-        // Read the finalized maximum before saving metadata; queued UI updates may lag the builder.
-        let metadata = await MainActor.run {
-            if let calories = builder?.statistics(for: HKQuantityType(.activeEnergyBurned))?
-                .sumQuantity()?.doubleValue(for: .kilocalorie()) {
-                matrics.energy = calories
-            }
-            if let statistics = builder?.statistics(for: HKQuantityType(.runningPower)) {
-                matrics.updatePower(statistics.maximumQuantity()?.doubleValue(for: .watt()))
-            }
-            return matrics.getMetadata()
-        }
-        do {
-            try await builder?.addMetadata(metadata)
-        } catch {
-            NSLog("endWorkoutSession: failed to add metadata to builder: \(error.localizedDescription)")
-        }
-
-        guard let workout = try await builder?.finishWorkout() else {
-            throw SessionError.failureFinishWorkout
-        }
-
-        self.workout = workout
-
-        // Route 생성 시도
-        if let route = try? await routeBuilder?.finishRoute(
-            with: workout,
-            metadata: metadata
-        ) {
-            Task { @MainActor in
-                self.route = route
-            }
-        } else {
-            NSLog("endWorkoutSession: route creation failed, metadata is already stored in workout via builder")
+            // Never retry an invalidated finishRoute builder, and never discard the actual GPS backup.
+            NSLog("Workout saved, route/details pending: %@", error.localizedDescription)
+            workoutSaveState = .partial
         }
     }
-    
-    // 워치 경기 기록 초기화
+
+    @MainActor
+    private func captureMetadata(for recording: WatchWorkoutRecording) throws {
+        for type in [HKQuantityType(.heartRate), HKQuantityType(.distanceWalkingRunning),
+                     HKQuantityType(.activeEnergyBurned), HKQuantityType(.runningPower), HKQuantityType(.vo2Max)] {
+            if let statistics = recording.builder.statistics(for: type) { matrics.updateForStatistics(statistics) }
+        }
+        recording.metadata = matrics.getMetadata()
+        recording.metadata["SoccerBeatSessionID"] = recording.journal.sessionID.uuidString
+        recording.metadata["SoccerBeatRoutePointCount"] = recording.locations.count
+        recording.journal.routePointCount = recording.locations.count
+        recording.journal.metadata = try PropertyListSerialization.data(fromPropertyList: recording.metadata,
+                                                                       format: .binary, options: 0)
+        persistJournal(for: recording)
+        if recording.routeBackupFailed {
+            do {
+                try recording.store.replaceSamples(recording.locations.map(\.recoverySample),
+                                                    for: recording.journal.sessionID)
+                recording.routeBackupFailed = false
+            } catch {
+                NSLog("GPS recovery copy still unavailable: %@", error.localizedDescription)
+            }
+        }
+    }
+
+    @MainActor
+    private func persistJournal(for recording: WatchWorkoutRecording) {
+        do {
+            try recording.store.save(recording.journal)
+            recording.recoveryWriteFailed = false
+        } catch {
+            recording.recoveryWriteFailed = true
+            NSLog("Workout recovery journal write failed; keeping builders in memory: %@", error.localizedDescription)
+        }
+    }
+
+    @MainActor
+    var canDismissWorkoutSummary: Bool {
+        switch workoutSaveState {
+        case .saved: return true
+        case .partial: return watchRecording.map { !$0.recoveryWriteFailed && !$0.routeBackupFailed } ?? false
+        case .failed:
+            return watchRecording.map {
+                !$0.collectionBegan && $0.locations.isEmpty && !matrics.hasHeartRateData &&
+                !matrics.hasDistanceData && !matrics.hasCaloriesData && !matrics.hasSpeedData && !matrics.hasPowerData
+            } ?? true
+        default: return false
+        }
+    }
+
+    @MainActor
+    func retryWorkoutSave() {
+        guard let recording = watchRecording, recording.finalizationTask == nil else { return }
+        beginFinalization(recording.journal.endDate ?? Date())
+    }
+
+    @MainActor
+    private func beginFinalization(_ date: Date) {
+        guard let recording = watchRecording, recording.finalizationTask == nil else { return }
+        workoutSaveState = .saving
+        recording.finalizationTask = Task { @MainActor in
+            defer {
+                recording.session.end()
+                recording.finalizationTask = nil
+            }
+            do { try await endWorkoutSession(date) }
+            catch {
+                NSLog("Workout save pending: %@", error.localizedDescription)
+                workoutSaveState = .failed
+            }
+        }
+    }
+
+    @MainActor
     func resetWorkout() {
+        guard canDismissWorkoutSummary else { return }
         builder = nil
+        routeBuilder = nil
         workout = nil
+        route = nil
         session = nil
-        
+        watchRecording = nil
         matrics.reset()
         isAutomotiveMotion = false
-        // 종료 때 중단한 위치 수집을 재개해 다음 경기의 최신 정밀 위치를 미리 준비한다.
+        workoutSaveState = .idle
         checkLocationAuthorization()
     }
-    
+
     func togglePause() {
         running ? pause() : resume()
     }
@@ -167,9 +309,18 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         session?.resume()
     }
     
+    @MainActor
     func endWorkout() {
-        session?.end()
-        self.showingSummaryView = true
+        guard let recording = watchRecording, workoutSaveState != .saving else { return }
+        workoutSaveState = .saving
+        showingSummaryView = true
+        let endDate = Date()
+        recording.journal.endDate = endDate
+        running = false
+        matrics.pauseSpeed()
+        motionManager.stopActivityUpdates()
+        locationManager.stopUpdatingLocation()
+        recording.session.stopActivity(with: endDate)
     }
 }
 
@@ -178,54 +329,52 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
     
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
                         from fromState: HKWorkoutSessionState, date: Date) {
-        NSLog("WorkOutSession 변화 감지: \(toState)")
         Task { @MainActor in
-            self.running = toState == .running
-            if toState == .paused {
-                // 실제 세션 상태 전환을 기준으로 처리해 사용자 요청과 시스템 pause에 동일하게 대응한다.
-                self.matrics.pauseSpeed()
+            guard self.session === workoutSession else { return }
+            // A queued running callback must not reactivate collection after the user requested stop.
+            if toState == .running && watchRecording?.journal.endDate != nil { return }
+            running = toState == .running
+            if toState == .running {
+                startMotionDetaction()
+            } else {
+                motionManager.stopActivityUpdates()
+                matrics.pauseSpeed()
             }
-            startMotionDetaction()
-        }
-        if [HKWorkoutSessionState.paused, .stopped, .ended].contains(toState) {
-            self.motionManager.stopActivityUpdates()
-        }
-
-        /// Save Wokrout, Route
-        if toState == .ended {
-            // 경기 종료 후 불필요한 위치 수집을 막는다.
-            // https://developer.apple.com/documentation/corelocation/cllocationmanager/stopupdatinglocation()
-            locationManager.stopUpdatingLocation()
-            Task { @MainActor in
-                do {
-                    try await endWorkoutSession(date)
-                } catch {
-                    NSLog(error.localizedDescription)
+            if toState == .stopped || toState == .ended {
+                locationManager.stopUpdatingLocation()
+                if let recording = watchRecording, recording.finalizationTask == nil,
+                   (toState == .stopped || workoutSaveState == .idle) {
+                    showingSummaryView = true
+                    beginFinalization(date)
                 }
             }
         }
     }
-    
-    // MARK: - 앱이 비정상적으로 Workout을 종료 시킨다.
-    /// 시기상 아래 함수보다 먼저 불림
-    /// `func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,`
-    // TODO: - 어떤 일을 해야할까? 비정상 종료를 할 때 어떻게 해야할까? 워치가 절전 모드로 간다던가, 이런 데이터들은...?
-    func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
+
+    func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
+        Task { @MainActor in
+            guard self.session === workoutSession else { return }
+            NSLog("Workout session failed: %@", error.localizedDescription)
+            running = false
+            locationManager.stopUpdatingLocation()
+            motionManager.stopActivityUpdates()
+            matrics.pauseSpeed()
+            showingSummaryView = true
+            beginFinalization(Date())
+        }
+    }
 
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) { }
 
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder,
                         didCollectDataOf collectedTypes: Set<HKSampleType>) {
-        for type in collectedTypes {
-            guard let quantityType = type as? HKQuantityType else {
-                return // Nothing to do.
+        Task { @MainActor in
+            guard self.builder === workoutBuilder else { return }
+            for type in collectedTypes {
+                guard let quantityType = type as? HKQuantityType,
+                      let statistics = workoutBuilder.statistics(for: quantityType) else { continue }
+                matrics.updateForStatistics(statistics)
             }
-            
-            guard let statistics = workoutBuilder.statistics(for: quantityType) else {
-                continue
-            }
-            // Update the published values.
-            matrics.updateForStatistics(statistics)
         }
     }
 }
@@ -234,51 +383,55 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
 extension WorkoutManager {
     // MARK: - 위치 정보가 수집되면 불리는 메서드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard running else {
-            // 경기 전 최신 위치가 준비되면 StartView의 시작 가능 상태를 다시 평가한다.
-            objectWillChange.send()
-            return
-        }
-
-        let receivedAt = Date()
-        let sortedLocations = locations.sorted { $0.timestamp < $1.timestamp }
-
-        sortedLocations.forEach { location in
-            matrics.updateSpeed(
-                timestamp: location.timestamp,
-                speed: location.speed,
-                speedAccuracy: location.speedAccuracy,
-                horizontalAccuracy: location.horizontalAccuracy,
-                isAutomotive: isAutomotiveMotion,
-                receivedAt: receivedAt
-            )
-        }
-
-        // Filter the raw data.
-        let filteredLocations = sortedLocations.filter { (location: CLLocation) -> Bool in
-            location.horizontalAccuracy >= 0 && location.horizontalAccuracy <= 50.0
-        }
-        
-        guard !filteredLocations.isEmpty else {
-            return
-        }
-        
-        // Add the filtered data to the route.
-        routeBuilder?.insertRouteData(filteredLocations) { (success, error) in
-            if !success {
-                // Handle any errors here.
-                print(error.debugDescription)
+        Task { @MainActor in
+            guard let recording = watchRecording, recording.acceptingLocations else {
+                objectWillChange.send()
+                return
+            }
+            let receivedAt = Date()
+            let sorted = locations.sorted { $0.timestamp < $1.timestamp }
+            for location in sorted where running {
+                matrics.updateSpeed(timestamp: location.timestamp, speed: location.speed,
+                                    speedAccuracy: location.speedAccuracy, horizontalAccuracy: location.horizontalAccuracy,
+                                    isAutomotive: isAutomotiveMotion, receivedAt: receivedAt)
+            }
+            let valid = sorted.filter {
+                CLLocationCoordinate2DIsValid($0.coordinate) && $0.horizontalAccuracy.isFinite &&
+                (0...50).contains($0.horizontalAccuracy) && $0.timestamp >= recording.journal.startDate &&
+                $0.timestamp <= receivedAt && $0.timestamp <= (recording.journal.endDate ?? receivedAt)
+            }
+            guard !valid.isEmpty else { return }
+            recording.locations.append(contentsOf: valid)
+            do {
+                try recording.store.append(valid.map { $0.recoverySample }, to: recording.journal.sessionID)
+            } catch {
+                recording.routeBackupFailed = true
+                NSLog("GPS recovery copy failed; still attempting HealthKit insertion: %@", error.localizedDescription)
+            }
+            let previous = recording.insertionTask
+            recording.insertionTask = Task { @MainActor in
+                await previous?.value
+                guard !recording.insertionFailed else { return }
+                do { try await recording.routeBuilder.insertRouteData(valid) }
+                catch {
+                    recording.insertionFailed = true
+                    NSLog("Route insertion failed; raw fixes retained for rebuilding: %@", error.localizedDescription)
+                }
             }
         }
     }
-    
+
     // MARK: - 위치 공유 권한 정보가 업데이트 되면 불리는 메서드
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationAuthorization()
-        objectWillChange.send()
+        Task { @MainActor in
+            checkLocationAuthorization()
+            objectWillChange.send()
+        }
     }
 
+    @MainActor
     func checkLocationAuthorization() {
+        recoverPendingWorkoutRoutes()
         switch locationManager.authorizationStatus {
         case .notDetermined:
             NSLog("위치 권한 결정 안됨")
@@ -301,9 +454,104 @@ extension WorkoutManager {
                     }
                 }
             }
-            locationManager.startUpdatingLocation()
+            if watchRecording == nil || running { locationManager.startUpdatingLocation() }
         @unknown default:
             NSLog(locationManager.authorizationStatus.rawValue.description)
+        }
+    }
+}
+
+private extension CLLocation {
+    var recoverySample: WorkoutRouteSample {
+        WorkoutRouteSample(latitude: coordinate.latitude, longitude: coordinate.longitude, altitude: altitude,
+                           horizontalAccuracy: horizontalAccuracy, verticalAccuracy: verticalAccuracy,
+                           course: course, speed: speed, speedAccuracy: speedAccuracy,
+                           courseAccuracy: courseAccuracy, timestamp: timestamp)
+    }
+}
+
+private extension WorkoutRouteSample {
+    var location: CLLocation {
+        CLLocation(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), altitude: altitude,
+                   horizontalAccuracy: horizontalAccuracy, verticalAccuracy: verticalAccuracy,
+                   course: course, courseAccuracy: courseAccuracy, speed: speed,
+                   speedAccuracy: speedAccuracy, timestamp: timestamp)
+    }
+}
+
+extension WorkoutManager {
+    /// Only new sessions with our durable journal are candidates; never rewrite historical workouts.
+    @MainActor
+    func recoverPendingWorkoutRoutes() {
+        guard workoutRecoveryTask == nil else { return }
+        let store = WorkoutRecoveryStore()
+        workoutRecoveryTask = Task { @MainActor in
+            defer { workoutRecoveryTask = nil }
+            do {
+                for var record in try store.records() {
+                    do {
+                        guard record.sessionID != watchRecording?.journal.sessionID, record.finishAttempted else { continue }
+                        guard let saved = try await recoveryWorkout(for: record) else {
+                            NSLog("Workout recovery pending: saved workout not yet accessible; keeping local journal")
+                            continue
+                        }
+                        record.workoutID = saved.uuid
+                        try store.save(record)
+                        let existing = try await recoveryRoute(for: saved)
+                        let samples = try store.samples(for: record.sessionID)
+                        let expected = max(record.routePointCount, saved.metadata?["SoccerBeatRoutePointCount"] as? Int ?? 0)
+                        if let existing {
+                            if existing.count >= max(expected, samples.count) { try store.complete(record.sessionID) }
+                            continue
+                        }
+                        if samples.isEmpty {
+                            if record.metadataStored { try store.complete(record.sessionID) }
+                            continue
+                        }
+                        // A finish call consumes its builder even on error, and lock can make its outcome ambiguous.
+                        // Query on later activations, rather than create another route after an unconfirmed finish.
+                        guard !record.routeFinishAttempted, samples.count >= expected else { continue }
+                        let routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: .local())
+                        try await routeBuilder.insertRouteData(samples.map(\.location))
+                        let metadata = (try PropertyListSerialization.propertyList(from: record.metadata, options: [],
+                                                                                   format: nil)) as? [String: Any] ?? [:]
+                        guard try store.claimRouteFinish(&record) else { continue }
+                        let route = try await routeBuilder.finishRoute(with: saved, metadata: metadata)
+                        if route.count >= samples.count { try store.complete(record.sessionID) }
+                    } catch {
+                        NSLog("Workout recovery deferred for one session: %@", error.localizedDescription)
+                    }
+                }
+            } catch {
+                NSLog("Workout recovery deferred; local journal retained: %@", error.localizedDescription)
+            }
+        }
+    }
+
+    @MainActor
+    private func recoveryWorkout(for record: WorkoutRecoveryRecord) async throws -> HKWorkout? {
+        let predicate = record.workoutID.map { HKQuery.predicateForObject(with: $0) }
+            ?? HKQuery.predicateForObjects(withMetadataKey: "SoccerBeatSessionID", allowedValues: [record.sessionID.uuidString])
+        return try await withCheckedThrowingContinuation { continuation in
+            let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: predicate, limit: 1,
+                                      sortDescriptors: nil) { _, samples, error in
+                if let error { continuation.resume(throwing: error) }
+                else { continuation.resume(returning: samples?.first as? HKWorkout) }
+            }
+            healthStore.execute(query)
+        }
+    }
+
+    @MainActor
+    private func recoveryRoute(for workout: HKWorkout) async throws -> HKWorkoutRoute? {
+        try await withCheckedThrowingContinuation { continuation in
+            let query = HKSampleQuery(sampleType: HKSeriesType.workoutRoute(),
+                                      predicate: HKQuery.predicateForObjects(from: workout), limit: HKObjectQueryNoLimit,
+                                      sortDescriptors: nil) { _, samples, error in
+                if let error { continuation.resume(throwing: error) }
+                else { continuation.resume(returning: (samples as? [HKWorkoutRoute])?.max(by: { $0.count < $1.count })) }
+            }
+            healthStore.execute(query)
         }
     }
 }

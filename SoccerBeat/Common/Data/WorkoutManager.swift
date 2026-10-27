@@ -58,13 +58,23 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     var builder: HKLiveWorkoutBuilder?
     // 헬스킷 세션 기록용 빌더 선언
     var routeBuilder: HKWorkoutRouteBuilder?
+    @Published var workoutSaveState: WorkoutSaveState = .idle
+    var watchRecording: WatchWorkoutRecording?
+    var workoutRecoveryTask: Task<Void, Never>?
 
     // 세션 시작과 종료 시에 뷰 관리 변수
     @Published var showingPrecount = false
     @Published var showingSummaryView = false {
         didSet {
             if showingSummaryView == false {
-                resetWorkout()
+                Task { @MainActor in
+                    guard !showingSummaryView else { return }
+                    guard canDismissWorkoutSummary else {
+                        showingSummaryView = true
+                        return
+                    }
+                    resetWorkout()
+                }
             }
         }
     }
@@ -89,6 +99,11 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
     #else
     var contextDate: Date?
     var hkWorkouts = [HKWorkout]()
+    var workoutObserverQueries: [HKQuery] = []
+    var workoutRefreshQueued = false
+    var workoutRefreshInProgress = false
+    var workoutCache: [UUID: WorkoutData] = [:]
+    var deletedWorkoutIDs: Set<UUID> = []
 
     // Send when permission is granted by the user.
     var authSuccess = PassthroughSubject<(), Never>()

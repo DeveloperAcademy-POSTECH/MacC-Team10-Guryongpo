@@ -313,6 +313,94 @@ final class SprintDetectorTests: XCTestCase {
         XCTAssertEqual(detector.maxAccelerationMPS2, 4, accuracy: 0.001)
     }
 
+    func testUnavailableSpeedIsDistinctFromMeasuredZero() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 14_000)
+        XCTAssertNil(detector.currentSpeed(at: start))
+        detector.process(timestamp: start, speed: 0, speedAccuracy: 0.2, receivedAt: start)
+        XCTAssertEqual(detector.currentSpeed(at: start), 0)
+        let invalid = start.addingTimeInterval(1)
+        detector.process(timestamp: invalid, speed: -1, speedAccuracy: 0.2, receivedAt: invalid)
+        XCTAssertNil(detector.currentSpeed(at: invalid))
+    }
+
+    func testRejectedGPSDoesNotDisplayZeroOrEraseRecordedMaximum() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 15_000)
+        for offset in [0.0, 1.0] {
+            let date = start.addingTimeInterval(offset)
+            detector.process(timestamp: date, speed: 3, speedAccuracy: 0.2, receivedAt: date)
+        }
+        let bad = start.addingTimeInterval(2)
+        detector.process(timestamp: bad, speed: 3, speedAccuracy: 4, receivedAt: bad)
+        XCTAssertNil(detector.currentSpeed(at: bad))
+        XCTAssertEqual(detector.maxSpeedMPS, 3)
+        XCTAssertTrue(detector.hasConfirmedSpeed)
+        let recovered = start.addingTimeInterval(3)
+        detector.process(timestamp: recovered, speed: 2, speedAccuracy: 0.2, receivedAt: recovered)
+        XCTAssertEqual(detector.currentSpeed(at: recovered), 2)
+        XCTAssertEqual(detector.maxSpeedMPS, 3)
+    }
+
+    func testSilentLocationStreamExpiresEvenWithoutAnotherCallback() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 16_000)
+        detector.process(timestamp: start, speed: 2, speedAccuracy: 0.2, receivedAt: start)
+        XCTAssertEqual(detector.currentSpeed(at: start.addingTimeInterval(5)), 2)
+        XCTAssertNil(detector.currentSpeed(at: start.addingTimeInterval(5.01)))
+        let next = start.addingTimeInterval(8)
+        detector.process(timestamp: next, speed: 2.5, speedAccuracy: 0.2, receivedAt: next)
+        XCTAssertEqual(detector.currentSpeed(at: next), 2.5)
+    }
+
+    func testDelayedDeliveryUsesMeasurementTimeForFreshness() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 17_000)
+        detector.process(timestamp: start, speed: 2, speedAccuracy: 0.2, receivedAt: start.addingTimeInterval(4))
+        XCTAssertEqual(detector.currentSpeed(at: start.addingTimeInterval(4)), 2)
+        XCTAssertNil(detector.currentSpeed(at: start.addingTimeInterval(5.01)))
+    }
+
+    func testOldCallbackAfterRejectedSampleCannotRestartMeasurement() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 18_000)
+        detector.process(timestamp: start, speed: 2, speedAccuracy: 0.2, receivedAt: start)
+        let invalid = start.addingTimeInterval(2)
+        detector.process(timestamp: invalid, speed: -1, speedAccuracy: -1, receivedAt: invalid)
+        detector.process(timestamp: start.addingTimeInterval(1), speed: 2, speedAccuracy: 0.2, receivedAt: invalid)
+        XCTAssertNil(detector.currentSpeed(at: invalid))
+        XCTAssertEqual(detector.validSampleCount, 1)
+        let next = start.addingTimeInterval(3)
+        detector.process(timestamp: next, speed: 2, speedAccuracy: 0.2, receivedAt: next)
+        XCTAssertEqual(detector.currentSpeed(at: next), 2)
+    }
+
+    func testFutureTimestampCannotBlockSubsequentNormalSample() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 19_000)
+        detector.process(timestamp: start.addingTimeInterval(100), speed: 2, speedAccuracy: 0.2, receivedAt: start)
+        detector.process(timestamp: start, speed: 2, speedAccuracy: 0.2, receivedAt: start)
+        XCTAssertEqual(detector.currentSpeed(at: start), 2)
+    }
+
+    func testIsolatedFixesDoNotClaimAConfirmedZeroMaximum() {
+        var detector = SprintDetector()
+        let start = Date(timeIntervalSinceReferenceDate: 20_000)
+        detector.process(timestamp: start, speed: 0, speedAccuracy: 0.2, receivedAt: start)
+        let isolated = start.addingTimeInterval(10)
+        detector.process(timestamp: isolated, speed: 0, speedAccuracy: 0.2, receivedAt: isolated)
+        XCTAssertFalse(detector.hasConfirmedSpeed)
+        let paired = isolated.addingTimeInterval(1)
+        detector.process(timestamp: paired, speed: 0, speedAccuracy: 0.2, receivedAt: paired)
+        XCTAssertTrue(detector.hasConfirmedSpeed)
+        XCTAssertEqual(detector.maxSpeedMPS, 0)
+        detector.pause()
+        XCTAssertNil(detector.currentSpeed(at: paired))
+        XCTAssertTrue(detector.hasConfirmedSpeed)
+        detector.reset()
+        XCTAssertFalse(detector.hasConfirmedSpeed)
+    }
+
 }
 
 

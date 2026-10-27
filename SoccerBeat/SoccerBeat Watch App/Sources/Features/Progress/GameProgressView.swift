@@ -15,7 +15,7 @@ struct GameProgressView: View {
     private var whenTheGameStarted: Date { workoutManager.builder?.startDate ?? Date() }
     private var distanceKM: String {
         matricsIndicator.isDistanceActive
-        ? (matricsIndicator.distanceMeter / 1000).rounded(at: 2)
+        ? (matricsIndicator.distanceMeter / 1000).rounded(at: 1)
         : "--'--"
     }
     
@@ -128,7 +128,7 @@ extension GameProgressView {
                         
                         HStack(alignment: .bottom) {
                             Spacer()
-                            Text("\(matricsIndicator.sprintCount)")
+                            Text(matricsIndicator.hasSpeedData ? matricsIndicator.sprintCount.formatted() : "--")
                                 .font(.distanceTimeNumber)
                                 .foregroundStyle(.ongoingNumber)
                             Text("TIMES")
