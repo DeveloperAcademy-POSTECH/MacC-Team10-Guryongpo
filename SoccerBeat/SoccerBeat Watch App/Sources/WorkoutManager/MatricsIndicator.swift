@@ -92,6 +92,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
     @Published var energy: Double = 0 // 활동 칼로리 (kcal)
     @Published private var peakPower = PeakPower()
     var power: Double { peakPower.watts ?? 0 }
+    private var hasPersonalHeartRateReference = false
     var hasPowerData: Bool { peakPower.watts != nil }
     var maxSpeedMPS: Double = 0.0
     var acceleration: Double = 0.0
@@ -111,6 +112,11 @@ final class MatricsIndicator: NSObject, ObservableObject {
             "Calories": Int(energy.rounded(.toNearestOrAwayFromZero))
         ]
 
+        metadata["FieldChartVersion"] = 2
+        if hasPersonalHeartRateReference, let maximum = properMaxHeartRate {
+            metadata["FieldChartHeartRateReference"] = maximum
+            metadata["FieldChartHeartRateReferenceSource"] = "ageEstimate"
+        }
         metadata["HasPowerData"] = hasPowerData
         if hasPowerData { metadata["Power"] = power }
         metadata["PowerSource"] = hasPowerData ? "healthKitRunningPower" : "unavailable"
@@ -140,15 +146,17 @@ final class MatricsIndicator: NSObject, ObservableObject {
     }
     
     func computeProperMaxHeartRate(with store: HKHealthStore) {
-        do {
-            let birthYear = try store.dateOfBirthComponents().year
-            let currentYear = Calendar.current.component(.year, from: Date())
-            properMaxHeartRate = birthYear.map { Double(220 - (currentYear - $0)) } ?? 190
-        } catch {
-            properMaxHeartRate = 190
+        hasPersonalHeartRateReference = false
+        properMaxHeartRate = 190
+        if let birthYear = try? store.dateOfBirthComponents().year {
+            let age = Calendar.current.component(.year, from: Date()) - birthYear
+            if (1...120).contains(age) {
+                properMaxHeartRate = Double(220 - age)
+                hasPersonalHeartRateReference = true
+            }
         }
     }
-    
+
     // MARK: - Heart Rate Setup -> MatricsIndicator
     func computeHeartZone(_ heartRate: Double) -> Int {
         let maximum = properMaxHeartRate ?? 190
@@ -185,6 +193,8 @@ final class MatricsIndicator: NSObject, ObservableObject {
         recentSprintSpeedMPS = 0
         acceleration = 0
         peakPower = PeakPower()
+        hasPersonalHeartRateReference = false
+        properMaxHeartRate = nil
 
         #if os(watchOS)
         // 재시작 시 이전 경기의 Sprint 후보 구간이 이어지지 않도록 판정 상태도 함께 초기화한다.

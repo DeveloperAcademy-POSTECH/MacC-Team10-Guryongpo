@@ -1,174 +1,204 @@
-//
-//  DataConverter.swift
-//  SoccerBeat
-//
-//  Created by daaan on 11/20/23.
-//
-
 import Foundation
 
+/// Field Chart v2. Scores are activity indicators; rendering reserves a visible 30% radius.
 final class DataConverter {
-    // TODO: - 매개 변수가 4개가 넘어가면 별도의 타입을 고려
-    static private func toLevelDictionary(totalDistance: Double,
-                                      maxHeartRate: Int,
-                                      maxVelocity: Double,
-                                      sprintCount: Int,
-                                      minHeartRate: Int,
-                                      rangeHeartRate: Int,
-                                      totalMatchTime: Int,
-                                      unavailable: Set<WorkoutMetric>) -> [String: Double] {
-        var levels: [String: Double] = [:]
-        
-        if totalDistance <= 1.0 {
-            levels["totalDistance"] = 1.0
-        } else if totalDistance > 1.0 && totalDistance <= 2.0 {
-            levels["totalDistance"] = 2.0
-        } else if totalDistance > 2.0 && totalDistance <= 3.0 {
-            levels["totalDistance"] = 3.0
-        } else if totalDistance > 3.0 && totalDistance <= 4.0 {
-            levels["totalDistance"] = 4.0
-        } else if totalDistance > 4.0 {
-            levels["totalDistance"] = 5.0
-        }
-        
-        if maxHeartRate <= 165 {
-            levels["maxHeartRate"] = 1.0
-        } else if maxHeartRate > 165 && maxHeartRate <= 175 {
-            levels["maxHeartRate"] = 2.0
-        } else if maxHeartRate > 175 && maxHeartRate <= 185 {
-            levels["maxHeartRate"] = 3.0
-        } else if maxHeartRate > 185 && maxHeartRate <= 195 {
-            levels["maxHeartRate"] = 4.0
-        } else if maxHeartRate > 195 {
-            levels["maxHeartRate"] = 5.0
-        }
-        
-        if maxVelocity <= 15 {
-            levels["maxVelocity"] = 1.0
-        } else if maxVelocity > 15 && maxVelocity <= 18 {
-            levels["maxVelocity"] = 2.0
-        } else if maxVelocity > 18 && maxVelocity <= 21 {
-            levels["maxVelocity"] = 3.0
-        } else if maxVelocity > 21 && maxVelocity <= 24 {
-            levels["maxVelocity"] = 4.0
-        } else if maxVelocity > 24 {
-            levels["maxVelocity"] = 5.0
-        }
-        
-        if sprintCount <= 1 {
-            levels["sprintCount"] = 1.0
-        } else if sprintCount > 1 && sprintCount <= 2 {
-            levels["sprintCount"] = 2.0
-        } else if sprintCount > 2 && sprintCount <= 3 {
-            levels["sprintCount"] = 3.0
-        } else if sprintCount > 3 && sprintCount <= 4 {
-            levels["sprintCount"] = 4.0
-        } else if sprintCount > 4 {
-            levels["sprintCount"] = 5.0
-        }
-        
-        if minHeartRate <= 50 {
-            levels["minHeartRate"] = 5.0
-        } else if minHeartRate > 50 && minHeartRate <= 60 {
-            levels["minHeartRate"] = 4.0
-        } else if minHeartRate > 60 && minHeartRate <= 70 {
-            levels["minHeartRate"] = 3.0
-        } else if minHeartRate > 70 && minHeartRate <= 80 {
-            levels["minHeartRate"] = 2.0
-        } else if minHeartRate > 80 {
-            levels["minHeartRate"] = 1.0
-        }
-        
-        if rangeHeartRate <= 65 {
-            levels["rangeHeartRate"] = 1.0
-        } else if rangeHeartRate > 65 && rangeHeartRate <= 75 {
-            levels["rangeHeartRate"] = 2.0
-        } else if rangeHeartRate > 75 && rangeHeartRate <= 85 {
-            levels["rangeHeartRate"] = 3.0
-        } else if rangeHeartRate > 85 && rangeHeartRate <= 95 {
-            levels["rangeHeartRate"] = 4.0
-        } else if rangeHeartRate > 95 {
-            levels["rangeHeartRate"] = 5.0
-        }
-        
-        if totalMatchTime <= 40 * 60 {
-            levels["totalMatchTime"] = 1.0
-        } else if totalMatchTime > 40 * 60 && totalMatchTime <= 50 * 60 {
-            levels["totalMatchTime"] = 2.0
-        } else if totalMatchTime > 50 * 60 && totalMatchTime <= 60 * 60 {
-            levels["totalMatchTime"] = 3.0
-        } else if totalMatchTime > 60 * 60 && totalMatchTime <= 70 * 60 {
-            levels["totalMatchTime"] = 4.0
-        } else if totalMatchTime > 70 * 60 {
-            levels["totalMatchTime"] = 5.0
-        }
-        
-        // Missing measurements must not become minimum levels (or a maximum level for zero minimum HR).
-        if unavailable.contains(.distance) || !totalDistance.isFinite || totalDistance < 0 {
-            levels["totalDistance"] = nil
-        }
-        if unavailable.contains(.maxSpeed) || !maxVelocity.isFinite || maxVelocity < 0 {
-            levels["maxVelocity"] = nil
-        }
-        if unavailable.contains(.sprint) || sprintCount < 0 { levels["sprintCount"] = nil }
-        if unavailable.contains(.minHeartRate) || minHeartRate <= 0 { levels["minHeartRate"] = nil }
-        if unavailable.contains(.maxHeartRate) || maxHeartRate <= 0 { levels["maxHeartRate"] = nil }
-        if levels["minHeartRate"] == nil || levels["maxHeartRate"] == nil || maxHeartRate < minHeartRate {
-            levels["rangeHeartRate"] = nil
-        }
-        if totalMatchTime <= 0 { levels["totalMatchTime"] = nil }
-        return levels
-    }
-    
+    static let version = 2
+    // Clockwise order matches the existing six labels: Agility, Activity, Potential,
+    // Mentality, Endurance, Explosivity. Unknown inputs remain nil until rendering.
+    static let axisCount = 6
+    private static let scoreAnchors = [0.0, 40, 70, 85, 100]
+
     static func toLevels(_ workout: WorkoutData) -> [Double] {
-        let recentLevel = toLevelDictionary(totalDistance: workout.distance,
-                                       maxHeartRate: workout.maxHeartRate,
-                                       maxVelocity: workout.velocity,
-                                       sprintCount: workout.sprint,
-                                       minHeartRate: workout.minHeartRate,
-                                       rangeHeartRate: workout.maxHeartRate-workout.minHeartRate,
-                                       totalMatchTime: workout.playtimeSec,
-                                       unavailable: workout.unavailableMetrics)
-        
-        
-        return Amplify(recentLevel)
+        displayLevels(measuredScores(workout))
     }
-    
-    static func toLevels(_ averageWorkout: WorkoutAverageData) -> [Double] {
-        let averageLevel = toLevelDictionary(totalDistance: averageWorkout.totalDistance,
-                                             maxHeartRate: averageWorkout.maxHeartRate,
-                                             maxVelocity: averageWorkout.maxVelocity,
-                                             sprintCount: averageWorkout.sprintCount,
-                                             minHeartRate: averageWorkout.minHeartRate,
-                                             rangeHeartRate: averageWorkout.maxHeartRate-averageWorkout.minHeartRate,
-                                             totalMatchTime: averageWorkout.totalMatchTime,
-                                             unavailable: averageWorkout.unavailableMetrics)
-        return Amplify(averageLevel)
+
+    static func toLevels(_ workout: WorkoutAverageData) -> [Double] {
+        displayLevels(workout.fieldChartScores)
     }
-    
-    static private func Amplify(_ level: [String: Double]) -> [Double] {
-        // Temporary partial-data policy: redistribute each axis's weights among known inputs.
-        // If an entire axis is unavailable, use the mean of the other observed input levels.
-        let fallback = level.isEmpty ? 0 : level.values.reduce(0, +) / Double(level.count)
-        func score(_ inputs: [(String, Double)]) -> Double {
-            var weighted = 0.0
-            var weight = 0.0
-            for (key, contribution) in inputs {
-                if let value = level[key] {
-                    weighted += value * contribution
-                    weight += contribution
+
+    static func displayLevels(_ scores: [Double?]) -> [Double] {
+        let known = scores.compactMap { $0 }.filter { $0.isFinite }
+        let fallback = known.isEmpty ? 50 : min(70, known.reduce(0, +) / Double(known.count))
+        return (0..<axisCount).map { index in
+            let score = index < scores.count ? scores[index] : nil
+            let value = score.flatMap { $0.isFinite ? $0 : nil } ?? fallback
+            return 1.5 + 3.5 * min(100, max(0, value)) / 100
+        }
+    }
+
+    static func averageScores(_ workouts: [WorkoutData]) -> [Double?] {
+        let scores = workouts.filter { !$0.error }.map(measuredScores)
+        return (0..<axisCount).map { index in
+            let values = scores.compactMap { $0[index] }
+            return values.isEmpty ? nil : values.reduce(0, +) / Double(values.count)
+        }
+    }
+
+    static func maximumScores(_ workouts: [WorkoutData]) -> [Double?] {
+        let scores = workouts.filter { !$0.error }.map(measuredScores)
+        return (0..<axisCount).map { index in scores.compactMap { $0[index] }.max() }
+    }
+
+    private static func points(_ value: Double, _ thresholds: [Double]) -> Double {
+        guard value > thresholds[0] else { return 0 }
+        for index in 1..<thresholds.count where value <= thresholds[index] {
+            let fraction = (value - thresholds[index - 1]) / (thresholds[index] - thresholds[index - 1])
+            return scoreAnchors[index - 1] + fraction * (scoreAnchors[index] - scoreAnchors[index - 1])
+        }
+        return 100
+    }
+
+    private struct Interval {
+        let start: Date
+        let end: Date
+        let value: Double
+        var seconds: Double { end.timeIntervalSince(start) }
+    }
+
+    private static func pauses(_ workout: WorkoutData) -> [DateInterval] {
+        var result: [DateInterval] = []
+        for pause in workout.heatmapPausedIntervals.sorted(by: { $0.start < $1.start }) where pause.duration > 0 {
+            if let last = result.last, pause.start <= last.end {
+                result[result.count - 1] = DateInterval(start: last.start, end: max(last.end, pause.end))
+            } else { result.append(pause) }
+        }
+        return result
+    }
+
+    private static func activePieces(_ interval: Interval, pauses: [DateInterval], start: Date, end: Date) -> [Interval] {
+        var cursor = max(interval.start, start)
+        let limit = min(interval.end, end)
+        guard cursor < limit else { return [] }
+        var result: [Interval] = []
+        for pause in pauses where pause.end > cursor && pause.start < limit {
+            if pause.start > cursor { result.append(Interval(start: cursor, end: pause.start, value: interval.value)) }
+            cursor = max(cursor, pause.end)
+            if cursor >= limit { return result }
+        }
+        if cursor < limit { result.append(Interval(start: cursor, end: limit, value: interval.value)) }
+        return result
+    }
+
+    private static func fastestThreeSeconds(_ segments: [Interval]) -> Double? {
+        var left = 0
+        var integral = 0.0
+        var best: Double?
+        for index in segments.indices {
+            let segment = segments[index]
+            if index == 0 || abs(segment.start.timeIntervalSince(segments[index - 1].end)) > 0.001 {
+                left = index
+                integral = 0
+            }
+            integral += segment.value * segment.seconds
+            let windowStart = segment.end.addingTimeInterval(-3)
+            while left < index && segments[left].end <= windowStart {
+                integral -= segments[left].value * segments[left].seconds
+                left += 1
+            }
+            if windowStart >= segments[left].start {
+                let partial = windowStart.timeIntervalSince(segments[left].start) * segments[left].value
+                best = max(best ?? 0, (integral - partial) / 3)
+            }
+        }
+        return best
+    }
+
+    static func measuredScores(_ workout: WorkoutData) -> [Double?] {
+        guard !workout.error else { return Array(repeating: nil, count: axisCount) }
+        let clock = workout.time.split(separator: ":").compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
+        let duration = workout.recordedDuration ?? (clock.count == 2 ? clock[0] * 60 + clock[1] : 0)
+        guard duration.isFinite, duration > 0 else { return Array(repeating: nil, count: axisCount) }
+        var scores = Array<Double?>(repeating: nil, count: axisCount)
+        if !workout.unavailableMetrics.contains(.distance), workout.distance.isFinite, workout.distance >= 0 {
+            scores[1] = points(workout.distance * 1000 / (duration / 60), [0, 30, 55, 75, 100])
+        }
+        let ordered = workout.speedSamples.filter { $0.timestamp.timeIntervalSince1970.isFinite }
+            .sorted { $0.timestamp < $1.timestamp }
+        let start = workout.startDate ?? ordered.first?.timestamp ?? workout.heartRateDates.first
+        guard let start, start.timeIntervalSince1970.isFinite else { return scores }
+        let end = workout.endDate ?? start.addingTimeInterval(duration)
+        guard end > start else { return scores }
+        let paused = pauses(workout)
+        var detector = SprintDetector()
+        var previous: WorkoutSpeedSample?
+        var segments: [Interval] = []
+        var lastSeen: Date?
+        for sample in ordered where sample.timestamp >= start && sample.timestamp <= end {
+            if let lastSeen, sample.timestamp <= lastSeen { continue }
+            lastSeen = sample.timestamp
+            if paused.contains(where: { $0.contains(sample.timestamp) && sample.timestamp < $0.end }) {
+                detector.pause()
+                previous = nil
+                continue
+            }
+            if let anchor = previous, paused.contains(where: { max(anchor.timestamp, $0.start) < min(sample.timestamp, $0.end) }) {
+                detector.pause()
+                previous = nil
+            }
+            detector.process(timestamp: sample.timestamp, speed: sample.speed, speedAccuracy: sample.speedAccuracy,
+                             horizontalAccuracy: sample.horizontalAccuracy, receivedAt: sample.timestamp)
+            guard detector.currentSpeed(at: sample.timestamp) != nil else { previous = nil; continue }
+            if let previous {
+                let gap = sample.timestamp.timeIntervalSince(previous.timestamp)
+                if gap > 0 && gap <= 2 {
+                    let interval = Interval(start: previous.timestamp, end: sample.timestamp, value: (previous.speed + sample.speed) / 2)
+                    segments += activePieces(interval, pauses: paused, start: start, end: end)
                 }
             }
-            // The previous formula used a total axis weight of 0.5, amplified by 1.5.
-            return (weight > 0 ? weighted / weight : fallback) * 0.75
+            previous = sample
         }
-        return [
-            score([("totalDistance", 0.15), ("maxHeartRate", 0.35)]),
-            score([("maxVelocity", 0.3)]),
-            score([("maxVelocity", 0.25), ("sprintCount", 0.125), ("maxHeartRate", 0.125)]),
-            score([("minHeartRate", 0.1)]),
-            score([("totalDistance", 0.15), ("rangeHeartRate", 0.15), ("totalMatchTime", 0.2)]),
-            score([("totalDistance", 0.3), ("sprintCount", 0.1), ("maxHeartRate", 0.1)])
-        ]
+        if let speed = fastestThreeSeconds(segments) {
+            scores[0] = points(speed * 3.6, [0, 10, 16, 21, 26])
+        }
+        let covered = segments.reduce(0) { $0 + $1.seconds }
+        if covered >= duration * 0.70 {
+            let fast = segments.filter { $0.value * 3.6 >= 14 }.reduce(0) { $0 + $1.seconds }
+            scores[3] = points(100 * fast / covered, [0, 1, 4, 8, 14])
+            if duration >= 600 {
+                scores[5] = points(Double(detector.sprintCount) / (covered / 600), [0, 0.5, 1, 2, 3])
+            }
+        }
+        // Compare first/last thirds in active elapsed time, without treating GPS gaps as standing still.
+        if duration >= 900 {
+            func offset(_ date: Date) -> Double {
+                date.timeIntervalSince(start) - paused.reduce(0) { total, pause in
+                    total + max(0, min(date, pause.end).timeIntervalSince(max(start, pause.start)))
+                }
+            }
+            let third = duration / 3
+            var firstTime = 0.0, lastTime = 0.0, firstDistance = 0.0, lastDistance = 0.0
+            for segment in segments {
+                let a = offset(segment.start), b = offset(segment.end)
+                let first = max(0, min(b, third) - max(a, 0))
+                let last = max(0, min(b, duration) - max(a, duration - third))
+                firstTime += first; lastTime += last
+                firstDistance += first * segment.value; lastDistance += last * segment.value
+            }
+            if firstTime >= third * 0.70, lastTime >= third * 0.70, firstDistance / firstTime * 60 >= 20 {
+                scores[4] = points(100 * (lastDistance / lastTime) / (firstDistance / firstTime), [0, 50, 75, 90, 100])
+            }
+        }
+        // Potential represents heart-rate load, using the recorded age-based reference, not this match's peak.
+        if let reference = workout.heartRateReferenceMaximum, reference.isFinite, reference > 0,
+           workout.heartRateDates.count == workout.heartRates.count {
+            let readings = zip(workout.heartRateDates, workout.heartRates)
+                .filter { $0.0.timeIntervalSince1970.isFinite }.sorted { $0.0 < $1.0 }
+            var heartSegments: [Interval] = []
+            for index in readings.indices.dropFirst() {
+                let previous = readings[index - 1], current = readings[index]
+                let gap = current.0.timeIntervalSince(previous.0)
+                if gap > 0 && gap <= 15 && previous.1 > 0 && current.1 > 0 {
+                    heartSegments += activePieces(Interval(start: previous.0, end: current.0,
+                                                          value: (Double(previous.1) + Double(current.1)) / 2),
+                                                 pauses: paused, start: start, end: end)
+                }
+            }
+            let seconds = heartSegments.reduce(0) { $0 + $1.seconds }
+            if seconds >= duration * 0.70 {
+                let mean = heartSegments.reduce(0) { $0 + $1.value * $1.seconds } / seconds
+                scores[2] = points(mean / reference, [0, 0.50, 0.65, 0.80, 0.90])
+            }
+        }
+        return scores
     }
 }

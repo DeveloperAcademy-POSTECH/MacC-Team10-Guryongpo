@@ -125,7 +125,8 @@ final class WorkoutManager: NSObject, ObservableObject, CLLocationManagerDelegat
         HKQuantityType.quantityType(forIdentifier: .vo2Max)!,
         HKSeriesType.workoutType(),
         HKSeriesType.workoutRoute(),
-        HKObjectType.activitySummaryType()
+        HKObjectType.activitySummaryType(),
+        HKObjectType.characteristicType(forIdentifier: .dateOfBirth)!
     ]
     
     let typesToShare: Set = [HKQuantityType.workoutType(),

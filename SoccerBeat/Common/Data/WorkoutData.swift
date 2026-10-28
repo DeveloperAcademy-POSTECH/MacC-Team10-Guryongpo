@@ -16,6 +16,13 @@ enum WorkoutDataAvailability: Hashable {
     case available, unavailable, failed, pending, permissionDenied
 }
 
+struct WorkoutSpeedSample: Hashable {
+    let timestamp: Date
+    let speed: Double // m/s
+    let speedAccuracy: Double
+    let horizontalAccuracy: Double
+}
+
 // All of the user's workout data.
 struct WorkoutData: Hashable, Equatable, Identifiable {
     var id: UUID = UUID()
@@ -50,6 +57,11 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var heartRateAvailability: WorkoutDataAvailability = .available
     var hasRetrievalFailure = false
     var heartRateDates: [Date] = []
+    var speedSamples: [WorkoutSpeedSample] = []
+    var startDate: Date?
+    var endDate: Date?
+    var recordedDuration: TimeInterval?
+    var heartRateReferenceMaximum: Double?
 
     var hasPartialData: Bool {
         !unavailableMetrics.isEmpty || routeAvailability != .available || heartRateAvailability != .available
@@ -255,6 +267,7 @@ struct WorkoutAverageData: Hashable, Equatable, Identifiable {
     var calories: Int
     var totalMatchTime: Int // Total play time in the match.
     var unavailableMetrics: Set<WorkoutMetric> = []
+    var fieldChartScores: [Double?] = []
     
     static let exampleAverage: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 180,
                                                              minHeartRate: 50,
