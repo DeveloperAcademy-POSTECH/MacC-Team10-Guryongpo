@@ -33,9 +33,12 @@ struct SprintDetector {
     private(set) var maxAccelerationMPS2 = 0.0
     private(set) var validSampleCount = 0
     private(set) var discardedSampleCount = 0
+    private(set) var hasConfirmedSpeed = false
 
     private var state = State.idle
     private var lastTimestamp: Date?
+    private var lastObservedTimestamp: Date?
+    private var currentSampleTimestamp: Date?
     private var previousValidSpeedMPS: Double?
     private var candidatePeakSpeedMPS = 0.0
 
@@ -50,10 +53,13 @@ struct SprintDetector {
         receivedAt: Date = .now
     ) {
         let sampleAge = receivedAt.timeIntervalSince(timestamp)
-        if let lastTimestamp, timestamp <= lastTimestamp {
+        if let lastObservedTimestamp, timestamp <= lastObservedTimestamp {
             discardedSampleCount += 1
             return
         }
+        // An invalid newer sample must not let an older callback restart the speed chain.
+        // Future timestamps are rejected without poisoning the ordering anchor.
+        if sampleAge.isFinite, sampleAge >= 0 { lastObservedTimestamp = timestamp }
         guard Self.isPlausibleSpeed(speed),
               speedAccuracy.isFinite, (0...Self.maximumSpeedAccuracy).contains(speedAccuracy),
               horizontalAccuracy.isFinite, (0...Self.maximumHorizontalAccuracy).contains(horizontalAccuracy),
@@ -74,6 +80,7 @@ struct SprintDetector {
                 state = .idle
                 isSprint = false
                 speedMPS = 0
+                currentSampleTimestamp = nil
                 candidatePeakSpeedMPS = 0
                 return
             } else if let previousValidSpeedMPS {
@@ -87,8 +94,10 @@ struct SprintDetector {
         previousValidSpeedMPS = speed
         validSampleCount += 1
         speedMPS = speed
+        currentSampleTimestamp = timestamp
         if let confirmedPeakSpeedMPS {
             maxSpeedMPS = max(maxSpeedMPS, confirmedPeakSpeedMPS)
+            hasConfirmedSpeed = true
         }
 
         let qualifiesForEntry = speed >= Self.entrySpeedMPS
@@ -148,6 +157,12 @@ struct SprintDetector {
         speed.isFinite && (0...maximumSpeedMPS).contains(speed)
     }
 
+    func currentSpeed(at date: Date) -> Double? {
+        guard let timestamp = currentSampleTimestamp,
+              (0...Self.maximumSampleAge).contains(date.timeIntervalSince(timestamp)) else { return nil }
+        return speedMPS
+    }
+
     mutating func reset() {
         // 기본값을 단일 초기화 원천으로 사용해 판정 상태와 진단 카운터를 빠짐없이 초기화한다.
         self = Self()
@@ -158,6 +173,7 @@ struct SprintDetector {
         state = .idle
         isSprint = false
         speedMPS = 0
+        currentSampleTimestamp = nil
         lastTimestamp = nil
         previousValidSpeedMPS = nil
         candidatePeakSpeedMPS = 0

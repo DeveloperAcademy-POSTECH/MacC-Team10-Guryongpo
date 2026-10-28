@@ -49,7 +49,7 @@ struct StartView: View {
             }
 
             Button(action: {
-                workoutManager.showingPrecount.toggle()
+                workoutManager.showingPrecount = true
             }) {
                 Image(.startButton)
             }

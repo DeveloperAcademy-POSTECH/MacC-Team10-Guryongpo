@@ -128,7 +128,7 @@ extension GameProgressView {
                         
                         HStack(alignment: .bottom) {
                             Spacer()
-                            Text("\(matricsIndicator.sprintCount)")
+                            Text(matricsIndicator.hasSpeedData ? matricsIndicator.sprintCount.formatted() : "--")
                                 .font(.distanceTimeNumber)
                                 .foregroundStyle(.ongoingNumber)
                             Text("TIMES")

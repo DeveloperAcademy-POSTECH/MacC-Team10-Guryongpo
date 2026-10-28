@@ -295,7 +295,7 @@ extension MatchListItemView {
             VStack(alignment: .leading) {
                 Text("뛴 거리")
                 HStack(spacing: 0) {
-                    Text((workoutData.error ? "--" : String(format: "%.1f", workoutData.distance)))
+                    Text((workoutData.error || workoutData.unavailableMetrics.contains(.distance) ? "--" : String(format: "%.1f", workoutData.distance)))
                     Text(" km")
                 }
                 .bold()
@@ -304,7 +304,7 @@ extension MatchListItemView {
             VStack(alignment: .leading) {
                 Text("최고 속도")
                 HStack(spacing: 0) {
-                    Text((workoutData.error ? "--" :  "\(Int(workoutData.velocity).formatted())"))
+                    Text((workoutData.error || workoutData.unavailableMetrics.contains(.maxSpeed) ? "--" :  "\(Int(workoutData.velocity).formatted())"))
                     Text(" km/h")
                 }
                 .bold()
@@ -314,10 +314,10 @@ extension MatchListItemView {
                 Text("스프린트")
                 HStack(spacing: 0) {
                     if workoutData.sprint == 1 {
-                        Text((workoutData.error ? "--" : "\(workoutData.sprint)"))
+                        Text((workoutData.error || workoutData.unavailableMetrics.contains(.sprint) ? "--" : "\(workoutData.sprint)"))
                         Text(" time")
                     } else {
-                        Text((workoutData.error ? "--" : "\(workoutData.sprint)"))
+                        Text((workoutData.error || workoutData.unavailableMetrics.contains(.sprint) ? "--" : "\(workoutData.sprint)"))
                         Text(" times")
                     }
                 }

@@ -8,6 +8,14 @@
 import Foundation
 import CoreLocation
 
+enum WorkoutMetric: Hashable {
+    case distance, sprint, maxSpeed, calories, heartRate, minHeartRate, maxHeartRate
+}
+
+enum WorkoutDataAvailability: Hashable {
+    case available, unavailable, failed, pending, permissionDenied
+}
+
 // All of the user's workout data.
 struct WorkoutData: Hashable, Equatable, Identifiable {
     var id: UUID = UUID()
@@ -25,10 +33,10 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var center: [Double] // center of heatmap
     var formattedDate: Date { dateFormatter.date(from: date) ?? Date() }
     var maxHeartRate: Int {
-        heartRate["max", default: 110] // Maximum heart rate during the match.
+        heartRate["max", default: 0] // Maximum heart rate during the match.
     }
     var minHeartRate: Int {
-        heartRate["min", default: 50] // Minimum heart rate during the match.
+        heartRate["min", default: 0] // Minimum heart rate during the match.
     }
     var calories: Int
     var vo2Max: Double
@@ -37,6 +45,15 @@ struct WorkoutData: Hashable, Equatable, Identifiable {
     var heatmapSamples: [HeatmapSample] = []
     var heatmapPausedIntervals: [DateInterval] = []
     var hasPowerData = false
+    var unavailableMetrics: Set<WorkoutMetric> = []
+    var routeAvailability: WorkoutDataAvailability = .available
+    var heartRateAvailability: WorkoutDataAvailability = .available
+    var hasRetrievalFailure = false
+    var heartRateDates: [Date] = []
+
+    var hasPartialData: Bool {
+        !unavailableMetrics.isEmpty || routeAvailability != .available || heartRateAvailability != .available
+    }
     
     var matchBadge: [Int] {
         // MARK: Badge 기준
@@ -237,6 +254,7 @@ struct WorkoutAverageData: Hashable, Equatable, Identifiable {
     var sprintCount: Int // Number of sprints during the match.
     var calories: Int
     var totalMatchTime: Int // Total play time in the match.
+    var unavailableMetrics: Set<WorkoutMetric> = []
     
     static let exampleAverage: WorkoutAverageData = WorkoutAverageData(maxHeartRate: 180,
                                                              minHeartRate: 50,
@@ -301,6 +319,7 @@ extension CLLocationCoordinate2D: Hashable {
 extension WorkoutData {
     var location: String {
         get async {
+            guard !route.isEmpty, center.count == 2 else { return "" }
             let centerLocation = CLLocation(latitude: center[0], longitude: center[1]).coordinate
             let loadedAddress =  await showCurrentAddress(centerLocation)
             return loadedAddress

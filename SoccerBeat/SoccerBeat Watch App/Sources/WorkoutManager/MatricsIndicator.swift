@@ -12,6 +12,11 @@ final class MatricsIndicator: NSObject, ObservableObject {
     
     @Published var heartRate: Double = 0 {
         didSet {
+            guard heartRate.isFinite, heartRate > 0 else {
+                heartZone = 1
+                return
+            }
+            hasHeartRateData = true
             self.heartZone = computeHeartZone(heartRate)
             
             if saveMinHeartRate == 0 {
@@ -42,6 +47,9 @@ final class MatricsIndicator: NSObject, ObservableObject {
 
     // MARK: - Distance
     @Published var distanceMeter: Double = 0
+    @Published private(set) var hasDistanceData = false
+    @Published private(set) var hasHeartRateData = false
+    @Published private(set) var hasCaloriesData = false
     @Published var sprintCount: Int = 0 // default setup
 
     // MARK: - 심박수 위험 지대 감지
@@ -68,7 +76,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
     private var bpmString: String { String(heartRate.formatted(.number.precision(.fractionLength(0)))) }
     var isBPMActive: Bool { bpmString != "0" }
     var bpmForText: String { isBPMActive ? bpmString : "---" }
-    var isDistanceActive: Bool { distanceMeter != 0 }
+    var isDistanceActive: Bool { hasDistanceData }
     private var timer: Timer?
     private var zone5Count = 0
     // 데이터 상수 선언
@@ -92,20 +100,28 @@ final class MatricsIndicator: NSObject, ObservableObject {
     // TODO: - WorkoutData로 반환하도록 설정
     func getMetadata() -> [String: Any] {
         var metadata: [String: Any] = [
-            "MaxSpeed": Double(maxSpeedMPS.rounded(at: 2)), // m/s
+            "MaxSpeed": maxSpeedMPS, // m/s
             "SprintCount": sprintCount,
             "MinHeartRate": saveMinHeartRate == 300 ? 0 : saveMinHeartRate,
             "MaxHeartRate": saveMaxHeartRate,
             "HeartRates": saveHeartRates.map {String($0)}.joined(separator: ","),
-            "Vo2Max": Double(vo2Max.rounded(at: 1)),
-            "Distance": Double((distanceMeter / 1000).rounded(at: 1)), // km
-            "Acceleration": Double(acceleration.rounded(at: 1)),
-            "Calories": Int(energy.rounded())
+            "Vo2Max": vo2Max,
+            "Distance": distanceMeter / 1000, // km; round only for display.
+            "Acceleration": acceleration,
+            "Calories": Int(energy.rounded(.toNearestOrAwayFromZero))
         ]
 
         metadata["HasPowerData"] = hasPowerData
-        if hasPowerData { metadata["Power"] = Double(power.rounded(at: 1)) }
+        if hasPowerData { metadata["Power"] = power }
         metadata["PowerSource"] = hasPowerData ? "healthKitRunningPower" : "unavailable"
+        metadata["HasDistanceData"] = hasDistanceData
+        metadata["HasHeartRateData"] = hasHeartRateData
+        metadata["HasCaloriesData"] = hasCaloriesData
+        if !hasDistanceData { metadata.removeValue(forKey: "Distance") }
+        if !hasCaloriesData { metadata.removeValue(forKey: "Calories") }
+        if !hasHeartRateData {
+            ["MinHeartRate", "MaxHeartRate", "HeartRates"].forEach { metadata.removeValue(forKey: $0) }
+        }
 
         #if os(watchOS)
         metadata["SprintCriteriaVersion"] = 3
@@ -113,6 +129,11 @@ final class MatricsIndicator: NSObject, ObservableObject {
         metadata["SprintSpeedSource"] = "coreLocation"
         metadata["SprintValidSampleCount"] = sprintDetector.validSampleCount
         metadata["SprintDiscardedSampleCount"] = sprintDetector.discardedSampleCount
+        metadata["HasSpeedData"] = sprintDetector.hasConfirmedSpeed
+        if !sprintDetector.hasConfirmedSpeed {
+            metadata.removeValue(forKey: "MaxSpeed")
+            metadata.removeValue(forKey: "SprintCount")
+        }
         #endif
 
         return metadata
@@ -122,7 +143,7 @@ final class MatricsIndicator: NSObject, ObservableObject {
         do {
             let birthYear = try store.dateOfBirthComponents().year
             let currentYear = Calendar.current.component(.year, from: Date())
-            properMaxHeartRate = Double(220 - (currentYear - birthYear!))
+            properMaxHeartRate = birthYear.map { Double(220 - (currentYear - $0)) } ?? 190
         } catch {
             properMaxHeartRate = 190
         }
@@ -130,13 +151,14 @@ final class MatricsIndicator: NSObject, ObservableObject {
     
     // MARK: - Heart Rate Setup -> MatricsIndicator
     func computeHeartZone(_ heartRate: Double) -> Int {
-        if heartRate < Double(properMaxHeartRate!) * 0.6 {
+        let maximum = properMaxHeartRate ?? 190
+        if heartRate < maximum * 0.6 {
             return 1
-        } else if heartRate < Double(properMaxHeartRate!) * 0.7 {
+        } else if heartRate < maximum * 0.7 {
             return 2
-        } else if heartRate < Double(properMaxHeartRate!) * 0.8 {
+        } else if heartRate < maximum * 0.8 {
             return 3
-        } else if heartRate < Double(properMaxHeartRate!) * 0.9 {
+        } else if heartRate < maximum * 0.9 {
             return 4
         } else {
             return 5
@@ -153,6 +175,9 @@ final class MatricsIndicator: NSObject, ObservableObject {
         
         energy = 0
         distanceMeter = 0
+        hasDistanceData = false
+        hasHeartRateData = false
+        hasCaloriesData = false
         maxSpeedMPS = 0
         speedMPS = 0
         isSprint = false
@@ -205,32 +230,52 @@ final class MatricsIndicator: NSObject, ObservableObject {
         speedMPS = sprintDetector.speedMPS
         isSprint = sprintDetector.isSprint
     }
+
+    func currentSpeed(at date: Date) -> Double? {
+        sprintDetector.currentSpeed(at: date)
+    }
+
+    var hasSpeedData: Bool { sprintDetector.hasConfirmedSpeed }
     #endif
 
     /// 이게 한번만 불리는게 아니라, 여러 세트가 있을 수 있음
     /// 예를들어 경기를 1쿼터, 2쿼터 나눠서 할거면, 지금처럼 메트릭스 인디케이터가 여러개가 생길 수도 있는 것임.
     /// 아니면 애초에 heartRate, distanceMeter, SpeedMPS 등을 배열로 선언해서 각 쿼터에 얼마나 했는지를 추정할 수도 있겠음
+    @MainActor
     func updateForStatistics(_ statistics: HKStatistics) {
-        DispatchQueue.main.async {
-            switch statistics.quantityType {
-            case HKQuantityType.quantityType(forIdentifier: .heartRate):
-                let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
-                self.heartRate = statistics.mostRecentQuantity()?.doubleValue(for: heartRateUnit) ?? 0.0
-            case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
-                let meterUnit = HKUnit.meter()
-                self.distanceMeter = statistics.sumQuantity()?.doubleValue(for: meterUnit) ?? 0
-            case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
-                self.energy = statistics.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0
-            case HKQuantityType.quantityType(forIdentifier: .runningPower):
-                self.updatePower(statistics.maximumQuantity()?.doubleValue(for: .watt()))
-            case HKQuantityType.quantityType(forIdentifier: .vo2Max):
-                let oldvo2Max = self.vo2Max
-                self.vo2Max = statistics.mostRecentQuantity()?.doubleValue(for: HKUnit(from: "ml/kg*min")) ?? 0
-                self.calculateMaxVo2Max(before: oldvo2Max, current: self.vo2Max)
-            default:
-                return
+        switch statistics.quantityType {
+        case HKQuantityType.quantityType(forIdentifier: .heartRate):
+            let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
+            if let value = statistics.mostRecentQuantity()?.doubleValue(for: heartRateUnit), value.isFinite, value > 0 {
+                heartRate = value
             }
+        case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
+            updateDistance(statistics.sumQuantity()?.doubleValue(for: .meter()))
+        case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
+            updateCalories(statistics.sumQuantity()?.doubleValue(for: .kilocalorie()))
+        case HKQuantityType.quantityType(forIdentifier: .runningPower):
+            updatePower(statistics.maximumQuantity()?.doubleValue(for: .watt()))
+        case HKQuantityType.quantityType(forIdentifier: .vo2Max):
+            if let value = statistics.mostRecentQuantity()?.doubleValue(for: HKUnit(from: "ml/kg*min")), value.isFinite, value > 0 {
+                calculateMaxVo2Max(before: vo2Max, current: value)
+            }
+        default:
+            return
         }
+    }
+
+    @MainActor
+    func updateDistance(_ measurement: Double?) {
+        guard let value = measurement, value.isFinite, value >= 0 else { return }
+        distanceMeter = max(distanceMeter, value)
+        hasDistanceData = true
+    }
+
+    @MainActor
+    func updateCalories(_ measurement: Double?) {
+        guard let value = measurement, value.isFinite, value >= 0 else { return }
+        energy = max(energy, value)
+        hasCaloriesData = true
     }
     
     func updatePower(_ measurement: Double?) {
@@ -238,6 +283,6 @@ final class MatricsIndicator: NSObject, ObservableObject {
     }
 
     private func calculateMaxVo2Max(before: Double, current: Double) {
-        vo2Max = max(vo2Max, current)
+        vo2Max = max(before, current)
     }
 }

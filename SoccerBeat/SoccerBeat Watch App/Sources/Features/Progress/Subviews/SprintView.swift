@@ -13,39 +13,43 @@ struct SprintView: View {
     
     var body: some View {
         
-        HStack {
-            ZStack {
-                RoundedRectangle(cornerRadius: 15.0)
-                    .stroke(lineWidth: /*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
-                    .foregroundStyle(.white)
-                    .frame(height: 21)
-                    .frame(maxWidth: .infinity)
-                    .overlay {
-                        ZStack {
-                            ProgressView(value: min(matricsIndicator.speedMPS, matricsIndicator.sprintSpeed), total: matricsIndicator.sprintSpeed)
-                                .progressViewStyle(GucciBarProgressStyle(accentGradient: .sprintOnGradient))
-                                .padding(.horizontal, 2)
+        TimelineView(.periodic(from: .now, by: 1)) { _ in
+            // A newly published GPS sample can be newer than the last timeline tick.
+            let speed = matricsIndicator.currentSpeed(at: .now)
+            HStack {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 15.0)
+                        .stroke(lineWidth: /*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                        .foregroundStyle(.white)
+                        .frame(height: 21)
+                        .frame(maxWidth: .infinity)
+                        .overlay {
+                            ZStack {
+                                ProgressView(value: min(speed ?? 0, matricsIndicator.sprintSpeed), total: matricsIndicator.sprintSpeed)
+                                    .progressViewStyle(GucciBarProgressStyle(accentGradient: .sprintOnGradient))
+                                    .padding(.horizontal, 2)
                             
-                            HStack {
-                                Spacer()
+                                HStack {
+                                    Spacer()
                                 
-                                if matricsIndicator.isSprint {
-                                    Text("SPRINT!")
-                                        .font(.sprintText)
-                                        .padding(.horizontal)
-                                } else {
-                                    Text((matricsIndicator.speedMPS * 3.6).rounded(at: 1) + " km/h")
-                                        .font(.sprintText)
-                                        .padding(.horizontal)
+                                    if matricsIndicator.isSprint, speed != nil {
+                                        Text("SPRINT!")
+                                            .font(.sprintText)
+                                            .padding(.horizontal)
+                                    } else {
+                                        Text(speed.map { ($0 * 3.6).rounded(at: 1) + " km/h" } ?? "-- km/h")
+                                            .font(.sprintText)
+                                            .padding(.horizontal)
+                                    }
                                 }
+                                .padding(.horizontal)
+                                .foregroundStyle(.white)
                             }
-                            .padding(.horizontal)
-                            .foregroundStyle(.white)
                         }
-                    }
+                }
             }
+            .padding(.vertical)
         }
-        .padding(.vertical)
     }
 }
 
