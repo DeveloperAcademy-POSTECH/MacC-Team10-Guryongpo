@@ -149,11 +149,14 @@ struct MainView: View {
                 }
                 .font(.mainSubTitleText)
                 .opacity(0.7)
-                Text("최근 경기")
-                    .minimumScaleFactor(0.7)
-                    .lineLimit(1)
-                    .font(.mainTitleText)
-                    .padding(.trailing)
+                HStack(spacing: 8) {
+                    Text("최근 경기")
+                        .minimumScaleFactor(0.7)
+                        .lineLimit(1)
+                        .font(.mainTitleText)
+                    FieldChartInformationButton(workout: workouts.first)
+                }
+                .padding(.trailing)
             }
             Spacer()
             NavigationLink {

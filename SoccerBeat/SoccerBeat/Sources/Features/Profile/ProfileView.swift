@@ -119,6 +119,7 @@ struct ProfileView: View {
                         
                         ViewControllerContainer(ProfileViewController(radarAverageValue: average,
                                                                       radarAtypicalValue: maximumAbility))
+                        .id([average, maximumAbility])
                         .fixedSize()
                         .frame(width: 304, height: 348)
                         .zIndex(-1)

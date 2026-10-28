@@ -246,8 +246,8 @@ final class WorkoutRecordReconciliationTests: XCTestCase {
     }
 
 
-    private func chartRecord(duration: Int = 900, speed: Double = 1, heartRate: Int? = nil) -> WorkoutData {
-        var result = record(distance: Double(duration) * speed / 1000, time: "\(duration / 60) : \(duration % 60)")
+    private func chartRecord(duration: Int = 900, speed: Double = 1, heartRate: Int? = nil, sprints: Int = 0) -> WorkoutData {
+        var result = record(distance: Double(duration) * speed / 1000, sprint: sprints, time: "\(duration / 60) : \(duration % 60)")
         let start = Date(timeIntervalSince1970: 1_000_000)
         result.startDate = start
         result.endDate = start.addingTimeInterval(Double(duration))
@@ -344,7 +344,7 @@ final class WorkoutRecordReconciliationTests: XCTestCase {
 
     @objc func testSprintRateRequiresTenMinutes() {
         XCTAssertNil(DataConverter.measuredScores(chartRecord(duration: 599, speed: 6))[5])
-        XCTAssertEqual(DataConverter.measuredScores(chartRecord(duration: 600, speed: 6))[5]!, 70, accuracy: 0.000001)
+        XCTAssertEqual(DataConverter.measuredScores(chartRecord(duration: 600, speed: 6, sprints: 1))[5]!, 70, accuracy: 0.000001)
     }
 
     @objc func testEnduranceRequiresFifteenMinutesAndRealInitialActivity() {
@@ -428,13 +428,52 @@ final class WorkoutRecordReconciliationTests: XCTestCase {
         XCTAssertTrue(missing.allSatisfy { $0.isFinite && (1.5...5).contains($0) })
     }
 
+    @objc func testIrregularHeartSamplesAreWeightedByElapsedTime() {
+        var workout = chartRecord(duration: 11)
+        let start = workout.startDate!
+        workout.heartRateDates = [0.0, 1, 11].map { start.addingTimeInterval($0) }
+        workout.heartRates = [100, 100, 200]
+        workout.heartRateReferenceMaximum = 200
+        let ratio = (100.0 + 150.0 * 10) / 11 / 200
+        XCTAssertEqual(DataConverter.measuredScores(workout)[2]!, 70 + (ratio - 0.65) / 0.15 * 15, accuracy: 0.000001)
+    }
+
+    @objc func testOverlappingPausesAreSubtractedOnce() {
+        var workout = chartRecord(duration: 1320, heartRate: 130)
+        let start = workout.startDate!
+        workout.recordedDuration = 900
+        workout.heatmapPausedIntervals = [DateInterval(start: start.addingTimeInterval(300), end: start.addingTimeInterval(600)),
+                                         DateInterval(start: start.addingTimeInterval(450), end: start.addingTimeInterval(720))]
+        let scores = DataConverter.measuredScores(workout)
+        XCTAssertEqual(scores[2]!, 70, accuracy: 0.000001)
+        XCTAssertEqual(scores[4]!, 100, accuracy: 0.000001)
+    }
+
+    @objc func testAllSixMeasuredGoalsCanReachTheOuterBoundary() {
+        var workout = chartRecord(speed: 8, heartRate: 180, sprints: 5)
+        workout.speedSamples = workout.speedSamples.enumerated().map { index, sample in
+            WorkoutSpeedSample(timestamp: sample.timestamp, speed: index % 60 < 3 ? 4 : 8,
+                               speedAccuracy: 0.2, horizontalAccuracy: 5)
+        }
+        XCTAssertEqual(DataConverter.measuredScores(workout), Array(repeating: 100, count: 6))
+        XCTAssertEqual(DataConverter.toLevels(workout), Array(repeating: 5, count: 6))
+    }
+
+    @objc func testSprintAxisUsesSavedReportCountRatherThanInventingNewEvents() {
+        let noSprints = chartRecord(speed: 8, sprints: 0)
+        XCTAssertEqual(DataConverter.measuredScores(noSprints)[5], 0)
+        var missing = noSprints
+        missing.unavailableMetrics.insert(.sprint)
+        XCTAssertNil(DataConverter.measuredScores(missing)[5])
+    }
+
 }
 
 @main
 struct WorkoutRecordReconciliationTestRunner {
     static func main() {
         let suite = WorkoutRecordReconciliationTests.defaultTestSuite
-        precondition(suite.testCaseCount == 49)
+        precondition(suite.testCaseCount == 53)
         suite.run()
         exit(suite.testRun?.hasSucceeded == true ? 0 : 1)
     }

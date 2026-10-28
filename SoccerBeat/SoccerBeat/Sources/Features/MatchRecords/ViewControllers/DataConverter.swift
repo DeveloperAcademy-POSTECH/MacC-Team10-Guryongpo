@@ -154,8 +154,9 @@ final class DataConverter {
         if covered >= duration * 0.70 {
             let fast = segments.filter { $0.value * 3.6 >= 14 }.reduce(0) { $0 + $1.seconds }
             scores[3] = points(100 * fast / covered, [0, 1, 4, 8, 14])
-            if duration >= 600 {
-                scores[5] = points(Double(detector.sprintCount) / (covered / 600), [0, 0.5, 1, 2, 3])
+            if duration >= 600, !workout.unavailableMetrics.contains(.sprint), workout.sprint >= 0 {
+                // Keep the chart consistent with the Sprint count shown in the saved report.
+                scores[5] = points(Double(workout.sprint) / (covered / 600), [0, 0.5, 1, 2, 3])
             }
         }
         // Compare first/last thirds in active elapsed time, without treating GPS gaps as standing still.

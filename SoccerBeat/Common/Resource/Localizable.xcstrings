@@ -859,9 +859,7 @@
         }
       }
     },
-    "Day" : {
-
-    },
+    "Day" : {},
     "Distance" : {
       "localizations" : {
         "en" : {
@@ -1260,9 +1258,7 @@
         }
       }
     },
-    "iPhone 설정에서 권한을 허용하고\n야외에서 GPS 신호를 확인해주세요" : {
-
-    },
+    "iPhone 설정에서 권한을 허용하고\n야외에서 GPS 신호를 확인해주세요" : {},
     "last SPRINT!" : {
       "localizations" : {
         "en" : {
@@ -1593,9 +1589,7 @@
         }
       }
     },
-    "Selected" : {
-
-    },
+    "Selected" : {},
     "SOCCERBEAT" : {
       "localizations" : {
         "en" : {
@@ -1642,9 +1636,7 @@
         }
       }
     },
-    "Speed" : {
-
-    },
+    "Speed" : {},
     "Sprint" : {
       "localizations" : {
         "en" : {
@@ -2450,9 +2442,7 @@
         }
       }
     },
-    "권한 필요" : {
-
-    },
+    "권한 필요" : {},
     "나의 선수 카드와 최대 능력치를 만나보세요." : {
       "comment" : "선수카드 메시지",
       "extractionState" : "manual",
@@ -3479,9 +3469,7 @@
         }
       }
     },
-    "설정 > 개인정보 보호\n> 건강/위치 > SoccerBeat" : {
-
-    },
+    "설정 > 개인정보 보호\n> 건강/위치 > SoccerBeat" : {},
     "설정하기" : {
       "localizations" : {
         "en" : {
@@ -6577,6 +6565,325 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请检查健康数据访问权限。"
+          }
+        }
+      }
+    },
+    "chart.v2.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "필드 차트 기준"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field Chart Guide"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guía del gráfico"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "能力图说明"
+          }
+        }
+      }
+    },
+    "chart.v2.overview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기존 6개 축은 아래 활동 지표에 대응합니다. 일반 아마추어용 초기 기준이며, 최소 반지름 30%부터 목표 달성 시 100%까지 표시합니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The six axes represent the activity metrics below. These initial recreational-football targets display a minimum 30% radius and reach 100% when targets are met."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los seis ejes representan las métricas siguientes. Estos objetivos iniciales para fútbol recreativo muestran un radio mínimo del 30% y llegan al 100% al alcanzarlos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "六个轴对应以下活动指标。采用业余足球初始目标，半径最低为30%，达到目标时为100%。"
+          }
+        }
+      }
+    },
+    "chart.v2.measured" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "측정 기반"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measured"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medido"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基于测量"
+          }
+        }
+      }
+    },
+    "chart.v2.reference" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "참고값"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referencia"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参考值"
+          }
+        }
+      }
+    },
+    "chart.v2.agility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스피드 · 연속된 유효 구간의 3초 평균 최고속도입니다. 26km/h 이상이면 최고 점수입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed · Best three-second average across continuous valid samples. The top score starts at 26 km/h."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad · Mejor promedio de tres segundos con datos válidos continuos. La puntuación máxima empieza en 26 km/h."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速度 · 连续有效记录中最高的3秒平均速度。达到26 km/h获得最高分。"
+          }
+        }
+      }
+    },
+    "chart.v2.activity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활동량 · 일시정지를 제외한 기록 시간당 이동 거리입니다. 100m/min 이상이면 최고 점수입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work rate · Distance per recorded minute, excluding pauses. The top score starts at 100 m/min."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actividad · Distancia por minuto registrado, sin pausas. La puntuación máxima empieza en 100 m/min."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动量 · 扣除暂停后的每分钟移动距离。达到100 m/min获得最高分。"
+          }
+        }
+      }
+    },
+    "chart.v2.potential" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "심박 부하 · 시간 가중 평균 심박수를 연령 기반 추정 최대 심박수와 비교합니다. 90% 이상이면 최고 점수이며 운동 강도를 나타냅니다. 생년 정보가 없으면 참고값을 사용합니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart-rate load · Time-weighted mean heart rate relative to the age-estimated maximum. 90% earns the top score and indicates exercise intensity. Without birth-year access, this axis uses a reference value."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carga cardíaca · Frecuencia media ponderada por tiempo respecto al máximo estimado por edad. El 90% da la puntuación máxima e indica intensidad. Sin acceso al año de nacimiento se usa un valor de referencia."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "心率负荷 · 将时间加权平均心率与按年龄估算的最大心率比较。达到90%获得最高分，表示运动强度。无法读取出生年份时使用参考值。"
+          }
+        }
+      }
+    },
+    "chart.v2.mentality" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "고속주행 · 유효 속도 측정 시간 중 14km/h 이상 달린 시간의 비율입니다. 14% 이상이면 최고 점수입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fast running · Share of valid speed-measurement time at 14 km/h or faster. A 14% share earns the top score."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrera rápida · Porcentaje del tiempo con velocidad válida a 14 km/h o más. El 14% da la puntuación máxima."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速跑动 · 有效测速时间内，速度达到14 km/h的时间占比。占比达到14%获得最高分。"
+          }
+        }
+      }
+    },
+    "chart.v2.endurance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활동유지 · 초반과 후반 3분의 1 구간의 분당 이동량을 비교합니다. 15분 이상 기록하고 각 구간을 70% 이상 측정했으며 초반 활동량이 20m/min 이상일 때 계산합니다. 후반 활동량을 100% 유지하면 최고 점수입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consistency · Compares distance per minute in the first and last thirds. Requires 15 minutes, 70% coverage in each third, and an initial work rate of at least 20 m/min. Maintaining 100% earns the top score."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Constancia · Compara la distancia por minuto del primer y último tercio. Requiere 15 minutos, cobertura del 70% en ambos y al menos 20 m/min al inicio. Mantener el 100% da la puntuación máxima."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动保持 · 比较前后各三分之一时段的每分钟移动距离。需记录至少15分钟，两段覆盖率均达到70%，且前段达到20 m/min。后段保持100%时获得最高分。"
+          }
+        }
+      }
+    },
+    "chart.v2.explosivity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복질주 · 유효 측정 10분당 스프린트 횟수입니다. 10분 이상 기록하고 속도 측정 범위가 70% 이상일 때 계산하며, 10분당 3회 이상이면 최고 점수입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeated sprints · Sprints per ten valid measurement minutes. Requires a ten-minute record and 70% speed coverage. Three sprints per ten minutes earn the top score."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esprints repetidos · Esprints por diez minutos de medición válida. Requiere un registro de diez minutos y cobertura de velocidad del 70%. Tres por diez minutos dan la puntuación máxima."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重复冲刺 · 每10分钟有效测量的冲刺次数。需记录至少10分钟且测速覆盖率达到70%。每10分钟3次获得最高分。"
+          }
+        }
+      }
+    },
+    "chart.v2.missing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일부 축은 측정 범위가 부족하면 다른 측정 점수의 평균(최대 70점)으로 보완합니다. 모든 축이 없으면 반지름 65%의 기본 모양을 표시합니다. 참고값은 평균 비교선에 포함하지 않습니다. 심박·고속주행 비율은 70% 이상 측정했을 때만 계산합니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Axes with insufficient data use the mean of measured scores, capped at 70. With no measured axes, a default shape uses a 65% radius. Reference values are excluded from the average line. Heart-rate and fast-running ratios require 70% coverage."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los ejes sin datos suficientes usan la media de los medidos, con un máximo de 70. Sin datos medidos se muestra una forma con radio del 65%. Las referencias se excluyen de la línea media. Los porcentajes cardíacos y de carrera rápida requieren una cobertura del 70%."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据不足的轴使用已测量得分的平均值补充，最高70分。所有轴均无数据时显示半径65%的默认图形。参考值不计入平均线。心率和高速跑动比例需达到70%的测量覆盖率。"
           }
         }
       }
