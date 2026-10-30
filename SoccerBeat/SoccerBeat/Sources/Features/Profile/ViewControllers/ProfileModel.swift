@@ -80,6 +80,7 @@ final class ProfileModel: ObservableObject {
     }
     
     private func caculateMaxAbility(_ workouts: [WorkoutData]) {
+        maxAbility.fieldChartScores = DataConverter.maximumScores(workouts)
         for workout in workouts {
             maxAbility.maxHeartRate = max(maxAbility.maxHeartRate, workout.maxHeartRate)
             maxAbility.minHeartRate = min(maxAbility.minHeartRate, workout.minHeartRate)

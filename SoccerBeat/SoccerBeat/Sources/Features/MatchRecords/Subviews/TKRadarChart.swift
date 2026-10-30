@@ -195,13 +195,14 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
         let titleColor = delegate.colorOfTitleForRadarChart(self)
         for index in 0..<numOfRow {
             let i = CGFloat(index)
-            let title = dataSource.titleOfRowForRadarChart(self, row: index)
+            let key = dataSource.titleOfRowForRadarChart(self, row: index)
+            let title = String(localized: String.LocalizationValue(stringLiteral: key))
             let pointOnEdge = CGPoint(x: centerPoint.x - radius * sin(i * perAngle),
                                       y: centerPoint.y - radius * cos(i * perAngle))
             let attributeTextSize = (title as NSString)
                 .size(withAttributes: [NSAttributedStringKey.font: textFont])
         
-            let width = attributeTextSize.width + 40
+            let width = min(attributeTextSize.width + 8, max(0, bounds.width - 8))
             let xOffset = pointOnEdge.x >=  centerPoint .x ? width / 2.0 + padding : -width / 2.0 - padding
             let yOffset = pointOnEdge.y >=  centerPoint .y ? height / 2.0 + padding : -height / 2.0 - padding
             var legendCenter = CGPoint(x: pointOnEdge.x + xOffset, y: pointOnEdge.y + yOffset)
@@ -222,13 +223,11 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                                     + (radius + padding + height / 2.0)
                                     * CGFloat(index == 0 ? -1 : 1)
             }
-            let rect = CGRect(x: legendCenter.x - width / 2.0,
-                              y: legendCenter.y - height / 2.0,
+            let rect = CGRect(x: min(max(4, legendCenter.x - width / 2.0), max(4, bounds.width - width - 4)),
+                              y: min(max(0, legendCenter.y - height / 2.0), max(0, bounds.height - height)),
                               width: width, height: height)
             
-            let localizedKey = String.LocalizationValue(stringLiteral: title)
-            let convertTitle = String(localized: localizedKey)
-            (convertTitle as NSString).draw(in: rect, withAttributes: attributes)
+            (title as NSString).draw(in: rect, withAttributes: attributes)
         }
         
         /// Draw the background rectangle

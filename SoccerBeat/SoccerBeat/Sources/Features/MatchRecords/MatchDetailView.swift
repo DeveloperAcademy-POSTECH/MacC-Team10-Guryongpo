@@ -176,6 +176,8 @@ struct FieldRecordView: View {
             VStack {
                 HStack {
                     InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                     Spacer()
                 }
                 .zIndex(4.0)
@@ -283,6 +285,8 @@ struct FieldMovementView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         InformationButton(message: "슬라이더를 움직여 경기 중 위치를 확인해보세요.")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
                         Spacer()
                     }
                     
@@ -479,7 +483,7 @@ struct FieldChartView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
+                FieldChartInformationButton()
                 Spacer()
             }
 
@@ -554,5 +558,41 @@ private struct WorkoutDataNotice: View {
         MatchDetailView(workout: WorkoutData.example)
             .environmentObject(ProfileModel(workoutManager: workoutManager))
             .environmentObject(workoutManager)
+    }
+}
+
+struct FieldChartInformationButton: View {
+    @State private var isPresented = false
+    private let titles = ["민첩성", "적극성", "잠재력", "정신력", "지구력", "폭발력"]
+    private let details = ["chart.v2.agility", "chart.v2.activity", "chart.v2.potential",
+                           "chart.v2.mentality", "chart.v2.endurance", "chart.v2.explosivity"]
+
+    var body: some View {
+        Button { isPresented = true } label: {
+            Image(.infoIcon)
+                .resizable()
+                .frame(width: 11, height: 16)
+                .floatingCapsuleStyle(color: .white.opacity(0.8))
+        }
+        .accessibilityLabel("chart.v2.title")
+        .sheet(isPresented: $isPresented) {
+            NavigationStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("chart.v2.overview")
+                        ForEach(0..<6) { index in
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(LocalizedStringKey(titles[index])).font(.headline)
+                                Text(LocalizedStringKey(details[index]))
+                            }
+                        }
+                    }
+                    .padding()
+                }
+                .navigationTitle("chart.v2.title")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { Button("닫기") { isPresented = false } }
+            }
+        }
     }
 }

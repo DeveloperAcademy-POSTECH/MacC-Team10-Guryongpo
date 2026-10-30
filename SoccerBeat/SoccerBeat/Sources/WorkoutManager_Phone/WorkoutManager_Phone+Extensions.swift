@@ -277,6 +277,18 @@ extension WorkoutManager {
                                      HeatmapSample(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude,
                                                    timestamp: $0.timestamp, horizontalAccuracy: $0.horizontalAccuracy)
                                  }, heatmapPausedIntervals: pausedIntervals, hasPowerData: recordedPower.watts != nil)
+        result.speedSamples = locations.map {
+            WorkoutSpeedSample(timestamp: $0.timestamp, speed: $0.speed,
+                               speedAccuracy: $0.speedAccuracy, horizontalAccuracy: $0.horizontalAccuracy)
+        }
+        result.startDate = workout.startDate
+        result.endDate = workout.endDate
+        result.recordedDuration = workout.duration
+        result.heartRateReferenceMaximum = positive(metadata.getValue(forKey: "FieldChartHeartRateReference"))
+        if result.heartRateReferenceMaximum == nil, let year = try? healthStore.dateOfBirthComponents().year {
+            let age = Calendar.current.component(.year, from: workout.startDate) - year
+            if (1...120).contains(age) { result.heartRateReferenceMaximum = Double(220 - age) }
+        }
         result.id = workout.uuid
         result.unavailableMetrics = unavailable
         result.routeAvailability = routeResult.availability

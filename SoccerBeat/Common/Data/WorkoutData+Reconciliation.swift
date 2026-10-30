@@ -13,6 +13,7 @@ enum WorkoutRecordReconciliation {
         result.unavailableMetrics = Set(metrics.filter { metric in
             !records.contains { !$0.unavailableMetrics.contains(metric) }
         })
+        result.fieldChartScores = DataConverter.averageScores(records)
         result.totalDistance = mean(.distance) { $0.distance }
         result.maxVelocity = mean(.maxSpeed) { $0.velocity }
         result.sprintCount = Int(mean(.sprint) { Double($0.sprint) })
@@ -93,6 +94,11 @@ extension WorkoutData {
                                  heatmapSamples: keepRoute ? previous.heatmapSamples : heatmapSamples,
                                  heatmapPausedIntervals: keepRoute ? previous.heatmapPausedIntervals : heatmapPausedIntervals,
                                  hasPowerData: hasPowerData || previous.hasPowerData)
+        result.speedSamples = keepRoute ? previous.speedSamples : speedSamples
+        result.startDate = startDate ?? previous.startDate
+        result.endDate = endDate ?? previous.endDate
+        result.recordedDuration = recordedDuration ?? previous.recordedDuration
+        result.heartRateReferenceMaximum = heartRateReferenceMaximum ?? previous.heartRateReferenceMaximum
         result.id = id
         result.unavailableMetrics = missing
         result.routeAvailability = keepRoute ? .available : routeAvailability

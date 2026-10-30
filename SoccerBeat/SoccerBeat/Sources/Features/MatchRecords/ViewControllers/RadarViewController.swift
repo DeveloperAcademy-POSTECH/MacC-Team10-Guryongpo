@@ -20,11 +20,13 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
     var radarAtypicalValue: [Double]
     var error: Bool
     private var chart: TKRadarChart?
+    private let isCompact: Bool
     
-    init(radarAverageValue: [Double], radarAtypicalValue: [Double], error: Bool) {
+    init(radarAverageValue: [Double], radarAtypicalValue: [Double], error: Bool, isCompact: Bool = false) {
         self.radarAverageValue = radarAverageValue
         self.radarAtypicalValue = radarAtypicalValue
         self.error = error
+        self.isCompact = isCompact
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,7 +48,7 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
         super.viewDidLayoutSubviews()
         guard let chart, chart.frame != view.bounds else { return }
         chart.frame = view.bounds
-        chart.configuration.radius = min(view.bounds.width, view.bounds.height) / 3
+        chart.configuration.radius = min(view.bounds.width, view.bounds.height) / (isCompact ? 3.5 : 3)
         chart.reloadData()
     }
 
@@ -113,7 +115,7 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
     }
     
     func fontOfTitleForRadarChart(_ radarChart: TKRadarChart) -> UIFont {
-        return UIFont.systemFont(ofSize: 16)
+        return UIFont.systemFont(ofSize: isCompact ? 10 : 16)
     }
 }
 
@@ -121,6 +123,7 @@ class RadarViewController: UIViewController, TKRadarChartDataSource, TKRadarChar
 class ProfileViewController: UIViewController, TKRadarChartDataSource, TKRadarChartDelegate, UITableViewDelegate {
     var radarAverageValue: [Double]
     var radarAtypicalValue: [Double]
+    private var chart: TKRadarChart?
     
     init(radarAverageValue: [Double], radarAtypicalValue: [Double]) {
         self.radarAverageValue = radarAverageValue
@@ -135,16 +138,21 @@ class ProfileViewController: UIViewController, TKRadarChartDataSource, TKRadarCh
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let w = view.bounds.width
-        let chart = TKRadarChart(frame: CGRect(x: 0, y: 0, width: w, height: w))
-        chart.configuration.radius = w / 3
+        let chart = TKRadarChart(frame: .zero)
         chart.dataSource = self
         chart.delegate = self
-        chart.center = view.center
-        chart.reloadData()
         view.addSubview(chart)
+        self.chart = chart
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard let chart, chart.frame != view.bounds else { return }
+        chart.frame = view.bounds
+        chart.configuration.radius = min(view.bounds.width, view.bounds.height) / 3.8
+        chart.reloadData()
+    }
+
     func numberOfStepForRadarChart(_ radarChart: TKRadarChart) -> Int {
         return 5
     }

@@ -1,6 +1,35 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
+    "저장된 모든 경기 기록을 확인해보세요.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장된 모든 경기 기록을 확인해보세요."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View all your saved matches."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consulta todos tus partidos guardados."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看所有已保存的比赛记录。"
+          }
+        }
+      }
+    },
     "" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -859,9 +888,7 @@
         }
       }
     },
-    "Day" : {
-
-    },
+    "Day" : {},
     "Distance" : {
       "localizations" : {
         "en" : {
@@ -1260,9 +1287,7 @@
         }
       }
     },
-    "iPhone 설정에서 권한을 허용하고\n야외에서 GPS 신호를 확인해주세요" : {
-
-    },
+    "iPhone 설정에서 권한을 허용하고\n야외에서 GPS 신호를 확인해주세요" : {},
     "last SPRINT!" : {
       "localizations" : {
         "en" : {
@@ -1593,9 +1618,7 @@
         }
       }
     },
-    "Selected" : {
-
-    },
+    "Selected" : {},
     "SOCCERBEAT" : {
       "localizations" : {
         "en" : {
@@ -1642,9 +1665,7 @@
         }
       }
     },
-    "Speed" : {
-
-    },
+    "Speed" : {},
     "Sprint" : {
       "localizations" : {
         "en" : {
@@ -2450,9 +2471,7 @@
         }
       }
     },
-    "권한 필요" : {
-
-    },
+    "권한 필요" : {},
     "나의 선수 카드와 최대 능력치를 만나보세요." : {
       "comment" : "선수카드 메시지",
       "extractionState" : "manual",
@@ -3479,9 +3498,7 @@
         }
       }
     },
-    "설정 > 개인정보 보호\n> 건강/위치 > SoccerBeat" : {
-
-    },
+    "설정 > 개인정보 보호\n> 건강/위치 > SoccerBeat" : {},
     "설정하기" : {
       "localizations" : {
         "en" : {
@@ -6577,6 +6594,325 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请检查健康数据访问权限。"
+          }
+        }
+      }
+    },
+    "chart.v2.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "필드 차트 기준"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field Chart Guide"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guía del gráfico"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "能力图说明"
+          }
+        }
+      }
+    },
+    "chart.v2.overview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 항목은 다음 측정 기준을 나타냅니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each axis represents the following metric."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada eje representa la siguiente métrica."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各项对应以下测量指标。"
+          }
+        }
+      }
+    },
+    "chart.v2.measured" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "측정 기반"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measured"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medido"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基于测量"
+          }
+        }
+      }
+    },
+    "chart.v2.reference" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "참고값"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referencia"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参考值"
+          }
+        }
+      }
+    },
+    "chart.v2.agility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스피드 · 연속된 유효 기록의 3초 평균 최고속도입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed · Highest three-second average speed from continuous valid readings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad · Mayor velocidad media de tres segundos con mediciones válidas continuas."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速度 · 连续有效记录中的最高3秒平均速度。"
+          }
+        }
+      }
+    },
+    "chart.v2.activity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활동량 · 일시정지를 제외한 분당 이동 거리입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work rate · Distance per minute, excluding pauses."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actividad · Distancia por minuto, sin contar las pausas."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动量 · 扣除暂停后的每分钟移动距离。"
+          }
+        }
+      }
+    },
+    "chart.v2.potential" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "심박 부하 · 평균 심박수를 연령 기반 추정 최대 심박수와 비교합니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart-rate load · Time-weighted average heart rate relative to the age-estimated maximum."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carga cardíaca · Frecuencia cardíaca media ponderada por tiempo respecto al máximo estimado por edad."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "心率负荷 · 时间加权平均心率与按年龄估算的最大心率之比。"
+          }
+        }
+      }
+    },
+    "chart.v2.mentality" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "고속주행 · 유효 속도 측정 시간 중 14km/h 이상 달린 시간의 비율입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fast running · Proportion of valid speed-measurement time spent at 14 km/h or faster."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrera rápida · Proporción del tiempo con mediciones válidas de velocidad a 14 km/h o más."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速跑动 · 有效测速时间内，速度达到14 km/h及以上的时间占比。"
+          }
+        }
+      }
+    },
+    "chart.v2.endurance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활동유지 · 경기 초반과 후반 3분의 1 구간의 분당 이동량을 비교합니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consistency · Distance per minute in the last third compared with the first third of the match."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Constancia · Distancia por minuto del último tercio comparada con la del primer tercio del partido."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动保持 · 比较比赛后段与前段各三分之一时段的每分钟移动距离。"
+          }
+        }
+      }
+    },
+    "chart.v2.explosivity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복질주 · 유효 측정 시간 10분당 스프린트 횟수입니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeated sprints · Sprint count per ten minutes of valid measurement."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esprints repetidos · Número de esprints por cada diez minutos de medición válida."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重复冲刺 · 每10分钟有效测量时间内的冲刺次数。"
+          }
+        }
+      }
+    },
+    "chart.v2.missing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일부 축은 측정 범위가 부족하면 다른 측정 점수의 평균(최대 70점)으로 보완합니다. 모든 축이 없으면 반지름 65%의 기본 모양을 표시합니다. 참고값은 평균 비교선에 포함하지 않습니다. 심박·고속주행 비율은 70% 이상 측정했을 때만 계산합니다."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Axes with insufficient data use the mean of measured scores, capped at 70. With no measured axes, a default shape uses a 65% radius. Reference values are excluded from the average line. Heart-rate and fast-running ratios require 70% coverage."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los ejes sin datos suficientes usan la media de los medidos, con un máximo de 70. Sin datos medidos se muestra una forma con radio del 65%. Las referencias se excluyen de la línea media. Los porcentajes cardíacos y de carrera rápida requieren una cobertura del 70%."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据不足的轴使用已测量得分的平均值补充，最高70分。所有轴均无数据时显示半径65%的默认图形。参考值不计入平均线。心率和高速跑动比例需达到70%的测量覆盖率。"
           }
         }
       }

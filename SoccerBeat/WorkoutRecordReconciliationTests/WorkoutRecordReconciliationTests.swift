@@ -245,85 +245,226 @@ final class WorkoutRecordReconciliationTests: XCTestCase {
         XCTAssertEqual(WorkoutRecordReconciliation.average(of: [record(distance: 2), failed]).totalDistance, 2)
     }
 
-    @objc func testAbilityKeepsExistingThresholdsAndScaleWithoutPower() {
-        let levels = DataConverter.toLevels(record())
-        let expected = [1.2, 2.25, 1.6875, 0.75, 1.2, 1.8]
-        for (actual, value) in zip(levels, expected) { XCTAssertEqual(actual, value, accuracy: 0.000001) }
+
+    private func chartRecord(duration: Int = 900, speed: Double = 1, heartRate: Int? = nil, sprints: Int = 0) -> WorkoutData {
+        var result = record(distance: Double(duration) * speed / 1000, sprint: sprints, time: "\(duration / 60) : \(duration % 60)")
+        let start = Date(timeIntervalSince1970: 1_000_000)
+        result.startDate = start
+        result.endDate = start.addingTimeInterval(Double(duration))
+        result.recordedDuration = Double(duration)
+        result.speedSamples = (0...duration).map {
+            WorkoutSpeedSample(timestamp: start.addingTimeInterval(Double($0)), speed: speed,
+                               speedAccuracy: 0.2, horizontalAccuracy: 5)
+        }
+        if let heartRate {
+            result.heartRates = stride(from: 0, through: duration, by: 5).map { _ in heartRate }
+            result.heartRateDates = stride(from: 0, through: duration, by: 5).map { start.addingTimeInterval(Double($0)) }
+            result.heartRateReferenceMaximum = 200
+        }
+        return result
     }
 
-    @objc func testPowerDoesNotAffectWorkoutOrAverageAbilities() {
-        let original = record()
-        var powered = record(power: 10000)
-        powered.hasPowerData = true
-        XCTAssertEqual(DataConverter.toLevels(original), DataConverter.toLevels(powered))
-        var average = WorkoutRecordReconciliation.average(of: [original])
-        let before = DataConverter.toLevels(average)
-        average.maxPower = 10000
-        XCTAssertEqual(before, DataConverter.toLevels(average))
+    @objc func testMinimumAndMaximumFillReachThirtyAndOneHundredPercent() {
+        XCTAssertEqual(DataConverter.displayLevels(Array(repeating: 0, count: 6)), Array(repeating: 1.5, count: 6))
+        XCTAssertEqual(DataConverter.displayLevels(Array(repeating: 100, count: 6)), Array(repeating: 5, count: 6))
     }
 
-    @objc func testPartialAbilityUsesKnownInputsAndRedistributesWeights() {
-        var partial = record(sprint: 999, speed: 999)
-        partial.unavailableMetrics = [.sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
-        let levels = DataConverter.toLevels(partial)
-        XCTAssertEqual(levels[0], 2.25, accuracy: 0.000001)
-        XCTAssertEqual(levels[1], 1.5, accuracy: 0.000001)
-        XCTAssertEqual(levels[2], 1.5, accuracy: 0.000001)
-        XCTAssertEqual(levels[3], 1.5, accuracy: 0.000001)
-        XCTAssertEqual(levels[4], (3 * 0.15 + 0.2) / 0.35 * 0.75, accuracy: 0.000001)
-        XCTAssertEqual(levels[5], 2.25, accuracy: 0.000001)
+    @objc func testUnknownAxesHaveVisibleDefaultAndCappedReference() {
+        XCTAssertEqual(DataConverter.displayLevels([]), Array(repeating: 3.25, count: 6))
+        let values = DataConverter.displayLevels([100, nil, nil, nil, nil, nil])
+        XCTAssertEqual(values[0], 5)
+        XCTAssertEqual(values[1], 3.95, accuracy: 0.000001)
     }
 
-    @objc func testMeasuredZeroSprintIsDifferentFromUnavailableSprintInAbility() {
-        let zero = record(sprint: 0, speed: 25)
-        var unknown = zero
-        unknown.unavailableMetrics.insert(.sprint)
-        XCTAssertLessThan(DataConverter.toLevels(zero)[2], DataConverter.toLevels(unknown)[2])
+    @objc func testActivityUsesDistancePerMinuteInsteadOfTotalDistance() {
+        let short = record(distance: 0.6, time: "10 : 0")
+        let long = record(distance: 1.2, time: "20 : 0")
+        XCTAssertEqual(DataConverter.measuredScores(short)[1]!, 73.75, accuracy: 0.000001)
+        XCTAssertEqual(DataConverter.measuredScores(short)[1], DataConverter.measuredScores(long)[1])
     }
 
-    @objc func testZeroMinimumHeartRateNeverProducesTopMentalityLevel() {
-        var zero = record()
-        zero.heartRate["min"] = 0
-        var unknown = record()
-        unknown.unavailableMetrics.insert(.minHeartRate)
-        XCTAssertEqual(DataConverter.toLevels(zero), DataConverter.toLevels(unknown))
+    @objc func testAxisOrderUsesUserRequestedMapping() {
+        let scores = DataConverter.measuredScores(chartRecord(speed: 8, heartRate: 180))
+        for index in 0...4 { XCTAssertEqual(scores[index]!, 100, accuracy: 0.000001) }
+        XCTAssertLessThan(scores[5]!, 70) // One continuous sprint is not repeated sprints.
     }
 
-    @objc func testNoKnownInputReturnsCenterInsteadOfInventedLevels() {
-        var missing = record(time: "0 : 0")
-        missing.unavailableMetrics = [.distance, .sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
-        XCTAssertEqual(DataConverter.toLevels(missing), Array(repeating: 0, count: 6))
+    @objc func testPowerNeverChangesChart() {
+        var original = chartRecord()
+        let before = DataConverter.toLevels(original)
+        original.hasPowerData = true
+        let powered = record(power: 10000)
+        XCTAssertEqual(DataConverter.toLevels(record()), DataConverter.toLevels(powered))
+        XCTAssertEqual(before, DataConverter.toLevels(original))
     }
 
-    @objc func testThreeMinutesAloneCanProducePartialAbilityChart() {
-        var partial = record(time: "3 : 0")
-        partial.unavailableMetrics = [.distance, .sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
-        XCTAssertEqual(DataConverter.toLevels(partial), Array(repeating: 0.75, count: 6))
+    @objc func testSpeedUsesContinuousThreeSecondAverage() {
+        let scores = DataConverter.measuredScores(chartRecord(speed: 5))
+        XCTAssertEqual(scores[0]!, 76, accuracy: 0.000001)
     }
 
-    @objc func testAverageRetainsMissingInputsForSamePartialAbilityPolicy() {
-        var partial = record()
-        partial.unavailableMetrics = [.sprint, .maxSpeed, .minHeartRate, .maxHeartRate]
-        let average = WorkoutRecordReconciliation.average(of: [partial])
-        XCTAssertTrue(average.unavailableMetrics.contains(.maxSpeed))
-        XCTAssertFalse(average.unavailableMetrics.contains(.distance))
-        XCTAssertEqual(DataConverter.toLevels(average), DataConverter.toLevels(partial))
+    @objc func testTooShortSpeedRunIsReference() {
+        XCTAssertNil(DataConverter.measuredScores(chartRecord(duration: 2, speed: 5))[0])
     }
 
-    @objc func testMissingCaloriesOrRouteDoesNotChangeAbility() {
-        let original = record()
-        var missing = original
-        missing.unavailableMetrics = [.calories, .heartRate]
-        missing.route = []
-        missing.routeAvailability = .unavailable
-        XCTAssertEqual(DataConverter.toLevels(original), DataConverter.toLevels(missing))
+    @objc func testGPSJumpCannotInflateSpeed() {
+        var workout = chartRecord(duration: 60, speed: 1.2)
+        let date = workout.speedSamples[20].timestamp
+        workout.speedSamples[20] = WorkoutSpeedSample(timestamp: date, speed: 30, speedAccuracy: 0.2, horizontalAccuracy: 5)
+        XCTAssertEqual(DataConverter.measuredScores(workout)[0]!, 17.28, accuracy: 0.000001)
     }
 
-    @objc func testNonfiniteInputsCannotMakeNonfiniteOrOutOfRangeChart() {
-        let invalid = record(distance: .nan, speed: .infinity)
-        let levels = DataConverter.toLevels(invalid)
-        XCTAssertEqual(levels.count, 6)
-        XCTAssertTrue(levels.allSatisfy { $0.isFinite && (0...3.75).contains($0) })
+    @objc func testDuplicateSpeedSampleCannotInjectSpike() {
+        var workout = chartRecord(duration: 60, speed: 1.2)
+        workout.speedSamples.append(WorkoutSpeedSample(timestamp: workout.speedSamples[20].timestamp,
+                                                      speed: 100, speedAccuracy: 0.2, horizontalAccuracy: 5))
+        XCTAssertEqual(DataConverter.measuredScores(workout)[0]!, 17.28, accuracy: 0.000001)
+    }
+
+    @objc func testInsufficientCoverageDoesNotBecomeZeroHighSpeedOrEndurance() {
+        var workout = chartRecord()
+        workout.speedSamples = Array(workout.speedSamples.prefix(400))
+        let scores = DataConverter.measuredScores(workout)
+        XCTAssertNotNil(scores[0])
+        XCTAssertNil(scores[3]); XCTAssertNil(scores[4]); XCTAssertNil(scores[5])
+    }
+
+    @objc func testMeasuredStationaryRecordStaysAtMinimumShape() {
+        let workout = chartRecord(speed: 0)
+        let scores = DataConverter.measuredScores(workout)
+        XCTAssertEqual(scores[0], 0); XCTAssertEqual(scores[1], 0)
+        XCTAssertEqual(scores[3], 0); XCTAssertEqual(scores[5], 0)
+        XCTAssertEqual(DataConverter.toLevels(workout), Array(repeating: 1.5, count: 6))
+    }
+
+    @objc func testHighSpeedThresholdCountsValidTime() {
+        XCTAssertEqual(DataConverter.measuredScores(chartRecord(speed: 4))[3], 100)
+        XCTAssertEqual(DataConverter.measuredScores(chartRecord(speed: 3))[3], 0)
+    }
+
+    @objc func testSprintRateRequiresTenMinutes() {
+        XCTAssertNil(DataConverter.measuredScores(chartRecord(duration: 599, speed: 6))[5])
+        XCTAssertEqual(DataConverter.measuredScores(chartRecord(duration: 600, speed: 6, sprints: 1))[5]!, 70, accuracy: 0.000001)
+    }
+
+    @objc func testEnduranceRequiresFifteenMinutesAndRealInitialActivity() {
+        XCTAssertNil(DataConverter.measuredScores(chartRecord(duration: 899))[4])
+        XCTAssertNil(DataConverter.measuredScores(chartRecord(speed: 0.1))[4])
+        XCTAssertEqual(DataConverter.measuredScores(chartRecord())[4], 100)
+    }
+
+    @objc func testEnduranceComparesFirstAndLastThirds() {
+        var workout = chartRecord()
+        for index in 600..<workout.speedSamples.count {
+            let sample = workout.speedSamples[index]
+            workout.speedSamples[index] = WorkoutSpeedSample(timestamp: sample.timestamp, speed: 0.5,
+                                                            speedAccuracy: 0.2, horizontalAccuracy: 5)
+        }
+        XCTAssertEqual(DataConverter.measuredScores(workout)[4]!, 40, accuracy: 0.000001)
+    }
+
+    @objc func testPausesBreakThreeSecondRuns() {
+        var workout = chartRecord(duration: 6, speed: 5)
+        let start = workout.startDate!
+        workout.heatmapPausedIntervals = [DateInterval(start: start.addingTimeInterval(2), end: start.addingTimeInterval(4))]
+        workout.recordedDuration = 4
+        XCTAssertNil(DataConverter.measuredScores(workout)[0])
+    }
+
+    @objc func testHeartLoadUsesRecordedReferenceAndTimeWeightedSamples() {
+        let workout = chartRecord(heartRate: 130)
+        XCTAssertEqual(DataConverter.measuredScores(workout)[2]!, 70, accuracy: 0.000001)
+        var changedPeak = workout
+        changedPeak.heartRate["max"] = 240
+        XCTAssertEqual(DataConverter.measuredScores(workout)[2], DataConverter.measuredScores(changedPeak)[2])
+    }
+
+    @objc func testHeartLoadNeedsReferenceAndCoverage() {
+        var workout = chartRecord(heartRate: 130)
+        workout.heartRateReferenceMaximum = nil
+        XCTAssertNil(DataConverter.measuredScores(workout)[2])
+        workout.heartRateReferenceMaximum = 200
+        workout.heartRateDates = Array(workout.heartRateDates.prefix(10))
+        workout.heartRates = Array(workout.heartRates.prefix(10))
+        XCTAssertNil(DataConverter.measuredScores(workout)[2])
+    }
+
+    @objc func testInvalidHeartSamplesCannotBridgeMissingIntervals() {
+        var workout = chartRecord(heartRate: 130)
+        workout.heartRates = workout.heartRates.enumerated().map { $0.offset % 2 == 0 ? 130 : 0 }
+        XCTAssertNil(DataConverter.measuredScores(workout)[2])
+    }
+
+    @objc func testAverageScoresExcludeReferencesAndAverageScoresNotRawMetrics() {
+        let records = [record(distance: 1, time: "10 : 0"), record(distance: 0, time: "10 : 0")]
+        let average = WorkoutRecordReconciliation.average(of: records)
+        XCTAssertEqual(average.fieldChartScores[1], 50)
+        XCTAssertNil(average.fieldChartScores[0])
+        XCTAssertEqual(DataConverter.toLevels(average)[1], 3.25)
+        XCTAssertEqual(DataConverter.maximumScores(records)[1], 100)
+    }
+
+    @objc func testLegacyMetadataStillShowsChartWithoutInventingSpeedOrHeartLoad() {
+        let workout = record()
+        let scores = DataConverter.measuredScores(workout)
+        XCTAssertNil(scores[0]); XCTAssertNil(scores[2])
+        XCTAssertTrue(DataConverter.toLevels(workout).allSatisfy { (1.5...5).contains($0) })
+    }
+
+    @objc func testFailedRefreshPreservesNewChartInputs() {
+        let previous = chartRecord(heartRate: 130)
+        var incoming = record(locations: 0)
+        incoming.id = previous.id
+        let merged = incoming.preservingAvailableData(from: previous)
+        XCTAssertEqual(merged.speedSamples, previous.speedSamples)
+        XCTAssertEqual(merged.recordedDuration, previous.recordedDuration)
+        XCTAssertEqual(merged.heartRateReferenceMaximum, previous.heartRateReferenceMaximum)
+    }
+
+    @objc func testInvalidAndMissingRecordsAlwaysHaveFiniteVisibleShape() {
+        let bad = record(distance: .nan, speed: .infinity, time: "--")
+        XCTAssertEqual(DataConverter.toLevels(bad), Array(repeating: 3.25, count: 6))
+        let missing = DataConverter.displayLevels([.nan, .infinity, nil])
+        XCTAssertTrue(missing.allSatisfy { $0.isFinite && (1.5...5).contains($0) })
+    }
+
+    @objc func testIrregularHeartSamplesAreWeightedByElapsedTime() {
+        var workout = chartRecord(duration: 11)
+        let start = workout.startDate!
+        workout.heartRateDates = [0.0, 1, 11].map { start.addingTimeInterval($0) }
+        workout.heartRates = [100, 100, 200]
+        workout.heartRateReferenceMaximum = 200
+        let ratio = (100.0 + 150.0 * 10) / 11 / 200
+        XCTAssertEqual(DataConverter.measuredScores(workout)[2]!, 70 + (ratio - 0.65) / 0.15 * 15, accuracy: 0.000001)
+    }
+
+    @objc func testOverlappingPausesAreSubtractedOnce() {
+        var workout = chartRecord(duration: 1320, heartRate: 130)
+        let start = workout.startDate!
+        workout.recordedDuration = 900
+        workout.heatmapPausedIntervals = [DateInterval(start: start.addingTimeInterval(300), end: start.addingTimeInterval(600)),
+                                         DateInterval(start: start.addingTimeInterval(450), end: start.addingTimeInterval(720))]
+        let scores = DataConverter.measuredScores(workout)
+        XCTAssertEqual(scores[2]!, 70, accuracy: 0.000001)
+        XCTAssertEqual(scores[4]!, 100, accuracy: 0.000001)
+    }
+
+    @objc func testAllSixMeasuredGoalsCanReachTheOuterBoundary() {
+        var workout = chartRecord(speed: 8, heartRate: 180, sprints: 5)
+        workout.speedSamples = workout.speedSamples.enumerated().map { index, sample in
+            WorkoutSpeedSample(timestamp: sample.timestamp, speed: index % 60 < 3 ? 4 : 8,
+                               speedAccuracy: 0.2, horizontalAccuracy: 5)
+        }
+        XCTAssertEqual(DataConverter.measuredScores(workout), Array(repeating: 100, count: 6))
+        XCTAssertEqual(DataConverter.toLevels(workout), Array(repeating: 5, count: 6))
+    }
+
+    @objc func testSprintAxisUsesSavedReportCountRatherThanInventingNewEvents() {
+        let noSprints = chartRecord(speed: 8, sprints: 0)
+        XCTAssertEqual(DataConverter.measuredScores(noSprints)[5], 0)
+        var missing = noSprints
+        missing.unavailableMetrics.insert(.sprint)
+        XCTAssertNil(DataConverter.measuredScores(missing)[5])
     }
 
 }
@@ -332,7 +473,7 @@ final class WorkoutRecordReconciliationTests: XCTestCase {
 struct WorkoutRecordReconciliationTestRunner {
     static func main() {
         let suite = WorkoutRecordReconciliationTests.defaultTestSuite
-        precondition(suite.testCaseCount == 36)
+        precondition(suite.testCaseCount == 53)
         suite.run()
         exit(suite.testRun?.hasSucceeded == true ? 0 : 1)
     }

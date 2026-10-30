@@ -153,7 +153,7 @@ struct MainView: View {
                     .minimumScaleFactor(0.7)
                     .lineLimit(1)
                     .font(.mainTitleText)
-                    .padding(.trailing)
+                .padding(.trailing)
             }
             Spacer()
             NavigationLink {
@@ -245,20 +245,14 @@ struct MainView: View {
                                 let recent = DataConverter.toLevels(workouts[0])
                                 let average = DataConverter.toLevels(profileModel.averageAbility)
                                 
-                                ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent, error: workouts[0].error))
+                                ViewControllerContainer(RadarViewController(radarAverageValue: average, radarAtypicalValue: recent, error: workouts[0].error, isCompact: true))
                                     .id([recent, average])
-                                    .scaleEffect(CGSize(width: 0.6, height: 0.6))
-                                    .padding()
-                                    .fixedSize()
                                     .frame(width: 220, height: 210)
                             } else {
                                 let blankRecent = DataConverter.toLevels(WorkoutData.blankExample)
                                 let blankAverage = DataConverter.toLevels(WorkoutAverageData.blankAverage)
                                 
-                                ViewControllerContainer(RadarViewController(radarAverageValue: blankAverage, radarAtypicalValue: blankRecent, error: true))
-                                    .scaleEffect(CGSize(width: 0.6, height: 0.6))
-                                    .padding()
-                                    .fixedSize()
+                                ViewControllerContainer(RadarViewController(radarAverageValue: blankAverage, radarAtypicalValue: blankRecent, error: true, isCompact: true))
                                     .frame(width: 220, height: 210)
                             }
                             Spacer()

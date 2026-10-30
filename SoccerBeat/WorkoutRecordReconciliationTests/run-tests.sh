@@ -12,6 +12,7 @@ xcrun swiftc -F "$frameworks" -I "$swift_support" -L "$swift_support" -lXCTestSw
     "$repo_root/SoccerBeat/Common/Data/HeatmapDensity.swift" \
     "$repo_root/SoccerBeat/Common/Data/WorkoutData.swift" \
     "$repo_root/SoccerBeat/Common/Data/WorkoutData+Reconciliation.swift" \
+    "$repo_root/SoccerBeat/SoccerBeat Watch App/Sources/WorkoutManager/SprintDetector.swift" \
     "$repo_root/SoccerBeat/SoccerBeat/Sources/Features/MatchRecords/ViewControllers/DataConverter.swift" \
     "$repo_root/SoccerBeat/WorkoutRecordReconciliationTests/WorkoutRecordReconciliationTests.swift" \
     -o "$test_dir/record-tests"

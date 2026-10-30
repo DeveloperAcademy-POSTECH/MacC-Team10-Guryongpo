@@ -2,6 +2,14 @@ import XCTest
 
 @MainActor
 final class MatricsIndicatorTests: XCTestCase {
+    @objc func testFieldChartVersionDoesNotInventPersonalHeartRateReference() {
+        let metrics = MatricsIndicator()
+        XCTAssertEqual(metrics.getMetadata()["FieldChartVersion"] as? Int, 2)
+        XCTAssertNil(metrics.getMetadata()["FieldChartHeartRateReference"])
+        metrics.reset()
+        XCTAssertNil(metrics.getMetadata()["FieldChartHeartRateReference"])
+    }
+
     @objc func testAbsentMeasurementsAreNotSerializedAsZero() {
         let metrics = MatricsIndicator()
         let metadata = metrics.getMetadata()
@@ -96,7 +104,7 @@ struct MatricsIndicatorTestRunner {
     @MainActor
     static func main() {
         let suite = MatricsIndicatorTests.defaultTestSuite
-        precondition(suite.testCaseCount == 7)
+        precondition(suite.testCaseCount == 8)
         suite.run()
         exit(suite.testRun?.hasSucceeded == true ? 0 : 1)
     }
