@@ -36,7 +36,9 @@ struct MatchRecapView: View {
                     Spacer()
                         .frame(height: 60)
                     HStack {
-                        FieldChartInformationButton()
+                        InformationButton(message: "저장된 모든 경기 기록을 확인해보세요.")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
                             .padding(.leading, 16)
                         
                         Spacer()
@@ -203,7 +205,7 @@ struct MatchListItemView: View {
             HStack(spacing: 0) {
                 // 스파이더 차트
                 radarCharts
-                //                    .frame(width: 60, height: 60)
+                    .scaleEffect(0.85)
                     .padding(.top, 16)
                     .opacity(workoutData.error ? 0 : 1)
                 

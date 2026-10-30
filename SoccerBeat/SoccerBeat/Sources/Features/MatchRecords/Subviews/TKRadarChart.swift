@@ -202,7 +202,7 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
             let attributeTextSize = (title as NSString)
                 .size(withAttributes: [NSAttributedStringKey.font: textFont])
         
-            let width = min(attributeTextSize.width + 8, bounds.width)
+            let width = min(attributeTextSize.width + 8, max(0, bounds.width - 8))
             let xOffset = pointOnEdge.x >=  centerPoint .x ? width / 2.0 + padding : -width / 2.0 - padding
             let yOffset = pointOnEdge.y >=  centerPoint .y ? height / 2.0 + padding : -height / 2.0 - padding
             var legendCenter = CGPoint(x: pointOnEdge.x + xOffset, y: pointOnEdge.y + yOffset)
@@ -223,7 +223,7 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                                     + (radius + padding + height / 2.0)
                                     * CGFloat(index == 0 ? -1 : 1)
             }
-            let rect = CGRect(x: min(max(0, legendCenter.x - width / 2.0), max(0, bounds.width - width)),
+            let rect = CGRect(x: min(max(4, legendCenter.x - width / 2.0), max(4, bounds.width - width - 4)),
                               y: min(max(0, legendCenter.y - height / 2.0), max(0, bounds.height - height)),
                               width: width, height: height)
             

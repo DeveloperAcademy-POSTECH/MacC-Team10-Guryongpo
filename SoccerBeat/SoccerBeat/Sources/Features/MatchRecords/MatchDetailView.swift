@@ -176,6 +176,8 @@ struct FieldRecordView: View {
             VStack {
                 HStack {
                     InformationButton(message: "경기의 상세 데이터에 따라 뱃지가 수여됩니다.")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                     Spacer()
                 }
                 .zIndex(4.0)
@@ -283,6 +285,8 @@ struct FieldMovementView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         InformationButton(message: "슬라이더를 움직여 경기 중 위치를 확인해보세요.")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
                         Spacer()
                     }
                     
@@ -479,7 +483,7 @@ struct FieldChartView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                FieldChartInformationButton(workout: workout)
+                FieldChartInformationButton()
                 Spacer()
             }
 
@@ -558,7 +562,6 @@ private struct WorkoutDataNotice: View {
 }
 
 struct FieldChartInformationButton: View {
-    var workout: WorkoutData?
     @State private var isPresented = false
     private let titles = ["민첩성", "적극성", "잠재력", "정신력", "지구력", "폭발력"]
     private let details = ["chart.v2.agility", "chart.v2.activity", "chart.v2.potential",
@@ -576,24 +579,13 @@ struct FieldChartInformationButton: View {
             NavigationStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        let scores = workout.map { DataConverter.measuredScores($0) }
                         Text("chart.v2.overview")
                         ForEach(0..<6) { index in
                             VStack(alignment: .leading, spacing: 6) {
-                                HStack {
-                                    Text(LocalizedStringKey(titles[index])).font(.headline)
-                                    Spacer()
-                                    if let scores {
-                                        Text(LocalizedStringKey(scores[index] == nil
-                                                               ? "chart.v2.reference" : "chart.v2.measured"))
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
+                                Text(LocalizedStringKey(titles[index])).font(.headline)
                                 Text(LocalizedStringKey(details[index]))
                             }
                         }
-                        Text("chart.v2.missing").font(.footnote).foregroundStyle(.secondary)
                     }
                     .padding()
                 }

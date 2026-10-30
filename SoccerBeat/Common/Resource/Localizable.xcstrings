@@ -1,6 +1,35 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
+    "저장된 모든 경기 기록을 확인해보세요.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장된 모든 경기 기록을 확인해보세요."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View all your saved matches."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consulta todos tus partidos guardados."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看所有已保存的比赛记录。"
+          }
+        }
+      }
+    },
     "" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6604,25 +6633,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "기존 6개 축은 아래 활동 지표에 대응합니다. 일반 아마추어용 초기 기준이며, 최소 반지름 30%부터 목표 달성 시 100%까지 표시합니다."
+            "value" : "각 항목은 다음 측정 기준을 나타냅니다."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The six axes represent the activity metrics below. These initial recreational-football targets display a minimum 30% radius and reach 100% when targets are met."
+            "value" : "Each axis represents the following metric."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los seis ejes representan las métricas siguientes. Estos objetivos iniciales para fútbol recreativo muestran un radio mínimo del 30% y llegan al 100% al alcanzarlos."
+            "value" : "Cada eje representa la siguiente métrica."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "六个轴对应以下活动指标。采用业余足球初始目标，半径最低为30%，达到目标时为100%。"
+            "value" : "各项对应以下测量指标。"
           }
         }
       }
@@ -6691,25 +6720,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스피드 · 연속된 유효 구간의 3초 평균 최고속도입니다. 26km/h 이상이면 최고 점수입니다."
+            "value" : "스피드 · 연속된 유효 기록의 3초 평균 최고속도입니다."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speed · Best three-second average across continuous valid samples. The top score starts at 26 km/h."
+            "value" : "Speed · Highest three-second average speed from continuous valid readings."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Velocidad · Mejor promedio de tres segundos con datos válidos continuos. La puntuación máxima empieza en 26 km/h."
+            "value" : "Velocidad · Mayor velocidad media de tres segundos con mediciones válidas continuas."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "速度 · 连续有效记录中最高的3秒平均速度。达到26 km/h获得最高分。"
+            "value" : "速度 · 连续有效记录中的最高3秒平均速度。"
           }
         }
       }
@@ -6720,25 +6749,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "활동량 · 일시정지를 제외한 기록 시간당 이동 거리입니다. 100m/min 이상이면 최고 점수입니다."
+            "value" : "활동량 · 일시정지를 제외한 분당 이동 거리입니다."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Work rate · Distance per recorded minute, excluding pauses. The top score starts at 100 m/min."
+            "value" : "Work rate · Distance per minute, excluding pauses."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Actividad · Distancia por minuto registrado, sin pausas. La puntuación máxima empieza en 100 m/min."
+            "value" : "Actividad · Distancia por minuto, sin contar las pausas."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "活动量 · 扣除暂停后的每分钟移动距离。达到100 m/min获得最高分。"
+            "value" : "活动量 · 扣除暂停后的每分钟移动距离。"
           }
         }
       }
@@ -6749,25 +6778,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "심박 부하 · 시간 가중 평균 심박수를 연령 기반 추정 최대 심박수와 비교합니다. 90% 이상이면 최고 점수이며 운동 강도를 나타냅니다. 생년 정보가 없으면 참고값을 사용합니다."
+            "value" : "심박 부하 · 평균 심박수를 연령 기반 추정 최대 심박수와 비교합니다."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heart-rate load · Time-weighted mean heart rate relative to the age-estimated maximum. 90% earns the top score and indicates exercise intensity. Without birth-year access, this axis uses a reference value."
+            "value" : "Heart-rate load · Time-weighted average heart rate relative to the age-estimated maximum."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Carga cardíaca · Frecuencia media ponderada por tiempo respecto al máximo estimado por edad. El 90% da la puntuación máxima e indica intensidad. Sin acceso al año de nacimiento se usa un valor de referencia."
+            "value" : "Carga cardíaca · Frecuencia cardíaca media ponderada por tiempo respecto al máximo estimado por edad."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "心率负荷 · 将时间加权平均心率与按年龄估算的最大心率比较。达到90%获得最高分，表示运动强度。无法读取出生年份时使用参考值。"
+            "value" : "心率负荷 · 时间加权平均心率与按年龄估算的最大心率之比。"
           }
         }
       }
@@ -6778,25 +6807,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "고속주행 · 유효 속도 측정 시간 중 14km/h 이상 달린 시간의 비율입니다. 14% 이상이면 최고 점수입니다."
+            "value" : "고속주행 · 유효 속도 측정 시간 중 14km/h 이상 달린 시간의 비율입니다."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fast running · Share of valid speed-measurement time at 14 km/h or faster. A 14% share earns the top score."
+            "value" : "Fast running · Proportion of valid speed-measurement time spent at 14 km/h or faster."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Carrera rápida · Porcentaje del tiempo con velocidad válida a 14 km/h o más. El 14% da la puntuación máxima."
+            "value" : "Carrera rápida · Proporción del tiempo con mediciones válidas de velocidad a 14 km/h o más."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "高速跑动 · 有效测速时间内，速度达到14 km/h的时间占比。占比达到14%获得最高分。"
+            "value" : "高速跑动 · 有效测速时间内，速度达到14 km/h及以上的时间占比。"
           }
         }
       }
@@ -6807,25 +6836,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "활동유지 · 초반과 후반 3분의 1 구간의 분당 이동량을 비교합니다. 15분 이상 기록하고 각 구간을 70% 이상 측정했으며 초반 활동량이 20m/min 이상일 때 계산합니다. 후반 활동량을 100% 유지하면 최고 점수입니다."
+            "value" : "활동유지 · 경기 초반과 후반 3분의 1 구간의 분당 이동량을 비교합니다."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consistency · Compares distance per minute in the first and last thirds. Requires 15 minutes, 70% coverage in each third, and an initial work rate of at least 20 m/min. Maintaining 100% earns the top score."
+            "value" : "Consistency · Distance per minute in the last third compared with the first third of the match."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Constancia · Compara la distancia por minuto del primer y último tercio. Requiere 15 minutos, cobertura del 70% en ambos y al menos 20 m/min al inicio. Mantener el 100% da la puntuación máxima."
+            "value" : "Constancia · Distancia por minuto del último tercio comparada con la del primer tercio del partido."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "活动保持 · 比较前后各三分之一时段的每分钟移动距离。需记录至少15分钟，两段覆盖率均达到70%，且前段达到20 m/min。后段保持100%时获得最高分。"
+            "value" : "活动保持 · 比较比赛后段与前段各三分之一时段的每分钟移动距离。"
           }
         }
       }
@@ -6836,25 +6865,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "반복질주 · 유효 측정 10분당 스프린트 횟수입니다. 10분 이상 기록하고 속도 측정 범위가 70% 이상일 때 계산하며, 10분당 3회 이상이면 최고 점수입니다."
+            "value" : "반복질주 · 유효 측정 시간 10분당 스프린트 횟수입니다."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Repeated sprints · Sprints per ten valid measurement minutes. Requires a ten-minute record and 70% speed coverage. Three sprints per ten minutes earn the top score."
+            "value" : "Repeated sprints · Sprint count per ten minutes of valid measurement."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esprints repetidos · Esprints por diez minutos de medición válida. Requiere un registro de diez minutos y cobertura de velocidad del 70%. Tres por diez minutos dan la puntuación máxima."
+            "value" : "Esprints repetidos · Número de esprints por cada diez minutos de medición válida."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重复冲刺 · 每10分钟有效测量的冲刺次数。需记录至少10分钟且测速覆盖率达到70%。每10分钟3次获得最高分。"
+            "value" : "重复冲刺 · 每10分钟有效测量时间内的冲刺次数。"
           }
         }
       }

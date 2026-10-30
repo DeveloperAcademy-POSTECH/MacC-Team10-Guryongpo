@@ -22,9 +22,10 @@ struct InformationButton: View {
                     .frame(width: 11, height: 16)
                 if isInfoOpen {
                     Text(LocalizedStringKey(message))
+                        .font(.body)
                         .foregroundStyle(.white)
                         .padding(.horizontal)
-                        .frame(height:16)
+                        .frame(minHeight: 16)
                 }
             }
             .floatingCapsuleStyle(color: isInfoOpen ? .floatingCapsuleGray : .white.opacity(0.8))

@@ -35,7 +35,7 @@ struct ProfileView: View {
                                 HStack {
                                     InformationButton(message: "나의 선수 카드와 최대 능력치를 만나보세요.")
                                         .lineLimit(1)
-                                        .minimumScaleFactor(0.8)
+                                        .minimumScaleFactor(0.5)
                                     Spacer()
                                 }
                                 .padding(.vertical, 30)
@@ -85,8 +85,23 @@ struct ProfileView: View {
                         }
                         
                         Spacer()
-                            .frame(height: 110)
+                            .frame(height: 40)
+
+                        let average = DataConverter.toLevels(profileModel.averageAbility)
+                        let maximumAbility = DataConverter.toLevels(profileModel.maxAbility)
                         
+                        HStack {
+                            FieldChartInformationButton()
+                            Spacer()
+                        }
+
+                        ViewControllerContainer(ProfileViewController(radarAverageValue: average,
+                                                                      radarAtypicalValue: maximumAbility))
+                        .id([average, maximumAbility])
+                        .frame(maxWidth: 304)
+                        .frame(height: 304)
+                        .zIndex(-1)
+
                         VStack(spacing: 6) {
                             HStack {
                                 HStack(spacing: 0) {
@@ -114,18 +129,8 @@ struct ProfileView: View {
                             }
                         }
                         
-                        let average = DataConverter.toLevels(profileModel.averageAbility)
-                        let maximumAbility = DataConverter.toLevels(profileModel.maxAbility)
-                        
-                        ViewControllerContainer(ProfileViewController(radarAverageValue: average,
-                                                                      radarAtypicalValue: maximumAbility))
-                        .id([average, maximumAbility])
-                        .fixedSize()
-                        .frame(width: 304, height: 348)
-                        .zIndex(-1)
-                        
                         Spacer()
-                            .frame(height: 110)
+                            .frame(height: 48)
                         
                         TrophyCollectionView()
                         
